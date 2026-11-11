@@ -44,3 +44,21 @@ The tests verify five distinct sourced spellings, meaning/example completeness, 
 - **Existing staging website:** remains experimental; it is not yet driven by these five approved records.
 
 The product must not claim its teaching is validated simply because word meanings are dictionary-grounded or the code's quality gates pass.
+
+
+## Update: researched pronunciation references and audio review route
+
+- The five records now include UK IPA and reference syllable segmentation from the Cambridge Dictionary pronunciation pages; they are **reference annotations**, not approved sound-breakdown teaching. Valid UK pronunciation alternatives have been recorded for `government`.
+- Each word has a draft spoken welcome/prompt, meaning, example sentence, targeted explanation and follow-up instruction.
+- The headless [lesson-script-compiler.cjs](lesson-script-compiler.cjs) assembles an eight-stage draft lesson and blocks publication while the whole-word recording, teaching explanation and reviewed phoneme units are outstanding.
+- [lesson-script-compiler.test.cjs](lesson-script-compiler.test.cjs) has been checked: all five words remain blocked, and their initial and subsequent independent spelling turns hide the answer.
+- [Audio review page](https://spellquest-staging.onrender.com/audio-review.html) offers AI-generated narrator previews for the *whole word*, *instruction*, *definition*, *example sentence* and *spelling explanation* only. It is NOT the approved student lesson.
+- The temporary TTS model currently used by staging is scheduled for retirement on **6 January 2027**; production voice infrastructure will need migration to a supported Realtime audio integration. See https://developers.openai.com/api/docs/guides/text-to-speech.
+
+### Human sign-off still required
+1. Structured-literacy/dyslexia educator: review grapheme and spelling explanations, word choice and error-correction language.
+2. Linguist/phonics expert: approve spoken syllables, phonemes and their grapheme mapping where instruction requires these.
+3. Voice reviewer: listen to complete generated audio in real browsers; verify UK accent, pacing, naturalness and consistency.
+4. Parent/child usability pilot: test the actual narrator-led interaction and comfort, then delayed spelling recall. This must not be called efficacy evidence from one child.
+
+The curriculum remains **not approved for child-facing structured phoneme lessons**.
