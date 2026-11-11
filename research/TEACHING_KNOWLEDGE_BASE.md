@@ -227,3 +227,37 @@ Keep outcome fields separate:
 
 ### Product decision
 **Include both proposed modes as optional learning supports**, not as replacements for the unaided spelling check. Design a full-alphabet tap keyboard so learners can independently spell without the motor/keyboard-layout barrier. Run comparative research before claiming one mode teaches spelling better.
+
+
+## 13. Age-responsive interaction design, independent of spelling attainment (11 November 2026)
+
+**Core distinction:** age and motor/interface familiarity can influence *how* a learner responds, but birth month/year must never determine the spelling difficulty, diagnose dyslexia, or override the adaptive skills assessment. The learner should always be able to change interaction mode.
+
+### Suggested defaults to test, not fixed developmental rules
+
+| Approximate age | Initial interface suggestion | Accessible alternatives |
+|---|---|---|
+| 4–6 | Large, generously spaced letter/grapheme tiles; short spoken prompts; tap-to-place and one-tap undo | Whole alphabet on-screen, adult-supported interaction, optional physical keyboard |
+| 7–9 | Tile construction plus optional on-screen alphabet; gradual introduction of independent production | Three-choice error discrimination, keyboard, supportive cues |
+| 10–12 | Choice of tiles, on-screen alphabet or keyboard; age-respectful visuals and language | Minimal/maximum scaffolding as needed, not tied to school year |
+| 13–16 | Modern interface and discreet keyboard/on-screen-alphabet defaults | Tiles and recognition remain available without childish presentation |
+| Adults | Practical, uncluttered response modes chosen by learner | Same evidence-informed supports as all age groups |
+
+### Design and accessibility rules
+
+- Never equate younger age with lower spelling knowledge, or older age with better typing skills.
+- Use *ability to operate a control* and explicit preferences to select interaction mode; allow rapid mode switching.
+- Younger learners may struggle with physical keyboard location and fine-motor coordination; minimise extraneous demands with large tap targets and optional tap-to-place instead of drag-and-drop.
+- Give instructions aloud by default after a user start gesture, with an accessible narration toggle, replay, captions/text, and no forced pronunciation grading.
+- Distinguish **assisted exact-letter selection** from **unaided spelling with a complete alphabet**. Even if both use tapping, only the latter can contribute to independent spelling evidence.
+- At mastery-check time, use the least revealing response mode that the individual can operate comfortably: keyboard, full on-screen alphabet, handwriting captured by a trained adult, or an equivalent validated modality.
+- Do not punish slower motor responses, and do not automatically award mastery for a task with all necessary letters displayed.
+- Preserve age-respectful visual design when someone chooses easier input controls.
+
+### What is supported versus what needs testing
+
+These are accessibility-driven design hypotheses, not research-verified age cutoffs. There is no established basis here for claiming that tile ordering is generally superior for every 4–6-year-old or that keyboard typing is better for teenagers. Pilot age-responsive defaults and allow learners to override them; evaluate actual spelling acquisition and delayed retention alongside ease of use, motor load and frustration.
+
+### Data model implication
+
+Store the response mode separately from spelling skill and from the amount of assistance. An older learner using tap tiles must not be assigned a younger visual theme, and a younger learner who spells independently with a full alphabet should receive full credit.
