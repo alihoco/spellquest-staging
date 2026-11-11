@@ -163,3 +163,67 @@ R01 Galuschka et al. (2020), dyslexia-focused spelling meta-analysis; R02 Peters
 - That fixed review delays (1/3/7/14 days) outperform adaptive alternatives in dyslexic populations
 
 *This document is a research-informed product specification, not a recommendation to replace personalised teaching, classroom instruction or clinical assessment.*
+
+---
+
+## 12. Supported spelling response modes: letter tiles and recognition choices (11 November 2026)
+
+### Research question
+Do two lower-motor-demand response formats — (A) arranging a supplied pool of exactly the correct letters in order and (B) selecting the correctly spelled word among three alternatives — improve *independent, delayed spelling ability*, or do they mainly improve success during an assisted game?
+
+### Evidence-backed basis
+- The International Dyslexia Association's *Spelling* guidance explicitly identifies **building words with letter tiles** as one useful activity among tracing, saying, copying and writing; this supports using tiles as a teaching modality, **not** a claim that a supplied exact-letter bank is superior to unaided spelling.
+  https://dyslexiaida.org/spelling/
+- Galuschka et al. (2020) meta-analysis of 34 controlled trials supports explicit phonics, orthographic rules and morphology; neither exact-letter tile selection nor three-choice recognition was isolated as the proven best response method.
+  https://doi.org/10.1080/00461520.2019.1659794
+- Veiga da Silva et al. (2023), three experiments with Brazilian fifth graders, found that spelling retrieval followed by **immediate corrective feedback** improved accuracy after four days relative to copying in one experiment. This supports including delayed *production* measures; it does not demonstrate that keyboard input is necessary.
+  https://pubmed.ncbi.nlm.nih.gov/37605436/
+- Smith & Karpicke (2014) found nuanced results in four retrieval-practice experiments comparing short-answer and multiple-choice formats for text learning, not dyslexic spelling. There is **no general law** that multiple-choice never supports learning or that free recall always wins.
+  https://pubmed.ncbi.nlm.nih.gov/24059563/
+- Petersen-Brown & Kromminga (2024) caution that evidence on individualising spelling instruction is limited and gains often concentrate on taught words.
+  https://doi.org/10.1002/pits.23223
+- A study of children with isolated spelling difficulties reported weaker delayed retention despite intact initial learning, which reinforces assessing **later recall**, not only today's tiles/choices.
+  https://pmc.ncbi.nlm.nih.gov/articles/PMC6343368/
+
+### Proposed activity A — *Build the spelling from supplied letters*
+**Role:** optional, supported **encoding and sequencing** practice after explicit sound-to-grapheme/pattern teaching; accessible alternative when typing is a motor or keyboard-navigation barrier.
+
+**Configuration:** display precisely the letters needed, including duplicates, in random order; child taps/drag-and-drops to construct the word. Provide audio for whole word, optional replay for verified syllables, and corrective feedback focused on a relevant pattern. Do not call this an independent-spelling assessment because the bank reveals the spelling's letter identities and length. Sequence of letters can still be educationally demanding, especially with repeats or confusable letters. Some learners will benefit from **grapheme tiles** (e.g., sh, igh) rather than single letters when teaching correspondences; these are different tasks and should be tagged separately. Avoid demanding drag gestures: tap-to-place, undo, large targets and keyboard access.
+
+**Scaffold ladder** (not a rigid progression):
+1. Fully modelled sound–spelling mapping.
+2. Given relevant grapheme tiles, build a word.
+3. Given all correct letter tiles, sequence the spelling.
+4. Reduce cues: add carefully chosen distractors or provide a complete on-screen letter keyboard without revealing only the needed letters.
+5. Recover spelling from audio with no supplied letter list using accessible on-screen keyboard or physical keyboard, at the learner's choice.
+6. Check delayed unaided spelling on a later date.
+
+**Critical caveat:** distinguish "all correct tiles present" from "all needed tiles plus distractors". They measure different knowledge.
+
+### Proposed activity B — *Choose the correct spelling from three*
+**Role:** optional **orthographic discrimination**, formative check and error-spotting exercise, not proof of autonomous spelling.
+
+**Configuration:** speak the target word and provide one correct form and two plausible errors drawn from the **specific pattern being taught** (e.g., single/double consonants). Randomise positions. Explain why the correct letter pattern works and correct the misconception after the response; minimise unnecessary repeated exposure to incorrect forms, and never use random nonsensical distractors. Avoid inferring mastery because of guessing: with three options, chance success is 1/3 even with no spelling knowledge.
+
+**Use:** especially after a learner has compared a correct form with a common misspelling; sometimes as a low-demand entry task. Do not replace an unaided production check with this response.
+
+### Game success vs learning success
+Keep outcome fields separate:
+- **Assisted success:** recognition / sequencing / clue use / completion.
+- **Independent production:** spell word from audio with *no preview of the needed letters*, either physical keyboard, full alphabet on-screen keyboard, or other accessibility-compatible input.
+- **Retained mastery:** independent production on a later day (e.g. 4 or 7+ days), with no preview.
+- **Transfer:** accurately spell untaught words sharing the target pattern.
+- **Usability and confidence:** task completion, perceived anxiety, optional assistance needed, time engaged and errors due to motor/input difficulty.
+
+**Never count an exact-letter-bank or three-choice success as mastery of an independently spelled word.** The interface should not shame children who choose assistance.
+
+### Evidence status and planned evaluation
+- Letter tiles as a component of structured instruction: supported by authoritative practical guidance, but their comparative effectiveness as an interface is **unproven** here.
+- Three-choice selection: plausibly useful for orthographic discrimination; direct evidence of superior delayed dyslexic spelling outcomes is **insufficient**.
+- No high-confidence head-to-head controlled trial was identified in this review showing that either mode outperforms handwriting, on-screen alphabet input or free typing for learners with dyslexia.
+- Treat interface preferences (typing, taps, drag, recognition) as accessibility choices, **not fixed learning-style classifications**.
+
+**A/B pilot:** Within learner, counterbalance equivalent word sets across (A) exact-letter sequencing, (B) three-option recognition, (C) keyboard-free *full alphabet* on-screen production, and (D) typed independent production (where comfortable). Keep teaching content, feedback, exposure time and difficulty comparable. Measure immediate unaided production separately, then delayed unaided spelling after 4–7 days and again at 3–4 weeks, plus transfer to untaught words. Pre-register a primary outcome of delayed unaided accuracy and track completion time, fatigue and engagement as secondary. Specialist reviewers must validate patterns, distractors and the spelling test.
+
+### Product decision
+**Include both proposed modes as optional learning supports**, not as replacements for the unaided spelling check. Design a full-alphabet tap keyboard so learners can independently spell without the motor/keyboard-layout barrier. Run comparative research before claiming one mode teaches spelling better.
