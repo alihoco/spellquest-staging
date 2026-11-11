@@ -1,0 +1,14 @@
+'use strict';
+const assert=require('node:assert/strict');
+const S=require('./review-scheduler.cjs');
+assert.equal(S.addDays('2026-11-11',1),'2026-11-12');
+assert.equal(S.schedule({word_id:'necessary',teaching_date:'2026-11-11'}).due,'2026-11-12');
+const history=[{word_id:'necessary',date:'2026-11-12',correct:true,independent:true,delayed:true,shown_target_letters:false}];
+assert.equal(S.schedule({word_id:'necessary',teaching_date:'2026-11-11',history}).due,'2026-11-15');
+const miss=[{word_id:'necessary',date:'2026-11-12',correct:false,independent:true,shown_target_letters:false}];
+assert.equal(S.schedule({word_id:'necessary',teaching_date:'2026-11-11',history:miss}).phase,'targeted_reteach');
+const queue=S.dailyQueue({today:'2026-11-13',word_records:[{id:'necessary',teaching_date:'2026-11-11'}],new_words:['embarrass']});
+assert.equal(queue.review.length,1);
+const mixed=S.mixedReview({word_ids:['a','b','c','d'],items:[{id:'a',cluster:'double'},{id:'b',cluster:'double'},{id:'c',cluster:'suffix'},{id:'d',cluster:'suffix'}]});
+assert.notEqual(mixed[0],mixed[1]);
+console.log('SpellQuest pilot scheduler checks passed');
