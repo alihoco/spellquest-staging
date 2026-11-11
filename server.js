@@ -79,6 +79,36 @@ for(const [word,sounds] of Object.entries(Y6_SOUND)){
   CLIPS['y6-part-'+word+'-'+n]=''+sounds[n]+'.';
  }
 }
+
+/* v0.8: Speech-first sound cues. Syllables are separated from written spelling
+   groups. AI-generated clips must be reviewed by a trained educator before production. */
+const SOUND_SYLLABLES={
+ necessary:['ness','uh','ser','ee'],
+ embarrass:['im','bar','uhs'],
+ accommodate:['uh','kom','uh','dayt'],
+ government:['guv','ern','ment'],
+ foreign:['for','in'],
+ familiar:['fuh','mil','yuh'],
+ environment:['in','vy','run','ment'],
+ privilege:['priv','uh','lij'],
+ rhythm:['rith','um'],
+ temperature:['tem','pruh','chuh']
+};
+CLIPS['y6-v08-welcome']='Hello, and welcome to SpellQuest! We are going to practise ten spellings together. First, I will say each word, and you can try writing it. If a word is difficult, that is absolutely fine. I will help you hear it slowly, show you its spelling patterns, and give you another go. You can replay my voice whenever you like. Ready? Let us begin.';
+CLIPS['y6-v08-prompt']='Here is your word. Listen carefully, then type your spelling.';
+CLIPS['y6-v08-wrong']='Good try. This is how we learn. First, listen to the whole word and say it with me. Then we will practise its spoken parts, and look at the tricky spelling.';
+CLIPS['y6-v08-sounds']='Now we will say the word in smaller spoken parts. Hear each sound, then say it back. There is time after each one.';
+CLIPS['y6-v08-spelling']='Now let us look at the way the word is written. The spelling parts do not always match the sounds perfectly. Here is a trick to remember the difficult letters.';
+CLIPS['y6-v08-ready']='You have practised the sounds and the spelling trick. When you are ready, hide the word and try spelling it from memory.';
+CLIPS['y6-v08-retry']='The spelling is hidden now. Listen to the word and type your best spelling.';
+CLIPS['y6-v08-next']='Well done for practising. Let us try the next word.';
+CLIPS['y6-v08-complete']='Look at all the words you have explored today. It is your progress that matters. You can come back and practise again another day.';
+for(const [word,syllables] of Object.entries(SOUND_SYLLABLES)){
+ for(let j=0;j<syllables.length;j++){
+  CLIPS['y6-v08-sound-'+word+'-'+j]=syllables[j];
+ }
+}
+
 const cache=new Map(),limits=new Map();let daily={day:'',count:0};
 function send(res,code,obj,headers={}){res.writeHead(code,{'Content-Type':'application/json','Cache-Control':'no-store',...headers});res.end(JSON.stringify(obj))}
 http.createServer(async(req,res)=>{
@@ -99,7 +129,7 @@ http.createServer(async(req,res)=>{
  const key=voice+':'+clip;if(cache.has(key)){res.writeHead(200,{'Content-Type':'audio/mpeg','Cache-Control':'public,max-age=86400',...cors});return res.end(cache.get(key))}
  daily.count++;
  try{
- const body={model:'gpt-4o-mini-tts',voice,input:CLIPS[clip],response_format:'mp3',instructions:'You are a natural, warm, calm, friendly educational narrator from England. Speak in clear neutral modern British English, with gentle human intonation, not a cartoon voice, not a computer voice, not exaggerated or patronising. For very short phonetic chunks, pronounce the spoken sound only, never spell letters aloud. Pronounce spelling words accurately and distinctly, keeping a natural pace.'};
+ const body={model:'gpt-4o-mini-tts',voice,input:CLIPS[clip],response_format:'mp3',instructions:'You are a natural, warm, calm, friendly educational narrator from England. Speak in clear neutral modern British English, with gentle human intonation, not a cartoon voice, not a computer voice, not exaggerated or patronising. For short speech-sound clips, speak the phonetic syllable as ordinary continuous British English speech. Do not say the names of letters or explain the sound. Use natural pronunciation and do not prolong the vowel. Pronounce spelling words accurately and distinctly, keeping a natural pace.'};
  const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),20000);
  let upstream;try{upstream=await fetch('https://api.openai.com/v1/audio/speech',{method:'POST',headers:{Authorization:'Bearer '+process.env.OPENAI_API_KEY,'Content-Type':'application/json'},body:JSON.stringify(body),signal:controller.signal})}finally{clearTimeout(timer)}
  if(!upstream.ok){console.error('Speech API status',upstream.status);return send(res,502,{error:'Voice generation temporarily unavailable'},cors)}
