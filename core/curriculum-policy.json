@@ -1,0 +1,177 @@
+{
+  "version": "1.0.0",
+  "status": "research_informed_pending_specialist_approval",
+  "language": "en-GB",
+  "principles": [
+    "Teach spelling as encoding speech and meaning into writing, not as visual memorisation alone.",
+    "Teach explicit sound-grapheme, orthographic and meaningful morphological structures as applicable.",
+    "Use human reviewed sound recordings and annotations; never map arbitrary displayed chunks to phonemes.",
+    "Distinguish assisted learning, immediate unaided spelling, delayed unaided recall and transfer.",
+    "Age affects appearance and default controls, never word difficulty.",
+    "Review learner errors to choose targeted re-teaching rather than repeat the same generic lesson.",
+    "Do not infer fixed learning styles or experimentally prefer an unvalidated programme based on one trial."
+  ],
+  "curriculum_domains": [
+    {
+      "id": "oral_foundations",
+      "name": "Oral phoneme and syllable awareness",
+      "examples": [
+        "phoneme identification",
+        "phoneme blending",
+        "phoneme segmentation"
+      ],
+      "note": "Speech sounds must be linguistically verified; not always one-to-one with letters."
+    },
+    {
+      "id": "phoneme_grapheme",
+      "name": "Sound-to-letter mapping",
+      "examples": [
+        "common consonants",
+        "vowels",
+        "digraphs",
+        "alternative graphemes"
+      ],
+      "note": "Explicitly teach verified phoneme-grapheme correspondences."
+    },
+    {
+      "id": "orthography",
+      "name": "Orthographic patterns and conventions",
+      "examples": [
+        "consonant doubling",
+        "long vowel spellings",
+        "silent letters",
+        "suffixing conventions"
+      ],
+      "note": "Avoid stating broad rules without exceptions."
+    },
+    {
+      "id": "syllables_stress",
+      "name": "Spoken syllables and stress",
+      "examples": [
+        "multisyllabic word segmentation",
+        "stress changes"
+      ],
+      "note": "Do not equate spelling chunks with syllables."
+    },
+    {
+      "id": "morphology",
+      "name": "Meaningful word parts",
+      "examples": [
+        "real prefixes",
+        "base words",
+        "suffixes",
+        "word families"
+      ],
+      "note": "Requires genuine documented morphological relationships."
+    },
+    {
+      "id": "irregular_words",
+      "name": "Word-specific choices",
+      "examples": [
+        "unpredictable grapheme choices",
+        "historical/exception spellings"
+      ],
+      "note": "Identify regular parts and exceptional parts, use accurate reviewed explanation."
+    },
+    {
+      "id": "transfer_fluency",
+      "name": "Independent transfer and retention",
+      "examples": [
+        "new words with taught pattern",
+        "dictation without spelling preview",
+        "spaced recall"
+      ],
+      "note": "Focus on retained independent ability not points."
+    }
+  ],
+  "error_taxonomy": [
+    {
+      "id": "sound_omission",
+      "signal": "Target phoneme apparently absent in learner attempt",
+      "review": "Expert-confirmed phoneme alignment needed; automated string matching alone insufficient",
+      "response": "Model spoken phoneme then its grapheme"
+    },
+    {
+      "id": "sound_order",
+      "signal": "Order of sounds/units possibly reversed",
+      "review": "Check target syllable and sound annotations",
+      "response": "Blend and segment with accurate audio"
+    },
+    {
+      "id": "grapheme_choice",
+      "signal": "Different plausible grapheme for a sound",
+      "review": "Teacher-approved alternatives by locale",
+      "response": "Contrast two authentic target patterns"
+    },
+    {
+      "id": "doubling",
+      "signal": "Extra or missing duplicate letter",
+      "review": "Specific doubling convention and exceptions",
+      "response": "Explain the spelling choice; build contrasting words"
+    },
+    {
+      "id": "morpheme",
+      "signal": "Base, prefix or suffix written incorrectly",
+      "review": "Verified morphology only",
+      "response": "Identify meaningful base and affix"
+    },
+    {
+      "id": "unstressed_syllable",
+      "signal": "Vowel/letter issue in reduced or unstressed syllable",
+      "review": "Accurate stress and pronunciation from educator",
+      "response": "Explicit spelling and meaningful word family"
+    },
+    {
+      "id": "orthographic_exception",
+      "signal": "Irregular target-specific grapheme sequence",
+      "review": "Word record includes exception and optional mnemonic",
+      "response": "Teach choice explicitly and retrieve again"
+    },
+    {
+      "id": "motor_input",
+      "signal": "Accidental tap or keypress rather than a spelling misconception",
+      "review": "Learner correction or repeat supports inference",
+      "response": "Offer undo and accessible input, do not mark mastery down without checking"
+    },
+    {
+      "id": "unclassified",
+      "signal": "Not enough evidence for a reliable error mechanism",
+      "review": "Default for unknown/unreviewed patterns",
+      "response": "Reveal exact mismatch, offer teacher-reviewed explanation without diagnostic guess"
+    }
+  ],
+  "adaptive_rules": {
+    "initial_difficulty": "independent diagnostic tasks only, never learner age",
+    "new_pattern": [
+      "HEAR",
+      "DISCOVER",
+      "UNDERSTAND",
+      "EXPLAIN",
+      "BUILD",
+      "RECALL",
+      "REINFORCE",
+      "REMEMBER"
+    ],
+    "known_item": [
+      "HEAR",
+      "RECALL",
+      "REMEMBER"
+    ],
+    "after_error": "Identify target using expert annotated word data; loop to smallest relevant UNDERSTAND/EXPLAIN/BUILD stage.",
+    "after_assisted_success": "Fade scaffold and obtain independent spelling.",
+    "after_immediate_success": "Schedule delayed independent recall before durable mastery.",
+    "after_delayed_success": "Extend spacing heuristically and test transfer where meaningful.",
+    "when_audio_is_unreviewed": "Suppress sound-level teaching; word cannot be promoted to approved.",
+    "experimental_davis_inspired": "Not part of default curriculum unless consent and reviewed protocol; never replace foundational instruction."
+  },
+  "release_gate_checklist": [
+    "Word spelling and en-GB pronunciation checked",
+    "Phonemes / syllables / graphemes / orthography / morphemes separately annotated",
+    "Instructional targets and any mnemonics approved",
+    "All narrated instructions and spoken chunks listened to and signed off",
+    "Motor-accessible independent spelling path exists",
+    "Assistance and delayed recall classified correctly",
+    "Evidence source and version recorded",
+    "Specialist review completed"
+  ]
+}
