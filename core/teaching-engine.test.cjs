@@ -14,7 +14,7 @@ const blocked=clone(word);blocked.status='draft';
 assert.equal(E.learningPlan({word:blocked}).state,'blocked');
 const badAudio=clone(word);badAudio.teaching.sound_units=[{verified_label:'ness',audio_id:'auto-tts',source:'synthetic_guess'}];
 assert.equal(E.learningPlan({word:badAudio}).state,'blocked');
-const wrongParts=clone(word);wrongParts.teaching.orthographic_units=['ne','cess','ary'];
+const wrongParts=clone(word);wrongParts.teaching.orthographic_units=['ne','ces','ry'];
 assert.equal(E.learningPlan({word:wrongParts}).state,'blocked');
 const plan=E.learningPlan({word,learner:{age:5,presentation:'playful'}});
 assert.equal(plan.state,'ready');assert.equal(plan.stages[0].stage,'HEAR');
