@@ -1,120 +1,232 @@
-<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SpellQuest | Year 6 Sound-Led Adventure</title><style>
-:root{font-family:system-ui,"Trebuchet MS",sans-serif;color:#25334f;background:#f5f3ff}*{box-sizing:border-box}body{margin:0;background:linear-gradient(130deg,#eaf8ff,#fff8ef 55%,#f2eaff);min-height:100vh}main{max-width:810px;margin:auto;padding:20px 15px 45px}header{display:flex;justify-content:space-between;align-items:center;gap:12px}.logo{color:#5548c1;text-decoration:none;font-size:23px;font-weight:850}.muted{color:#67718d}.small{font-size:13px;line-height:1.5}.hero{background:linear-gradient(120deg,#554bc5,#9780ed);border-radius:27px;color:#fff;margin:20px 0;padding:28px}.hero h1{font-size:clamp(28px,5vw,39px);margin:7px 0}.hero p{line-height:1.55;margin-bottom:0}.eyebrow{font-size:12px;letter-spacing:.08em;font-weight:800;color:#6250c1}.hero .eyebrow{color:#e8e1ff}.panel{background:white;padding:26px;border-radius:25px;box-shadow:0 12px 30px #41417e15}h2{font-size:clamp(23px,4vw,28px);margin:12px 0}p{line-height:1.55}button,select,input{font:inherit}button{cursor:pointer;border:0;background:#6052d1;color:white;border-radius:14px;padding:14px 19px;font-weight:780;min-height:48px}button.alt{background:#ebe9ff;color:#433a90}button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #f7b650;outline-offset:3px}button:disabled{opacity:.55;cursor:not-allowed}select{padding:10px;border:2px solid #cdd1e5;border-radius:11px;max-width:100%}input{width:100%;padding:17px;border-radius:14px;border:2px solid #cdd3e9;font-size:24px;letter-spacing:.02em;margin:10px 0 17px}label{display:block;font-weight:750;margin:16px 0 6px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin:17px 0}.voice{background:#f2f1ff;padding:14px;border-radius:16px;margin:17px 0;display:flex;flex-wrap:wrap;gap:12px;align-items:center}.voice label{margin:0}.status{font-size:13px;color:#53637c;min-height:20px}.progress{height:12px;background:#e7e7f4;border-radius:40px;overflow:hidden;margin:18px 0}.progress>div{height:100%;background:#54bca4}.chunks{display:flex;gap:8px;flex-wrap:wrap;margin:23px 0}.chunk{padding:18px 17px;border-radius:14px;background:#e1efff;font-size:clamp(24px,5vw,35px);font-weight:850;transition:transform .12s,background .12s}.chunk:nth-child(2n){background:#ffebc1}.chunk:nth-child(3n){background:#e0f5e9}.chunk.active{background:#6251cc!important;color:#fff;box-shadow:0 0 0 5px #ded7ff;transform:scale(1.07)}.tip{padding:18px;border:2px solid #ffe2a3;background:#fff8e9;border-radius:15px}.notice{padding:15px;border-radius:14px;background:#e5f5ed}.result{background:#f3f2ff;padding:12px;border-radius:12px;margin:9px 0}.big{font-size:23px;font-weight:800}.quiet{font-size:13px;color:#626d85;text-align:center;padding:20px}@media(max-width:520px){main{padding:12px}.panel{padding:18px}.hero{padding:23px}.voice{align-items:stretch}}@media(prefers-reduced-motion:reduce){*{transition:none!important}.chunk.active{transform:none}}
-</style></head><body><main><header><a class="logo" href="/">✨ SpellQuest</a><span class="muted small">Better today than yesterday</span></header><section class="hero"><span class="eyebrow">A SOUND-LED ADVENTURE</span><h1>Your Year 6 spelling quest</h1><p>Hear it. Say it. Learn the sounds. Discover the spelling. Try again.</p></section><div class="panel" id="app"></div><footer class="quiet">Ten words from the Years 5–6 statutory list · No rankings · Your progress stays on this device</footer></main>
+<!doctype html><html lang="en-GB">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#554ac4"><title>SpellQuest — Year 6 Sound-First Adventure</title>
+<style>
+:root{font-family:system-ui,"Trebuchet MS",Arial,sans-serif;color:#24324f;background:#f6f5fe}*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(120deg,#e7f8ff,#fff6ef 55%,#f1eaff);min-height:100vh}
+main{max-width:850px;margin:auto;padding:20px 16px 45px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{text-decoration:none;font-size:24px;font-weight:900;color:#584bc1}
+h1{font-size:clamp(29px,5vw,43px);margin:8px 0}h2{font-size:clamp(23px,4vw,29px)}
+.hero{background:linear-gradient(110deg,#5147be,#967df1);color:white;padding:30px;border-radius:28px;margin:20px 0;box-shadow:0 10px 28px #574bb522}
+.hero p{line-height:1.6;margin-bottom:0}.hero .eyebrow{color:#e9e4ff}
+.panel{background:white;border-radius:25px;padding:27px;box-shadow:0 10px 30px #625aaf14}
+.eyebrow{font-size:12px;letter-spacing:1px;font-weight:900;text-transform:uppercase;color:#6053ba}.muted{color:#62708b}.small{font-size:13px;line-height:1.5}
+p{line-height:1.6}
+button,input,select{font:inherit}
+button{border:0;cursor:pointer;border-radius:14px;padding:13px 17px;font-weight:800;background:#6051cc;color:white;min-height:46px}
+button.alt{background:#eae7ff;color:#43368a}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid #efbb56;outline-offset:3px}
+button:disabled{opacity:.55;cursor:default}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
+input{width:100%;font-size:23px;border:2px solid #ccd5ea;border-radius:15px;padding:16px;margin:8px 0 15px}
+label{display:block;font-weight:800;margin:14px 0 5px}
+.voice{background:#f3f1ff;border-radius:16px;padding:14px;margin:15px 0}
+.voice-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.voice label{margin:0;font-size:13px}
+.voice select{padding:8px;border:2px solid #dadbf1;border-radius:9px;color:#283554;background:white}
+.voice button{font-size:13px;min-height:36px;padding:8px 11px}
+.status{min-height:20px;display:block;font-size:13px;color:#54647e;margin-top:8px}
+.progress{height:13px;background:#e7e9f5;overflow:hidden;border-radius:99px;margin:18px 0}
+.progress>div{background:#5abf9e;height:100%}
+.sound-row,.spelling-row{display:flex;flex-wrap:wrap;gap:10px;margin:19px 0}
+.sound{min-width:70px;padding:17px 20px;border-radius:15px;background:#dceeff;color:#253353;font-size:clamp(21px,4vw,30px);font-weight:850;text-align:center}
+.sound:nth-child(2n){background:#ffebc4}.sound:nth-child(3n){background:#e0f7e9}
+.sound.active{background:#6252d0!important;color:white;box-shadow:0 0 0 5px #e4dcff}
+.sound small{display:block;font-size:12px;font-weight:600;margin-top:4px}
+.spelling-row span{padding:15px 18px;background:#dfeeff;border-radius:13px;font-size:clamp(23px,4vw,33px);font-weight:850}
+.spelling-row span:nth-child(2n){background:#ffe8b8}.spelling-row span:nth-child(3n){background:#e1f7ea}
+.tip{background:#fff8e9;border:2px solid #ffe1a4;padding:18px;border-radius:15px;margin:18px 0}
+.note{background:#f0f5ff;border-radius:15px;padding:15px;margin:15px 0}
+.good{background:#e2f5e9;border-radius:15px;padding:17px}
+.result{padding:12px;background:#f1f0ff;border-radius:10px;margin:8px 0}
+.now{color:#4b369e;font-weight:800;font-size:16px}
+.footer{text-align:center;font-size:12px;color:#63708c;padding:18px}
+@media(max-width:500px){.panel{padding:18px}main{padding:12px}.hero{padding:24px}.sound{min-width:58px;padding:13px 14px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style></head>
+<body><main><header><a class="logo" href="/">✨ SpellQuest</a><span class="muted small">Better today than yesterday</span></header>
+<section class="hero"><span class="eyebrow">YOUR OWN SPELLING ADVENTURE</span><h1>Hear it. Say it. Spell it.</h1><p>Learn Year 6 spellings one step at a time, with a friendly voice to explain every stage.</p></section>
+<section class="panel" id="app"></section>
+<div class="footer">Year 5–6 statutory spelling words · Your progress stays in this browser · No rankings or comparisons</div></main>
 <script>
-const W=[
-{w:'necessary',p:['ne','ces','sa','ry'],tip:'One c and two s letters. Remember the shirt with one collar and two sleeves.'},
-{w:'embarrass',p:['em','bar','rass'],tip:'There are two r letters and two s letters.'},
-{w:'accommodate',p:['ac','com','mo','date'],tip:'Remember two c letters and two m letters.'},
-{w:'government',p:['gov','ern','ment'],tip:'Keep the n in govern before adding ment.'},
-{w:'foreign',p:['for','eign'],tip:'The ending is spelled e i g n. The sounds do not tell the whole story.'},
-{w:'familiar',p:['fa','mil','iar'],tip:'Think of family to remember the beginning.'},
-{w:'environment',p:['en','viron','ment'],tip:'Remember environ, then add ment.'},
-{w:'privilege',p:['priv','i','lege'],tip:'The ending is spelled lege, not ledge.'},
-{w:'rhythm',p:['rhyth','m'],tip:'Look closely at rh at the beginning and the letter y.'},
-{w:'temperature',p:['tem','per','a','ture'],tip:'Remember the a before ture.'}
+const WORDS=[
+ {word:'necessary',spelling:['ne','ces','sa','ry'],sounds:['ness','uh','ser','ee']},
+ {word:'embarrass',spelling:['em','bar','rass'],sounds:['im','bar','uhs']},
+ {word:'accommodate',spelling:['ac','com','mo','date'],sounds:['uh','kom','uh','dayt']},
+ {word:'government',spelling:['gov','ern','ment'],sounds:['guv','ern','ment']},
+ {word:'foreign',spelling:['for','eign'],sounds:['for','in']},
+ {word:'familiar',spelling:['fa','mil','iar'],sounds:['fuh','mil','yuh']},
+ {word:'environment',spelling:['en','viron','ment'],sounds:['in','vy','run','ment']},
+ {word:'privilege',spelling:['priv','i','lege'],sounds:['priv','uh','lij']},
+ {word:'rhythm',spelling:['rhyth','m'],sounds:['rith','um']},
+ {word:'temperature',spelling:['tem','per','a','ture'],sounds:['tem','pruh','chuh']}
 ];
-const $=id=>document.getElementById(id),app=$('app'),ENDPOINT='https://spellquest-voice-staging.onrender.com/api/voice';
+const app=document.getElementById('app'),$=id=>document.getElementById(id);
+const ENDPOINT='https://spellquest-voice-staging.onrender.com/api/voice';
 let voice=sessionStorage.getItem('spellquest-ai-voice')||'marin';
 let narration=localStorage.getItem('spellquest-audio-first')!=='off';
-let stage='welcome',index=0,first=0,results=[],token=0,player=new Audio(),clips=new Map(),playing=false,unlocked=false;
-player.preload='auto';
-function clipUrl(clip){
+let pace=localStorage.getItem('spellquest-sound-pace')||'relaxed';
+let stage='welcome',idx=0,first=0,results=[],ticket=0,activePlayer=null,activePlaying=false;
+const cached=new Map();
+const makeUrl=clip=>{
  const key=voice+':'+clip;
- if(!clips.has(key)){
-  const job=fetch(ENDPOINT+'?clip='+encodeURIComponent(clip)+'&voice='+encodeURIComponent(voice)).then(r=>{if(!r.ok)throw Error('Audio '+r.status);return r.blob()}).then(b=>URL.createObjectURL(b)).catch(e=>{clips.delete(key);throw e});
-  clips.set(key,job);
+ if(!cached.has(key)){
+  const prom=fetch(ENDPOINT+'?clip='+encodeURIComponent(clip)+'&voice='+encodeURIComponent(voice))
+   .then(r=>{if(!r.ok)throw new Error('Voice error '+r.status);return r.blob()})
+   .then(blob=>URL.createObjectURL(blob))
+   .catch(e=>{cached.delete(key);throw e});
+  cached.set(key,prom);
  }
- return clips.get(key);
+ return cached.get(key);
+};
+function warm(clips){clips.forEach(c=>makeUrl(c).catch(()=>{}))}
+function setStatus(msg){const el=$('audio-status');if(el)el.textContent=msg}
+function stop(){
+ ticket++;
+ if(activePlayer){activePlayer.pause();activePlayer.onended=null;activePlayer.onerror=null;activePlayer=null}
+ activePlaying=false;
 }
-function warm(clipsToLoad){clipsToLoad.forEach(c=>clipUrl(c).catch(()=>{}))}
-function setStatus(msg){const el=$('status');if(el)el.textContent=msg}
-function interrupt(){token++;player.pause();player.onended=null;player.onerror=null;playing=false}
-async function play(clip,t=token){
- if(t!==token)return false;
+async function speak(clip,t=ticket){
+ if(t!==ticket)return false;
+ setStatus('🔊 Narrator speaking…');
  try{
-  setStatus('🔊 Narrator speaking…');
-  const url=await clipUrl(clip);if(t!==token)return false;
-  player.pause();player.src=url;player.currentTime=0;
-  const outcome=new Promise((resolve)=>{player.onended=()=>resolve(true);player.onerror=()=>resolve(false)});
-  await player.play();playing=true;const ended=await outcome;playing=false;if(t===token)setStatus('');return t===token&&ended;
- }catch(e){if(t===token)setStatus('Audio could not start. Select Replay narration, or check the device sound.');playing=false;return false}
+  const url=await makeUrl(clip);if(t!==ticket)return false;
+  const player=new Audio(url);activePlayer=player;
+  const ended=new Promise(resolve=>{player.onended=()=>resolve(true);player.onerror=()=>resolve(false)});
+  await player.play();activePlaying=true;
+  const ok=await ended;activePlaying=false;
+  if(t===ticket){activePlayer=null;setStatus('')}
+  return t===ticket&&ok;
+ }catch(e){
+  if(t===ticket)setStatus('Audio did not play. Tap Replay narration, or check the sound on your device.');
+  activePlaying=false;return false;
+ }
 }
-async function sequence(clipsToPlay,t=token){
- for(const clip of clipsToPlay){if(t!==token||!narration)return false;const ok=await play(clip,t);if(!ok)return false}
+function pause(ms,t){return new Promise(resolve=>setTimeout(()=>resolve(t===ticket),ms))}
+async function talk(clips,t=ticket){
+ if(!narration)return false;
+ for(const clip of clips){if(t!==ticket)return false;if(!(await speak(clip,t)))return false}
  return true;
 }
-function voiceBox(){return '<div class="voice"><label for="voice">Voice</label><select id="voice" onchange="changeVoice(this.value)"><option value="marin">Marin · warm</option><option value="cedar">Cedar · calm</option></select><button class="alt" id="toggle" onclick="toggleNarration()">'+(narration?'🔊 Narration on':'🔇 Narration off')+'</button><span id="status" class="status" role="status"></span></div>'}
-function voiceSet(){const el=$('voice');if(el)el.value=voice}
-function toggleNarration(){narration=!narration;localStorage.setItem('spellquest-audio-first',narration?'on':'off');interrupt();const b=$('toggle');if(b)b.textContent=narration?'🔊 Narration on':'🔇 Narration off';if(narration)resumeNarration()}
-function changeVoice(v){interrupt();voice=v;sessionStorage.setItem('spellquest-ai-voice',v);clips.clear();if(narration)resumeNarration()}
-function resumeNarration(){if(stage==='question')play('y6-'+W[index].w);if(stage==='review')reviewFlow();if(stage==='correct')play('y6-correct');if(stage==='retry')play('y6-'+W[index].w)}
-function progress(){return '<div class="progress" role="progressbar" aria-label="Words explored" aria-valuenow="'+index+'" aria-valuemin="0" aria-valuemax="10"><div style="width:'+(index*10)+'%"></div></div>'}
+function soundVoice(){return '<div class="voice"><div class="voice-row"><label for="voice">Narrator</label><select id="voice" onchange="chooseVoice(this.value)"><option value="marin">Marin · warm</option><option value="cedar">Cedar · calm</option></select><label for="pace">Practice pace</label><select id="pace" onchange="choosePace(this.value)"><option value="relaxed">Relaxed</option><option value="extra">Extra thinking time</option></select><button class="alt" onclick="toggleAudio()" id="audio-toggle">'+(narration?'🔊 Sound on':'🔇 Sound off')+'</button></div><span class="status" id="audio-status" role="status"></span></div>'}
+function voiceSet(){if($('voice'))$('voice').value=voice;if($('pace'))$('pace').value=pace}
+function chooseVoice(v){stop();voice=v;sessionStorage.setItem('spellquest-ai-voice',v);cached.clear();if(narration)replay()}
+function choosePace(v){pace=v;localStorage.setItem('spellquest-sound-pace',v)}
+function toggleAudio(){narration=!narration;localStorage.setItem('spellquest-audio-first',narration?'on':'off');stop();if($('audio-toggle'))$('audio-toggle').textContent=narration?'🔊 Sound on':'🔇 Sound off';if(narration)replay()}
+function replay(){
+ if(stage==='welcome')return introAudio();
+ if(stage==='question')return instructionAudio();
+ if(stage==='review')return reviewAudio();
+ if(stage==='retry')return retryAudio();
+ if(stage==='success')return successAudio();
+ if(stage==='finished')return speak('y6-v08-complete');
+}
+function progress(){return '<div class="progress" role="progressbar" aria-label="Words completed" aria-valuemin="0" aria-valuemax="10" aria-valuenow="'+idx+'"><div style="width:'+(idx*10)+'%"></div></div>'}
 function welcome(){
- stage='welcome';interrupt();
- app.innerHTML='<span class="eyebrow">YOUR OWN PACE · TEN WORDS</span><h2>Ready to explore some spellings?</h2><p class="big">We’ll talk you through everything.</p><p>Press Start once to turn on the sound. After that, your narrator will guide you through each word.</p>'+voiceBox()+'<div class="actions"><button onclick="start()">▶ Start with sound</button></div><p class="muted small">The game will never compare you with other children.</p>';
- voiceSet();warm(['y6-demo-start','y6-necessary','y6-try','y6-demo-parts']);
+ stop();stage='welcome';
+ app.innerHTML='<span class="eyebrow">WELCOME, WORD EXPLORER!</span><h2>Your adventure starts here 🌟</h2>'+
+ '<p>We’ll practise ten words together. I will say the word, help you hear it slowly and show you any tricky spelling patterns. You can always listen again.</p>'+
+ '<p>We’re not testing how you compare to anybody else. We’re finding out what you can learn.</p>'+
+ soundVoice()+'<div class="actions"><button onclick="begin()">▶ Start and hear your welcome</button></div>'+
+ '<p class="muted small">Tap Start once to enable audio. Your narrator explains the next steps aloud.</p>';
+ voiceSet();warm(['y6-v08-welcome','y6-v08-prompt','y6-necessary','y6-v08-wrong']);
 }
-async function start(){
- unlocked=true;index=0;first=0;results=[];
- // The child's Start click provides the initial media gesture.
- question(true,true);
+async function introAudio(){
+ stop();const t=ticket;
+ const ok=await talk(['y6-v08-welcome'],t);
+ if(ok&&t===ticket&&stage==='welcome')question(true);
 }
-function question(announce=false,firstQuestion=false){
- stage='question';interrupt();const w=W[index];
- app.innerHTML='<span class="eyebrow">WORD '+(index+1)+' OF 10</span>'+progress()+'<h2>Listen to the word</h2><p>Your narrator will say the word. Type what you hear.</p><div class="actions"><button class="alt" onclick="play(\'y6-'+W[index].w+'\')">🔊 Hear the word again</button></div><label for="answer">Your spelling</label><input id="answer" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="Type the word you heard" onkeydown="if(event.key===\'Enter\')check()">'+voiceBox()+'<button onclick="check()">Check spelling →</button>';
- voiceSet();const t=token;
- warm(['y6-'+w.w,'y6-try','y6-demo-repeat','y6-demo-parts','y6-correct']);
- if(narration&&announce)(async()=>{if(firstQuestion){const ok=await play('y6-demo-start',t);if(!ok)return}if(t===token)await play('y6-'+w.w,t)})();
+function begin(){idx=0;first=0;results=[];narration=true;localStorage.setItem('spellquest-audio-first','on');introAudio()}
+function question(auto=false){
+ stop();stage='question';const w=WORDS[idx];
+ app.innerHTML='<span class="eyebrow">WORD '+(idx+1)+' OF 10</span>'+progress()+
+ '<h2>Listen, then spell</h2><p>Listen to the word. Type the spelling when you are ready. You can hear it as often as you need.</p>'+
+ '<div class="actions"><button class="alt" onclick="speak(\'y6-'+WORDS[idx].word+'\')">🔊 Hear word again</button><button class="alt" onclick="instructionAudio()">🔊 Replay instructions</button></div>'+
+ '<label for="answer">Your spelling</label><input id="answer" aria-label="Type the spelling of the spoken word" autocapitalize="off" autocomplete="off" spellcheck="false" onkeydown="if(event.key===\'Enter\')check(false)">'+soundVoice()+
+ '<button onclick="check(false)">Check my spelling →</button>';
+ voiceSet();warm(['y6-v08-prompt','y6-'+w.word,'y6-v08-wrong','y6-v08-demo-repeat']);
+ if(auto&&narration)instructionAudio();
 }
-function check(){
- const inp=$('answer');const answer=inp.value.toLowerCase().replace(/[^a-z]/g,'');if(!answer){inp.focus();return}
- let correct=answer===W[index].w;results[index]={w:W[index].w,first:correct,learned:correct,tries:1};if(correct){first++;correctScreen(false)}else reviewScreen();
+async function instructionAudio(){
+ stop();const t=ticket;await talk(['y6-v08-prompt','y6-'+WORDS[idx].word],t);
 }
-function correctScreen(improved){
- stage='correct';interrupt();app.innerHTML='<span class="eyebrow">WORD '+(index+1)+' OF 10</span>'+progress()+'<h2>'+(improved?'You learned something new! 🌱':'You remembered it! 🌟')+'</h2><p>You spelled the word yourself. That is progress worth celebrating.</p>'+voiceBox()+'<div class="actions"><button onclick="next()">Next word →</button><button class="alt" onclick="play(\'y6-'+(improved?'improved':'correct')+'\')">🔊 Hear that again</button></div>';voiceSet();if(narration)play(improved?'y6-improved':'y6-correct');
+function check(retry){
+ const inp=$('answer');const guess=inp.value.toLowerCase().replace(/[^a-z]/g,'');if(!guess){inp.focus();return}
+ const yes=guess===WORDS[idx].word;
+ if(!retry){results[idx]={word:WORDS[idx].word,initial:yes,learned:yes,attempts:1};if(yes)first++}
+ else{results[idx].attempts++;if(yes)results[idx].learned=true}
+ if(yes)success(retry);else review();
 }
-function reviewScreen(){
- stage='review';interrupt();let w=W[index];
- app.innerHTML='<span class="eyebrow">LET’S LEARN WORD '+(index+1)+'</span>'+progress()+'<h2>Hear it. Say it. Learn it.</h2><p>Listen to the whole word, then say it yourself. Watch each sound light up.</p><div class="chunks" id="chunks">'+w.p.map((p,j)=>'<span class="chunk" id="chunk-'+j+'">'+p+'</span>').join('')+'</div><div id="hint" class="tip" style="display:none"></div>'+voiceBox()+'<div class="actions"><button id="retry" onclick="retryScreen()">🙈 Hide and spell again</button><button class="alt" onclick="reviewFlow()">🔊 Replay the lesson</button><button class="alt" onclick="next()">Skip to next word</button></div>';voiceSet();
- const soundClips=w.p.map((_,j)=>'y6-part-'+w.w+'-'+j);
- warm(['y6-demo-repeat','y6-'+w.w,'y6-demo-parts',...soundClips,'y6-tip-'+w.w]);
- if(narration)reviewFlow();
+function success(improved){
+ stop();stage='success';
+ app.innerHTML='<span class="eyebrow">WORD '+(idx+1)+' OF 10</span>'+progress()+
+ '<h2>'+(improved?'You learned something new! 🌱':'You remembered it! 🌟')+'</h2>'+
+ '<div class="good">That spelling came from you. Every word you learn is your own progress.</div>'+
+ soundVoice()+'<div class="actions"><button onclick="next()">Next word →</button><button class="alt" onclick="successAudio()">🔊 Replay encouragement</button></div>';
+ voiceSet();if(narration)successAudio();
 }
-async function reviewFlow(){
- if(stage!=='review')return;interrupt();const t=token,w=W[index];let ok;
- ok=await sequence(['y6-try','y6-demo-repeat','y6-'+w.w],t);if(!ok)return;
- await new Promise(resolve=>setTimeout(resolve,950));if(t!==token||stage!=='review')return;
- ok=await play('y6-demo-parts',t);if(!ok)return;
- for(let j=0;j<w.p.length;j++){
-  if(t!==token||stage!=='review')return;
-  document.querySelectorAll('.chunk').forEach((el,k)=>el.classList.toggle('active',j===k));
-  ok=await play('y6-part-'+w.w+'-'+j,t);if(!ok)return;
+async function successAudio(){stop();await talk([results[idx].initial?'y6-correct':'y6-improved'],ticket)}
+function review(){
+ stop();stage='review';const w=WORDS[idx];
+ app.innerHTML='<span class="eyebrow">LET’S LEARN WORD '+(idx+1)+'</span>'+progress()+
+ '<h2>Let’s work through it together</h2>'+
+ '<p>First we say the word. Then we hear the spoken parts slowly. Finally we discover the tricky spelling.</p>'+
+ '<div id="review-content"><p class="now">🔊 Listen to your narrator...</p></div>'+
+ soundVoice()+
+ '<div class="actions"><button class="alt" onclick="reviewAudio()">🔊 Replay the lesson</button><button id="hide-button" onclick="retry()">🙈 Hide and spell again</button></div>';
+ voiceSet();
+ const clips=['y6-v08-wrong','y6-v08-sounds','y6-v08-spelling','y6-v08-ready','y6-'+w.word,'y6-tip-'+w.word];
+ w.sounds.forEach((_,j)=>clips.push('y6-v08-sound-'+w.word+'-'+j));warm(clips);
+ if(narration)reviewAudio();
+}
+async function reviewAudio(){
+ stop();stage='review';const t=ticket,w=WORDS[idx],host=$('review-content');
+ if(!host)return;
+ host.innerHTML='<div class="note"><strong>Step 1: Hear the whole word</strong><p>Listen carefully, then say the word yourself.</p></div>';
+ let ok=await talk(['y6-v08-wrong','y6-'+w.word],t);if(!ok)return;
+ if(!(await pause(pace==='extra'?3000:2100,t)))return;
+ host.innerHTML='<div class="note"><strong>Step 2: Hear the spoken parts</strong><p>Listen and say each one back. We will give you time.</p></div>'+
+ '<div class="sound-row" id="sound-row">'+w.sounds.map((v,j)=>'<div class="sound" id="sound-'+j+'">'+v+'</div>').join('')+'</div>';
+ ok=await talk(['y6-v08-sounds'],t);if(!ok)return;
+ for(let j=0;j<w.sounds.length;j++){
+  if(t!==ticket||stage!=='review')return;
+  document.querySelectorAll('.sound').forEach((el,k)=>el.classList.toggle('active',k===j));
+  ok=await speak('y6-v08-sound-'+w.word+'-'+j,t);if(!ok)return;
+  if(!(await pause(pace==='extra'?3100:2250,t)))return;
  }
- if(t!==token)return;
- document.querySelectorAll('.chunk').forEach(el=>el.classList.remove('active'));
- const hint=$('hint');if(hint){hint.style.display='block';hint.innerHTML='<strong>Word secret:</strong> '+w.tip}
- ok=await play('y6-tip-'+w.w,t);if(!ok)return;
- if(t===token&&stage==='review'){
-  setStatus('Now let’s hide the word and try again.');
-  await new Promise(resolve=>setTimeout(resolve,650));
-  if(t===token&&stage==='review')retryScreen();
+ if(t!==ticket)return;
+ document.querySelectorAll('.sound').forEach(el=>el.classList.remove('active'));
+ host.innerHTML='<div class="note"><strong>Step 3: Learn the written spelling</strong><p>Now we look at the letters that make up the word. They are not always the same as the spoken parts.</p></div>'+
+ '<div class="spelling-row">'+w.spelling.map(x=>'<span>'+x+'</span>').join('')+'</div>'+
+ '<div class="tip" id="trick"><strong>Memory trick</strong><p>Listen to the explanation from your narrator.</p></div>';
+ ok=await talk(['y6-v08-spelling','y6-tip-'+w.word,'y6-v08-ready'],t);
+ if(ok&&t===ticket&&stage==='review'){
+  $('trick').innerHTML='<strong>Memory trick</strong><p>'+({necessary:'One C, two S letters: one collar, two sleeves.',embarrass:'Two R letters and two S letters.',accommodate:'Double C and double M.'}[w.word]||'Remember the tricky letter pattern you just heard.')+'</p>';
+  setStatus('Ready when you are. The next step will hide the spelling.');
  }
 }
-function retryScreen(){
- stage='retry';interrupt();
- app.innerHTML='<span class="eyebrow">WORD '+(index+1)+' · TRY AGAIN</span>'+progress()+'<h2>What can you remember?</h2><p>The spelling is hidden. Listen and type it from memory.</p><button class="alt" onclick="play(\'y6-'+W[index].w+'\')">🔊 Hear the word again</button><label for="answer">Your spelling</label><input id="answer" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="Type the word you heard" onkeydown="if(event.key===\'Enter\')retryCheck()">'+voiceBox()+'<div class="actions"><button onclick="retryCheck()">Check spelling →</button><button class="alt" onclick="reviewScreen()">Hear the lesson again</button></div>';voiceSet();if(narration)play('y6-'+W[index].w);
+function retry(){
+ stop();stage='retry';
+ app.innerHTML='<span class="eyebrow">WORD '+(idx+1)+' · TRY AGAIN</span>'+progress()+
+ '<h2>Now it’s your turn</h2><p>The spelling is hidden. Listen to the word, and try it yourself.</p>'+
+ '<div class="actions"><button class="alt" onclick="speak(\'y6-'+WORDS[idx].word+'\')">🔊 Hear word again</button></div>'+
+ '<label for="answer">Your spelling</label><input id="answer" autocapitalize="off" autocomplete="off" spellcheck="false" onkeydown="if(event.key===\'Enter\')check(true)">'+soundVoice()+
+ '<div class="actions"><button onclick="check(true)">Check my spelling →</button><button class="alt" onclick="review()">Hear the lesson again</button></div>';
+ voiceSet();if(narration)retryAudio();
 }
-function retryCheck(){
- const inp=$('answer'),answer=inp.value.toLowerCase().replace(/[^a-z]/g,'');if(!answer){inp.focus();return}
- const r=results[index];r.tries++;if(answer===W[index].w){r.learned=true;correctScreen(true)}else reviewScreen();
-}
-function next(){index++;if(index>=W.length)finish();else question(true,false)}
+async function retryAudio(){stop();await talk(['y6-v08-retry','y6-'+WORDS[idx].word],ticket)}
+function next(){idx++;if(idx===WORDS.length)finish();else question(true)}
 function finish(){
- stage='finished';interrupt();const learned=results.filter(r=>r.learned).length;
+ stop();stage='finished';const learned=results.filter(r=>r.learned).length;
  let history=[];try{history=JSON.parse(localStorage.getItem('spellquest-y6-practice')||'[]')}catch(e){}
  history.push({date:new Date().toISOString().slice(0,10),first,learned,results});localStorage.setItem('spellquest-y6-practice',JSON.stringify(history.slice(-20)));
- app.innerHTML='<span class="eyebrow">YOUR JOURNEY TODAY</span><h2>Look how far you’ve come! 🌟</h2><div class="notice"><strong>'+first+'</strong> words remembered straight away. <strong>'+learned+'</strong> spelled during practice.</div><p>The goal is to remember them again another day — you are learning at your pace.</p>'+results.map(r=>'<div class="result"><strong>'+r.w+'</strong> — '+(r.first?'Remembered independently':r.learned?'Learned with help':'Ready to revisit')+'</div>').join('')+voiceBox()+'<div class="actions"><button onclick="start()">Practise again</button><button class="alt" onclick="location.href=\'/\'">Back to SpellQuest</button></div>';voiceSet();if(narration)play('y6-demo-done');
+ app.innerHTML='<span class="eyebrow">YOUR JOURNEY TODAY</span><h2>Look how far you’ve come! 🌟</h2>'+
+ '<div class="good"><strong>'+first+'</strong> words remembered immediately; <strong>'+learned+'</strong> spelled during practice.</div>'+
+ '<p>Your progress is what matters. We can try again another day to see what you remember.</p>'+
+ results.map(r=>'<div class="result"><strong>'+r.word+'</strong> — '+(r.initial?'Remembered straight away':r.learned?'Learned with help':'Ready to revisit')+'</div>').join('')+
+ soundVoice()+'<div class="actions"><button onclick="welcome()">Start again</button><button class="alt" onclick="location.href=\'/\'">Back to SpellQuest</button></div>';
+ voiceSet();if(narration)talk(['y6-v08-complete']);
 }
-window.addEventListener('pagehide',interrupt);welcome();
+window.addEventListener('pagehide',stop);
+welcome();
 </script></body></html>
