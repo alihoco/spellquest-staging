@@ -56,3 +56,7 @@ const attempt = E.gradeAttempt({
 `node core/teaching-engine.test.cjs` from repository root, using Node 20+.
 
 **Readiness:** Teaching policy/code *prototype*, not production-ready, and not proof of clinical efficacy. Freeze full gameplay until word validation and audio test gates are passed.
+
+
+## Audio-first contract (separate from live prototype)
+See [../research/SPELLMASTER_VOICE_FIRST_TEACHER_CONTRACT_V1.md](../research/SPELLMASTER_VOICE_FIRST_TEACHER_CONTRACT_V1.md), [voice-tutor-policy.cjs](voice-tutor-policy.cjs) and [voice-tutor-policy.test.cjs](voice-tutor-policy.test.cjs). This guards voice turn-taking and forbids unvalidated automated phoneme grading. The existing staging page is not yet wired to this headless policy; its narration and microphone behaviour have not passed the target child/device acceptance tests.
