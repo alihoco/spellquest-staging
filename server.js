@@ -109,6 +109,18 @@ for(const [word,syllables] of Object.entries(SOUND_SYLLABLES)){
  }
 }
 
+// Review-only whole word and explanation clips. These are NOT educator-approved
+// phoneme/syllable audio and MUST NOT be served as approved spelling lessons.
+const draftWordRecords=require('./core/seed-word-records-y5-6.json').records;
+for(const wordRecord of draftWordRecords){
+ const key='pilot-'+wordRecord.spelling;
+ CLIPS[key+'-whole']=wordRecord.spelling;
+ CLIPS[key+'-definition']=wordRecord.teaching.provisional_script.definition;
+ CLIPS[key+'-sentence']=wordRecord.teaching.provisional_script.contextual_example;
+ CLIPS[key+'-explanation']=wordRecord.teaching.provisional_script.explain;
+ CLIPS[key+'-instruction']=wordRecord.teaching.provisional_script.question;
+}
+
 const cache=new Map(),limits=new Map();let daily={day:'',count:0};
 function send(res,code,obj,headers={}){res.writeHead(code,{'Content-Type':'application/json','Cache-Control':'no-store',...headers});res.end(JSON.stringify(obj))}
 http.createServer(async(req,res)=>{
