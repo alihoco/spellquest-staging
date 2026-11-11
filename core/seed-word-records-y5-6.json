@@ -1,0 +1,548 @@
+{
+  "schema_version": "1.3.0",
+  "status": "draft_awaiting_specialist_and_audio_signoff",
+  "notes": "These are researched editorial drafts, NOT approved sound lessons. No unverified segments should be narrated.",
+  "records": [
+    {
+      "id": "en-gb-y56-necessary",
+      "locale": "en-GB",
+      "spelling": "necessary",
+      "curriculum": {
+        "name": "England national curriculum statutory Years 5 and 6",
+        "source_url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/239784/English_Appendix_1_-_Spelling.pdf",
+        "verified_against_source": true
+      },
+      "editorial_status": "linguistic_review",
+      "publishable": false,
+      "order_proposal": 1,
+      "meaning": {
+        "part_of_speech": "adjective",
+        "definition": "Needed for something to happen or be done.",
+        "example_sentence": "A helmet is necessary when we go on this climbing activity.",
+        "source_url": "https://dictionary.cambridge.org/dictionary/english/necessary",
+        "review_status": "editorial_draft"
+      },
+      "audio": {
+        "whole_word": {
+          "id": null,
+          "url": null,
+          "locale": "en-GB",
+          "approved": false
+        },
+        "definition": {
+          "id": null,
+          "approved": false
+        },
+        "example_sentence": {
+          "id": null,
+          "approved": false
+        },
+        "teacher_prompts": {
+          "ids": [],
+          "approved": false
+        }
+      },
+      "teaching": {
+        "targets": [
+          {
+            "id": "target-necessary",
+            "description": "One c and two s letters; word-specific spelling pattern",
+            "review_status": "draft"
+          }
+        ],
+        "explanation": {
+          "id": "explanation-necessary",
+          "script": "The memory aid 'one collar, two sleeves' refers to letter counts, not phonemes or syllables.",
+          "approved": false
+        },
+        "orthographic_units": [
+          "ne",
+          "ces",
+          "sa",
+          "ry"
+        ],
+        "sound_units": [],
+        "sound_review": {
+          "status": "unreviewed",
+          "reviewer": null
+        },
+        "morpheme_units": [],
+        "morpheme_review_status": "pending_specialist_review",
+        "misconception_examples": [
+          {
+            "pattern": "extra_c",
+            "match": "neccessary",
+            "say": "You have an extra c. This word has one c and two s letters."
+          },
+          {
+            "pattern": "missing_s",
+            "match": "necesary",
+            "say": "One of the two s letters is missing. Let's look at that part together."
+          }
+        ],
+        "memory_cues": []
+      },
+      "activity_contract": {
+        "initial": "audio_first_unaided_full_alphabet_or_keyboard",
+        "supported": [
+          "exact_letter_tiles",
+          "grapheme_tiles",
+          "three_choice"
+        ],
+        "independent": [
+          "full_alphabet_tap",
+          "physical_keyboard"
+        ],
+        "delayed_review": true,
+        "definition_optional": true,
+        "definition_required_for_disambiguation": false
+      },
+      "reviews": {
+        "dictionary_cross_check": "reference_linked",
+        "spelling": "verified",
+        "linguistic_expert": null,
+        "phoneme_specialist": null,
+        "audio_quality": null,
+        "instructional_specialist": null,
+        "completed": false
+      },
+      "provenance": {
+        "date": "2026-11-11",
+        "version": "0.1-draft",
+        "author": "Spellmaster curriculum preparation",
+        "source_type": "curriculum_and_dictionary"
+      }
+    },
+    {
+      "id": "en-gb-y56-embarrass",
+      "locale": "en-GB",
+      "spelling": "embarrass",
+      "curriculum": {
+        "name": "England national curriculum statutory Years 5 and 6",
+        "source_url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/239784/English_Appendix_1_-_Spelling.pdf",
+        "verified_against_source": true
+      },
+      "editorial_status": "linguistic_review",
+      "publishable": false,
+      "order_proposal": 2,
+      "meaning": {
+        "part_of_speech": "verb",
+        "definition": "To make someone feel awkward, uncomfortable or self-conscious.",
+        "example_sentence": "I did not want to embarrass my friend by telling everyone about the mistake.",
+        "source_url": "https://dictionary.cambridge.org/dictionary/english/embarrass?topic=embarrassing",
+        "review_status": "editorial_draft"
+      },
+      "audio": {
+        "whole_word": {
+          "id": null,
+          "url": null,
+          "locale": "en-GB",
+          "approved": false
+        },
+        "definition": {
+          "id": null,
+          "approved": false
+        },
+        "example_sentence": {
+          "id": null,
+          "approved": false
+        },
+        "teacher_prompts": {
+          "ids": [],
+          "approved": false
+        }
+      },
+      "teaching": {
+        "targets": [
+          {
+            "id": "target-embarrass",
+            "description": "Double r and double s",
+            "review_status": "draft"
+          }
+        ],
+        "explanation": {
+          "id": "explanation-embarrass",
+          "script": "Both doubled consonants are word-specific teaching targets; the split is spelling support only.",
+          "approved": false
+        },
+        "orthographic_units": [
+          "em",
+          "bar",
+          "rass"
+        ],
+        "sound_units": [],
+        "sound_review": {
+          "status": "unreviewed",
+          "reviewer": null
+        },
+        "morpheme_units": [],
+        "morpheme_review_status": "pending_specialist_review",
+        "misconception_examples": [
+          {
+            "pattern": "one_r",
+            "match": "embarass",
+            "say": "This word needs two r letters. We can practise that part."
+          },
+          {
+            "pattern": "one_s",
+            "match": "embarras",
+            "say": "The end of this word needs two s letters."
+          }
+        ],
+        "memory_cues": []
+      },
+      "activity_contract": {
+        "initial": "audio_first_unaided_full_alphabet_or_keyboard",
+        "supported": [
+          "exact_letter_tiles",
+          "grapheme_tiles",
+          "three_choice"
+        ],
+        "independent": [
+          "full_alphabet_tap",
+          "physical_keyboard"
+        ],
+        "delayed_review": true,
+        "definition_optional": true,
+        "definition_required_for_disambiguation": false
+      },
+      "reviews": {
+        "dictionary_cross_check": "reference_linked",
+        "spelling": "verified",
+        "linguistic_expert": null,
+        "phoneme_specialist": null,
+        "audio_quality": null,
+        "instructional_specialist": null,
+        "completed": false
+      },
+      "provenance": {
+        "date": "2026-11-11",
+        "version": "0.1-draft",
+        "author": "Spellmaster curriculum preparation",
+        "source_type": "curriculum_and_dictionary"
+      }
+    },
+    {
+      "id": "en-gb-y56-accommodate",
+      "locale": "en-GB",
+      "spelling": "accommodate",
+      "curriculum": {
+        "name": "England national curriculum statutory Years 5 and 6",
+        "source_url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/239784/English_Appendix_1_-_Spelling.pdf",
+        "verified_against_source": true
+      },
+      "editorial_status": "linguistic_review",
+      "publishable": false,
+      "order_proposal": 3,
+      "meaning": {
+        "part_of_speech": "verb",
+        "definition": "To provide enough space for someone or something, or to meet a particular need.",
+        "example_sentence": "The school hall can accommodate all the visitors.",
+        "source_url": "https://dictionary.cambridge.org/dictionary/english/accommodate?topic=giving-providing-and-supplying",
+        "review_status": "editorial_draft"
+      },
+      "audio": {
+        "whole_word": {
+          "id": null,
+          "url": null,
+          "locale": "en-GB",
+          "approved": false
+        },
+        "definition": {
+          "id": null,
+          "approved": false
+        },
+        "example_sentence": {
+          "id": null,
+          "approved": false
+        },
+        "teacher_prompts": {
+          "ids": [],
+          "approved": false
+        }
+      },
+      "teaching": {
+        "targets": [
+          {
+            "id": "target-accommodate",
+            "description": "Double c and double m",
+            "review_status": "draft"
+          }
+        ],
+        "explanation": {
+          "id": "explanation-accommodate",
+          "script": "'ac + com + mo + date' must not be presented as a phonetic breakdown.",
+          "approved": false
+        },
+        "orthographic_units": [
+          "ac",
+          "com",
+          "mo",
+          "date"
+        ],
+        "sound_units": [],
+        "sound_review": {
+          "status": "unreviewed",
+          "reviewer": null
+        },
+        "morpheme_units": [],
+        "morpheme_review_status": "pending_specialist_review",
+        "misconception_examples": [
+          {
+            "pattern": "one_c",
+            "match": "acommodate",
+            "say": "Look at the beginning: there are two c letters."
+          },
+          {
+            "pattern": "one_m",
+            "match": "accomodate",
+            "say": "This spelling needs two m letters. Let's practise that pair."
+          }
+        ],
+        "memory_cues": []
+      },
+      "activity_contract": {
+        "initial": "audio_first_unaided_full_alphabet_or_keyboard",
+        "supported": [
+          "exact_letter_tiles",
+          "grapheme_tiles",
+          "three_choice"
+        ],
+        "independent": [
+          "full_alphabet_tap",
+          "physical_keyboard"
+        ],
+        "delayed_review": true,
+        "definition_optional": true,
+        "definition_required_for_disambiguation": false
+      },
+      "reviews": {
+        "dictionary_cross_check": "reference_linked",
+        "spelling": "verified",
+        "linguistic_expert": null,
+        "phoneme_specialist": null,
+        "audio_quality": null,
+        "instructional_specialist": null,
+        "completed": false
+      },
+      "provenance": {
+        "date": "2026-11-11",
+        "version": "0.1-draft",
+        "author": "Spellmaster curriculum preparation",
+        "source_type": "curriculum_and_dictionary"
+      }
+    },
+    {
+      "id": "en-gb-y56-government",
+      "locale": "en-GB",
+      "spelling": "government",
+      "curriculum": {
+        "name": "England national curriculum statutory Years 5 and 6",
+        "source_url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/239784/English_Appendix_1_-_Spelling.pdf",
+        "verified_against_source": true
+      },
+      "editorial_status": "linguistic_review",
+      "publishable": false,
+      "order_proposal": 4,
+      "meaning": {
+        "part_of_speech": "noun",
+        "definition": "The group of people responsible for running a country.",
+        "example_sentence": "The government announced a new plan for local schools.",
+        "source_url": "https://dictionary.cambridge.org/dictionary/english/government",
+        "review_status": "editorial_draft"
+      },
+      "audio": {
+        "whole_word": {
+          "id": null,
+          "url": null,
+          "locale": "en-GB",
+          "approved": false
+        },
+        "definition": {
+          "id": null,
+          "approved": false
+        },
+        "example_sentence": {
+          "id": null,
+          "approved": false
+        },
+        "teacher_prompts": {
+          "ids": [],
+          "approved": false
+        }
+      },
+      "teaching": {
+        "targets": [
+          {
+            "id": "target-government",
+            "description": "Preserve govern when adding -ment",
+            "review_status": "draft"
+          }
+        ],
+        "explanation": {
+          "id": "explanation-government",
+          "script": "Genuine morphological relationship govern + -ment; an n can be hard to hear in connected speech; never require one fixed pronunciation.",
+          "approved": false
+        },
+        "orthographic_units": [
+          "govern",
+          "ment"
+        ],
+        "sound_units": [],
+        "sound_review": {
+          "status": "unreviewed",
+          "reviewer": null
+        },
+        "morpheme_units": [
+          "govern",
+          "ment"
+        ],
+        "morpheme_review_status": "pending_specialist_review",
+        "misconception_examples": [
+          {
+            "pattern": "missing_n",
+            "match": "goverment",
+            "say": "Let's look at the base word govern. Keep its n before adding ment."
+          }
+        ],
+        "memory_cues": []
+      },
+      "activity_contract": {
+        "initial": "audio_first_unaided_full_alphabet_or_keyboard",
+        "supported": [
+          "exact_letter_tiles",
+          "grapheme_tiles",
+          "three_choice"
+        ],
+        "independent": [
+          "full_alphabet_tap",
+          "physical_keyboard"
+        ],
+        "delayed_review": true,
+        "definition_optional": true,
+        "definition_required_for_disambiguation": false
+      },
+      "reviews": {
+        "dictionary_cross_check": "reference_linked",
+        "spelling": "verified",
+        "linguistic_expert": null,
+        "phoneme_specialist": null,
+        "audio_quality": null,
+        "instructional_specialist": null,
+        "completed": false
+      },
+      "provenance": {
+        "date": "2026-11-11",
+        "version": "0.1-draft",
+        "author": "Spellmaster curriculum preparation",
+        "source_type": "curriculum_and_dictionary"
+      }
+    },
+    {
+      "id": "en-gb-y56-environment",
+      "locale": "en-GB",
+      "spelling": "environment",
+      "curriculum": {
+        "name": "England national curriculum statutory Years 5 and 6",
+        "source_url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/239784/English_Appendix_1_-_Spelling.pdf",
+        "verified_against_source": true
+      },
+      "editorial_status": "linguistic_review",
+      "publishable": false,
+      "order_proposal": 5,
+      "meaning": {
+        "part_of_speech": "noun",
+        "definition": "The natural world around us, including the air, land, water and living things.",
+        "example_sentence": "We can protect the environment by reducing waste.",
+        "source_url": "https://dictionary.cambridge.org/dictionary/english/environment",
+        "review_status": "editorial_draft"
+      },
+      "audio": {
+        "whole_word": {
+          "id": null,
+          "url": null,
+          "locale": "en-GB",
+          "approved": false
+        },
+        "definition": {
+          "id": null,
+          "approved": false
+        },
+        "example_sentence": {
+          "id": null,
+          "approved": false
+        },
+        "teacher_prompts": {
+          "ids": [],
+          "approved": false
+        }
+      },
+      "teaching": {
+        "targets": [
+          {
+            "id": "target-environment",
+            "description": "Preserve environ when adding -ment",
+            "review_status": "draft"
+          }
+        ],
+        "explanation": {
+          "id": "explanation-environment",
+          "script": "Environ + -ment is a meaningful form-based teaching aid. Spoken syllables differ by accent and should be reviewed.",
+          "approved": false
+        },
+        "orthographic_units": [
+          "environ",
+          "ment"
+        ],
+        "sound_units": [],
+        "sound_review": {
+          "status": "unreviewed",
+          "reviewer": null
+        },
+        "morpheme_units": [
+          "environ",
+          "ment"
+        ],
+        "morpheme_review_status": "pending_specialist_review",
+        "misconception_examples": [
+          {
+            "pattern": "missing_n",
+            "match": "enviroment",
+            "say": "Look at environ before ment. Keep the final n in the first part."
+          }
+        ],
+        "memory_cues": []
+      },
+      "activity_contract": {
+        "initial": "audio_first_unaided_full_alphabet_or_keyboard",
+        "supported": [
+          "exact_letter_tiles",
+          "grapheme_tiles",
+          "three_choice"
+        ],
+        "independent": [
+          "full_alphabet_tap",
+          "physical_keyboard"
+        ],
+        "delayed_review": true,
+        "definition_optional": true,
+        "definition_required_for_disambiguation": false
+      },
+      "reviews": {
+        "dictionary_cross_check": "reference_linked",
+        "spelling": "verified",
+        "linguistic_expert": null,
+        "phoneme_specialist": null,
+        "audio_quality": null,
+        "instructional_specialist": null,
+        "completed": false
+      },
+      "provenance": {
+        "date": "2026-11-11",
+        "version": "0.1-draft",
+        "author": "Spellmaster curriculum preparation",
+        "source_type": "curriculum_and_dictionary"
+      }
+    }
+  ]
+}
