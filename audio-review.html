@@ -1,0 +1,45 @@
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Spellmaster — Five Word Audio Review</title>
+<style>
+body{margin:0;background:#f4f5fa;color:#29364b;font:16px/1.5 system-ui,Arial,sans-serif}main{max-width:920px;margin:auto;padding:24px 16px 50px}h1{margin:0}header{background:#263665;color:white;border-radius:20px;padding:24px;margin:16px 0}header p{margin-bottom:0}article{background:white;border-radius:18px;padding:19px;margin:14px 0;box-shadow:0 4px 20px #23335615}h2{margin:0 0 8px}button,select{font:inherit}button{background:#504bb1;color:white;border:0;border-radius:12px;cursor:pointer;padding:12px 14px;font-weight:750}button:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid orange;outline-offset:2px}.buttons{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}select{padding:9px;border:1px solid #bdc8d8;border-radius:8px}.muted{color:#647086}.notice{background:#fff1d2;border-radius:12px;padding:13px}.status{font-size:13px;min-height:20px;color:#53627f}.review{display:flex;gap:15px;flex-wrap:wrap;align-items:center}.choice{font-size:14px}.mono{font-family:ui-monospace,monospace;font-size:14px}.card{background:#f3f5ff;padding:12px;border-radius:12px}textarea{width:100%;min-height:65px;border-radius:10px;padding:12px;border:1px solid #ccd4e2;box-sizing:border-box}@media(max-width:550px){main{padding:12px}article{padding:14px}}</style>
+</head><body><main><a href="/" style="color:#504bb1">← Staging home</a><header><h1>Spellmaster: Audio review</h1><p>Five draft Year 5–6 words. Listen to complete-word pronunciation, definitions, examples and spelling explanations before specialist sign-off.</p></header><div class="notice"><b>Review-only drafts.</b> This is not a validated lesson or a test for children. No unreviewed sound chunks are played. The voice is AI-generated, and pronunciation and teaching scripts still need human approval.</div>
+<section class="review"><label for="voice">Narrator</label><select id="voice"><option value="marin">Marin — warm</option><option value="cedar">Cedar — calm</option></select><button id="stop">■ Stop audio</button></section>
+<section id="records"></section>
+<section class="card"><h2>Reviewer checklist</h2><p>Listen for pronunciation accuracy, clear natural British English, comfortable pacing, correct definition and context, and teaching that does not confuse written chunks with spoken sounds.</p><p>To approve for use with children, each item also requires specialist review of phoneme–grapheme mapping and any word-specific teaching claims. This page does not change approval status.</p></section>
+<script>
+const data=[
+{w:"necessary",ipa:"/ˈnes.ə.ser.i/",focus:"One c, two s",meaning:"Needed for something to happen or be done.",example:"A helmet is necessary when we go on this climbing activity.",explain:"There is exactly one c and two s letters. One collar and two sleeves is an optional word-specific memory aid."},
+{w:"embarrass",ipa:"/ɪmˈbær.əs/",focus:"Double r and double s",meaning:"To make someone feel awkward, uncomfortable or self-conscious.",example:"I did not want to embarrass my friend by telling everyone about the mistake.",explain:"This word has two r letters and two s letters. The doubled letters do not require doubled sounds."},
+{w:"accommodate",ipa:"/əˈkɒm.ə.deɪt/",focus:"Double c and double m",meaning:"To provide enough space for someone or something, or to meet a particular need.",example:"The school hall can accommodate all the visitors.",explain:"There are two c letters and two m letters. We do not pronounce doubled letter names as extra sounds."},
+{w:"government",ipa:"/ˈɡʌv.ə.mənt/ or /ˈɡʌv.ən.mənt/",focus:"Govern + ment",meaning:"The group of people responsible for running a country.",example:"The government announced a new plan for local schools.",explain:"Govern is the base word. Add ment without dropping the n. Different UK pronunciations are acceptable."},
+{w:"environment",ipa:"/ɪnˈvaɪ.rə.mənt/",focus:"Environ + ment",meaning:"The natural world around us, including the air, land, water and living things.",example:"We can protect the environment by reducing waste.",explain:"The written form can be grouped as environ plus ment. Written parts are not necessarily spoken syllables."}
+];
+const endpoint="https://spellquest-voice-staging.onrender.com/api/voice";
+const root=document.getElementById('records');
+const audio=new Audio();let pending=0;
+for(const item of data){
+ const art=document.createElement('article');
+ const title=document.createElement('h2');title.textContent=item.w;art.append(title);
+ const sub=document.createElement('p');sub.className='muted';sub.textContent=item.ipa+" · "+item.focus;art.append(sub);
+ const sections=[["whole","Whole word"],["instruction","Instruction"],["definition","Definition"],["sentence","Example sentence"],["explanation","Spelling explanation"]];
+ const buttons=document.createElement('div');buttons.className='buttons';
+ for(const [suffix,label] of sections){const b=document.createElement('button');b.textContent='▶ '+label;b.onclick=()=>play(item.w,suffix,art);buttons.append(b)}
+ art.append(buttons);
+ const info=document.createElement('div');info.className='status';info.setAttribute('role','status');art.append(info);
+ for(const [label,text] of [["Definition",item.meaning],["Example",item.example],["Teaching focus",item.explain]]){const p=document.createElement('p');const strong=document.createElement('b');strong.textContent=label+': ';p.append(strong,document.createTextNode(text));art.append(p)}
+ const feedback=document.createElement('textarea');feedback.placeholder='Optional reviewer notes for this word (stored nowhere)';feedback.setAttribute('aria-label','Review notes for '+item.w);art.append(feedback);
+ root.append(art);
+}
+async function play(word,suffix,art){
+ const id=++pending;audio.pause();const status=art.querySelector('.status');document.querySelectorAll('.status').forEach(x=>x.textContent='');
+ status.textContent='Loading natural voice…';
+ try{
+  const voice=document.getElementById('voice').value;
+  const res=await fetch(endpoint+'?clip='+encodeURIComponent('pilot-'+word+'-'+suffix)+'&voice='+encodeURIComponent(voice));
+  if(!res.ok)throw Error('Voice service '+res.status);
+  const blob=await res.blob();if(id!==pending)return;
+  const url=URL.createObjectURL(blob);audio.src=url;audio.onended=()=>{URL.revokeObjectURL(url);status.textContent='Finished'};
+  await audio.play();status.textContent='Playing audio…';
+ }catch(e){if(id===pending)status.textContent='Unable to play: '+e.message}
+}
+document.getElementById('stop').onclick=()=>{pending++;audio.pause();document.querySelectorAll('.status').forEach(x=>x.textContent='Playback stopped')};
+</script></main></body></html>
