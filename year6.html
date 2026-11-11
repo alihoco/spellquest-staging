@@ -39,8 +39,8 @@ async function toggleMic(){
  const source=ctx.createMediaStreamSource(s),a=ctx.createAnalyser();a.fftSize=1024;source.connect(a);
  stream=s;ac=ctx;analyser=a;microphoneOn=true;micView();
  micMessage('Microphone enabled. Speak after the narrator. Speech is not recorded or saved by SpellQuest.');
- if(state==='whole')startWholeListening();
- else if(state==='parts')startPartListening(partIndex);
+ if(state==='whole')say('y6-'+W[i].w,()=>{if(state==='whole'&&microphoneOn)startWholeListening()});
+ else if(state==='parts')say('y6-part-'+W[i].w+'-'+partIndex,()=>{if(state==='parts'&&microphoneOn)startPartListening(partIndex)});
  }catch(e){micMessage('Microphone permission was not granted. The buttons still work.')}
 }
 function closeMic(){cancelListening();microphoneOn=false;if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}if(ac){ac.close().catch(()=>{});ac=null}analyser=null}
