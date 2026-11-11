@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.3.0",
+  "schema_version": "1.4.0",
   "status": "draft_awaiting_specialist_and_audio_signoff",
-  "notes": "These are researched editorial drafts, NOT approved sound lessons. No unverified segments should be narrated.",
+  "notes": "IPA and syllable symbols transcribed from Cambridge pronunciation reference pages. Not approved for isolated TTS playback, sound-to-grapheme alignment or learner-facing phoneme instruction. Specialist and actual audio review pending.",
   "records": [
     {
       "id": "en-gb-y56-necessary",
@@ -47,12 +47,13 @@
           {
             "id": "target-necessary",
             "description": "One c and two s letters; word-specific spelling pattern",
-            "review_status": "draft"
+            "review_status": "draft",
+            "pattern_id": "single-c-double-s"
           }
         ],
         "explanation": {
           "id": "explanation-necessary",
-          "script": "The memory aid 'one collar, two sleeves' refers to letter counts, not phonemes or syllables.",
+          "script": "There is exactly one c and two s letters. One collar and two sleeves is an optional word-specific memory aid.",
           "approved": false
         },
         "orthographic_units": [
@@ -63,7 +64,7 @@
         ],
         "sound_units": [],
         "sound_review": {
-          "status": "unreviewed",
+          "status": "reference_transcribed_pending_specialist_review",
           "reviewer": null
         },
         "morpheme_units": [],
@@ -80,7 +81,19 @@
             "say": "One of the two s letters is missing. Let's look at that part together."
           }
         ],
-        "memory_cues": []
+        "memory_cues": [],
+        "provisional_script": {
+          "preview_word": "Listen carefully to the whole word. You can say it back if you want to.",
+          "question": "Now spell the word as best you can. You can listen again.",
+          "first_error": "That gives us something to work on. Let's look at one part of the spelling.",
+          "explain": "There is exactly one c and two s letters. One collar and two sleeves is an optional word-specific memory aid.",
+          "guided_practice": "Try to spot the single c and the pair of s letters.",
+          "independent_recall": "The spelling is hidden now. Listen to the word and try it again without clues.",
+          "definition_offer": "Would you like to hear what this word means?",
+          "definition": "necessary means: Needed for something to happen or be done.",
+          "contextual_example": "A helmet is necessary when we go on this climbing activity.",
+          "next": "You can revisit this word another day. Now let's see what's next."
+        }
       },
       "activity_contract": {
         "initial": "audio_first_unaided_full_alphabet_or_keyboard",
@@ -110,9 +123,25 @@
         "date": "2026-11-11",
         "version": "0.1-draft",
         "author": "Spellmaster curriculum preparation",
-        "source_type": "curriculum_and_dictionary"
+        "source_type": "curriculum_and_dictionary",
+        "phonetics_source": "https://dictionary.cambridge.org/pronunciation/english/necessary"
       },
-      "status": "linguistic_review"
+      "status": "linguistic_review",
+      "pronunciation_reference": {
+        "locale": "en-GB",
+        "phonetic_notation": "IPA",
+        "whole_word_ipa": "/ˈnes.ə.ser.i/",
+        "syllables_for_expert_review": [
+          "nes",
+          "ə",
+          "ser",
+          "i"
+        ],
+        "primary_stress_syllable_zero_based": 0,
+        "source": "https://dictionary.cambridge.org/pronunciation/english/necessary",
+        "reviewed_by_specialist": false,
+        "notes": "Syllables in IPA are for reviewer reference, not ready-made natural TTS chunks."
+      }
     },
     {
       "id": "en-gb-y56-embarrass",
@@ -158,12 +187,13 @@
           {
             "id": "target-embarrass",
             "description": "Double r and double s",
-            "review_status": "draft"
+            "review_status": "draft",
+            "pattern_id": "double-r-double-s"
           }
         ],
         "explanation": {
           "id": "explanation-embarrass",
-          "script": "Both doubled consonants are word-specific teaching targets; the split is spelling support only.",
+          "script": "This word has two r letters and two s letters. Compare how the word sounds with how the doubled letters are written.",
           "approved": false
         },
         "orthographic_units": [
@@ -173,7 +203,7 @@
         ],
         "sound_units": [],
         "sound_review": {
-          "status": "unreviewed",
+          "status": "reference_transcribed_pending_specialist_review",
           "reviewer": null
         },
         "morpheme_units": [],
@@ -190,7 +220,19 @@
             "say": "The end of this word needs two s letters."
           }
         ],
-        "memory_cues": []
+        "memory_cues": [],
+        "provisional_script": {
+          "preview_word": "Listen carefully to the whole word. You can say it back if you want to.",
+          "question": "Now spell the word as best you can. You can listen again.",
+          "first_error": "That gives us something to work on. Let's look at one part of the spelling.",
+          "explain": "This word has two r letters and two s letters. Compare how the word sounds with how the doubled letters are written.",
+          "guided_practice": "Find the two pairs of doubled letters.",
+          "independent_recall": "The spelling is hidden now. Listen to the word and try it again without clues.",
+          "definition_offer": "Would you like to hear what this word means?",
+          "definition": "embarrass means: To make someone feel awkward, uncomfortable or self-conscious.",
+          "contextual_example": "I did not want to embarrass my friend by telling everyone about the mistake.",
+          "next": "You can revisit this word another day. Now let's see what's next."
+        }
       },
       "activity_contract": {
         "initial": "audio_first_unaided_full_alphabet_or_keyboard",
@@ -220,9 +262,24 @@
         "date": "2026-11-11",
         "version": "0.1-draft",
         "author": "Spellmaster curriculum preparation",
-        "source_type": "curriculum_and_dictionary"
+        "source_type": "curriculum_and_dictionary",
+        "phonetics_source": "https://dictionary.cambridge.org/pronunciation/english/embarrass"
       },
-      "status": "linguistic_review"
+      "status": "linguistic_review",
+      "pronunciation_reference": {
+        "locale": "en-GB",
+        "phonetic_notation": "IPA",
+        "whole_word_ipa": "/ɪmˈbær.əs/",
+        "syllables_for_expert_review": [
+          "ɪm",
+          "bær",
+          "əs"
+        ],
+        "primary_stress_syllable_zero_based": 1,
+        "source": "https://dictionary.cambridge.org/pronunciation/english/embarrass",
+        "reviewed_by_specialist": false,
+        "notes": "Contrast pronounced segments with spelling: doubled r and s do not require doubled speech sounds."
+      }
     },
     {
       "id": "en-gb-y56-accommodate",
@@ -268,12 +325,13 @@
           {
             "id": "target-accommodate",
             "description": "Double c and double m",
-            "review_status": "draft"
+            "review_status": "draft",
+            "pattern_id": "double-c-double-m"
           }
         ],
         "explanation": {
           "id": "explanation-accommodate",
-          "script": "'ac + com + mo + date' must not be presented as a phonetic breakdown.",
+          "script": "There are two c letters and two m letters. Don't ask the narrator to pronounce duplicated letter names as sounds.",
           "approved": false
         },
         "orthographic_units": [
@@ -284,7 +342,7 @@
         ],
         "sound_units": [],
         "sound_review": {
-          "status": "unreviewed",
+          "status": "reference_transcribed_pending_specialist_review",
           "reviewer": null
         },
         "morpheme_units": [],
@@ -301,7 +359,19 @@
             "say": "This spelling needs two m letters. Let's practise that pair."
           }
         ],
-        "memory_cues": []
+        "memory_cues": [],
+        "provisional_script": {
+          "preview_word": "Listen carefully to the whole word. You can say it back if you want to.",
+          "question": "Now spell the word as best you can. You can listen again.",
+          "first_error": "That gives us something to work on. Let's look at one part of the spelling.",
+          "explain": "There are two c letters and two m letters. Don't ask the narrator to pronounce duplicated letter names as sounds.",
+          "guided_practice": "Look for the two pairs of consonants.",
+          "independent_recall": "The spelling is hidden now. Listen to the word and try it again without clues.",
+          "definition_offer": "Would you like to hear what this word means?",
+          "definition": "accommodate means: To provide enough space for someone or something, or to meet a particular need.",
+          "contextual_example": "The school hall can accommodate all the visitors.",
+          "next": "You can revisit this word another day. Now let's see what's next."
+        }
       },
       "activity_contract": {
         "initial": "audio_first_unaided_full_alphabet_or_keyboard",
@@ -331,9 +401,25 @@
         "date": "2026-11-11",
         "version": "0.1-draft",
         "author": "Spellmaster curriculum preparation",
-        "source_type": "curriculum_and_dictionary"
+        "source_type": "curriculum_and_dictionary",
+        "phonetics_source": "https://dictionary.cambridge.org/pronunciation/english/accommodate"
       },
-      "status": "linguistic_review"
+      "status": "linguistic_review",
+      "pronunciation_reference": {
+        "locale": "en-GB",
+        "phonetic_notation": "IPA",
+        "whole_word_ipa": "/əˈkɒm.ə.deɪt/",
+        "syllables_for_expert_review": [
+          "ə",
+          "kɒm",
+          "ə",
+          "deɪt"
+        ],
+        "primary_stress_syllable_zero_based": 1,
+        "source": "https://dictionary.cambridge.org/pronunciation/english/accommodate",
+        "reviewed_by_specialist": false,
+        "notes": "Do not pronounce two separate c or m sounds to imply doubled letters."
+      }
     },
     {
       "id": "en-gb-y56-government",
@@ -379,12 +465,13 @@
           {
             "id": "target-government",
             "description": "Preserve govern when adding -ment",
-            "review_status": "draft"
+            "review_status": "draft",
+            "pattern_id": "govern-plus-ment"
           }
         ],
         "explanation": {
           "id": "explanation-government",
-          "script": "Genuine morphological relationship govern + -ment; an n can be hard to hear in connected speech; never require one fixed pronunciation.",
+          "script": "Govern is the base word. Add ment without dropping the n. Different accepted pronunciations mean the n may be less obvious when spoken.",
           "approved": false
         },
         "orthographic_units": [
@@ -393,7 +480,7 @@
         ],
         "sound_units": [],
         "sound_review": {
-          "status": "unreviewed",
+          "status": "reference_transcribed_pending_specialist_review",
           "reviewer": null
         },
         "morpheme_units": [
@@ -408,7 +495,19 @@
             "say": "Let's look at the base word govern. Keep its n before adding ment."
           }
         ],
-        "memory_cues": []
+        "memory_cues": [],
+        "provisional_script": {
+          "preview_word": "Listen carefully to the whole word. You can say it back if you want to.",
+          "question": "Now spell the word as best you can. You can listen again.",
+          "first_error": "That gives us something to work on. Let's look at one part of the spelling.",
+          "explain": "Govern is the base word. Add ment without dropping the n. Different accepted pronunciations mean the n may be less obvious when spoken.",
+          "guided_practice": "Which part of govern stays in government?",
+          "independent_recall": "The spelling is hidden now. Listen to the word and try it again without clues.",
+          "definition_offer": "Would you like to hear what this word means?",
+          "definition": "government means: The group of people responsible for running a country.",
+          "contextual_example": "The government announced a new plan for local schools.",
+          "next": "You can revisit this word another day. Now let's see what's next."
+        }
       },
       "activity_contract": {
         "initial": "audio_first_unaided_full_alphabet_or_keyboard",
@@ -438,9 +537,34 @@
         "date": "2026-11-11",
         "version": "0.1-draft",
         "author": "Spellmaster curriculum preparation",
-        "source_type": "curriculum_and_dictionary"
+        "source_type": "curriculum_and_dictionary",
+        "phonetics_source": "https://dictionary.cambridge.org/pronunciation/english/government"
       },
-      "status": "linguistic_review"
+      "status": "linguistic_review",
+      "pronunciation_reference": {
+        "locale": "en-GB",
+        "phonetic_notation": "IPA",
+        "whole_word_ipa": [
+          "/ˈɡʌv.ə.mənt/",
+          "/ˈɡʌv.ən.mənt/"
+        ],
+        "syllables_for_expert_review": [
+          [
+            "ɡʌv",
+            "ə",
+            "mənt"
+          ],
+          [
+            "ɡʌv",
+            "ən",
+            "mənt"
+          ]
+        ],
+        "primary_stress_syllable_zero_based": 0,
+        "source": "https://dictionary.cambridge.org/pronunciation/english/government",
+        "reviewed_by_specialist": false,
+        "notes": "UK variants differ; do not call either child's valid accent incorrect. Govern + ment is written-morphology instruction."
+      }
     },
     {
       "id": "en-gb-y56-environment",
@@ -486,12 +610,13 @@
           {
             "id": "target-environment",
             "description": "Preserve environ when adding -ment",
-            "review_status": "draft"
+            "review_status": "draft",
+            "pattern_id": "environ-plus-ment"
           }
         ],
         "explanation": {
           "id": "explanation-environment",
-          "script": "Environ + -ment is a meaningful form-based teaching aid. Spoken syllables differ by accent and should be reviewed.",
+          "script": "The written form can be grouped as environ plus ment. The spoken syllables are not simply environ/ment.",
           "approved": false
         },
         "orthographic_units": [
@@ -500,7 +625,7 @@
         ],
         "sound_units": [],
         "sound_review": {
-          "status": "unreviewed",
+          "status": "reference_transcribed_pending_specialist_review",
           "reviewer": null
         },
         "morpheme_units": [
@@ -515,7 +640,19 @@
             "say": "Look at environ before ment. Keep the final n in the first part."
           }
         ],
-        "memory_cues": []
+        "memory_cues": [],
+        "provisional_script": {
+          "preview_word": "Listen carefully to the whole word. You can say it back if you want to.",
+          "question": "Now spell the word as best you can. You can listen again.",
+          "first_error": "That gives us something to work on. Let's look at one part of the spelling.",
+          "explain": "The written form can be grouped as environ plus ment. The spoken syllables are not simply environ/ment.",
+          "guided_practice": "Can you remember the letters at the end of environ?",
+          "independent_recall": "The spelling is hidden now. Listen to the word and try it again without clues.",
+          "definition_offer": "Would you like to hear what this word means?",
+          "definition": "environment means: The natural world around us, including the air, land, water and living things.",
+          "contextual_example": "We can protect the environment by reducing waste.",
+          "next": "You can revisit this word another day. Now let's see what's next."
+        }
       },
       "activity_contract": {
         "initial": "audio_first_unaided_full_alphabet_or_keyboard",
@@ -545,9 +682,25 @@
         "date": "2026-11-11",
         "version": "0.1-draft",
         "author": "Spellmaster curriculum preparation",
-        "source_type": "curriculum_and_dictionary"
+        "source_type": "curriculum_and_dictionary",
+        "phonetics_source": "https://dictionary.cambridge.org/pronunciation/english/environment"
       },
-      "status": "linguistic_review"
+      "status": "linguistic_review",
+      "pronunciation_reference": {
+        "locale": "en-GB",
+        "phonetic_notation": "IPA",
+        "whole_word_ipa": "/ɪnˈvaɪ.rə.mənt/",
+        "syllables_for_expert_review": [
+          "ɪn",
+          "vaɪ",
+          "rə",
+          "mənt"
+        ],
+        "primary_stress_syllable_zero_based": 1,
+        "source": "https://dictionary.cambridge.org/pronunciation/english/environment",
+        "reviewed_by_specialist": false,
+        "notes": "Environ + ment is written morphological structure, not identical to spoken syllables."
+      }
     }
   ]
 }
