@@ -2,7 +2,7 @@
   "product_name": "Spellmaster",
   "name_previous": "SpellQuest",
   "version": "1.0.0",
-  "status": "design policy; learning thresholds pending educational validation",
+  "status": "design policy; educational and psychological review pending",
   "motto": "Better today than yesterday",
   "never_compare_with_peers": true,
   "skill_statuses": [
@@ -56,5 +56,16 @@
   },
   "scope": "Skill- or pattern-specific mastery; no global terminal maximum level",
   "measurement": "Delayed unaided spelling, not practice points",
-  "research_validated_thresholds": false
+  "research_validated_thresholds": false,
+  "psychological_safety": {
+    "standard": "research/PSYCHOLOGICAL_SAFETY_AND_FEEDBACK_V1.md",
+    "no_failure_labels": true,
+    "truthful_specific_feedback": true,
+    "no_shaming_sounds_or_red_crosses": true,
+    "no_forced_retries": true,
+    "offer_pause_skip_and_support": true,
+    "never_revoke_mastery_trophies": true,
+    "do_not_invent_positive_outcomes": true,
+    "all_feedback_requires_review": true
+  }
 }
