@@ -288,3 +288,37 @@ See [ADAPTIVE_TEACHING_EXPERIMENT_PROTOCOL.md](ADAPTIVE_TEACHING_EXPERIMENT_PROT
 ## 19. Teaching core implementation freeze (11 November 2026)
 
 The **headless learning-policy core** now lives in [../core/README.md](../core/README.md), with executable logic [../core/teaching-engine.cjs](../core/teaching-engine.cjs), regression tests [../core/teaching-engine.test.cjs](../core/teaching-engine.test.cjs), and curriculum/error rules [../core/curriculum-policy.json](../core/curriculum-policy.json). It operationalises the eight-stage [SPELLQUEST_TEACHING_METHOD_V1.md](SPELLQUEST_TEACHING_METHOD_V1.md). These are implementation specifications and a tested prototype, **not a clinically validated intervention**. Until educator-approved audio and word annotations are available, it must not be used to automatically create learner-facing phoneme lessons. Gameplay development is explicitly secondary to specialist-reviewed curriculum and functional learning assessments.
+
+
+## 20. Mixed old/new spelling retrieval throughout gameplay (11 November 2026)
+
+### Evidence
+
+- IDA's *Spelling* guidance recommends practising a few new words, with repeated accurate writing and fluency-building dictation as words are learned: https://dyslexiaida.org/spelling/
+- University of Michigan DyslexiaHelp guidance calls for structured, **cumulative** spelling instruction, introducing new information only after earlier content has been learned securely: https://dyslexiahelp.umich.edu/professionals/dyslexia-and-intervention/spelling/how-should-spelling-be-taught/
+- Warwickshire literacy practice guidance explicitly describes interleaving older with newly learned spelling words (two new words followed by already learned words): https://www.sasc.org.uk/media/gedbejuc/warwickshire-literacy-practice-guidance-oct-2020.pdf
+- Veiga da Silva et al. (2023) found improved four-day spelling retention after retrieval plus immediate feedback compared with copying, in one of three experiments with Brazilian fifth graders: https://pubmed.ncbi.nlm.nih.gov/37605436/
+- Klimovich & Richter (2025) found some longer-term benefits from interleaving German spelling rules, with results affected by prior knowledge and guidance. This was **not** a trial of English spelling in dyslexic pupils: https://pmc.ncbi.nlm.nih.gov/articles/PMC12511507/
+
+### Core gameplay policy
+
+1. Never keep adding only novel words: every adventure session draws **due older words** into current play, including words last seen days or weeks earlier.
+2. Teach a new validated feature with a small connected set first, where appropriate. During retrieval, mix it with previously taught and different-feature words to practise discrimination and memory.
+3. At the start of a session, prioritise a short **unaided recall of a due old word**, followed by a mixture of due reviews and, only if review workload permits, a small number of new words.
+4. Prototype default: up to eight word-turns, at most two new words, and around two due review opportunities for each new-word opportunity. These numbers are **adjustable pilot hypotheses**, not a proven dosage; learners can opt for shorter sessions.
+5. If there is a review backlog or a difficult day, reduce or omit new words. A day of revising old knowledge counts as meaningful progress.
+6. Familiar-word successes are emotionally helpful, but **never manipulate scores by secretly choosing only known-easy items** or count assisted construction as independent retention. Use genuinely due words selected by review schedule, acknowledge growth when the child actually remembers.
+7. A review begins with the whole word spoken, no visible spelling and an accessible complete alphabet/keyboard. If incorrect, give focused feedback and optional supported building; save initial independent result separately.
+8. Celebrate a *real* later correct answer with warm praise or game progress; avoid public comparisons, loss-based streak penalties, speed pressure or rewards solely for taps. Review achievements should distinguish 'practised' from 'remembered unaided'.
+9. Keep new words and older reviews in the **same adventure story**, not segregated into punitive tests. Give an explicit reason for reappearing old words (e.g. helping the explorer remember it for longer).
+10. Test actual ratios, spacing, mixed-vs-blocked retrieval schedules, and reward effects against retained spelling and learner fatigue rather than assuming gamification improves learning.
+
+### Implementation
+
+The headless core now includes `buildMixedSession` in [../core/review-scheduler.cjs](../core/review-scheduler.cjs), with checks in `review-scheduler.test.cjs`. It interleaves due previously taught words with a capped number of new entries and prioritises overdue reviews. It is a **prototype deterministic scheduler**, not a clinically validated adaptive spaced repetition model. Teacher-verified word data and meaningful delayed evaluation must precede live educational use.
+
+### Open questions for pilot
+- How many due items are tolerable per session at different learner skill levels (not age alone)?
+- Which spaced intervals and backlog thresholds produce long-term recall without frustration?
+- How much initial grouped introduction is helpful before mixed practice for a genuinely new spelling pattern?
+- Do personal rewards for delayed independent recall increase engagement without substituting for true learning?
