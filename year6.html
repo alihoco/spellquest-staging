@@ -147,7 +147,7 @@ function startTeaching(){
  '<h2>First, say the whole word 🌱</h2>'+
  '<p>Listen to the word, then say it aloud. We’ll practise its smaller parts next.</p>'+
  '<div id="part-instruction" class="user-action" aria-live="polite">🔊 Listen to the whole word.</div>'+
- '<div class="parts" id="part-list">'+w.p.map((x,j)=>'<span id="part-'+j+'">'+x+'</span>').join('')+'</div>'+
+ '<div class="parts" id="part-list" style="display:none">'+w.p.map((x,j)=>'<span id="part-'+j+'">'+x+'</span>').join('')+'</div>'+
  voiceBox()+
  '<button id="part-next" onclick="showPart(0)">Continue to the parts →</button>'+
  '<button class="alt" onclick="say(\'y6-'+w.w+'\',()=>{if(state===\'whole\'&&microphoneOn)startWholeListening()})">🔊 Hear the word again</button>'+
@@ -159,7 +159,7 @@ function startTeaching(){
  if(narration)autoSay('y6-'+w.w,()=>{if(state==='whole'&&microphoneOn)startWholeListening()});
 }
 function showPart(n){
- stop();state='parts';partIndex=n;
+ stop();state='parts';partIndex=n;const partList=document.getElementById('part-list');if(partList)partList.style.display='flex';
  const w=W[i];
  if(n>=w.p.length){showTip();return}
  document.querySelectorAll('#part-list span').forEach((el,k)=>el.classList.toggle('active',k===n));
