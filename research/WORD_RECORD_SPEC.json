@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "status": "draft specification — human review required",
   "word_record": {
     "id": "en-gb-necessary",
@@ -74,7 +74,9 @@
     "Keep visual age and spelling attainment independent",
     "Do not count exact-letter tile or multiple-choice recognition success as independent spelling mastery",
     "Allow spelling production with a complete on-screen alphabet independent of physical keyboard familiarity",
-    "Compare assisted activities by delayed unaided spelling outcomes rather than game completion"
+    "Compare assisted activities by delayed unaided spelling outcomes rather than game completion",
+    "Do not make keyboard skill a prerequisite for spelling practice or mastery",
+    "Offer age-respectful tile interactions to older learners and full-alphabet independent tapping to young learners"
   ],
   "research_links": [
     "research/TEACHING_KNOWLEDGE_BASE.md",
@@ -106,5 +108,42 @@
       "assistance": "none (no target letter preview)",
       "independent_mastery_evidence": true
     }
+  },
+  "interaction_profiles": {
+    "age_used_for": "default presentation and accessibility suggestions only",
+    "age_not_used_for": [
+      "spelling difficulty",
+      "spelling mastery",
+      "dyslexia diagnosis"
+    ],
+    "default_modes": {
+      "4-6": [
+        "tap_supplied_letters",
+        "tap_full_alphabet"
+      ],
+      "7-9": [
+        "tap_supplied_letters",
+        "tap_full_alphabet",
+        "physical_keyboard"
+      ],
+      "10-12": [
+        "tap_full_alphabet",
+        "physical_keyboard",
+        "tap_supplied_letters"
+      ],
+      "13-16": [
+        "physical_keyboard",
+        "tap_full_alphabet",
+        "tap_supplied_letters"
+      ],
+      "17+": [
+        "physical_keyboard",
+        "tap_full_alphabet",
+        "tap_supplied_letters"
+      ]
+    },
+    "allow_mode_override": true,
+    "age_categories_are_hypotheses": true,
+    "preserve_theme_independently": true
   }
 }
