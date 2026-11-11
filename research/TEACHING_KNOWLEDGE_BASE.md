@@ -261,3 +261,10 @@ These are accessibility-driven design hypotheses, not research-verified age cuto
 ### Data model implication
 
 Store the response mode separately from spelling skill and from the amount of assistance. An older learner using tap tiles must not be assigned a younger visual theme, and a younger learner who spells independently with a full alphabet should receive full credit.
+
+
+## 14. Comparative system review — Morphs (spelling.info), 11 November 2026
+
+A public-source evaluation of Grammarsaurus's Morphs spelling game has been added at [COMPETITOR_MORPHS_SPELLING_INFO.md](COMPETITOR_MORPHS_SPELLING_INFO.md). Morphs is structured around explicit teaching of genuine morphemes, followed by game application in an immersive adventure world. Its teacher-facing spelling heatmap helps identify gaps. This is a particularly useful reference for designing transferable word-family and morphology lessons rather than teaching isolated spellings.
+
+**Research caution:** published product descriptions and screenshots establish intended functionality, not controlled evidence of the software's efficacy for dyslexic learners. The student login itself was not inspected in an authenticated session. Stronger aspects to investigate include explicit morpheme progression and targeted diagnosis; SpellQuest's differentiators should be verified phonological/orthographic teaching, audio-first guidance, learner-age-respectful accessibility and delayed independent recall, not copying the game's artwork, characters, world or proprietary lessons.
