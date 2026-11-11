@@ -322,3 +322,8 @@ The headless core now includes `buildMixedSession` in [../core/review-scheduler.
 - Which spaced intervals and backlog thresholds produce long-term recall without frustration?
 - How much initial grouped introduction is helpful before mixed practice for a genuinely new spelling pattern?
 - Do personal rewards for delayed independent recall increase engagement without substituting for true learning?
+
+
+## 21. Brand and mastery reward design: Spellmaster (11 November 2026)
+
+The product is now named **Spellmaster**; original SpellQuest repository and staging URLs remain temporary technical identifiers until deliberate migration. See [SPELLMASTER_BRAND_AND_MASTERY_V1.md](SPELLMASTER_BRAND_AND_MASTERY_V1.md) and [../core/mastery-rewards-policy.json](../core/mastery-rewards-policy.json). Learners can earn **Master** in a specific skill realm through independently retained spelling and later unlock new realms; this never implies comparison with another child, school year or a fixed ability level. Supported practice and recognition can earn progress but not retained mastery; rewards must support confidence without introducing speed or streak pressure. Mastery threshold details require educational validation.
