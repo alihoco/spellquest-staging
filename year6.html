@@ -83,7 +83,9 @@ function reviewScreen(){
 }
 async function reviewFlow(){
  if(stage!=='review')return;interrupt();const t=token,w=W[index];let ok;
- ok=await sequence(['y6-try','y6-demo-repeat','y6-'+w.w,'y6-demo-parts'],t);if(!ok)return;
+ ok=await sequence(['y6-try','y6-demo-repeat','y6-'+w.w],t);if(!ok)return;
+ await new Promise(resolve=>setTimeout(resolve,950));if(t!==token||stage!=='review')return;
+ ok=await play('y6-demo-parts',t);if(!ok)return;
  for(let j=0;j<w.p.length;j++){
   if(t!==token||stage!=='review')return;
   document.querySelectorAll('.chunk').forEach((el,k)=>el.classList.toggle('active',j===k));
@@ -92,8 +94,12 @@ async function reviewFlow(){
  if(t!==token)return;
  document.querySelectorAll('.chunk').forEach(el=>el.classList.remove('active'));
  const hint=$('hint');if(hint){hint.style.display='block';hint.innerHTML='<strong>Word secret:</strong> '+w.tip}
- await play('y6-tip-'+w.w,t);
- if(t===token&&stage==='review'){setStatus('Now you can hide the word and try spelling it again.');const retry=$('retry');if(retry)retry.focus()}
+ ok=await play('y6-tip-'+w.w,t);if(!ok)return;
+ if(t===token&&stage==='review'){
+  setStatus('Now let’s hide the word and try again.');
+  await new Promise(resolve=>setTimeout(resolve,650));
+  if(t===token&&stage==='review')retryScreen();
+ }
 }
 function retryScreen(){
  stage='retry';interrupt();
