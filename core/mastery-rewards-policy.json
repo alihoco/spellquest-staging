@@ -1,7 +1,7 @@
 {
   "product_name": "Spellmaster",
   "name_previous": "SpellQuest",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "status": "design policy; educational and psychological review pending",
   "motto": "Better today than yesterday",
   "never_compare_with_peers": true,
@@ -67,5 +67,50 @@
     "never_revoke_mastery_trophies": true,
     "do_not_invent_positive_outcomes": true,
     "all_feedback_requires_review": true
+  },
+  "proportionate_recognition": {
+    "principle": "Small authentic achievements receive small recognition; significant demonstrated retained mastery earns significant, occasional rewards.",
+    "praise_requires_observable_basis": true,
+    "never_reward_merely_for_clicks": true,
+    "minor": {
+      "events": [
+        "specific corrected letter pattern",
+        "successful independent self-correction"
+      ],
+      "tone": "warm, specific, understated",
+      "reward": "small optional progress acknowledgement"
+    },
+    "moderate": {
+      "events": [
+        "correct immediate independent recall"
+      ],
+      "tone": "recognise independent work without mastery claim",
+      "reward": "measured progress"
+    },
+    "major": {
+      "events": [
+        "delayed independent retained mastery across appropriate examples",
+        "relevant transfer demonstrated"
+      ],
+      "tone": "occasional meaningful celebration",
+      "reward": "master badge or realm unlock"
+    },
+    "after_error": {
+      "tone": "neutral, kind, actionable; no criticism or fabricated praise",
+      "reward": "none for incorrect answer; help available without cost"
+    },
+    "preferences": [
+      "quiet feedback",
+      "reduced animations",
+      "age-respectful reward styling"
+    ],
+    "anti_patterns": [
+      "confetti on every tap",
+      "praise with no observation",
+      "easy-question reward farming",
+      "loss aversion",
+      "mastery credit for assisted recognition"
+    ],
+    "thresholds_validated": false
   }
 }
