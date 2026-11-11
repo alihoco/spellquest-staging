@@ -283,3 +283,8 @@ The review [DAVIS_WHITEHEAD_METHODS_REVIEW.md](DAVIS_WHITEHEAD_METHODS_REVIEW.md
 ## 17. Individualised A/B/C teaching experiments (11 November 2026)
 
 See [ADAPTIVE_TEACHING_EXPERIMENT_PROTOCOL.md](ADAPTIVE_TEACHING_EXPERIMENT_PROTOCOL.md). All pupils retain the established Structured Literacy baseline; we compare core teaching (A), core plus original Davis-inspired Meaning & Making (B), and core plus the same extra time in structured practice (C). The primary outcome is **delayed independent spelling**, not game completion. Randomise matched word sets, repeatedly assess before personalising, and distinguish genuine technique effects from extra teaching time or repeated exposure. This protocol requires specialist and child-research ethics review before learner-level experimentation.
+
+
+## 19. Teaching core implementation freeze (11 November 2026)
+
+The **headless learning-policy core** now lives in [../core/README.md](../core/README.md), with executable logic [../core/teaching-engine.cjs](../core/teaching-engine.cjs), regression tests [../core/teaching-engine.test.cjs](../core/teaching-engine.test.cjs), and curriculum/error rules [../core/curriculum-policy.json](../core/curriculum-policy.json). It operationalises the eight-stage [SPELLQUEST_TEACHING_METHOD_V1.md](SPELLQUEST_TEACHING_METHOD_V1.md). These are implementation specifications and a tested prototype, **not a clinically validated intervention**. Until educator-approved audio and word annotations are available, it must not be used to automatically create learner-facing phoneme lessons. Gameplay development is explicitly secondary to specialist-reviewed curriculum and functional learning assessments.
