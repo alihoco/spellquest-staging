@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0.0",
+  "status": "draft specification — human review required",
+  "word_record": {
+    "id": "en-gb-necessary",
+    "locale": "en-GB",
+    "spelling": "necessary",
+    "meaning": null,
+    "example_sentence": null,
+    "curriculum_source": "England statutory Years 5–6",
+    "whole_word_audio": {
+      "url": null,
+      "accent": "clear en-GB",
+      "status": "pending_human_review"
+    },
+    "spoken_syllables": {
+      "units": [],
+      "audio_urls": [],
+      "stress": null,
+      "status": "not_annotated_do_not_generate"
+    },
+    "phonemes": {
+      "ipa_units": [],
+      "graphemes": [],
+      "status": "not_annotated_do_not_generate"
+    },
+    "orthographic_chunks": {
+      "units": [
+        "ne",
+        "ces",
+        "sa",
+        "ry"
+      ],
+      "note": "Spelling chunks are not phonemes or necessarily syllables",
+      "status": "illustrative_pending_review"
+    },
+    "morphemes": {
+      "units": [],
+      "status": "unreviewed"
+    },
+    "targets": [
+      {
+        "feature": "one c, two s",
+        "why": "word-specific spelling choices"
+      }
+    ],
+    "mnemonic": {
+      "text": "one collar (c), two sleeves (ss)",
+      "role": "supplementary",
+      "status": "pending_review"
+    },
+    "feedback_rules": [],
+    "progress_measures": [
+      "first_attempt_unaided",
+      "assisted_practice",
+      "delayed_unaided_recall",
+      "untaught_word_transfer"
+    ],
+    "expert_review": {
+      "phonics_specialist": null,
+      "spelling_teacher": null,
+      "audio_reviewer": null,
+      "approved": false
+    }
+  },
+  "release_gates": [
+    "Do not synthesize phonemes from letter chunks",
+    "Never label orthographic chunks as spoken sounds",
+    "Human-review full word pronunciation, syllable segmentation and sound-to-grapheme mapping",
+    "Ground morphology in documented word relationships",
+    "Include independent spelling and specific corrective feedback",
+    "Measure delayed recall separately from immediate assisted performance",
+    "Never assign fixed learning-style identity",
+    "Keep visual age and spelling attainment independent"
+  ],
+  "research_links": [
+    "research/TEACHING_KNOWLEDGE_BASE.md",
+    "research/EVIDENCE_REGISTER.csv"
+  ]
+}
