@@ -44,10 +44,10 @@ const Y6_SOUND={
  government:['guv','ern','ment'],
  foreign:['for','in'],
  familiar:['fuh','mill','yuh'],
- environment:['en','vy','run','ment'],
+ environment:['en','vy run','ment'],
  privilege:['priv','uh','lij'],
  rhythm:['rith','um'],
- temperature:['tem','pruh','chuh']
+ temperature:['tem','pruh','uh','chuh']
 };
 const Y6_TIPS={
  necessary:'Listen to the word necessary. The sound can help us remember its rhythm, but we still need the spelling trick. One C and two S letters. Think of a shirt with one collar and two sleeves.',
