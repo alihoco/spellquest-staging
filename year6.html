@@ -66,7 +66,7 @@ const ENDPOINT='https://spellquest-voice-staging.onrender.com/api/voice';
 let voice=sessionStorage.getItem('spellquest-ai-voice')||'marin';
 let narration=localStorage.getItem('spellquest-audio-first')!=='off';
 let pace=localStorage.getItem('spellquest-sound-pace')||'relaxed';
-let stage='welcome',idx=0,first=0,results=[],ticket=0,activePlayer=null,activePlaying=false;
+let stage='welcome',idx=0,first=0,results=[],ticket=0,activePlayer=null,activePlaying=false,activeResolve=null;
 const cached=new Map();
 const makeUrl=clip=>{
  const key=voice+':'+clip;
@@ -84,6 +84,7 @@ function setStatus(msg){const el=$('audio-status');if(el)el.textContent=msg}
 function stop(){
  ticket++;
  if(activePlayer){activePlayer.pause();activePlayer.onended=null;activePlayer.onerror=null;activePlayer=null}
+ if(activeResolve){activeResolve(false);activeResolve=null}
  activePlaying=false;
 }
 async function speak(clip,t=ticket){
@@ -92,10 +93,10 @@ async function speak(clip,t=ticket){
  try{
   const url=await makeUrl(clip);if(t!==ticket)return false;
   const player=new Audio(url);activePlayer=player;
-  const ended=new Promise(resolve=>{player.onended=()=>resolve(true);player.onerror=()=>resolve(false)});
+  const ended=new Promise(resolve=>{activeResolve=resolve;player.onended=()=>{activeResolve=null;resolve(true)};player.onerror=()=>{activeResolve=null;resolve(false)}});
   await player.play();activePlaying=true;
   const ok=await ended;activePlaying=false;
-  if(t===ticket){activePlayer=null;setStatus('')}
+  if(t===ticket){activePlayer=null;setStatus(ok?'':'The voice stopped. Please replay this step.')}
   return t===ticket&&ok;
  }catch(e){
   if(t===ticket)setStatus('Audio did not play. Tap Replay narration, or check the sound on your device.');
@@ -144,7 +145,7 @@ function question(auto=false){
  '<div class="actions"><button class="alt" onclick="speak(\'y6-'+WORDS[idx].word+'\')">🔊 Hear word again</button><button class="alt" onclick="instructionAudio()">🔊 Replay instructions</button></div>'+
  '<label for="answer">Your spelling</label><input id="answer" aria-label="Type the spelling of the spoken word" autocapitalize="off" autocomplete="off" spellcheck="false" onkeydown="if(event.key===\'Enter\')check(false)">'+soundVoice()+
  '<button onclick="check(false)">Check my spelling →</button>';
- voiceSet();warm(['y6-v08-prompt','y6-'+w.word,'y6-v08-wrong','y6-v08-demo-repeat']);
+ voiceSet();warm(['y6-v08-prompt','y6-'+w.word,'y6-v08-wrong','y6-v08-sounds']);
  if(auto&&narration)instructionAudio();
 }
 async function instructionAudio(){
