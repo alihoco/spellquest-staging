@@ -273,3 +273,8 @@ A public-source evaluation of Grammarsaurus's Morphs spelling game has been adde
 ## 15. Core teaching method — SpellQuest Learning Cycle v1.0
 
 The product-wide, eight-stage research-informed lesson sequence and adaptive rules are now specified in [SPELLQUEST_TEACHING_METHOD_V1.md](SPELLQUEST_TEACHING_METHOD_V1.md). This is the normative product teaching specification for future design, curriculum and implementation decisions, **pending expert linguistic review and efficacy testing**. It separates the required pedagogic mechanisms from optional interaction screens, and does not treat assisted recognition or supplied-letter building as independent spelling mastery.
+
+
+## 16. Davis methods and Richard Whitehead — research comparison (11 November 2026)
+
+The review [DAVIS_WHITEHEAD_METHODS_REVIEW.md](DAVIS_WHITEHEAD_METHODS_REVIEW.md) compares Davis visual/experiential approaches, Richard Whitehead's work and the evidence for Structured Literacy. Evidence includes a small Davis-based controlled spelling study (van Staden et al., 2009) but does not support universal claims about visual learning style, disorientation or eliminating systematic retrieval practice. SpellQuest retains explicit sound–spelling, orthography and morphology instruction as the baseline. A proposed **Meaning and Making** branch experiments with visual, tactile and meaning-centred activities; its value must be assessed through delayed unaided spelling and transfer rather than anecdote or engagement alone. Proprietary Davis methods require licensing before being represented as such.
