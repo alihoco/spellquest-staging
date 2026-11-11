@@ -268,3 +268,8 @@ Store the response mode separately from spelling skill and from the amount of as
 A public-source evaluation of Grammarsaurus's Morphs spelling game has been added at [COMPETITOR_MORPHS_SPELLING_INFO.md](COMPETITOR_MORPHS_SPELLING_INFO.md). Morphs is structured around explicit teaching of genuine morphemes, followed by game application in an immersive adventure world. Its teacher-facing spelling heatmap helps identify gaps. This is a particularly useful reference for designing transferable word-family and morphology lessons rather than teaching isolated spellings.
 
 **Research caution:** published product descriptions and screenshots establish intended functionality, not controlled evidence of the software's efficacy for dyslexic learners. The student login itself was not inspected in an authenticated session. Stronger aspects to investigate include explicit morpheme progression and targeted diagnosis; SpellQuest's differentiators should be verified phonological/orthographic teaching, audio-first guidance, learner-age-respectful accessibility and delayed independent recall, not copying the game's artwork, characters, world or proprietary lessons.
+
+
+## 15. Core teaching method — SpellQuest Learning Cycle v1.0
+
+The product-wide, eight-stage research-informed lesson sequence and adaptive rules are now specified in [SPELLQUEST_TEACHING_METHOD_V1.md](SPELLQUEST_TEACHING_METHOD_V1.md). This is the normative product teaching specification for future design, curriculum and implementation decisions, **pending expert linguistic review and efficacy testing**. It separates the required pedagogic mechanisms from optional interaction screens, and does not treat assisted recognition or supplied-letter building as independent spelling mastery.
