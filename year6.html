@@ -16,31 +16,46 @@ const W=[
 ];
 const app=document.getElementById('app');let i=0,results=[],state='intro',currentAudio=null,seq=0,voice=sessionStorage.getItem('spellquest-ai-voice')||'marin',narration=localStorage.getItem('spellquest-audio-first')!=='off',partIndex=0;
 const base='https://spellquest-voice-staging.onrender.com/api/voice';
+const audioCache=new Map();
 function stop(){seq++;if(currentAudio){currentAudio.pause();currentAudio=null}}
+function audioUrl(clip){
+ const key=voice+':'+clip;
+ if(!audioCache.has(key)){
+  const p=fetch(base+'?clip='+encodeURIComponent(clip)+'&voice='+encodeURIComponent(voice)).then(r=>{if(!r.ok)throw Error('Audio unavailable');return r.blob()}).then(b=>URL.createObjectURL(b)).catch(e=>{audioCache.delete(key);throw e});
+  audioCache.set(key,p);
+ }
+ return audioCache.get(key);
+}
+function prefetchWordSounds(word){
+ const clips=W.find(x=>x.w===word).p.map((_,n)=>'y6-part-'+word+'-'+n);
+ clips.push('y6-tip-'+word,'y6-'+word);
+ clips.forEach(clip=>audioUrl(clip).catch(()=>{}));
+}
 async function say(clip,after,manual=true){
  if(!manual&&!narration)return;
- let id=++seq;if(currentAudio)currentAudio.pause();currentAudio=null;
- let status=document.getElementById('audio-status');if(status)status.textContent='🔊 Your narrator is speaking…';
+ const id=++seq;
+ if(currentAudio)currentAudio.pause();currentAudio=null;
+ const status=document.getElementById('audio-status');
+ if(status)status.textContent='🔊 Listening…';
  try{
-  let r=await fetch(base+'?clip='+encodeURIComponent(clip)+'&voice='+encodeURIComponent(voice));
-  if(!r.ok)throw Error('audio unavailable');
-  let blob=await r.blob();if(id!==seq)return;
-  let url=URL.createObjectURL(blob),a=new Audio(url);currentAudio=a;
-  a.onended=()=>{URL.revokeObjectURL(url);if(audioIsCurrent(a,id)){currentAudio=null;if(after)after()}};
-  a.onerror=()=>{URL.revokeObjectURL(url);if(status)status.textContent='Could not play audio. Press Listen again.'};
-  await a.play();if(status)status.textContent='';
- }catch(e){if(id===seq&&status)status.textContent='Narration unavailable. Press Listen again, or check your sound.'}
+  const url=await audioUrl(clip);
+  if(id!==seq)return;
+  const player=new Audio(url);currentAudio=player;
+  player.onended=()=>{if(audioIsCurrent(player,id)){currentAudio=null;if(after)after()}};
+  player.onerror=()=>{if(status)status.textContent='Audio did not play. Tap to try again.'};
+  await player.play();if(status)status.textContent='';
+ }catch(e){if(id===seq&&status)status.textContent='Audio unavailable. Please tap Listen again.'}
 }
 function audioIsCurrent(a,id){return id===seq&&currentAudio===a}
 function autoSay(clip,after){if(narration)say(clip,after,false)}
 function toggleNarration(){narration=!narration;localStorage.setItem('spellquest-audio-first',narration?'on':'off');if(!narration)stop();let b=document.getElementById('narration-toggle');if(b){b.textContent=narration?'🔊 Narration on':'🔇 Narration off';b.setAttribute('aria-pressed',String(narration))}}
-function changeVoice(v){voice=v;sessionStorage.setItem('spellquest-ai-voice',v);stop()}
+function changeVoice(v){stop();voice=v;sessionStorage.setItem('spellquest-ai-voice',v);audioCache.clear()}
 function voiceBox(){return '<div class="voice"><label for="v">Narrator: </label><select id="v" onchange="changeVoice(this.value)"><option value="marin">Marin · friendly</option><option value="cedar">Cedar · calm</option></select> <button id="narration-toggle" class="alt narration-btn" aria-pressed="'+narration+'" onclick="toggleNarration()">'+(narration?'🔊 Narration on':'🔇 Narration off')+'</button><p class="muted" id="audio-status">Listen again whenever you need. You can turn spoken guidance off here.</p></div>'}
 function voiceSet(){let v=document.getElementById('v');if(v)v.value=voice}
 function bar(){return '<div class="progress" role="progressbar" aria-label="Words explored" aria-valuemin="0" aria-valuemax="10" aria-valuenow="'+i+'"><div style="width:'+(i*10)+'%"></div></div>'}
 function intro(){state='intro';app.innerHTML='<span class="badge">TEN WORDS · YOUR OWN PACE</span><h2>Ready for a spelling adventure?</h2><p>First you will hear a word, without seeing its spelling. Have a go. If it is tricky, SpellQuest will show you a memory trick and help you practise.</p><p>There is no pass or fail. We are discovering what you already know and what you can learn.</p>'+voiceBox()+'<button onclick="begin()">Start my adventure →</button><button class="alt" onclick="say(\'y6-welcome\')">🔊 Read this to me</button>';voiceSet()}
 function begin(){i=0;results=[];question(true)}
-function question(autoplay=false){stop();state='question';app.innerHTML='<span class="badge">WORD '+(i+1)+' OF 10</span>'+bar()+'<h2>Listen and spell</h2><p>The word is hidden. Listen as many times as you like, then type the spelling you remember.</p><button class="alt" onclick="say(\'y6-'+W[i].w+'\')">🔊 Hear word</button><button class="alt" onclick="say(\'y6-instruction\')">🔊 Read question</button><label for="answer" style="display:block;margin-top:15px;font-weight:800">Your spelling</label><input id="answer" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="Type it here" onkeydown="if(event.key===\'Enter\')firstCheck()">'+voiceBox()+'<button onclick="firstCheck()">Check spelling →</button>';voiceSet();if(autoplay)autoSay('y6-instruction',()=>autoSay('y6-'+W[i].w))}
+function question(autoplay=false){stop();state='question';app.innerHTML='<span class="badge">WORD '+(i+1)+' OF 10</span>'+bar()+'<h2>Listen and spell</h2><p>The word is hidden. Listen as many times as you like, then type the spelling you remember.</p><button class="alt" onclick="say(\'y6-'+W[i].w+'\')">🔊 Hear word</button><button class="alt" onclick="say(\'y6-instruction\')">🔊 Read question</button><label for="answer" style="display:block;margin-top:15px;font-weight:800">Your spelling</label><input id="answer" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="Type it here" onkeydown="if(event.key===\'Enter\')firstCheck()">'+voiceBox()+'<button onclick="firstCheck()">Check spelling →</button>';voiceSet();if(autoplay)autoSay('y6-'+W[i].w)}
 function firstCheck(){let el=document.getElementById('answer');let value=el.value.toLowerCase().trim().replace(/\s/g,'');if(!value){el.focus();return}let yes=value===W[i].w;results[i]={word:W[i].w,first:yes,learned:yes,attempts:1};feedback(yes,false)}
 function feedback(correct,improved){
  stop();
@@ -55,49 +70,47 @@ function feedback(correct,improved){
  '<button onclick="next()">Next word →</button>'+
  '<button class="alt" onclick="say(\'y6-'+w.w+'\')">🔊 Hear word</button>'+
  '<button class="alt" onclick="say(\'y6-'+(improved?'improved':'correct')+'\')">🔊 Hear encouragement</button>';
- voiceSet();autoSay(improved?'y6-improved':'y6-correct',()=>{if(state==='feedback')autoSay('y6-tip-'+w.w,()=>{if(state==='feedback')autoSay('y6-next-instruction')})});
+ voiceSet();autoSay(improved?'y6-improved':'y6-correct',()=>{if(state==='feedback')autoSay('y6-tip-'+w.w)});
 }
 function startTeaching(){
  stop();state='parts-intro';partIndex=0;
- const w=W[i];
+ const w=W[i];prefetchWordSounds(w.w);
  app.innerHTML='<span class="badge">WORD '+(i+1)+' OF 10 · LEARN TOGETHER</span>'+bar()+
- '<h2>Let’s learn this word together 🌱</h2>'+
- '<p>No problem — every try helps. We will look at one spelling piece at a time.</p>'+
+ '<h2>Listen to the word in smaller parts 🌱</h2>'+
+ '<p>Watch the highlighted spelling as each sound is spoken. Say the parts with the narrator.</p>'+
  '<div class="parts" id="part-list">'+w.p.map((x,j)=>'<span id="part-'+j+'">'+x+'</span>').join('')+'</div>'+
- '<div id="part-instruction" class="user-action" aria-live="polite">Listen as we work through the pieces.</div>'+
+ '<div id="part-instruction" class="user-action" aria-live="polite">🔊 Let’s practise the sounds.</div>'+
  voiceBox()+
- '<button id="part-next" onclick="showPart(0)">▶ Begin the pieces</button>'+
- '<button class="alt" onclick="say(\'y6-parts-intro\')">🔊 Hear the introduction again</button>'+
- '<button class="alt" onclick="next()">Move to next word</button>';
+ '<button id="part-next" onclick="showPart(0)">▶ Hear the sounds</button>'+
+ '<button class="alt" onclick="next()">Skip this word</button>';
  voiceSet();
- autoSay('y6-try',()=>{if(state==='parts-intro')autoSay('y6-parts-intro',()=>{if(state==='parts-intro')showPart(0)})});
+ if(narration)autoSay('y6-try',()=>{if(state==='parts-intro')showPart(0)});
 }
 function showPart(n){
  stop();state='parts';partIndex=n;
  const w=W[i];
- const boxes=[...document.querySelectorAll('#part-list span')];
- boxes.forEach((el,k)=>el.classList.toggle('active',k===n));
- const prompt=document.getElementById('part-instruction');
- prompt.innerHTML='<span class="speaking">🔊 Piece '+(n+1)+' of '+w.p.length+': <strong>'+w.p[n]+'</strong></span><p>Listen, say the letters aloud, then choose “I said it”. You can also say them quietly in your head.</p>';
- const button=document.getElementById('part-next');
- button.textContent=n===w.p.length-1?'✅ I said it · Hear the word secret':'✅ I said it · Next piece';
- button.onclick=()=>{if(partIndex===w.p.length-1)showTip();else showPart(partIndex+1)};
- const extra=document.getElementById('part-replay');
- if(extra)extra.remove();
- const replay=document.createElement('button');replay.id='part-replay';replay.className='alt';replay.textContent='🔊 Hear this piece again';replay.onclick=()=>say('y6-part-'+w.w+'-'+partIndex);
- button.insertAdjacentElement('afterend',replay);
- autoSay('y6-part-'+w.w+'-'+n);
+ if(n>=w.p.length){showTip();return}
+ document.querySelectorAll('#part-list span').forEach((el,k)=>el.classList.toggle('active',k===n));
+ document.getElementById('part-instruction').innerHTML='<span class="speaking">🔊 Sound '+(n+1)+' of '+w.p.length+'</span><p>Say it along with the narrator.</p>';
+ const nextButton=document.getElementById('part-next');
+ nextButton.textContent=n===w.p.length-1?'Continue to word secret →':'Next sound →';
+ nextButton.onclick=()=>showPart(n+1);
+ const old=document.getElementById('part-replay');if(old)old.remove();
+ const replay=document.createElement('button');replay.id='part-replay';replay.className='alt';replay.textContent='🔊 Repeat sound';replay.onclick=()=>say('y6-part-'+w.w+'-'+partIndex);
+ nextButton.insertAdjacentElement('afterend',replay);
+ if(narration)autoSay('y6-part-'+w.w+'-'+n,()=>{if(state==='parts'&&partIndex===n)showPart(n+1)});
 }
 function showTip(){
  stop();state='tip';const w=W[i];
  document.querySelectorAll('#part-list span').forEach(el=>el.classList.remove('active'));
- document.getElementById('part-instruction').innerHTML='<div class="tip"><strong>Our word secret:</strong> '+w.tip+'</div><p>Listen to the whole word and the memory trick. Then hide the spelling and have another go.</p>';
- document.getElementById('part-next').textContent='🙈 Hide the word · Try again';
+ document.getElementById('part-instruction').innerHTML='<div class="tip"><strong>Remember this spelling trick:</strong> '+w.tip+'</div><p>Say the whole word together, then hide it and have another go.</p>';
+ document.getElementById('part-next').textContent='🙈 Hide it and spell again';
  document.getElementById('part-next').onclick=again;
- let replay=document.getElementById('part-replay');if(replay){replay.textContent='🔊 Hear the word secret again';replay.onclick=()=>say('y6-tip-'+w.w)}
- autoSay('y6-parts-finish',()=>{if(state==='tip')autoSay('y6-tip-'+w.w,()=>{if(state==='tip')autoSay('y6-'+w.w)})});
+ let replay=document.getElementById('part-replay');
+ if(replay){replay.textContent='🔊 Repeat memory trick';replay.onclick=()=>say('y6-tip-'+w.w)}
+ if(narration)autoSay('y6-tip-'+w.w,()=>{if(state==='tip')autoSay('y6-'+w.w)});
 }
-function again(){stop();state='retry';app.innerHTML='<span class="badge">SECOND TRY · WORD '+(i+1)+'</span>'+bar()+'<h2>What can you remember now?</h2><p>The spelling is hidden again. Listen and have another go.</p><button class="alt" onclick="say(\'y6-'+W[i].w+'\')">🔊 Hear word</button><label for="answer" style="display:block;margin-top:15px;font-weight:800">Your spelling</label><input id="answer" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="Your next attempt" onkeydown="if(event.key===\'Enter\')retryCheck()">'+voiceBox()+'<button onclick="retryCheck()">Check spelling →</button><button class="alt" onclick="feedback(false,false)">Show word parts</button>';voiceSet();autoSay('y6-hide',()=>{if(state==='retry')autoSay('y6-'+W[i].w)})}
+function again(){stop();state='retry';app.innerHTML='<span class="badge">SECOND TRY · WORD '+(i+1)+'</span>'+bar()+'<h2>What can you remember now?</h2><p>The spelling is hidden again. Listen and have another go.</p><button class="alt" onclick="say(\'y6-'+W[i].w+'\')">🔊 Hear word</button><label for="answer" style="display:block;margin-top:15px;font-weight:800">Your spelling</label><input id="answer" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="Your next attempt" onkeydown="if(event.key===\'Enter\')retryCheck()">'+voiceBox()+'<button onclick="retryCheck()">Check spelling →</button><button class="alt" onclick="feedback(false,false)">Show word parts</button>';voiceSet();autoSay('y6-'+W[i].w)}
 function retryCheck(){let el=document.getElementById('answer'),v=el.value.toLowerCase().trim().replace(/\s/g,'');if(!v){el.focus();return}results[i].attempts++;let yes=v===W[i].w;if(yes)results[i].learned=true;feedback(yes,yes)}
 function next(){stop();i++;if(i===W.length)finish();else question(true)}
 function finish(){stop();state='done';let first=results.filter(r=>r.first).length,learned=results.filter(r=>r.learned).length;let history=[];try{history=JSON.parse(localStorage.getItem('spellquest-y6-practice')||'[]')}catch(e){}history.push({date:new Date().toISOString().slice(0,10),first,learned,results});localStorage.setItem('spellquest-y6-practice',JSON.stringify(history.slice(-20)));app.innerHTML='<span class="badge">YOUR ADVENTURE IS COMPLETE</span><h2>Look how far you came today! 🌟</h2><p>You explored ten tricky words. The most important achievement is giving yourself the chance to learn.</p><div class="good"><b>'+first+'</b> words remembered straight away · <b>'+learned+'</b> spelled during the challenge</div><h3>Your word journey</h3>'+results.map(r=>'<div class="result"><b>'+r.word+'</b> — '+(r.first?'Remembered straight away':r.learned?'Learned with practice':'Ready to revisit')+'</div>').join('')+'<p class="tip">Spelling a word today is a great start. Revisiting it on another day is how we can discover whether it has stuck.</p>'+voiceBox()+'<button onclick="begin()">Practise again →</button><button class="alt" onclick="say(\'y6-finish\')">🔊 Hear my message</button><button class="alt" onclick="location.href=\'/\'">Back to SpellQuest</button>';voiceSet();autoSay('y6-finish')}
