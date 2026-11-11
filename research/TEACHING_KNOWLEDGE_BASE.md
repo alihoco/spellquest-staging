@@ -372,3 +372,8 @@ See [PSYCHOLOGICAL_SAFETY_AND_FEEDBACK_V1.md](PSYCHOLOGICAL_SAFETY_AND_FEEDBACK_
 4. Test separately words where meaning is essential (homophones) versus a regular spelling with obvious meaning; never withhold needed disambiguating context just to run an experiment.
 
 **Status:** Teaching-research decision and data-schema update, *not yet a live website feature*. Spoken word scoring is intentionally disabled.
+
+
+## 25. First five Year 5–6 pilot word records (11 November 2026)
+
+The initial researched editorial drafts are [../core/seed-word-records-y5-6.json](../core/seed-word-records-y5-6.json), with [review checklist](../core/PILOT_FIRST_FIVE_WORDS.md) and [automated checks](../core/seed-word-records-y5-6.test.cjs). They cover **necessary, embarrass, accommodate, government and environment**, each with curriculum provenance, an original learner-facing definition, contextual example, key spelling targets and targeted correction scripts. They remain **blocked** in the teaching engine until a qualified phonics/structured-literacy expert approves explanations and linguistic mapping and the natural voice audio is checked. No synthetic sound chunks are automatically approved. The existing public demo does not yet consume this curriculum.
