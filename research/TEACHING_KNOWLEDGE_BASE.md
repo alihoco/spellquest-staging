@@ -337,3 +337,38 @@ See [PSYCHOLOGICAL_SAFETY_AND_FEEDBACK_V1.md](PSYCHOLOGICAL_SAFETY_AND_FEEDBACK_
 ## 23. Voice-first teaching and pronunciation validation (11 November 2026)
 
 **Mandatory core specification:** [SPELLMASTER_VOICE_FIRST_TEACHER_CONTRACT_V1.md](SPELLMASTER_VOICE_FIRST_TEACHER_CONTRACT_V1.md). Every task starts with spoken guidance after one user gesture; the learner must not read instructions, although seeing written spelling is necessary for teaching graphemes. Accurate spoken-syllable/phoneme modelling needs educator-approved audio, distinct from written chunks. Optional microphone input may support turn-taking and uncertain whole-word recognition but must never make unvalidated phoneme-level judgements; see the 2018 children's ASA accuracy review and 2024 NCIL teaching guidance linked in that specification. The headless contract lives in [../core/voice-tutor-policy.cjs](../core/voice-tutor-policy.cjs) with tests. This does **not** yet mean the live site has been corrected or clinically validated.
+
+
+## 24. Optional spoken definitions, meaning/context, and minimal speech response (11 November 2026)
+
+**Research question:** Does a meaning explanation or contextual spoken sentence support independent spelling retention beyond equal-time phonics/orthography practice?
+
+### Evidence reviewed
+- IDA Spelling guidance explicitly recommends teaching **word structure, origin and meaning** alongside sound-symbol mapping, syllable patterns and morphology. https://dyslexiaida.org/spelling/
+- University of Michigan DyslexiaHelp lists **semantics** as a core linguistic component of spelling, especially for homophones (e.g. there/their/they're) where spelling depends on meaning/context. https://dyslexiahelp.umich.edu/professionals/dyslexia-and-intervention/spelling/how-should-spelling-be-taught/more-on-spelling/
+- Hilte & Reitsma (2011; online 2010), `Orthographic learning in learning to spell: the roles of semantics and type of practice`, 36 Grade 2 learners and novel nonwords. Semantic information improved spelling accuracy at 1- and 7-day dictation relative to nonwords taught without a semantic representation; spelling practice also beat reading practice. This is small, not a dyslexia-specific trial and cannot establish benefits for every familiar word. https://pubmed.ncbi.nlm.nih.gov/20494368/
+- ASHA written-language disorders guidance includes semantic awareness and word meaning in spelling assessment, especially homophones and meaning-linked word families. https://www.asha.org/practice-portal/clinical-topics/written-language-disorders
+
+### Core teaching decision
+- Provide **"What does it mean?"**, a user-initiated, optional **spoken definition** (brief, everyday language) and a spoken example sentence. Offer visuals/context when helpful without introducing a required reading task.
+- When homophones/homographs require meaning to identify which spelling is requested, give an **unambiguous spoken context sentence as part of the initial HEAR stage**, not only as an optional hint.
+- At explicit EXPLAIN stage, real morpheme meanings and related word families can help the learner *understand why* the word is spelled that way. Do not infer invented etymologies or meanings from syllable chunks.
+- Definitions are not mandatory for every familiar word; keep lesson flow short. No literacy burden: child need not read any instructions to access semantic support.
+- Do **not** treat understanding a definition or selecting a picture as evidence of independent spelling mastery.
+- Use the same verified natural narrator for definition and sentence, and review meaning, example and word sense before publication.
+- Measure optional support's incremental value with matched word sets and delayed **unaided spelling** rather than engagement alone. The evidence suggests possible value, not universal benefit or the optimal duration.
+
+### Spoken-response decision for the core
+- First implementation detects **whether child speech activity occurred**, only with explicit microphone permission, and never claims to recognise the word or correct pronunciation.
+- Use voice activity detection (VAD) with echo suppression/no microphone listening during teacher playback; distinguish speech activity from general noise as far as practical. Local processing is preferred; no recording storage or transmission for this core feature.
+- **Never** withhold lesson progression due to missed/uncertain speech activity. Always present an equally straightforward manual Continue option; no negative feedback.
+- Voice recognition and phoneme-level correctness remain out of scope pending separate validation for children's speech, accents, devices, background noise and privacy.
+- If microphone is disabled, simply invite the learner to say the word aloud or silently and continue. Speaking aloud remains optional, including for children with speech/language differences.
+
+### Testing obligations
+1. Adult and child device/room testing of microphone false positives from narration, siblings and background noise.
+2. Check silence/noise handling and timeout never leaves the learner stranded.
+3. A/B test definitions on word sets where semantic support plausibly matters, using time-matched practice as a control. Pre-register delayed unaided spelling outcome.
+4. Test separately words where meaning is essential (homophones) versus a regular spelling with obvious meaning; never withhold needed disambiguating context just to run an experiment.
+
+**Status:** Teaching-research decision and data-schema update, *not yet a live website feature*. Spoken word scoring is intentionally disabled.
