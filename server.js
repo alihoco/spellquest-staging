@@ -1,0 +1,47 @@
+'use strict';
+const http=require('node:http');
+const crypto=require('node:crypto');
+const PORT=process.env.PORT||10000;
+const ORIGIN='https://spellquest-staging.onrender.com';
+const WORDS=['ship','because','necessary'];
+const CLIPS={
+ welcome:'Hello! Welcome to SpellQuest. Let us learn a word together.',
+ discover:'Unlock the word. Look at its parts. Say them slowly and notice the tricky bit. When you are ready, press build the word.',
+ build:'Build the word. Tap the chunks in the right order, then press check my word.',
+ recall:'Now spell it yourself. The word is hidden. Listen carefully, remember, and type it. Press check spelling when you are ready.',
+ correct:'You remembered it! Fantastic. You spelled that word all by yourself.',
+ retry:'Not quite yet. That is how we learn. Look at the tricky part, then give it another go.',
+ tiles:'Good try! Let us look at the chunks and try putting them in a new order.',
+ restart:'Ready to try again?',
+ finish:'You finished three word challenges. Great work exploring patterns and trying again.',
+ ship:'ship',because:'because',necessary:'necessary'
+};
+const cache=new Map(),limits=new Map();let daily={day:'',count:0};
+function send(res,code,obj,headers={}){res.writeHead(code,{'Content-Type':'application/json','Cache-Control':'no-store',...headers});res.end(JSON.stringify(obj))}
+http.createServer(async(req,res)=>{
+ const origin=req.headers.origin||'';const cors=origin===ORIGIN?{'Access-Control-Allow-Origin':ORIGIN,'Vary':'Origin'}:{};
+ if(req.method==='OPTIONS'){res.writeHead(204,{...cors,'Access-Control-Allow-Methods':'GET, OPTIONS','Access-Control-Allow-Headers':'Content-Type'});return res.end()}
+ const url=new URL(req.url,'https://voice.local');
+ if(url.pathname==='/health')return send(res,200,{ok:true,configured:!!process.env.OPENAI_API_KEY},cors);
+ if(url.pathname!=='/api/voice'||req.method!=='GET')return send(res,404,{error:'Not found'},cors);
+ if(origin!==ORIGIN)return send(res,403,{error:'Origin not allowed'},cors);
+ const clip=url.searchParams.get('clip'),voice=url.searchParams.get('voice')||'marin';
+ if(!Object.hasOwn(CLIPS,clip)||!['marin','cedar'].includes(voice))return send(res,400,{error:'Invalid clip'},cors);
+ if(!process.env.OPENAI_API_KEY)return send(res,503,{error:'Voice service needs an API key'},cors);
+ const ip=(req.headers['x-forwarded-for']||req.socket.remoteAddress||'').toString().split(',')[0].trim();
+ const now=Date.now(),r=limits.get(ip)||{start:now,count:0};
+ if(now-r.start>60000){r.start=now;r.count=0}r.count++;limits.set(ip,r);
+ const today=new Date().toISOString().slice(0,10);if(daily.day!==today)daily={day:today,count:0};
+ if(r.count>25||daily.count>=250)return send(res,429,{error:'Voice demo usage limit reached'},cors);
+ const key=voice+':'+clip;if(cache.has(key)){res.writeHead(200,{'Content-Type':'audio/mpeg','Cache-Control':'public,max-age=86400',...cors});return res.end(cache.get(key))}
+ daily.count++;
+ try{
+ const body={model:'gpt-4o-mini-tts',voice,input:CLIPS[clip],response_format:'mp3',instructions:'You are a natural, warm, calm, friendly educational narrator from England. Speak in clear neutral modern British English, with gentle human intonation, not a cartoon voice, not a computer voice, not exaggerated or patronising. Pronounce spelling words accurately and distinctly, keeping a natural pace.'};
+ const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),20000);
+ let upstream;try{upstream=await fetch('https://api.openai.com/v1/audio/speech',{method:'POST',headers:{Authorization:'Bearer '+process.env.OPENAI_API_KEY,'Content-Type':'application/json'},body:JSON.stringify(body),signal:controller.signal})}finally{clearTimeout(timer)}
+ if(!upstream.ok){console.error('Speech API status',upstream.status);return send(res,502,{error:'Voice generation temporarily unavailable'},cors)}
+ const buf=Buffer.from(await upstream.arrayBuffer());if(buf.length>2e6)return send(res,502,{error:'Voice response too large'},cors);
+ if(cache.size>=80)cache.delete(cache.keys().next().value);cache.set(key,buf);
+ res.writeHead(200,{'Content-Type':'audio/mpeg','Cache-Control':'public,max-age=86400',...cors});res.end(buf);
+ }catch(e){console.error('Speech generation error',e.message);send(res,502,{error:'Voice generation unavailable'},cors)}
+}).listen(PORT,'0.0.0.0',()=>console.log('SpellQuest voice service ready'));
