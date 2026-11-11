@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "date": "2026-11-11",
   "status": "curriculum word selection verified; sequence provisional pending specialist review",
   "source": "https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/239784/English_Appendix_1_-_Spelling.pdf",
@@ -20,7 +20,8 @@
     "after_miss": "targeted_teaching_then_new_independent_attempt; reset review interval as needed",
     "carry_due_reviews_across_weeks": true,
     "max_practice_minutes_suggestion": 10,
-    "delays_are_unvalidated": true
+    "delays_are_unvalidated": true,
+    "notes": "Review intervals are provisional; new word intake is slowed as reviews accumulate. Previously learned words are included throughout the adventure rather than only in separate review weeks."
   },
   "assessment": {
     "weekly": "brief mixed independent spoken dictation, not same-cluster-only",
@@ -600,5 +601,18 @@
       "scheduled_for_pilot": true,
       "not_approved_for_lesson_delivery": true
     }
-  ]
+  ],
+  "mixed_gameplay": {
+    "default_enabled": true,
+    "review_due_before_new_words": true,
+    "session_turn_limit_default": 8,
+    "new_word_limit_default": 2,
+    "review_to_new_ratio_when_due": 2,
+    "limit_new_words_when_reviews_backlogged": true,
+    "allow_familiar_success_moments": true,
+    "do_not_guarantee_or_fake_correctness": true,
+    "revisited_word_task": "independent retrieval from audio before hints, followed by corrective teaching when necessary",
+    "activity_goal": "retention and confidence, not accumulating easy-game points",
+    "evidence_status": "cumulative instruction and retrieval supported; precise ratios and delays need empirical validation"
+  }
 }
