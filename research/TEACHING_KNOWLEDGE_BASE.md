@@ -278,3 +278,8 @@ The product-wide, eight-stage research-informed lesson sequence and adaptive rul
 ## 16. Davis methods and Richard Whitehead — research comparison (11 November 2026)
 
 The review [DAVIS_WHITEHEAD_METHODS_REVIEW.md](DAVIS_WHITEHEAD_METHODS_REVIEW.md) compares Davis visual/experiential approaches, Richard Whitehead's work and the evidence for Structured Literacy. Evidence includes a small Davis-based controlled spelling study (van Staden et al., 2009) but does not support universal claims about visual learning style, disorientation or eliminating systematic retrieval practice. SpellQuest retains explicit sound–spelling, orthography and morphology instruction as the baseline. A proposed **Meaning and Making** branch experiments with visual, tactile and meaning-centred activities; its value must be assessed through delayed unaided spelling and transfer rather than anecdote or engagement alone. Proprietary Davis methods require licensing before being represented as such.
+
+
+## 17. Individualised A/B/C teaching experiments (11 November 2026)
+
+See [ADAPTIVE_TEACHING_EXPERIMENT_PROTOCOL.md](ADAPTIVE_TEACHING_EXPERIMENT_PROTOCOL.md). All pupils retain the established Structured Literacy baseline; we compare core teaching (A), core plus original Davis-inspired Meaning & Making (B), and core plus the same extra time in structured practice (C). The primary outcome is **delayed independent spelling**, not game completion. Randomise matched word sets, repeatedly assess before personalising, and distinguish genuine technique effects from extra teaching time or repeated exposure. This protocol requires specialist and child-research ethics review before learner-level experimentation.
