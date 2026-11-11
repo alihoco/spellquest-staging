@@ -1,0 +1,60 @@
+{
+  "product_name": "Spellmaster",
+  "name_previous": "SpellQuest",
+  "version": "1.0.0",
+  "status": "design policy; learning thresholds pending educational validation",
+  "motto": "Better today than yesterday",
+  "never_compare_with_peers": true,
+  "skill_statuses": [
+    {
+      "id": "discoverer",
+      "evidence": "concept introduced and explored",
+      "counts_as_independent_mastery": false
+    },
+    {
+      "id": "builder",
+      "evidence": "supported construction or recognition with recorded aid",
+      "counts_as_independent_mastery": false
+    },
+    {
+      "id": "independent_speller",
+      "evidence": "correctly produces spelling unaided after instruction",
+      "counts_as_independent_mastery": false
+    },
+    {
+      "id": "master",
+      "evidence": "delayed independent recall across validated examples",
+      "counts_as_independent_mastery": true
+    },
+    {
+      "id": "enduring_master",
+      "evidence": "later delayed retention and appropriate transfer",
+      "counts_as_independent_mastery": true
+    }
+  ],
+  "reward_policy": {
+    "allow": [
+      "optional coins",
+      "story progress",
+      "private trophies",
+      "realm unlocks",
+      "personal bests",
+      "positive pattern-based feedback"
+    ],
+    "disallow": [
+      "class rankings",
+      "global leaderboards",
+      "age norm shame",
+      "speed-only mastery",
+      "streak loss",
+      "trophy revocation for forgetfulness",
+      "mastery from assisted tiles or multiple-choice"
+    ],
+    "refresh_when_forgotten": true,
+    "age_independent_skill_titles": true,
+    "age_respectful_visual_theme": true
+  },
+  "scope": "Skill- or pattern-specific mastery; no global terminal maximum level",
+  "measurement": "Delayed unaided spelling, not practice points",
+  "research_validated_thresholds": false
+}
