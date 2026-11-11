@@ -14,7 +14,24 @@ const CLIPS={
  tiles:'Good try! Let us look at the chunks and try putting them in a new order.',
  restart:'Ready to try again?',
  finish:'You finished three word challenges. Great work exploring patterns and trying again.',
- ship:'ship',because:'because',necessary:'necessary'
+ ship:'ship',because:'because',necessary:'necessary',
+ 'y6-welcome':'Welcome to your spelling adventure. There are ten words from the Year Five and Six spelling list. Listen to each word and spell it as best you can. There are no marks or rankings. We are finding out what you already know, and what we can learn together.',
+ 'y6-instruction':'Listen to the word. You can press hear it again as many times as you like. Type the spelling when you are ready.',
+ 'y6-try':'That was a good attempt. Let us discover how this word is put together. Then you can have another go.',
+ 'y6-correct':'You got it! You remembered that spelling independently. Well done!',
+ 'y6-improved':'Look at that! You have learned something new. Every attempt helps us grow.',
+ 'y6-next':'Ready for the next word? You are doing brilliantly by giving these words a go.',
+ 'y6-finish':'You completed your spelling adventure. Look how much you practised. Your next challenge is to remember these words again another day.',
+ 'y6-necessary':'necessary',
+ 'y6-embarrass':'embarrass',
+ 'y6-accommodate':'accommodate',
+ 'y6-government':'government',
+ 'y6-foreign':'foreign',
+ 'y6-familiar':'familiar',
+ 'y6-environment':'environment',
+ 'y6-privilege':'privilege',
+ 'y6-rhythm':'rhythm',
+ 'y6-temperature':'temperature'
 };
 const cache=new Map(),limits=new Map();let daily={day:'',count:0};
 function send(res,code,obj,headers={}){res.writeHead(code,{'Content-Type':'application/json','Cache-Control':'no-store',...headers});res.end(JSON.stringify(obj))}
