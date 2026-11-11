@@ -34,41 +34,45 @@ const CLIPS={
  'y6-temperature':'temperature'
 };
 
-// Curated spelling-parts instruction: the displayed chunks are LETTER GROUPS, not
-// a promise that every chunk corresponds to one spoken sound or syllable.
-const Y6_PARTS={
- necessary:['ne','ces','sa','ry'],embarrass:['em','bar','rass'],
- accommodate:['ac','com','mo','date'],government:['gov','ern','ment'],
- foreign:['for','eign'],familiar:['fa','mil','iar'],
- environment:['en','viron','ment'],privilege:['priv','i','lege'],
- rhythm:['rhyth','m'],temperature:['tem','per','a','ture']
+// Teaching pronunciations are approximate, deliberately clear spoken chunks.
+// In irregular spellings, the highlighted printed group may not exactly match
+// one spoken syllable. The full-word pronunciation and spelling rule remain primary.
+const Y6_SOUND={
+ necessary:['neh','sess','uh','ree'],
+ embarrass:['em','bar','rass'],
+ accommodate:['uh','kom','uh','dayt'],
+ government:['guv','ern','ment'],
+ foreign:['for','in'],
+ familiar:['fuh','mill','yuh'],
+ environment:['en','vy','run','ment'],
+ privilege:['priv','uh','lij'],
+ rhythm:['rith','um'],
+ temperature:['tem','pruh','chuh']
 };
 const Y6_TIPS={
- necessary:'This word has one letter C and two letters S. Think of a shirt: one collar and two sleeves.',
- embarrass:'Look for two R letters and two S letters. Those are the two pairs to remember.',
- accommodate:'Notice the two C letters and the two M letters.',
- government:'Think of the smaller word govern. Keep the letter N when you add ment.',
- foreign:'Remember the unusual ending: E I G N. It is also in the word reign.',
- familiar:'Think of family to remember the spelling at the start.',
- environment:'First remember environ, then add M E N T.',
- privilege:'The ending is L E G E, not L E D G E.',
- rhythm:'It begins R H, and it uses the letter Y. This word has an unusual spelling pattern.',
- temperature:'Remember the letter A before the final T U R E.'
+ necessary:'Listen to the word necessary. The sound can help us remember its rhythm, but we still need the spelling trick. One C and two S letters. Think of a shirt with one collar and two sleeves.',
+ embarrass:'It sounds like em bar ass, but the spelling has two R letters and two S letters.',
+ accommodate:'Listen to accommodate. The spelling has a double C and a double M. These pairs need special attention.',
+ government:'Listen to government. Think of govern, then add ment. Keep the N.',
+ foreign:'Foreign has an unusual ending. It sounds different from its letters. Remember E I G N.',
+ familiar:'Familiar is related to family. This connection helps explain the spelling.',
+ environment:'Think of the word environ, then add ment. The written parts help when the sounds change.',
+ privilege:'The ending sounds like lij, but the spelling uses L E G E. Remember this unusual ending.',
+ rhythm:'Rhythm has an unusual spelling. The first sound is written R H. The vowel sound is written with Y.',
+ temperature:'Temperature is often pronounced quickly. Remember the letter A before the ending T U R E.'
 };
-CLIPS['y6-parts-intro']='Let us work through the spelling in small pieces. These colourful boxes are groups of letters to remember, not always separate sounds. I will read the letters in each box. Please say them with me, then press I said it to move on.';
-CLIPS['y6-parts-repeat']='Your turn! Say those letters aloud, or in your head if you prefer. Then choose I said it to keep going.';
-CLIPS['y6-parts-finish']='Well done practising the pieces. Now listen to our memory trick, then we will hide the spelling and give it another go.';
-CLIPS['y6-hide']='Time to try again. The word is hidden. Listen to the whole word, then spell it from memory. You can replay the word whenever you need to.';
-CLIPS['y6-next-instruction']='You can move to the next word, or hear this explanation again. You are in charge of the pace.';
-CLIPS['y6-result-intro']='Look at your progress! These are words you tried today. The ones you worked through are opportunities to remember even more next time.';
-for(const [word,parts] of Object.entries(Y6_PARTS)){
+CLIPS['y6-parts-intro']='Let us try saying the sounds together. Watch each part light up.';
+CLIPS['y6-parts-repeat']='Your turn. Say the parts together, then try the whole word.';
+CLIPS['y6-parts-finish']='Here is the spelling trick.';
+CLIPS['y6-hide']='Now hide the word and try spelling it again.';
+CLIPS['y6-next-instruction']='Ready for your next word?';
+CLIPS['y6-result-intro']='Look at how far you have come today.';
+for(const [word,sounds] of Object.entries(Y6_SOUND)){
  CLIPS['y6-tip-'+word]=Y6_TIPS[word];
- for(let n=0;n<parts.length;n++){
-  const letters=parts[n].toUpperCase().split('').join(', ');
-  CLIPS['y6-part-'+word+'-'+n]='Here is spelling piece '+(n+1)+'. The letters are '+letters+'. Now say the letters with me: '+letters+'. Your turn.';
+ for(let n=0;n<sounds.length;n++){
+  CLIPS['y6-part-'+word+'-'+n]=''+sounds[n]+'.';
  }
 }
-
 const cache=new Map(),limits=new Map();let daily={day:'',count:0};
 function send(res,code,obj,headers={}){res.writeHead(code,{'Content-Type':'application/json','Cache-Control':'no-store',...headers});res.end(JSON.stringify(obj))}
 http.createServer(async(req,res)=>{
@@ -85,11 +89,11 @@ http.createServer(async(req,res)=>{
  const now=Date.now(),r=limits.get(ip)||{start:now,count:0};
  if(now-r.start>60000){r.start=now;r.count=0}r.count++;limits.set(ip,r);
  const today=new Date().toISOString().slice(0,10);if(daily.day!==today)daily={day:today,count:0};
- if(r.count>25||daily.count>=250)return send(res,429,{error:'Voice demo usage limit reached'},cors);
+ if(r.count>80||daily.count>=250)return send(res,429,{error:'Voice demo usage limit reached'},cors);
  const key=voice+':'+clip;if(cache.has(key)){res.writeHead(200,{'Content-Type':'audio/mpeg','Cache-Control':'public,max-age=86400',...cors});return res.end(cache.get(key))}
  daily.count++;
  try{
- const body={model:'gpt-4o-mini-tts',voice,input:CLIPS[clip],response_format:'mp3',instructions:'You are a natural, warm, calm, friendly educational narrator from England. Speak in clear neutral modern British English, with gentle human intonation, not a cartoon voice, not a computer voice, not exaggerated or patronising. Pronounce spelling words accurately and distinctly, keeping a natural pace.'};
+ const body={model:'gpt-4o-mini-tts',voice,input:CLIPS[clip],response_format:'mp3',instructions:'You are a natural, warm, calm, friendly educational narrator from England. Speak in clear neutral modern British English, with gentle human intonation, not a cartoon voice, not a computer voice, not exaggerated or patronising. For very short phonetic chunks, pronounce the spoken sound only, never spell letters aloud. Pronounce spelling words accurately and distinctly, keeping a natural pace.'};
  const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),20000);
  let upstream;try{upstream=await fetch('https://api.openai.com/v1/audio/speech',{method:'POST',headers:{Authorization:'Bearer '+process.env.OPENAI_API_KEY,'Content-Type':'application/json'},body:JSON.stringify(body),signal:controller.signal})}finally{clearTimeout(timer)}
  if(!upstream.ok){console.error('Speech API status',upstream.status);return send(res,502,{error:'Voice generation temporarily unavailable'},cors)}
