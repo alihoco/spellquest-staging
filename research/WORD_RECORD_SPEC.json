@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.2.0",
+  "schema_version": "1.3.0",
   "status": "draft specification — human review required",
   "word_record": {
     "id": "en-gb-necessary",
@@ -61,6 +61,22 @@
       "spelling_teacher": null,
       "audio_reviewer": null,
       "approved": false
+    },
+    "definition": {
+      "text": null,
+      "spoken_audio_id": null,
+      "example_sentence": null,
+      "example_audio_id": null,
+      "meaning_review_status": "pending",
+      "optional_for_learner": true,
+      "required_when": "homograph_or_homophone_ambiguity",
+      "not_a_substitute_for_spelling_instruction": true
+    },
+    "semantic_support": {
+      "reviewed_related_words": [],
+      "reviewed_morpheme_meanings": [],
+      "illustration_optional": true,
+      "delayed_recall_evaluation": true
     }
   },
   "release_gates": [
@@ -76,7 +92,9 @@
     "Allow spelling production with a complete on-screen alphabet independent of physical keyboard familiarity",
     "Compare assisted activities by delayed unaided spelling outcomes rather than game completion",
     "Do not make keyboard skill a prerequisite for spelling practice or mastery",
-    "Offer age-respectful tile interactions to older learners and full-alphabet independent tapping to young learners"
+    "Offer age-respectful tile interactions to older learners and full-alphabet independent tapping to young learners",
+    "Definitions and example sentences must be accurate, contextual, age respectful and audio narrated if offered",
+    "A definition may support semantic understanding but cannot count as spelling mastery"
   ],
   "research_links": [
     "research/TEACHING_KNOWLEDGE_BASE.md",
