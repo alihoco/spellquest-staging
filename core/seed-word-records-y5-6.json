@@ -111,7 +111,8 @@
         "version": "0.1-draft",
         "author": "Spellmaster curriculum preparation",
         "source_type": "curriculum_and_dictionary"
-      }
+      },
+      "status": "linguistic_review"
     },
     {
       "id": "en-gb-y56-embarrass",
@@ -220,7 +221,8 @@
         "version": "0.1-draft",
         "author": "Spellmaster curriculum preparation",
         "source_type": "curriculum_and_dictionary"
-      }
+      },
+      "status": "linguistic_review"
     },
     {
       "id": "en-gb-y56-accommodate",
@@ -330,7 +332,8 @@
         "version": "0.1-draft",
         "author": "Spellmaster curriculum preparation",
         "source_type": "curriculum_and_dictionary"
-      }
+      },
+      "status": "linguistic_review"
     },
     {
       "id": "en-gb-y56-government",
@@ -436,7 +439,8 @@
         "version": "0.1-draft",
         "author": "Spellmaster curriculum preparation",
         "source_type": "curriculum_and_dictionary"
-      }
+      },
+      "status": "linguistic_review"
     },
     {
       "id": "en-gb-y56-environment",
@@ -542,7 +546,8 @@
         "version": "0.1-draft",
         "author": "Spellmaster curriculum preparation",
         "source_type": "curriculum_and_dictionary"
-      }
+      },
+      "status": "linguistic_review"
     }
   ]
 }
