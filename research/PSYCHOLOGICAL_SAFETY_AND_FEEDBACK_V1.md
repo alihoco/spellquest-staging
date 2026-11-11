@@ -79,3 +79,31 @@
 - Easy pause/skip, age-respectful theme and independent input options.
 - Real learners including dyslexic children and adults provide feedback; accessibility and emotion checks pass.
 - Explicit checks against made-up praise, false mastery and comparing people.
+
+
+## Proportionate praise and reward calibration — amendment (11 November 2026)
+
+**Rule: Praise must be truthful, specific and proportional to the achievement.** A positive experience does not mean praising every action. Distinguish calm supportive guidance from earned achievement recognition.
+
+| Observable event | Appropriate response | Reward treatment |
+|---|---|---|
+| Learner listens, taps a control, requests a hint | Neutral, clear acknowledgement: "Here is the next part." | No mastery praise or coins merely for clicks |
+| Learner makes a serious attempt, including an incorrect spelling | Warm task-focused response: "Let's look at the tricky part." Recognise a real strategy if observed | No failure signal; no invented success claim |
+| Learner independently corrects a specific previously missed feature | Specific, modest recognition: "You remembered the second s this time." | Small optional recognition, not a mastery badge |
+| Learner spells a word unaided immediately after instruction | Moderate, accurate praise: "You spelled it without the clues." | Visible progress; not labelled long-term mastery |
+| Learner recalls a previously difficult word independently days later | Stronger recognition: "You remembered this from last week." | Meaningful progress towards a skill Master milestone |
+| Learner demonstrates retained mastery across multiple words and suitable delays, with transfer where appropriate | Significant, occasional celebration anchored to the evidence | Master trophy/realm advancement; not tied to age norms |
+
+### Interaction and voice guardrails
+
+- Use a calm, conversational voice; **do not** use escalating exclamations, confetti, fanfares, animations or narrator praise after every response.
+- Encouragement should be frequent enough to sustain emotional safety, but not constantly delivered as a reward. A simple "Let's try another way" is often better than "Amazing!".
+- Distinguish **effort observed** from effort assumed; never say "You worked so hard" when only one quick click is known.
+- Mark incorrect spellings privately and accurately, without personal criticism; provide a useful correction or a smaller achievable next step.
+- Keep *practice tokens* and *evidence-based mastery trophies* separate. No medals, certificates or "mastered" labels for merely recognising a supplied answer.
+- Major celebration should be rare enough to feel significant, but **achievable at every skill level**. A foundational sound-pattern mastery is worthy of the same respect as advanced morphology mastery.
+- Learners can choose low-stimulation feedback, reduced animation and quieter recognition; this should not reduce their opportunities to learn.
+- Do not use streak pressure, losses or hidden difficulty adjustments to manufacture frequent wins.
+- The sizes of rewards, frequency and wordings are design hypotheses requiring feedback studies with learners and review by specialist educators. We must not claim an empirically proven optimal reward schedule.
+
+**Product test:** For each learner-visible praise or reward event, the implementation must be able to answer: *What specific, observable achievement justified this response?* If none, give neutral helpful narration instead.
