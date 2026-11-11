@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "status": "draft specification — human review required",
   "word_record": {
     "id": "en-gb-necessary",
@@ -71,10 +71,40 @@
     "Include independent spelling and specific corrective feedback",
     "Measure delayed recall separately from immediate assisted performance",
     "Never assign fixed learning-style identity",
-    "Keep visual age and spelling attainment independent"
+    "Keep visual age and spelling attainment independent",
+    "Do not count exact-letter tile or multiple-choice recognition success as independent spelling mastery",
+    "Allow spelling production with a complete on-screen alphabet independent of physical keyboard familiarity",
+    "Compare assisted activities by delayed unaided spelling outcomes rather than game completion"
   ],
   "research_links": [
     "research/TEACHING_KNOWLEDGE_BASE.md",
     "research/EVIDENCE_REGISTER.csv"
-  ]
+  ],
+  "activity_modes": {
+    "arrange_exact_letters": {
+      "purpose": "supported letter sequencing",
+      "assistance": "high",
+      "independent_mastery_evidence": false,
+      "duplicates_required": true,
+      "requires_accessible_tap": true
+    },
+    "choose_one_of_three": {
+      "purpose": "orthographic error discrimination",
+      "assistance": "high",
+      "independent_mastery_evidence": false,
+      "correct_option_count": 1,
+      "alternatives_count": 2,
+      "specialist_reviewed_distractors": true
+    },
+    "tap_full_alphabet": {
+      "purpose": "independent spelling production without physical keyboard",
+      "assistance": "none (no target letter preview)",
+      "independent_mastery_evidence": true
+    },
+    "physical_keyboard": {
+      "purpose": "independent spelling production",
+      "assistance": "none (no target letter preview)",
+      "independent_mastery_evidence": true
+    }
+  }
 }
