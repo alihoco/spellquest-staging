@@ -33,6 +33,42 @@ const CLIPS={
  'y6-rhythm':'rhythm',
  'y6-temperature':'temperature'
 };
+
+// Curated spelling-parts instruction: the displayed chunks are LETTER GROUPS, not
+// a promise that every chunk corresponds to one spoken sound or syllable.
+const Y6_PARTS={
+ necessary:['ne','ces','sa','ry'],embarrass:['em','bar','rass'],
+ accommodate:['ac','com','mo','date'],government:['gov','ern','ment'],
+ foreign:['for','eign'],familiar:['fa','mil','iar'],
+ environment:['en','viron','ment'],privilege:['priv','i','lege'],
+ rhythm:['rhyth','m'],temperature:['tem','per','a','ture']
+};
+const Y6_TIPS={
+ necessary:'This word has one letter C and two letters S. Think of a shirt: one collar and two sleeves.',
+ embarrass:'Look for two R letters and two S letters. Those are the two pairs to remember.',
+ accommodate:'Notice the two C letters and the two M letters.',
+ government:'Think of the smaller word govern. Keep the letter N when you add ment.',
+ foreign:'Remember the unusual ending: E I G N. It is also in the word reign.',
+ familiar:'Think of family to remember the spelling at the start.',
+ environment:'First remember environ, then add M E N T.',
+ privilege:'The ending is L E G E, not L E D G E.',
+ rhythm:'It begins R H, and it uses the letter Y. This word has an unusual spelling pattern.',
+ temperature:'Remember the letter A before the final T U R E.'
+};
+CLIPS['y6-parts-intro']='Let us work through the spelling in small pieces. These colourful boxes are groups of letters to remember, not always separate sounds. I will read the letters in each box. Please say them with me, then press I said it to move on.';
+CLIPS['y6-parts-repeat']='Your turn! Say those letters aloud, or in your head if you prefer. Then choose I said it to keep going.';
+CLIPS['y6-parts-finish']='Well done practising the pieces. Now listen to our memory trick, then we will hide the spelling and give it another go.';
+CLIPS['y6-hide']='Time to try again. The word is hidden. Listen to the whole word, then spell it from memory. You can replay the word whenever you need to.';
+CLIPS['y6-next-instruction']='You can move to the next word, or hear this explanation again. You are in charge of the pace.';
+CLIPS['y6-result-intro']='Look at your progress! These are words you tried today. The ones you worked through are opportunities to remember even more next time.';
+for(const [word,parts] of Object.entries(Y6_PARTS)){
+ CLIPS['y6-tip-'+word]=Y6_TIPS[word];
+ for(let n=0;n<parts.length;n++){
+  const letters=parts[n].toUpperCase().split('').join(', ');
+  CLIPS['y6-part-'+word+'-'+n]='Here is spelling piece '+(n+1)+'. The letters are '+letters+'. Now say the letters with me: '+letters+'. Your turn.';
+ }
+}
+
 const cache=new Map(),limits=new Map();let daily={day:'',count:0};
 function send(res,code,obj,headers={}){res.writeHead(code,{'Content-Type':'application/json','Cache-Control':'no-store',...headers});res.end(JSON.stringify(obj))}
 http.createServer(async(req,res)=>{
