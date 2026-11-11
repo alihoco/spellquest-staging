@@ -17,6 +17,7 @@ function browserFallback(text){
  speechSynthesis.speak(u);
 }
 function clipForText(text){
+ text=String(text).replace(/<[^>]*>/g,'').replace(/^[^A-Za-z]+/u,'').trim();
  if(['ship','because','necessary'].includes(text))return text;
  if(text.startsWith('Unlock the word'))return 'discover';
  if(text.startsWith('Build the word'))return 'build';
