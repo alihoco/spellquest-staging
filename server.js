@@ -61,7 +61,13 @@ const Y6_TIPS={
  rhythm:'Rhythm has an unusual spelling. The first sound is written R H. The vowel sound is written with Y.',
  temperature:'Temperature is often pronounced quickly. Remember the letter A before the ending T U R E.'
 };
-CLIPS['y6-parts-intro']='Let us try saying the sounds together. Watch each part light up.';
+CLIPS['y6-demo-start']='Welcome to your spelling adventure. Listen to each word and type how you think it is spelled. You can listen again whenever you like. Ready? Here is your first word.';
+CLIPS['y6-demo-word']='Listen to the word. Type the spelling when you are ready.';
+CLIPS['y6-demo-repeat']='Listen to the whole word and say it aloud with me.';
+CLIPS['y6-demo-parts']='Now listen to the smaller spoken parts. Watch each one light up, and say it with me.';
+CLIPS['y6-demo-retry']='Now the word is hidden. Listen again, and try spelling it yourself.';
+CLIPS['y6-demo-done']='That was great practice. You can come back and try again another day.';
+CLIPS['y6-parts-intro']='Now listen to the sounds. Watch the parts light up and say them together.';
 CLIPS['y6-parts-repeat']='Your turn. Say the parts together, then try the whole word.';
 CLIPS['y6-parts-finish']='Here is the spelling trick.';
 CLIPS['y6-hide']='Now hide the word and try spelling it again.';
