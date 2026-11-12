@@ -60,3 +60,7 @@ const attempt = E.gradeAttempt({
 
 ## Audio-first contract (separate from live prototype)
 See [../research/SPELLMASTER_VOICE_FIRST_TEACHER_CONTRACT_V1.md](../research/SPELLMASTER_VOICE_FIRST_TEACHER_CONTRACT_V1.md), [voice-tutor-policy.cjs](voice-tutor-policy.cjs) and [voice-tutor-policy.test.cjs](voice-tutor-policy.test.cjs). This guards voice turn-taking and forbids unvalidated automated phoneme grading. The existing staging page is not yet wired to this headless policy; its narration and microphone behaviour have not passed the target child/device acceptance tests.
+
+
+## Mandatory diagnostic correction loop
+See [../research/DIAGNOSTIC_FEEDBACK_LOOP_V1.md](../research/DIAGNOSTIC_FEEDBACK_LOOP_V1.md). Every learning activity must **observe, identify, explain, equip, retry, revisit, adapt**. Give precise reviewed feedback when supported, admit uncertainty where not, and vary approach on repeated errors. Immediate assisted success never substitutes for delayed independent recall. Staging implements some pattern-matched feedback in [../spelling-feedback.js](../spelling-feedback.js), but this is not a universal validated tutor.
