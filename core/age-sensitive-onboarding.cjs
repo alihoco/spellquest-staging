@@ -19,8 +19,8 @@ function onboardingRecommendation({birthMonth,asOf='2026-11-12',themeOverride=nu
  const suggestion=age<=5?['playful','foundation']:
  age<=7?['young_adventure','year1_2']:
  age<=9?['discovery','year2_3']:
- age<=11?['quest','year3_4']:
- age<=13?['explorer','year5_6']:
+ age<=10?['quest','year3_4']:
+ age<=12?['explorer','year5_6']:
  age<=16?['modern_adventure','secondary_foundations']:
  ['minimal','adult_diagnostic'];
  return {ageApproximateYears:age,theme:themeOverride||suggestion[0],
