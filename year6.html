@@ -47,7 +47,7 @@ label{display:block;font-weight:800;margin:14px 0 5px}
 <body><main><header><a class="logo" href="/">✨ Spellmaster</a><span class="muted small">Better today than yesterday</span></header>
 <section class="hero"><span class="eyebrow">YOUR OWN SPELLING ADVENTURE</span><h1>Hear it. Say it. Spell it.</h1><p>Learn Year 6 spellings one step at a time, with a friendly voice to explain every stage.</p></section>
 <section class="panel" id="app"></section>
-<div class="footer">Year 5–6 statutory spelling words · Your progress stays in this browser · No rankings or comparisons</div></main>
+<div class="footer">Year 5–6 spelling adventures · Learn at your own pace · Your progress stays in this browser</div></main>
 <script>
 const WORDS=[
  {word:'necessary',spelling:['ne','ces','sa','ry'],sounds:['ness','uh','ser','ee']},
@@ -126,15 +126,15 @@ function progress(){return '<div class="progress" role="progressbar" aria-label=
 function welcome(){
  stop();stage='welcome';
  app.innerHTML='<span class="eyebrow">WELCOME, WORD EXPLORER!</span><h2>Your adventure starts here 🌟</h2>'+
- '<p>We’ll practise ten words together. I will say the word, help you hear it slowly and show you any tricky spelling patterns. You can always listen again.</p>'+
+ '<p>We’ll explore spellings at your own pace. Words you already know move into your collection, and tricky words get extra help. You can listen again or finish whenever you like.</p>'+
  '<p>We’re not testing how you compare to anybody else. We’re finding out what you can learn.</p>'+
  soundVoice()+'<div class="actions"><button onclick="begin()">▶ Start and hear your welcome</button></div>'+
  '<p class="muted small">Tap Start once to enable audio. Your narrator explains the next steps aloud.</p>';
- voiceSet();warm(['y6-v08-welcome','y6-v08-prompt','y6-necessary','y6-v08-wrong']);
+ voiceSet();warm(['spellmaster-adaptive-welcome-v1','y6-v08-prompt','y6-necessary','y6-v08-wrong']);
 }
 async function introAudio(){
  stop();const t=ticket;
- const ok=await talk(['y6-v08-welcome'],t);
+ const ok=await talk(['spellmaster-adaptive-welcome-v1'],t);
  if(ok&&t===ticket&&stage==='welcome')question(true);
 }
 function begin(){idx=0;first=0;results=[];narration=true;localStorage.setItem('spellquest-audio-first','on');introAudio()}
@@ -273,7 +273,7 @@ begin=function(){
 };
 introAudio=async function(){
  stop();const t=ticket;
- const ok=await talk(['y6-v08-welcome'],t);
+ const ok=await talk(['spellmaster-adaptive-welcome-v1'],t);
  if(ok&&t===ticket&&stage==='welcome')adaptiveStartWord();
 };
 check=function(retry){
