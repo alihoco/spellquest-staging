@@ -382,3 +382,18 @@ The initial researched editorial drafts are [../core/seed-word-records-y5-6.json
 ## 26. Short frequent sessions, 3-word weekly hypothesis and Word Vault (12 November 2026)
 
 Full research and game-design policy: [SESSION_DOSAGE_AND_WORD_VAULT_V1.md](SESSION_DOSAGE_AND_WORD_VAULT_V1.md). The IDA recommends only a few new irregular words at once; 2023 distributed-spelling evidence favours practice across days for 28-day retention, and a 2026 classroom meta-analysis supports context-dependent retrieval, spacing and interleaving. No research establishes exactly **three new words each week** or **five to eight minutes** as optimal for all dyslexic learners. These are learner-adjustable *pilot defaults*. Old words should reappear throughout play. The Word Vault allows words to be collected, protected, rescued and mastered, while preserving earned achievements and separating storytelling from actual unaided retained spelling. Daily reminders are proposed opt-in guardian-controlled product functionality, not active scheduled tasks.
+
+
+## 27. Adaptive intake: known words do not consume teaching time (12 November 2026)
+
+**Decision:** Three new words per week remains a school-friendly starting suggestion, not a ceiling or quota. Spellmaster should *offer* additional new words when the learner repeatedly demonstrates independent prior knowledge, the review workload is manageable, and the learner wishes to continue. Do not make an unexpected word correct on first attempt equal to durable mastery; collect it as 'known on first unaided attempt' and schedule a brief delayed retrieval.
+
+Research basis:
+- IDA structured literacy recommends diagnostic, responsive pacing and cumulative instruction: https://dyslexiaida.org/structured-literacy-effective-instruction-for-students-with-dyslexia-and-related-reading-difficulties/
+- Krambeer et al. (2024), Dutch vocabulary adaptive study: removing first-try-correct items from intensive practice improved efficiency without compromising retention in that non-dyslexic-spelling setting: https://escholarship.org/uc/item/1jh7z8tp
+- 2026 applied cognitive study found targeted pretesting to identify prior knowledge and remove already-known material improved learning efficiency, particularly for moderate/high prior-knowledge learners: https://doi.org/10.1037/xap0000540
+- McNaughton et al. (1994) spelling review cautions that limiting new words at once and periodic review can help some learners with learning disabilities: https://doi.org/10.2307/1511072
+
+Implementation: [../core/adaptive-word-intake.cjs](../core/adaptive-word-intake.cjs) offers new teaching based on first-try knowledge, recent independent accuracy, review backlog, short-session fatigue guardrails and learner choice. [Tests](../core/adaptive-word-intake.test.cjs) check the branching logic. A first correct result skips redundant teaching but retains a delayed check; errors lead to focused guidance, not relentless extra words. The provisional 8-minute soft session limit, 12-minute hard break suggestion and six-new-word guardrail are **design hypotheses**, not validated optimal dosage. No age-based spelling ceilings. This headless logic is not yet wired to the live staging game.
+
+**Never turn adaptation into pressure:** If a child has three correct spellings, the teacher can say, 'You already know those. Would you like another?' Continuing is always optional and session duration remains short. The Word Vault records genuine first-try knowledge separately from delayed mastery.
