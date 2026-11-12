@@ -48,6 +48,7 @@ label{display:block;font-weight:800;margin:14px 0 5px}
 <section class="hero"><span class="eyebrow">YOUR OWN SPELLING ADVENTURE</span><h1>Hear it. Say it. Spell it.</h1><p>Learn Year 6 spellings one step at a time, with a friendly voice to explain every stage.</p></section>
 <section class="panel" id="app"></section>
 <div class="footer">Year 5–6 spelling adventures · Learn at your own pace · Your progress stays in this browser</div></main>
+<script src="/spelling-feedback.js"></script>
 <script>
 const WORDS=[
  {word:'necessary',spelling:['ne','ces','sa','ry'],sounds:['ness','uh','ser','ee']},
@@ -189,14 +190,10 @@ async function reviewAudio(){
  if(!(await pause(pace==='extra'?1700:900,t)))return;
  host.innerHTML='<div class="note"><strong>Now look at the correct spelling.</strong></div>'+
  '<div class="spelling-row">'+w.spelling.map(x=>'<span>'+x+'</span>').join('')+'</div>'+
- '<div class="tip"><strong>One thing to remember</strong><p>'+({
- necessary:'One C and two S letters — one collar and two sleeves.',
- embarrass:'Two R letters and two S letters.',
- accommodate:'Two C letters and two M letters.',
- government:'Keep the N in govern when adding ment.',
- environment:'Keep the N in environ before ment.'
- }[w.word]||'Look carefully at the spelling pattern.')+'</p></div>';
- ok=await speak('y6-tip-'+w.word,t);
+ '<div class="tip"><strong>Notice this part</strong><p>'+errorFeedbackForCurrent().text+'</p></div>';
+ const feedback=errorFeedbackForCurrent();
+ const tip=host.querySelector('.tip');if(tip)tip.innerHTML='<strong>Notice this part</strong><p>'+feedback.text+'</p>';
+ ok=await speak(feedback.clip,t);
  if(ok&&t===ticket&&stage==='review')setStatus('Ready to try spelling again.');
 }
 function shortReview(){
@@ -205,14 +202,14 @@ function shortReview(){
  app.innerHTML='<span class="eyebrow">ONE QUICK REMINDER</span>'+progress()+
  '<h2>Let’s focus on one detail</h2>'+
  '<div class="spelling-row">'+w.spelling.map(x=>'<span>'+x+'</span>').join('')+'</div>'+
- '<p>Take a moment to look at the correct spelling, then have another go.</p>'+
+ '<p>'+errorFeedbackForCurrent().text+'</p>'+
  soundVoice()+
  '<div class="actions"><button onclick="retry()">🙈 Hide and try once more</button>'+
  '<button class="alt" onclick="next()">Come back to this later</button></div>';
  voiceSet();if(narration)shortReviewAudio();
 }
 async function shortReviewAudio(){
- stop();const t=ticket;await speak('y6-short-retry-'+WORDS[idx].word,t);
+ stop();const t=ticket;await speak(errorFeedbackForCurrent().clip,t);
 }
 function retry(){
  stop();stage='retry';
@@ -243,6 +240,8 @@ welcome();
 // The formal curriculum and sound teaching gates remain separate.
 const ADAPTIVE_KEY='spellmaster-staging-intake-v1';
 let runCount=0,runStart=0,runFirst=0,runNew=0,runSeen=new Set(),runResults=[],runReview=false;
+let lastErrorFeedback=null;
+function errorFeedbackForCurrent(){return lastErrorFeedback||{clip:'spellmaster-error-generic-middle',text:'Look at the middle of the correct word. Then have another go.'}}
 function adaptiveToday(){const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}
 function adaptiveDatePlus(date,n){const d=new Date(date+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)}
 function adaptiveLoad(){try{return JSON.parse(localStorage.getItem(ADAPTIVE_KEY)||'{}')}catch(e){return {}}}
@@ -289,6 +288,7 @@ check=function(retry){
  const guess=input.value.toLowerCase().replace(/[^a-z]/g,'');
  if(!guess){input.focus();return}
  const word=WORDS[idx].word,ok=guess===word;
+ if(!ok)lastErrorFeedback=window.SpellmasterFeedback.diagnose(word,guess);
  if(!retry){
   results[idx]={word,initial:ok,learned:ok,attempts:1};
   runResults.push({word,initial:ok,learned:ok,review:runReview});
