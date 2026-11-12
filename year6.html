@@ -79,7 +79,7 @@ const makeUrl=clip=>{
  }
  return cached.get(key);
 };
-function warm(clips){clips.forEach(c=>makeUrl(c).catch(()=>{}))}
+function warm(clips){/* Deliberately disabled concurrent TTS prefetch: welcome audio takes priority. */}
 function setStatus(msg){const el=$('audio-status');if(el)el.textContent=msg}
 function stop(){
  ticket++;
@@ -89,7 +89,7 @@ function stop(){
 }
 async function speak(clip,t=ticket){
  if(t!==ticket)return false;
- setStatus('🔊 Narrator speaking…');
+ setStatus('🔊 Preparing your narrator…');
  try{
   const url=await makeUrl(clip);if(t!==ticket)return false;
   const player=new Audio(url);activePlayer=player;
@@ -99,7 +99,7 @@ async function speak(clip,t=ticket){
   if(t===ticket){activePlayer=null;setStatus(ok?'':'The voice stopped. Please replay this step.')}
   return t===ticket&&ok;
  }catch(e){
-  if(t===ticket)setStatus('Audio did not play. Tap Replay narration, or check the sound on your device.');
+  if(t===ticket)setStatus('Audio could not play. Please try Replay instructions.');
   activePlaying=false;return false;
  }
 }
