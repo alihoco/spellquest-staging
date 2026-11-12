@@ -423,3 +423,8 @@ Implementation: [../core/adaptive-word-intake.cjs](../core/adaptive-word-intake.
 
 ### Implementation note
 The staging Year 6 page now removes the pseudo-phonetic printed sound sequence in its review flow and has a `shortReview` path for the second unsuccessful independent attempt. The server contains short word-specific reminder clips. The older audio clips still exist in the server allowlist but are no longer invoked by the rewritten lesson flow. Approved linguistic segmentation remains a future sign-off item.
+
+
+## 29. Foundational diagnostic teaching feedback loop (12 November 2026)
+
+Product requirement: **Observe → Identify → Explain → Equip → Retry → Revisit → Adapt**. Read [DIAGNOSTIC_FEEDBACK_LOOP_V1.md](DIAGNOSTIC_FEEDBACK_LOOP_V1.md) for operational rules, review gates, uncertainty handling and learner safety. This is a cross-cutting release criterion for the curriculum, teacher narration, adaptive learning and future gameplay. A correction must respond to what the learner attempted, provide a precise reviewed aid, and check later independent recall. Repeated errors must vary support, not repeat the same lecture. The existing rule-based staging matcher is an early implementation and cannot infer the psychological cause of an error.
