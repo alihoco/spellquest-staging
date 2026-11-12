@@ -5,7 +5,7 @@ Status: architecture & safeguarding specification. **Not an operational authenti
 Scope: account required before finished/production learning experience, separated from current developer testing/demo.
 
 ## Product rule
-A learner gets a private, durable account with a random opaque `learner_id`. The app need not ask the learner for their legal name, date of birth, email address, school, home address, or precise location for routine spelling lessons. Nickname/avatar may be optional and must not be public-facing. We never promise literal anonymity: persistent IDs, access tokens, device/IP logs and detailed learning records can be **pseudonymous personal data**.
+A learner gets a private, durable account with a random opaque `learner_id`. The app requires **birth month and year** for age-respectful presentation and initial assessment placement, but does not require the learner's legal name, full birth date, personal email address, school, home address, or precise location for routine spelling lessons. Nickname/avatar may be optional and must not be public-facing. We never promise literal anonymity: persistent IDs, access tokens, device/IP logs and detailed learning records can be **pseudonymous personal data**.
 
 Account creation must be **safe and friction-light**, but not a toy authentication implementation:
 - Adult: age-appropriate private account with secure passwordless or vetted authentication.
@@ -20,7 +20,7 @@ Account creation must be **safe and friction-light**, but not a toy authenticati
 Children should have distinct learner IDs and scoped guardianship; family accounts never share learning scores across siblings.
 
 ### Learner record
-`learner_id` opaque random UUID, `account_id` reference, `display_nickname_optional`, `privacy_profile_version`, `consent_or_lawful_basis_metadata`, `preferred_input`, `preferred_voice`, `pacing_preference`, `last_seen_at`. No diagnosis required. Do not infer diagnosis, intelligence, personality or neurocognitive traits.
+`learner_id` opaque random UUID, `account_id` reference, `display_nickname_optional`, `privacy_profile_version`, `consent_or_lawful_basis_metadata`, `preferred_input`, `preferred_voice`, `pacing_preference`, `last_seen_at`. Store encrypted month/year of birth (YYYY-MM) with restricted guardian access, or a minimally sufficient age-band derivation where possible. No diagnosis required. Do not infer diagnosis, intelligence, personality or neurocognitive traits.
 
 ### Spelling attempt (append-only, minimally necessary)
 `attempt_id`, `learner_id`, `word_id`, `lesson_version`, `timestamp`, `attempt_index`, `phase` (baseline/retry/delayed), `input_mode`, `independent`, `correct`, `error_category` (reviewed rule or unknown), `assistance_level`, `strategy_id`, `duration_band_optional` (not an ability grade), `word_status_before/after`. Prefer error categories and correct-answer status rather than retaining raw misspellings or audio by default.
@@ -63,3 +63,14 @@ Per strategy `strategy_id`, `word_family`, `sessions`, `independent_retained`, `
 - ICO Children's Code: https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/childrens-information/childrens-code-guidance-and-resources/age-appropriate-design-a-code-of-practice-for-online-services/
 - UK GDPR children's consent: https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/lawful-basis/consent/what-is-valid-consent/
 - EEF learning styles: https://educationendowmentfoundation.org.uk/education-evidence/teaching-learning-toolkit/learning-styles/
+
+
+## Age-respectful appearance and diagnostic placement (updated 12 November 2026)
+
+**Confirmed requirement:** Guardian or adult learner supplies birth month and birth year, without full birthday. This is a purposeful minimum personal datum to guide the *starting assessment* and to age the UI theme gracefully. It is still pseudonymous personal data; month/year alone must not be claimed anonymous. Limit access to birth metadata, prevent exposure in public URLs or analytics, and apply appropriate age-sensitive privacy protections and deletion controls.
+
+**Presentation maturity differs from spelling achievement.** A 12-year-old learning early spelling patterns must see age-respectful graphics and language, while a six-year-old spelling advanced words must not be forced into an older-looking interface. Gradually introduce more mature theme suggestions around age bands, without a sudden birthday restyle. Give guardian/learner an appearance override.
+
+**Initial diagnostic, not a ceiling:** use age to choose an approximate starting point on the England phonics/spelling progression, then rapidly move up/down from independent results. A typical six-year-old begins at **Year 1–2 patterns** rather than Year 4–5 or Year 5–6; more advanced words follow if early examples are clearly known. Year 4–5 and Year 5–6 are possible later samples, not assumptions made on one answer. Exact school year is not reliably inferred from birth month alone because of academic-year boundaries, moving schools, local variation and individual differences. The engine can start with a short, audio-led sample and use observed results to place the learner; ongoing teaching always remains ability-based rather than age-limited.
+
+**Implementation:** [../core/age-sensitive-onboarding.cjs](../core/age-sensitive-onboarding.cjs) and [tests](../core/age-sensitive-onboarding.test.cjs) implement a *headless pilot policy*, not an actual account form or a validated placement test. The current Year 6 staging game remains for developer testing; it must not become the default onboarding lesson for a young learner. Birth month/year cannot uniquely establish exact age in years because no birth day is collected; approximate age is sufficient for visual themes and broad initial placement. Never use inferred age alone as a diagnosis or fixed ability label.
