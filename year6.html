@@ -1,5 +1,5 @@
 <!doctype html><html lang="en-GB">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#554ac4"><title>SpellQuest — Year 6 Sound-First Adventure</title>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#554ac4"><title>Spellmaster — Year 6 Sound-First Adventure</title>
 <style>
 :root{font-family:system-ui,"Trebuchet MS",Arial,sans-serif;color:#24324f;background:#f6f5fe}*{box-sizing:border-box}
 body{margin:0;background:linear-gradient(120deg,#e7f8ff,#fff6ef 55%,#f1eaff);min-height:100vh}
@@ -44,7 +44,7 @@ label{display:block;font-weight:800;margin:14px 0 5px}
 @media(max-width:500px){.panel{padding:18px}main{padding:12px}.hero{padding:24px}.sound{min-width:58px;padding:13px 14px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style></head>
-<body><main><header><a class="logo" href="/">✨ SpellQuest</a><span class="muted small">Better today than yesterday</span></header>
+<body><main><header><a class="logo" href="/">✨ Spellmaster</a><span class="muted small">Better today than yesterday</span></header>
 <section class="hero"><span class="eyebrow">YOUR OWN SPELLING ADVENTURE</span><h1>Hear it. Say it. Spell it.</h1><p>Learn Year 6 spellings one step at a time, with a friendly voice to explain every stage.</p></section>
 <section class="panel" id="app"></section>
 <div class="footer">Year 5–6 statutory spelling words · Your progress stays in this browser · No rankings or comparisons</div></main>
@@ -225,9 +225,98 @@ function finish(){
  '<div class="good"><strong>'+first+'</strong> words remembered immediately; <strong>'+learned+'</strong> spelled during practice.</div>'+
  '<p>Your progress is what matters. We can try again another day to see what you remember.</p>'+
  results.map(r=>'<div class="result"><strong>'+r.word+'</strong> — '+(r.initial?'Remembered straight away':r.learned?'Learned with help':'Ready to revisit')+'</div>').join('')+
- soundVoice()+'<div class="actions"><button onclick="welcome()">Start again</button><button class="alt" onclick="location.href=\'/\'">Back to SpellQuest</button></div>';
+ soundVoice()+'<div class="actions"><button onclick="welcome()">Start again</button><button class="alt" onclick="location.href=\'/\'">Back to Spellmaster</button></div>';
  voiceSet();if(narration)talk(['y6-v08-complete']);
 }
 window.addEventListener('pagehide',stop);
 welcome();
+</script><script>
+// Spellmaster adaptive intake: appends to the experimental staging lesson.
+// The formal curriculum and sound teaching gates remain separate.
+const ADAPTIVE_KEY='spellmaster-staging-intake-v1';
+let runCount=0,runStart=0,runFirst=0,runNew=0,runSeen=new Set(),runResults=[],runReview=false;
+function adaptiveToday(){const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}
+function adaptiveDatePlus(date,n){const d=new Date(date+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)}
+function adaptiveLoad(){try{return JSON.parse(localStorage.getItem(ADAPTIVE_KEY)||'{}')}catch(e){return {}}}
+function adaptiveSave(word,ok,fromReview,afterHelp){
+ const all=adaptiveLoad(),entry=all[word]||{events:[],retained:0};
+ if(fromReview&&ok&&!afterHelp)entry.retained++;
+ entry.events.push({date:adaptiveToday(),correct:ok,mode:'independent_keyboard',afterHelp:!!afterHelp,review:!!fromReview});
+ entry.next=adaptiveDatePlus(adaptiveToday(),ok?(entry.retained>=2?14:entry.retained?3:1):1);
+ entry.vault=ok?(entry.retained?'protected':'collected'):'recovery_quest';
+ all[word]=entry;localStorage.setItem(ADAPTIVE_KEY,JSON.stringify(all));
+}
+function adaptiveSelect(){
+ const all=adaptiveLoad(),day=adaptiveToday();
+ const due=WORDS.map((w,i)=>({i,word:w.word,record:all[w.word]}))
+  .filter(x=>x.record&&x.record.next<=day&&!runSeen.has(x.word))
+  .sort((a,b)=>a.record.next.localeCompare(b.record.next));
+ const fresh=WORDS.map((w,i)=>({i,word:w.word})).filter(x=>!all[x.word]&&!runSeen.has(x.word));
+ if(!due.length&&!fresh.length)return null;
+ if(due.length&&(runCount%3!==2||!fresh.length))return {i:due[0].i,review:true};
+ if(fresh.length)return {i:fresh[0].i,review:false};
+ return {i:due[0].i,review:true};
+}
+function adaptiveStartWord(){
+ const selection=adaptiveSelect();if(!selection)return finish();
+ idx=selection.i;runReview=selection.review;runCount++;
+ if(!runReview)runNew++;
+ question(true);
+ const heading=app.querySelector('.eyebrow');
+ if(heading)heading.textContent=(runReview?'MEMORY QUEST':'NEW WORD')+' · CHALLENGE '+runCount;
+}
+begin=function(){
+ runCount=0;runStart=Date.now();runFirst=0;runNew=0;runSeen=new Set();runResults=[];runReview=false;
+ idx=0;first=0;results=[];narration=true;
+ localStorage.setItem('spellquest-audio-first','on');
+ introAudio();
+};
+introAudio=async function(){
+ stop();const t=ticket;
+ const ok=await talk(['y6-v08-welcome'],t);
+ if(ok&&t===ticket&&stage==='welcome')adaptiveStartWord();
+};
+check=function(retry){
+ const input=$('answer');if(!input)return;
+ const guess=input.value.toLowerCase().replace(/[^a-z]/g,'');
+ if(!guess){input.focus();return}
+ const word=WORDS[idx].word,ok=guess===word;
+ if(!retry){
+  results[idx]={word,initial:ok,learned:ok,attempts:1};
+  runResults.push({word,initial:ok,learned:ok,review:runReview});
+  if(ok){first++;runFirst++}
+  adaptiveSave(word,ok,runReview,false);
+ }else{
+  results[idx].attempts++;
+  runResults[runResults.length-1].attempts=results[idx].attempts;
+  if(ok){results[idx].learned=true;runResults[runResults.length-1].learned=true;adaptiveSave(word,true,false,true)}
+ }
+ if(ok){runSeen.add(word);success(retry)}else review();
+};
+next=function(){
+ stop();const elapsed=(Date.now()-runStart)/60000,selection=adaptiveSelect();
+ if(!selection||elapsed>=12)return finish();
+ stage='choice';
+ const text=elapsed>=8?'You have enjoyed a good short session. Would you like another word, or finish for today?':
+ runFirst>=2?'You already knew some of those! They are saved for later memory checks. Would you like another word?':
+ 'Ready to explore another word, or would you prefer to finish here?';
+ app.innerHTML='<span class="eyebrow">YOUR CHOICE</span><h2>Keep exploring?</h2><p>'+text+'</p>'+
+ '<div class="note">There is no fixed weekly word limit. Previously learned words will come back on another day.</div>'+
+ soundVoice()+'<div class="actions"><button onclick="adaptiveStartWord()">Another word →</button>'+
+ '<button class="alt" onclick="finish()">Finish for today</button></div>';
+ voiceSet();if(narration)talk(['y6-v08-next']);
+};
+finish=function(){
+ stop();stage='finished';
+ const remembered=runResults.filter(x=>x.initial).length;
+ app.innerHTML='<span class="eyebrow">YOUR JOURNEY</span><h2>Look how far you have come! 🌟</h2>'+
+ '<div class="good">You explored <strong>'+runCount+'</strong> words. <strong>'+remembered+
+ '</strong> were correct on the first try.</div>'+
+ '<p>Words you knew are saved for later review. Tricky words will return with a fresh opportunity to learn.</p>'+
+ runResults.map(x=>'<div class="result"><strong>'+x.word+'</strong> — '+
+ (x.initial?'Spelled independently':x.learned?'Improved with help':'Ready to practise again')+'</div>').join('')+
+ soundVoice()+'<div class="actions"><button onclick="welcome()">Back to welcome</button>'+
+ '<button class="alt" onclick="location.href=\'/\'">Home</button></div>';
+ voiceSet();if(narration)talk(['y6-v08-complete']);
+};
 </script></body></html>
