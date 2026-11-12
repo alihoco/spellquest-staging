@@ -1,11 +1,11 @@
 {
-  "version": "1.2.0",
+  "version": "1.3.0",
   "date": "2026-11-11",
   "status": "curriculum word selection verified; sequence provisional pending specialist review",
   "source": "https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/239784/English_Appendix_1_-_Spelling.pdf",
   "locale": "en-GB",
   "total_seed_words": 30,
-  "pilot_plan": "Ten weeks of three new words each, plus two weeks with no new words for consolidation; paced by baseline knowledge, not school age.",
+  "pilot_plan": "Three new words per week is a school-aligned initial suggestion only; word intake adapts to demonstrated prior knowledge, due review load, fatigue and learner choice. No fixed weekly quota.",
   "sequencing_rationale": "Teach one clearly defined feature with contrasted words, then interleave retrieval with previously taught features; do not assume all words in a cluster obey the same rule.",
   "scheduling_hypothesis": {
     "new_words_per_week_default": 3,
@@ -606,8 +606,8 @@
     "default_enabled": true,
     "review_due_before_new_words": true,
     "session_turn_limit_default": 8,
-    "new_word_limit_default": 2,
-    "review_to_new_ratio_when_due": 2,
+    "new_word_limit_default": "adaptive",
+    "review_to_new_ratio_when_due": "flexible_per_retention_load",
     "limit_new_words_when_reviews_backlogged": true,
     "allow_familiar_success_moments": true,
     "do_not_guarantee_or_fake_correctness": true,
@@ -617,8 +617,8 @@
   },
   "session_dosage": {
     "status": "pilot_hypothesis",
-    "new_words_per_week_target": 3,
-    "new_words_per_session_max": 1,
+    "new_words_per_week_target": "suggested_3_not_cap",
+    "new_words_per_session_max": "adaptive_no_fixed_pedagogical_limit",
     "minutes_per_session_suggested": [
       5,
       8
@@ -631,7 +631,14 @@
     "sources": [
       "https://dyslexiaida.org/spelling/",
       "https://doi.org/10.1002/pits.22943"
-    ]
+    ],
+    "new_word_offer_logic": "core/adaptive-word-intake.cjs",
+    "soft_minutes_suggested": 8,
+    "hard_minutes_provisional_guardrail": 12,
+    "provisional_max_new_offered_per_session": 6,
+    "learner_can_finish_anytime": true,
+    "correct_initial_unaided_word": "skip_intensive_teaching_and_schedule_later_recall",
+    "already_known_is_not_durable_mastery": true
   },
   "reward_mechanics": {
     "name": "Word Vault",
