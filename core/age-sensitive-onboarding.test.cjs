@@ -1,0 +1,13 @@
+'use strict';
+const assert=require('node:assert/strict');
+const {approximateAge,onboardingRecommendation,assessmentNext}=require('./age-sensitive-onboarding.cjs');
+assert.equal(approximateAge('2020-07','2026-11-12').approximateYears,6);
+assert.equal(onboardingRecommendation({birthMonth:'2020-07'}).initialAssessmentBand,'year1_2');
+assert.equal(onboardingRecommendation({birthMonth:'2015-08'}).initialAssessmentBand,'year5_6');
+assert.equal(onboardingRecommendation({birthMonth:'2020-07',themeOverride:'modern_adventure'}).theme,'modern_adventure');
+assert.equal(onboardingRecommendation({birthMonth:'2020-07'}).progressionCap,null);
+assert.equal(assessmentNext({currentBand:'year1_2',independentAttempts:[{correct:true},{correct:true},{correct:true}]}).band,'year2_3');
+assert.equal(assessmentNext({currentBand:'year3_4',independentAttempts:[{correct:false},{correct:false},{correct:false}]}).band,'year2_3');
+assert.equal(assessmentNext({currentBand:'year3_4',independentAttempts:[{correct:true}]}).action,'collect_more_evidence');
+assert.throws(()=>onboardingRecommendation({birthMonth:'2028-01'}));
+console.log('Age-appropriate starting point and optional theme regression checks passed');
