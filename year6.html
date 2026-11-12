@@ -197,7 +197,7 @@ async function reviewAudio(){
  environment:'Keep the N in environ before ment.'
  }[w.word]||'Look carefully at the spelling pattern.')+'</p></div>';
  ok=await speak('y6-tip-'+w.word,t);
- if(ok&&t===ticket&&stage==='review')setStatus('Ready to hide the spelling and try again.');
+ if(ok&&t===ticket&&stage==='review')setStatus('Ready to try spelling again.');
 }
 function shortReview(){
  stop();stage='short-review';const w=WORDS[idx];
@@ -205,7 +205,7 @@ function shortReview(){
  app.innerHTML='<span class="eyebrow">ONE QUICK REMINDER</span>'+progress()+
  '<h2>Let’s focus on one detail</h2>'+
  '<div class="spelling-row">'+w.spelling.map(x=>'<span>'+x+'</span>').join('')+'</div>'+
- '<p>Take a moment to look at the correct spelling. Then hide it for another try.</p>'+
+ '<p>Take a moment to look at the correct spelling, then have another go.</p>'+
  soundVoice()+
  '<div class="actions"><button onclick="retry()">🙈 Hide and try once more</button>'+
  '<button class="alt" onclick="next()">Come back to this later</button></div>';
@@ -217,13 +217,13 @@ async function shortReviewAudio(){
 function retry(){
  stop();stage='retry';
  app.innerHTML='<span class="eyebrow">WORD '+(idx+1)+' · TRY AGAIN</span>'+progress()+
- '<h2>Now it’s your turn</h2><p>The spelling is hidden. Listen to the word, and try it yourself.</p>'+
+ '<h2>Now it’s your turn</h2><p>Listen to the word, then spell it.</p>'+
  '<div class="actions"><button class="alt" onclick="speak(\'y6-'+WORDS[idx].word+'\')">🔊 Hear word again</button></div>'+
  '<label for="answer">Your spelling</label><input id="answer" autocapitalize="off" autocomplete="off" spellcheck="false" onkeydown="if(event.key===\'Enter\')check(true)">'+soundVoice()+
  '<div class="actions"><button onclick="check(true)">Check my spelling →</button><button class="alt" onclick="review()">Hear the lesson again</button></div>';
  voiceSet();if(narration)retryAudio();
 }
-async function retryAudio(){stop();await talk(['y6-v08-retry','y6-'+WORDS[idx].word],ticket)}
+async function retryAudio(){stop();const prompt=results[idx]?.attempts>1?[]:['spellmaster-retry-brief-v2'];await talk([...prompt,'y6-'+WORDS[idx].word],ticket)}
 function next(){idx++;if(idx===WORDS.length)finish();else question(true)}
 function finish(){
  stop();stage='finished';const learned=results.filter(r=>r.learned).length;
