@@ -141,6 +141,7 @@ for(const [word,text] of Object.entries(RETRY_CLIPS))CLIPS['y6-short-retry-'+wor
 CLIPS['y6-short-retry-instruction']='That is still a tricky spelling. We will focus on one detail rather than repeat the whole lesson.';
 CLIPS['y6-review-first-instruction']='Let us look at the correct written spelling and one thing to remember.';
 
+// Only fixed, reviewed-draft feedback strings are ever eligible for TTS. No free-form user attempt is spoken.\nObject.assign(CLIPS,require('./spelling-feedback.js').audioClips());
 const cache=new Map(),limits=new Map();let daily={day:'',count:0};
 function send(res,code,obj,headers={}){res.writeHead(code,{'Content-Type':'application/json','Cache-Control':'no-store',...headers});res.end(JSON.stringify(obj))}
 http.createServer(async(req,res)=>{
