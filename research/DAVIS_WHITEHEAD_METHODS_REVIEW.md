@@ -105,3 +105,14 @@ Learn general principles from publicly described Davis research, but **do not** 
 **Explore a hybrid, not an equal blend of conflicting theories.** Retain explicit Structured Literacy and measurable delayed production as the non-negotiable core. Pilot meaning-first and tangible, child-created representations as supportive options informed by Davis, particularly for hard-to-imagine or abstract words, while rejecting unsupported universal explanations and untested claims of superiority.
 
 **Status:** Public-source review done; original book, teacher course and all primary study full texts not exhaustively evaluated. A specialist and research-methods reviewer should scrutinise this before presenting it as evidence of efficacy.
+
+
+## 11. Staging check and implementation status — 12 November 2026
+
+The user asked whether recurring errors in the Year 6 staging game lead to a Davis-inspired alternative. **As of this check, they do not.** The currently deployed `year6.html` repeats a short written-correct-word reminder after a second incorrect attempt. It does not offer the optional meaning/visual-building route.
+
+The new headless [optional meaning-making support policy](../core/meaning-making-policy.cjs) and [tests](../core/meaning-making-policy.test.cjs) are in GitHub. They encode an **opt-in choice** after at least two independent errors (or review errors): core-focused practice, meaning-and-making, or park for later. They require that the spelling, meaning and activity have been reviewed before the route can be enabled. It remains behind pedagogical approval gates and is **not yet wired into the playable staging game**. It must not impersonate branded/licensed Davis services.
+
+**Research reaffirmed on 12 November 2026:** IDA's structured literacy framework explicitly includes hands-on, multimodal instruction. Galuschka et al. (2020) synthesize 34 controlled spelling trials, finding support for phonics, orthographic and morphological teaching. The published van Staden/Tolmie/Badenhorst (2009) Davis-based Afrikaans study used approximately 18 learners per arm and tested a multi-component intervention, not Spellmaster's proposed optional feature; its positive results are suggestive but do not demonstrate superiority or transfer to English. Therefore add Meaning & Making experimentally, with a **time-matched additional practice condition**, and track delayed *independent* spelling, rather than assuming it works.
+
+Next UI acceptance criteria: second mistake offers a *brief spoken, optional* different route rather than a lengthy lecture; correct letters are shown during manipulation but hidden at unaided recall; meaning and association are relevant and accurate; learner can select ordinary quick help or park the word; no missed word produces a failure penalty; uptake and retained recall are tracked only with appropriate guardian consent for research.
