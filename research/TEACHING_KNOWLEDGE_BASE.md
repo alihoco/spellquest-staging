@@ -397,3 +397,29 @@ Research basis:
 Implementation: [../core/adaptive-word-intake.cjs](../core/adaptive-word-intake.cjs) offers new teaching based on first-try knowledge, recent independent accuracy, review backlog, short-session fatigue guardrails and learner choice. [Tests](../core/adaptive-word-intake.test.cjs) check the branching logic. A first correct result skips redundant teaching but retains a delayed check; errors lead to focused guidance, not relentless extra words. The provisional 8-minute soft session limit, 12-minute hard break suggestion and six-new-word guardrail are **design hypotheses**, not validated optimal dosage. No age-based spelling ceilings. This headless logic is not yet wired to the live staging game.
 
 **Never turn adaptation into pressure:** If a child has three correct spellings, the teacher can say, 'You already know those. Would you like another?' Continuing is always optional and session duration remains short. The Word Vault records genuine first-try knowledge separately from delayed mastery.
+
+
+## 28. Correct printed forms and targeted feedback after a second spelling error (12 November 2026)
+
+**Problem revealed by a learner usability test:** The Year 6 `necessary` lesson displayed phonetic approximations (e.g. "ness / uh / ser / ee") as if they were spellings while speaking parts of the word. These are not correct written forms of the word and the TTS models did not reliably teach true phonemes. A second spelling error also triggered the identical long lesson, increasing fatigue.
+
+### Evidence and practical conclusion
+- IDA's [Spelling](https://dyslexiaida.org/spelling/) guidance advocates understanding sound–letter relationships and giving correct spelling models with reasonable corrective practice.
+- [Dixon & Kaminska (2007)](https://doi.org/10.1111/j.1467-9817.2007.00337.x) shows prior work finding that exposure to incorrect spellings can reduce later accuracy, while the study of children around age ten revealed a different pattern. **Therefore the research does NOT justify an absolute claim that seeing any misspelling is always harmful.**
+- [McLeod & colleagues, orthographic facilitation review (2019)](https://pubs.asha.org/doi/10.1044/2019_LSHSS-VOIA-18-0135) reports strong evidence that exposure to a word's correct written form benefits spelling/word learning; direct evidence in dyslexia-specific samples remains limited.
+- [Open University dyslexia feedback guidance](https://www.open.edu/openlearn/education/support-dyslexic-language-students-through-feedback) recommends constructive, individually suitable error highlighting, avoiding discouragement from repeated mistakes.
+- [IDA targeted prompt feedback](https://dyslexialibrary.org/education-category/targeted-prompt-feedback/) summarises the importance of specific corrective feedback and opportunities to respond.
+- [Galuschka et al. (2020)](https://doi.org/10.1080/00461520.2019.1659794) supports phonics, spelling conventions and morphology as intervention elements.
+
+### Core product rules
+1. During **initial learning**, first model the correct spoken whole word, then the **correct printed orthographic form** and reviewed spelling features. Never print approximate pronunciations that resemble a misspelling as if they were part of the target spelling.
+2. A deliberate side-by-side comparison of a correct form with a *clearly labelled* common misspelling may be valid when teaching a precise confusion, and with clear, immediate corrective feedback. It is **not the default presentation**, and should be evaluated for delayed retained spelling rather than banned dogmatically.
+3. Spoken syllables, individual phonemes and printed letter groups must remain separate. Do not play or show AI-invented phonetic segments until specialist reviewed and matched to accurate audio.
+4. After first error: give short, accurate, word-specific modelling and explanation, provide opportunity to spell unaided.
+5. After second error: **do not restart the full explanation**. Provide a **brief targeted reminder** with the correct spelling visible, speak one helpful cue, hide the word and offer another try or a low-pressure choice to revisit later.
+6. After repeated errors, offer a different verified support method or park the word for spaced return; do not force indefinite attempts or issue generic praise.
+7. Keep the correct word visible during teaching but hide it during independent recall; record supported vs independent performance separately.
+8. This is an evidence-informed UX correction, not a proven comparative experiment. Measure fatigue, engagement and 7-/28-day unaided recall.
+
+### Implementation note
+The staging Year 6 page now removes the pseudo-phonetic printed sound sequence in its review flow and has a `shortReview` path for the second unsuccessful independent attempt. The server contains short word-specific reminder clips. The older audio clips still exist in the server allowlist but are no longer invoked by the rewritten lesson flow. Approved linguistic segmentation remains a future sign-off item.
