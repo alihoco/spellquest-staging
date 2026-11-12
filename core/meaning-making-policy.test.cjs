@@ -1,0 +1,15 @@
+'use strict';
+const assert=require('node:assert/strict');
+const {supportDecision,methodEvidence}=require('./meaning-making-policy.cjs');
+const approved={wordApproved:true,meaningApproved:true,activityApproved:true};
+assert.equal(supportDecision({independentErrors:1,...approved}).action,'targeted_short_feedback');
+assert.equal(supportDecision({independentErrors:2,...approved}).action,'offer_choice');
+assert.equal(supportDecision({independentErrors:2,...approved,learnerChoice:'meaning_making'}).action,'offer_meaning_making');
+assert.equal(supportDecision({independentErrors:2,...approved,learnerChoice:'park'}).action,'park_for_later');
+assert.equal(supportDecision({independentErrors:2,...approved,frustrated:true}).action,'offer_pause_or_park');
+assert.equal(supportDecision({independentErrors:2,wordApproved:true}).action,'targeted_short_feedback');
+assert.equal(supportDecision({independentErrors:2,...approved,experimentAssignment:'C',researchPermission:true}).action,'time_matched_extra_practice');
+assert.equal(supportDecision({independentErrors:2,...approved,experimentAssignment:'B',researchPermission:false}).action,'offer_choice');
+assert.equal(supportDecision({independentErrors:2,...approved,learnerChoice:'meaning_making'}).coreRequired,true);
+assert.equal(methodEvidence({observations:[{arm:'B',correct:true,delayed:true,independent:true}]}).inference,'insufficient_for_personalised_causal_claim');
+console.log('Meaning & Making safe teaching-choice tests passed');
