@@ -102,6 +102,7 @@ CLIPS['y6-v08-sounds']='Now we will say the word in smaller spoken parts. Hear e
 CLIPS['y6-v08-spelling']='Now let us look at the way the word is written. The spelling parts do not always match the sounds perfectly. Here is a trick to remember the difficult letters.';
 CLIPS['y6-v08-ready']='You have practised the sounds and the spelling trick. When you are ready, hide the word and try spelling it from memory.';
 CLIPS['y6-v08-retry']='The spelling is hidden now. Listen to the word and type your best spelling.';
+CLIPS['spellmaster-retry-brief-v2']='Your turn. Try spelling the word again.';
 CLIPS['y6-v08-next']='Well done for practising. Let us try the next word.';
 CLIPS['y6-v08-complete']='Look at all the words you have explored today. It is your progress that matters. You can come back and practise again another day.';
 for(const [word,syllables] of Object.entries(SOUND_SYLLABLES)){
