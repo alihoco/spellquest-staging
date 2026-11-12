@@ -9,7 +9,7 @@ function supportDecision({independentErrors=0,reviewErrors=0,alreadyExplained=fa
  const base={coreRequired:true,neverInferFixedLearningStyle:true,pronunciationJudgement:false,comparativeEfficacyClaim:false};
  if(frustrated)return {...base,action:'offer_pause_or_park',reason:'learner_comfort'};
  if(!wordApproved)return {...base,action:'expert_gated_core',reason:'word_not_approved'};
- if(!repeatedDifficulty&&!alreadyExplained)return {...base,action:'structured_core',reason:'first_teaching'};
+ if(independentErrors+reviewErrors===0&&!alreadyExplained)return {...base,action:'structured_core',reason:'first_teaching'};
  if(!repeatedDifficulty)return {...base,action:'targeted_short_feedback',reason:'initial_error'};
  if(learnerChoice==='park')return {...base,action:'park_for_later',reason:'learner_choice'};
  // The research arm must not be selected just because one approach seems more fun.
