@@ -143,7 +143,7 @@ http.createServer(async(req,res)=>{
  daily.count++;
  try{
  const body={model:'gpt-4o-mini-tts',voice,input:CLIPS[clip],response_format:'mp3',instructions:'You are a natural, warm, calm, friendly educational narrator from England. Speak in clear neutral modern British English, with gentle human intonation, not a cartoon voice, not a computer voice, not exaggerated or patronising. For short speech-sound clips, speak the phonetic syllable as ordinary continuous British English speech. Do not say the names of letters or explain the sound. Use natural pronunciation and do not prolong the vowel. Pronounce spelling words accurately and distinctly, keeping a natural pace.'};
- const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),20000);
+ const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),40000);
  let upstream;try{upstream=await fetch('https://api.openai.com/v1/audio/speech',{method:'POST',headers:{Authorization:'Bearer '+process.env.OPENAI_API_KEY,'Content-Type':'application/json'},body:JSON.stringify(body),signal:controller.signal})}finally{clearTimeout(timer)}
  if(!upstream.ok){console.error('Speech API status',upstream.status);return send(res,502,{error:'Voice generation temporarily unavailable'},cors)}
  const buf=Buffer.from(await upstream.arrayBuffer());if(buf.length>2e6)return send(res,502,{error:'Voice response too large'},cors);
