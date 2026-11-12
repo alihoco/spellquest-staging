@@ -245,10 +245,10 @@ function errorFeedbackForCurrent(){return lastErrorFeedback||{clip:'spellmaster-
 function adaptiveToday(){const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}
 function adaptiveDatePlus(date,n){const d=new Date(date+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)}
 function adaptiveLoad(){try{return JSON.parse(localStorage.getItem(ADAPTIVE_KEY)||'{}')}catch(e){return {}}}
-function adaptiveSave(word,ok,fromReview,afterHelp){
+function adaptiveSave(word,ok,fromReview,afterHelp,errorCategory=null){
  const all=adaptiveLoad(),entry=all[word]||{events:[],retained:0};
  if(fromReview&&ok&&!afterHelp)entry.retained++;
- entry.events.push({date:adaptiveToday(),correct:ok,mode:'independent_keyboard',afterHelp:!!afterHelp,review:!!fromReview});
+ entry.events.push({date:adaptiveToday(),correct:ok,mode:'independent_keyboard',afterHelp:!!afterHelp,review:!!fromReview,error_category:ok?null:errorCategory});
  entry.next=adaptiveDatePlus(adaptiveToday(),ok?(entry.retained>=2?14:entry.retained?3:1):1);
  entry.vault=ok?(entry.retained?'protected':'collected'):'recovery_quest';
  all[word]=entry;localStorage.setItem(ADAPTIVE_KEY,JSON.stringify(all));
@@ -293,11 +293,12 @@ check=function(retry){
   results[idx]={word,initial:ok,learned:ok,attempts:1};
   runResults.push({word,initial:ok,learned:ok,review:runReview});
   if(ok){first++;runFirst++}
-  adaptiveSave(word,ok,runReview,false);
+  adaptiveSave(word,ok,runReview,false,ok?null:lastErrorFeedback?.id);
  }else{
   results[idx].attempts++;
   runResults[runResults.length-1].attempts=results[idx].attempts;
   if(ok){results[idx].learned=true;runResults[runResults.length-1].learned=true;adaptiveSave(word,true,false,true)}
+  else adaptiveSave(word,false,runReview,true,lastErrorFeedback?.id);
  }
  if(ok){runSeen.add(word);success(retry)}else if(retry){shortReview()}else{review()}
 };
