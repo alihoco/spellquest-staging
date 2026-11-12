@@ -12,7 +12,7 @@ for(const [word,guess,id] of [
  const feedback=m.diagnose(word,guess);
  assert.equal(feedback.id,id,word+' '+guess);
  assert.equal(m.audioClips()[feedback.clip],feedback.text);
- assert.ok(!feedback.text.includes(guess),'Do not read out wrong form');
+ assert.ok(!feedback.text.toLowerCase().includes('you spelled'),'Never criticise the learner');
 }
 assert.equal(m.diagnose('necessary','necessary'),null);
 const uncertain=m.diagnose('necessary','nesesurry');
