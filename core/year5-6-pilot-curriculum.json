@@ -1,5 +1,5 @@
 {
-  "version": "1.1.0",
+  "version": "1.2.0",
   "date": "2026-11-11",
   "status": "curriculum word selection verified; sequence provisional pending specialist review",
   "source": "https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/239784/English_Appendix_1_-_Spelling.pdf",
@@ -614,5 +614,47 @@
     "revisited_word_task": "independent retrieval from audio before hints, followed by corrective teaching when necessary",
     "activity_goal": "retention and confidence, not accumulating easy-game points",
     "evidence_status": "cumulative instruction and retrieval supported; precise ratios and delays need empirical validation"
+  },
+  "session_dosage": {
+    "status": "pilot_hypothesis",
+    "new_words_per_week_target": 3,
+    "new_words_per_session_max": 1,
+    "minutes_per_session_suggested": [
+      5,
+      8
+    ],
+    "days_per_week_suggested": 5,
+    "never_force_new_words": true,
+    "backlog_priority": "due_review_first",
+    "shorter_session_option": true,
+    "optional_weekend": true,
+    "sources": [
+      "https://dyslexiaida.org/spelling/",
+      "https://doi.org/10.1002/pits.22943"
+    ]
+  },
+  "reward_mechanics": {
+    "name": "Word Vault",
+    "status": "future_gameplay_not_implemented",
+    "learner_visible_states": [
+      "discovered",
+      "collected",
+      "protected",
+      "recovery_quest",
+      "mastered"
+    ],
+    "never_remove_earned_badges": true,
+    "never_equate_recovery_with_failure": true,
+    "combat_theme_optional": true,
+    "mastery_requires_delayed_independent_spelling": true
+  },
+  "reminders": {
+    "implemented": false,
+    "parent_or_guardian_controlled_for_minors": true,
+    "default_off": true,
+    "opt_in": true,
+    "suggested_daily_duration_minutes": 5,
+    "quiet_hours": true,
+    "no_missed_day_penalty": true
   }
 }
