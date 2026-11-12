@@ -118,6 +118,7 @@ function replay(){
  if(stage==='welcome')return introAudio();
  if(stage==='question')return instructionAudio();
  if(stage==='review')return reviewAudio();
+ if(stage==='short-review')return shortReviewAudio();
  if(stage==='retry')return retryAudio();
  if(stage==='success')return successAudio();
  if(stage==='finished')return speak('y6-v08-complete');
@@ -167,44 +168,51 @@ function success(improved){
  voiceSet();if(narration)successAudio();
 }
 async function successAudio(){stop();await talk([results[idx].initial?'y6-correct':'y6-improved'],ticket)}
+// Teaching is sound-led through the verified complete word, but we must not
+// present pseudo-phonetic spellings as written words. Accurate specialist-reviewed
+// phoneme/grapheme alignment is still pending.
 function review(){
  stop();stage='review';const w=WORDS[idx];
- app.innerHTML='<span class="eyebrow">LET’S LEARN WORD '+(idx+1)+'</span>'+progress()+
- '<h2>Let’s work through it together</h2>'+
- '<p>First we say the word. Then we hear the spoken parts slowly. Finally we discover the tricky spelling.</p>'+
- '<div id="review-content"><p class="now">🔊 Listen to your narrator...</p></div>'+
+ app.innerHTML='<span class="eyebrow">LET’S LEARN THIS WORD</span>'+progress()+
+ '<h2>Listen, then look at the spelling</h2>'+
+ '<p>We will hear the whole word and look at one tricky part. No made-up sound spellings.</p>'+
+ '<div id="review-content"><p class="now">🔊 The teacher will guide you.</p></div>'+
  soundVoice()+
- '<div class="actions"><button class="alt" onclick="reviewAudio()">🔊 Replay the lesson</button><button id="hide-button" onclick="retry()">🙈 Hide and spell again</button></div>';
- voiceSet();
- const clips=['y6-v08-wrong','y6-v08-sounds','y6-v08-spelling','y6-v08-ready','y6-'+w.word,'y6-tip-'+w.word];
- w.sounds.forEach((_,j)=>clips.push('y6-v08-sound-'+w.word+'-'+j));warm(clips);
- if(narration)reviewAudio();
+ '<div class="actions"><button class="alt" onclick="reviewAudio()">🔊 Hear this lesson again</button>'+
+ '<button onclick="retry()">🙈 Hide it and try spelling</button><button class="alt" onclick="next()">Save for later</button></div>';
+ voiceSet();if(narration)reviewAudio();
 }
 async function reviewAudio(){
- stop();stage='review';const t=ticket,w=WORDS[idx],host=$('review-content');
- if(!host)return;
- host.innerHTML='<div class="note"><strong>Step 1: Hear the whole word</strong><p>Listen carefully, then say the word yourself.</p></div>';
- let ok=await talk(['y6-v08-wrong','y6-'+w.word],t);if(!ok)return;
- if(!(await pause(pace==='extra'?3000:2100,t)))return;
- host.innerHTML='<div class="note"><strong>Step 2: Hear the spoken parts</strong><p>Listen and say each one back. We will give you time.</p></div>'+
- '<div class="sound-row" id="sound-row">'+w.sounds.map((v,j)=>'<div class="sound" id="sound-'+j+'">'+v+'</div>').join('')+'</div>';
- ok=await talk(['y6-v08-sounds'],t);if(!ok)return;
- for(let j=0;j<w.sounds.length;j++){
-  if(t!==ticket||stage!=='review')return;
-  document.querySelectorAll('.sound').forEach((el,k)=>el.classList.toggle('active',k===j));
-  ok=await speak('y6-v08-sound-'+w.word+'-'+j,t);if(!ok)return;
-  if(!(await pause(pace==='extra'?3100:2250,t)))return;
- }
- if(t!==ticket)return;
- document.querySelectorAll('.sound').forEach(el=>el.classList.remove('active'));
- host.innerHTML='<div class="note"><strong>Step 3: Learn the written spelling</strong><p>Now we look at the letters that make up the word. They are not always the same as the spoken parts.</p></div>'+
+ stop();stage='review';const t=ticket,w=WORDS[idx],host=$('review-content');if(!host)return;
+ host.innerHTML='<div class="note"><strong>First, hear the complete word.</strong><p>You can say it aloud if you like.</p></div>';
+ let ok=await speak('y6-'+w.word,t);if(!ok)return;
+ if(!(await pause(pace==='extra'?1700:900,t)))return;
+ host.innerHTML='<div class="note"><strong>Now look at the correct spelling.</strong></div>'+
  '<div class="spelling-row">'+w.spelling.map(x=>'<span>'+x+'</span>').join('')+'</div>'+
- '<div class="tip" id="trick"><strong>Memory trick</strong><p>Listen to the explanation from your narrator.</p></div>';
- ok=await talk(['y6-v08-spelling','y6-tip-'+w.word,'y6-v08-ready'],t);
- if(ok&&t===ticket&&stage==='review'){
-  $('trick').innerHTML='<strong>Memory trick</strong><p>'+({necessary:'One C, two S letters: one collar, two sleeves.',embarrass:'Two R letters and two S letters.',accommodate:'Double C and double M.'}[w.word]||'Remember the tricky letter pattern you just heard.')+'</p>';
-  setStatus('Ready when you are. The next step will hide the spelling.');
- }
+ '<div class="tip"><strong>One thing to remember</strong><p>'+({
+ necessary:'One C and two S letters — one collar and two sleeves.',
+ embarrass:'Two R letters and two S letters.',
+ accommodate:'Two C letters and two M letters.',
+ government:'Keep the N in govern when adding ment.',
+ environment:'Keep the N in environ before ment.'
+ }[w.word]||'Look carefully at the spelling pattern.')+'</p></div>';
+ ok=await speak('y6-tip-'+w.word,t);
+ if(ok&&t===ticket&&stage==='review')setStatus('Ready to hide the spelling and try again.');
+}
+function shortReview(){
+ stop();stage='short-review';const w=WORDS[idx];
+ // Brief focused revision after a SECOND unsuccessful attempt.
+ app.innerHTML='<span class="eyebrow">ONE QUICK REMINDER</span>'+progress()+
+ '<h2>Let’s focus on one detail</h2>'+
+ '<div class="spelling-row">'+w.spelling.map(x=>'<span>'+x+'</span>').join('')+'</div>'+
+ '<p>Take a moment to look at the correct spelling. Then hide it for another try.</p>'+
+ soundVoice()+
+ '<div class="actions"><button onclick="retry()">🙈 Hide and try once more</button>'+
+ '<button class="alt" onclick="next()">Come back to this later</button></div>';
+ voiceSet();if(narration)shortReviewAudio();
+}
+async function shortReviewAudio(){
+ stop();const t=ticket;await speak('y6-short-retry-'+WORDS[idx].word,t);
 }
 function retry(){
  stop();stage='retry';
@@ -291,7 +299,7 @@ check=function(retry){
   runResults[runResults.length-1].attempts=results[idx].attempts;
   if(ok){results[idx].learned=true;runResults[runResults.length-1].learned=true;adaptiveSave(word,true,false,true)}
  }
- if(ok){runSeen.add(word);success(retry)}else review();
+ if(ok){runSeen.add(word);success(retry)}else if(retry){shortReview()}else{review()}
 };
 next=function(){
  stop();const elapsed=(Date.now()-runStart)/60000,selection=adaptiveSelect();
