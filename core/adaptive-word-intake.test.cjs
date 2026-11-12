@@ -1,0 +1,16 @@
+'use strict';
+const assert=require('node:assert/strict');
+const {decideNext,classifyInitialKnowledge}=require('./adaptive-word-intake.cjs');
+assert.equal(classifyInitialKnowledge({correct:true,independent:true}).mastered,false);
+assert.equal(classifyInitialKnowledge({correct:true,independent:true}).intensiveTeachingNeeded,false);
+assert.equal(classifyInitialKnowledge({correct:true,independent:true,usedHints:true}).intensiveTeachingNeeded,true);
+const accurate=[{independent:true,correct:true},{independent:true,correct:true},{independent:true,correct:true}];
+assert.equal(decideNext({attempts:accurate,sessionNovelCorrectFirstTry:3,elapsedMinutes:3}).action,'offer_new');
+assert.equal(decideNext({attempts:accurate,sessionNovelCorrectFirstTry:3,learnerWantsMore:false}).action,'finish');
+assert.equal(decideNext({attempts:accurate,frustration:'high'}).action,'offer_break');
+assert.equal(decideNext({attempts:accurate,elapsedMinutes:14}).action,'offer_break');
+assert.equal(decideNext({attempts:accurate,elapsedMinutes:9}).action,'offer_continue_or_finish');
+assert.equal(decideNext({attempts:[{correct:false},{correct:false}],elapsedMinutes:2}).action,'targeted_support');
+assert.equal(decideNext({dueReviews:5,sessionNewIntroduced:1}).action,'review');
+assert.equal(decideNext({sessionNewIntroduced:6}).action,'offer_continue_or_finish');
+console.log('Adaptive learner-paced intake checks passed');
