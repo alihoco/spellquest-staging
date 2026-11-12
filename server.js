@@ -122,6 +122,24 @@ for(const wordRecord of draftWordRecords){
  CLIPS[key+'-instruction']=wordRecord.teaching.provisional_script.question;
 }
 
+
+// Brief second-attempt prompts: correct orthography only, no synthetic sound chunks.
+const RETRY_CLIPS={
+ necessary:'Let us focus on just one thing. Necessary has one C and two S letters. Look at those letters, then try once more.',
+ embarrass:'Just one reminder: embarrass has two R letters and two S letters. Take a look, then try again.',
+ accommodate:'A quick reminder: accommodate has two C letters and two M letters. You can try again when ready.',
+ government:'Remember the word govern. Keep its N when you add ment. Now try again.',
+ foreign:'The tricky ending in foreign is spelled E I G N. Have another go when you are ready.',
+ familiar:'Think of the word family. It can help with the opening of familiar. Try again.',
+ environment:'Remember environ, then add ment. Keep the N before ment.',
+ privilege:'The ending of privilege is L E G E. Let us try that again.',
+ rhythm:'Remember the R H at the beginning and the letter Y.',
+ temperature:'Remember the A before the ending T U R E.'
+};
+for(const [word,text] of Object.entries(RETRY_CLIPS))CLIPS['y6-short-retry-'+word]=text;
+CLIPS['y6-short-retry-instruction']='That is still a tricky spelling. We will focus on one detail rather than repeat the whole lesson.';
+CLIPS['y6-review-first-instruction']='Let us look at the correct written spelling and one thing to remember.';
+
 const cache=new Map(),limits=new Map();let daily={day:'',count:0};
 function send(res,code,obj,headers={}){res.writeHead(code,{'Content-Type':'application/json','Cache-Control':'no-store',...headers});res.end(JSON.stringify(obj))}
 http.createServer(async(req,res)=>{
