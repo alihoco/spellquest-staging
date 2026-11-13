@@ -170,7 +170,7 @@ function replay(){
  if(stage==='success')return successAudio();
  if(stage==='finished')return speak('y6-v08-complete');
 }
-function progress(){return '<div class="progress" role="progressbar" aria-label="Words completed" aria-valuemin="0" aria-valuemax="10" aria-valuenow="'+idx+'"><div style="width:'+(idx*10)+'%"></div></div>'}
+function progress(){const n=Math.min(8,Math.max(0,runCount));return '<div class="progress" role="progressbar" aria-label="Today’s adventure" aria-valuemin="0" aria-valuemax="8" aria-valuenow="'+n+'"><div style="width:'+(n/8*100)+'%"></div></div>'}
 function welcome(){
  stop();stage='welcome';
  app.innerHTML='<span class="eyebrow">WELCOME, WORD EXPLORER!</span><h2>Your adventure starts here 🌟</h2>'+
@@ -188,7 +188,7 @@ async function introAudio(){
 function begin(){idx=0;first=0;results=[];narration=true;localStorage.setItem('spellquest-audio-first','on');introAudio()}
 function question(auto=false){
  stop();stage='question';const w=WORDS[idx];
- app.innerHTML='<span class="eyebrow">WORD '+(idx+1)+' OF 10</span>'+progress()+
+ app.innerHTML='<span class="eyebrow">SPELLING CHALLENGE '+runCount+'</span>'+progress()+
  '<h2>Listen, then spell</h2><p>Listen to the word. Type the spelling when you are ready. You can hear it as often as you need.</p>'+
  '<div class="actions"><button class="alt" onclick="speak(\'y6-'+WORDS[idx].word+'\')">🔊 Hear word again</button><button class="alt" onclick="instructionAudio()">🔊 Replay instructions</button></div>'+
  '<label for="answer">Your spelling</label><input id="answer" aria-label="Type the spelling of the spoken word" autocapitalize="off" autocomplete="off" spellcheck="false" onkeydown="if(event.key===\'Enter\')check(false)">'+soundVoice()+
@@ -208,8 +208,8 @@ function check(retry){
 }
 function success(improved){
  stop();stage='success';
- app.innerHTML='<span class="eyebrow">WORD '+(idx+1)+' OF 10</span>'+progress()+
- '<h2>'+(improved?'You learned something new! 🌱':'You remembered it! 🌟')+'</h2>'+
+ app.innerHTML='<span class="eyebrow">SPELLING CHALLENGE '+runCount+'</span>'+progress()+
+ '<h2>'+(improved?'You worked it out 🌱':'That spelling came from you ✓')+'</h2>'+
  '<div class="good">That spelling came from you. Every word you learn is your own progress.</div>'+
  soundVoice()+'<div class="actions"><button onclick="next()">Next word →</button><button class="alt" onclick="successAudio()">🔊 Replay encouragement</button></div>';
  voiceSet();if(narration)successAudio();
@@ -259,7 +259,7 @@ async function shortReviewAudio(){
 }
 function retry(){
  stop();stage='retry';
- app.innerHTML='<span class="eyebrow">WORD '+(idx+1)+' · TRY AGAIN</span>'+progress()+
+ app.innerHTML='<span class="eyebrow">LET’S TRY THIS WORD AGAIN</span>'+progress()+
  '<h2>Now it’s your turn</h2><p>Listen to the word, then spell it.</p>'+
  '<div class="actions"><button class="alt" onclick="speak(\'y6-'+WORDS[idx].word+'\')">🔊 Hear word again</button></div>'+
  '<label for="answer">Your spelling</label><input id="answer" autocapitalize="off" autocomplete="off" spellcheck="false" onkeydown="if(event.key===\'Enter\')check(true)">'+soundVoice()+
