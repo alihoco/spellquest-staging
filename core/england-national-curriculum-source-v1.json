@@ -1,0 +1,798 @@
+{
+  "source": {
+    "jurisdiction": "England",
+    "title": "National curriculum in England — English Appendix 1: Spelling",
+    "url": "https://assets.publishing.service.gov.uk/media/5a7ccc06ed915d63cc65ce61/English_Appendix_1_-_Spelling.pdf",
+    "publisher": "Department for Education",
+    "accessed": "2026-11-13",
+    "revision": "2014 published statutory programme"
+  },
+  "sets": {
+    "year1_common_exception": [
+      "the",
+      "a",
+      "do",
+      "to",
+      "today",
+      "of",
+      "said",
+      "says",
+      "are",
+      "were",
+      "was",
+      "is",
+      "his",
+      "has",
+      "I",
+      "you",
+      "your",
+      "they",
+      "be",
+      "he",
+      "me",
+      "she",
+      "we",
+      "no",
+      "go",
+      "so",
+      "by",
+      "my",
+      "here",
+      "there",
+      "where",
+      "love",
+      "come",
+      "some",
+      "one",
+      "once",
+      "ask",
+      "friend",
+      "school",
+      "put",
+      "push",
+      "pull",
+      "full",
+      "house",
+      "our"
+    ],
+    "year2_common_exception": [
+      "door",
+      "floor",
+      "poor",
+      "because",
+      "find",
+      "kind",
+      "mind",
+      "behind",
+      "child",
+      "children",
+      "wild",
+      "climb",
+      "most",
+      "only",
+      "both",
+      "old",
+      "cold",
+      "gold",
+      "hold",
+      "told",
+      "every",
+      "everybody",
+      "even",
+      "great",
+      "break",
+      "steak",
+      "pretty",
+      "beautiful",
+      "after",
+      "fast",
+      "last",
+      "past",
+      "father",
+      "class",
+      "grass",
+      "pass",
+      "plant",
+      "path",
+      "bath",
+      "hour",
+      "move",
+      "prove",
+      "improve",
+      "sure",
+      "sugar",
+      "eye",
+      "could",
+      "should",
+      "would",
+      "who",
+      "whole",
+      "any",
+      "many",
+      "clothes",
+      "busy",
+      "people",
+      "water",
+      "again",
+      "half",
+      "money",
+      "Mr",
+      "Mrs",
+      "parents",
+      "Christmas"
+    ],
+    "year3_4_statutory": [
+      "accident(ally)",
+      "actual(ly)",
+      "address",
+      "answer",
+      "appear",
+      "arrive",
+      "believe",
+      "bicycle",
+      "breath",
+      "breathe",
+      "build",
+      "busy/business",
+      "calendar",
+      "caught",
+      "centre",
+      "century",
+      "certain",
+      "circle",
+      "complete",
+      "consider",
+      "continue",
+      "decide",
+      "describe",
+      "different",
+      "difficult",
+      "disappear",
+      "early",
+      "earth",
+      "eight/eighth",
+      "enough",
+      "exercise",
+      "experience",
+      "experiment",
+      "extreme",
+      "famous",
+      "favourite",
+      "February",
+      "forward(s)",
+      "fruit",
+      "grammar",
+      "group",
+      "guard",
+      "guide",
+      "heard",
+      "heart",
+      "height",
+      "history",
+      "imagine",
+      "increase",
+      "important",
+      "interest",
+      "island",
+      "knowledge",
+      "learn",
+      "length",
+      "library",
+      "material",
+      "medicine",
+      "mention",
+      "minute",
+      "natural",
+      "naughty",
+      "notice",
+      "occasion(ally)",
+      "often",
+      "opposite",
+      "ordinary",
+      "particular",
+      "peculiar",
+      "perhaps",
+      "popular",
+      "position",
+      "possess(ion)",
+      "possible",
+      "potatoes",
+      "pressure",
+      "probably",
+      "promise",
+      "purpose",
+      "quarter",
+      "question",
+      "recent",
+      "regular",
+      "reign",
+      "remember",
+      "sentence",
+      "separate",
+      "special",
+      "straight",
+      "strange",
+      "strength",
+      "suppose",
+      "surprise",
+      "therefore",
+      "though/although",
+      "thought",
+      "through",
+      "various",
+      "weight",
+      "woman/women"
+    ],
+    "year5_6_statutory": [
+      "accommodate",
+      "accompany",
+      "according",
+      "achieve",
+      "aggressive",
+      "amateur",
+      "ancient",
+      "apparent",
+      "appreciate",
+      "attached",
+      "available",
+      "average",
+      "awkward",
+      "bargain",
+      "bruise",
+      "category",
+      "cemetery",
+      "committee",
+      "communicate",
+      "community",
+      "competition",
+      "conscience",
+      "conscious",
+      "controversy",
+      "convenience",
+      "correspond",
+      "criticise",
+      "curiosity",
+      "definite",
+      "desperate",
+      "determined",
+      "develop",
+      "dictionary",
+      "disastrous",
+      "embarrass",
+      "environment",
+      "equip (–ped, –ment)",
+      "especially",
+      "exaggerate",
+      "excellent",
+      "existence",
+      "explanation",
+      "familiar",
+      "foreign",
+      "forty",
+      "frequently",
+      "government",
+      "guarantee",
+      "harass",
+      "hindrance",
+      "identity",
+      "immediate(ly)",
+      "individual",
+      "interfere",
+      "interrupt",
+      "language",
+      "leisure",
+      "lightning",
+      "marvellous",
+      "mischievous",
+      "muscle",
+      "necessary",
+      "neighbour",
+      "nuisance",
+      "occupy",
+      "occur",
+      "opportunity",
+      "parliament",
+      "persuade",
+      "physical",
+      "prejudice",
+      "privilege",
+      "profession",
+      "programme",
+      "pronunciation",
+      "queue",
+      "recognise",
+      "recommend",
+      "relevant",
+      "restaurant",
+      "rhyme",
+      "rhythm",
+      "sacrifice",
+      "secretary",
+      "shoulder",
+      "signature",
+      "sincere(ly)",
+      "soldier",
+      "stomach",
+      "sufficient",
+      "suggest",
+      "symbol",
+      "system",
+      "temperature",
+      "thorough",
+      "twelfth",
+      "variety",
+      "vegetable",
+      "vehicle",
+      "yacht"
+    ],
+    "year1_pattern_examples": {
+      "double_final_consonants": [
+        "off",
+        "well",
+        "miss",
+        "buzz",
+        "back"
+      ],
+      "nk": [
+        "bank",
+        "think",
+        "honk",
+        "sunk"
+      ],
+      "syllable_awareness": [
+        "pocket",
+        "rabbit",
+        "carrot",
+        "thunder",
+        "sunset"
+      ],
+      "tch": [
+        "catch",
+        "fetch",
+        "kitchen",
+        "notch",
+        "hutch"
+      ],
+      "final_ve": [
+        "have",
+        "live",
+        "give"
+      ],
+      "ai": [
+        "rain",
+        "wait",
+        "train",
+        "paid",
+        "afraid"
+      ],
+      "oi": [
+        "oil",
+        "join",
+        "coin",
+        "point",
+        "soil"
+      ],
+      "ay": [
+        "day",
+        "play",
+        "say",
+        "way",
+        "stay"
+      ],
+      "oy": [
+        "boy",
+        "toy",
+        "enjoy",
+        "annoy"
+      ],
+      "split_a_e": [
+        "made",
+        "came",
+        "same",
+        "take",
+        "safe"
+      ],
+      "split_e_e": [
+        "these",
+        "theme",
+        "complete"
+      ],
+      "split_i_e": [
+        "five",
+        "ride",
+        "like",
+        "time",
+        "side"
+      ],
+      "split_o_e": [
+        "home",
+        "those",
+        "woke",
+        "hope",
+        "hole"
+      ],
+      "split_u_e": [
+        "June",
+        "rule",
+        "rude",
+        "use",
+        "tube",
+        "tune"
+      ],
+      "ar": [
+        "car",
+        "start",
+        "park",
+        "arm",
+        "garden"
+      ],
+      "ee": [
+        "see",
+        "tree",
+        "green",
+        "meet",
+        "week"
+      ],
+      "ea_long_e": [
+        "sea",
+        "dream",
+        "meat",
+        "each"
+      ],
+      "ea_short_e": [
+        "head",
+        "bread",
+        "meant",
+        "instead"
+      ],
+      "ir": [
+        "girl",
+        "bird",
+        "shirt",
+        "first",
+        "third"
+      ],
+      "ur": [
+        "turn",
+        "hurt",
+        "church",
+        "burst",
+        "Thursday"
+      ],
+      "oo_long": [
+        "food",
+        "pool",
+        "moon",
+        "zoo",
+        "soon"
+      ],
+      "oo_short": [
+        "book",
+        "took",
+        "foot",
+        "wood",
+        "good"
+      ],
+      "oa": [
+        "boat",
+        "coat",
+        "road",
+        "coach",
+        "goal"
+      ],
+      "oe": [
+        "toe",
+        "goes"
+      ],
+      "ou": [
+        "out",
+        "about",
+        "mouth",
+        "around",
+        "sound"
+      ],
+      "ow_ou": [
+        "now",
+        "how",
+        "brown",
+        "down",
+        "town"
+      ],
+      "ow_oh": [
+        "own",
+        "blow",
+        "snow",
+        "grow",
+        "show"
+      ],
+      "ue": [
+        "blue",
+        "clue",
+        "true",
+        "rescue",
+        "Tuesday"
+      ],
+      "ew": [
+        "new",
+        "few",
+        "grew",
+        "flew",
+        "drew",
+        "threw"
+      ],
+      "ie_igh": [
+        "lie",
+        "tie",
+        "pie",
+        "high",
+        "night",
+        "light",
+        "bright",
+        "right"
+      ],
+      "ore": [
+        "more",
+        "score",
+        "before",
+        "wore",
+        "shore"
+      ],
+      "aw": [
+        "saw",
+        "draw",
+        "yawn",
+        "crawl"
+      ],
+      "au": [
+        "author",
+        "August",
+        "dinosaur",
+        "astronaut"
+      ],
+      "air": [
+        "air",
+        "fair",
+        "pair",
+        "hair",
+        "chair"
+      ],
+      "ear": [
+        "dear",
+        "hear",
+        "beard",
+        "near",
+        "year"
+      ],
+      "are": [
+        "bare",
+        "dare",
+        "care",
+        "share",
+        "scared"
+      ],
+      "final_y": [
+        "very",
+        "happy",
+        "funny",
+        "party",
+        "family"
+      ],
+      "ph": [
+        "dolphin",
+        "alphabet",
+        "phonics",
+        "elephant"
+      ],
+      "wh": [
+        "when",
+        "where",
+        "which",
+        "wheel",
+        "while"
+      ],
+      "k_before_e_i_y": [
+        "Kent",
+        "sketch",
+        "kit",
+        "skin",
+        "frisky"
+      ],
+      "un_prefix": [
+        "unhappy",
+        "undo",
+        "unload",
+        "unfair",
+        "unlock"
+      ],
+      "compound": [
+        "football",
+        "playground",
+        "farmyard",
+        "bedroom",
+        "blackberry"
+      ]
+    },
+    "year2_pattern_examples": {
+      "dge_ge": [
+        "badge",
+        "edge",
+        "bridge",
+        "dodge",
+        "fudge",
+        "age",
+        "huge",
+        "change",
+        "charge",
+        "village"
+      ],
+      "soft_c": [
+        "race",
+        "ice",
+        "cell",
+        "city",
+        "fancy"
+      ],
+      "kn_gn": [
+        "knock",
+        "know",
+        "knee",
+        "gnat",
+        "gnaw"
+      ],
+      "wr": [
+        "write",
+        "written",
+        "wrote",
+        "wrong",
+        "wrap"
+      ],
+      "le_final": [
+        "table",
+        "apple",
+        "bottle",
+        "little",
+        "middle"
+      ],
+      "el_final": [
+        "camel",
+        "tunnel",
+        "squirrel",
+        "travel",
+        "towel"
+      ],
+      "al_final": [
+        "metal",
+        "pedal",
+        "capital",
+        "hospital",
+        "animal"
+      ],
+      "il_final": [
+        "pencil",
+        "fossil",
+        "nostril"
+      ],
+      "y_as_igh": [
+        "cry",
+        "fly",
+        "dry",
+        "try",
+        "reply",
+        "July"
+      ],
+      "y_as_short_i": [
+        "gym",
+        "myth"
+      ],
+      "adding_ies": [
+        "flies",
+        "tries",
+        "replies",
+        "copies",
+        "babies",
+        "carries"
+      ],
+      "adding_ed_ing": [
+        "hiking",
+        "hiked",
+        "hiking",
+        "nicer",
+        "nicest"
+      ],
+      "suffix_ment_ness_ful_less": [
+        "enjoyment",
+        "sadness",
+        "careful",
+        "playful",
+        "hopeless"
+      ],
+      "or_ore": [
+        "word",
+        "work",
+        "worm",
+        "world",
+        "worth"
+      ],
+      "war_wor": [
+        "war",
+        "warm",
+        "towards"
+      ],
+      "s_as_zh": [
+        "treasure",
+        "pleasure",
+        "measure"
+      ],
+      "tion": [
+        "station",
+        "fiction",
+        "motion",
+        "national",
+        "section"
+      ],
+      "homophones": [
+        "there",
+        "their",
+        "they’re",
+        "here",
+        "hear",
+        "quite",
+        "quiet",
+        "see",
+        "sea",
+        "bare",
+        "bear",
+        "one",
+        "won",
+        "sun",
+        "son",
+        "to",
+        "too",
+        "two",
+        "be",
+        "bee",
+        "blue",
+        "blew",
+        "night",
+        "knight"
+      ]
+    }
+  },
+  "age_bands": {
+    "year1": {
+      "age_range": [
+        5,
+        6
+      ],
+      "label": "Year 1, broad starting guidance"
+    },
+    "year2": {
+      "age_range": [
+        6,
+        7
+      ],
+      "label": "Year 2"
+    },
+    "year3_4": {
+      "age_range": [
+        7,
+        9
+      ],
+      "label": "Years 3–4"
+    },
+    "year5_6": {
+      "age_range": [
+        9,
+        11
+      ],
+      "label": "Years 5–6"
+    }
+  },
+  "caveats": [
+    "Years 1–2 exception and example sets are not statutory enumerated 100-word lists; examples are expressly non-statutory.",
+    "The Year 1–2 example sets in this seed are representative curated examples from the appendix, not yet a complete transcription of every example in every table.",
+    "Years 3–4 and 5–6 lists reproduce all 100 official entry slots each, with optional variant expansion.",
+    "Word membership is source-grounded; teaching-pattern classification is heuristic and needs linguistic specialist review.",
+    "This catalogue is an inventory, not approved narrated lessons. No unreviewed phoneme audio or child-facing correction scripts are automatically released."
+  ]
+}
