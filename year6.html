@@ -374,4 +374,65 @@ finish=function(){
  '<button class="alt" onclick="location.href=\'/\'">Home</button></div>';
  voiceSet();if(narration)talk(['y6-v08-complete']);
 };
+</script><script>
+// Local test-only profile launcher. Does not authenticate or upload learning data.
+const LP=window.SpellmasterProfiles;
+function htmlSafe(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function currentTheme(p){return p.theme==='auto'?LP.themeForAge(LP.ageInYears(p.birth)):p.theme}
+function createLocalProfile(){
+ const alias=$('new-alias')?.value||'',birth=$('new-birth')?.value||'';
+ try{LP.add(localStorage,{alias,birth});renderLanding()}
+ catch(e){const el=$('profile-error');if(el)el.textContent=e.message}
+}
+function chooseLocalProfile(id){try{LP.choose(localStorage,id);renderLanding()}catch(e){const el=$('profile-error');if(el)el.textContent=e.message}}
+function setLocalTheme(value){const p=LP.active(localStorage);if(!p)return;LP.updateTheme(localStorage,p.id,value);renderLanding()}
+function deleteLocalProfile(){
+ const p=LP.active(localStorage);if(!p)return;
+ if(!confirm('Delete this tester profile and its locally saved spelling history from this device?'))return;
+ LP.forget(localStorage,p.id);renderLanding();
+}
+function renderLanding(){
+ stop();stage='welcome';
+ const people=LP.readProfiles(localStorage),p=LP.active(localStorage);
+ document.body.dataset.theme=p?currentTheme(p):'explorer';
+ const progress=p?LP.summary(adaptiveLoad(),adaptiveToday()):null;
+ const cards=people.map(x=>'<button class="profile-choice '+(p&&p.id===x.id?'selected':'')+
+ '" onclick="chooseLocalProfile(\''+x.id+'\')"><span>✦ '+htmlSafe(x.alias)+'</span><small>'+
+ (p&&p.id===x.id?'Current explorer ✓':'Switch')+'</small></button>').join('');
+ const themeOptions=['auto','wonder','explorer','adventure','focus'];
+ app.innerHTML='<div class="start-layout"><section><span class="start-kicker">Welcome to your next adventure</span>'+
+ '<h2 style="font-size:clamp(28px,4vw,39px);line-height:1.15;margin:12px 0">'+
+ (p?'Ready to discover, '+htmlSafe(p.alias)+'?':'Every great speller starts somewhere.')+'</h2>'+
+ '<p class="start-desc">Hear a word, give it a go, and get helpful clues when you need them. Take a break whenever you want.</p>'+
+ '<div class="decor-orb" aria-hidden="true">✦📚✦</div>'+
+ (p?'<div style="margin-top:20px"><button class="play-now" onclick="begin()"><span class="play-icon">▶</span> Play now</button></div>':
+ '<p class="note">Create a local tester profile to start. This is not yet a secure account.</p>')+
+ (progress?'<div class="statline"><div class="stat"><strong>'+progress.wordsSeen+'</strong><small>Words explored</small></div>'+
+ '<div class="stat"><strong>'+progress.initialCorrect+'</strong><small>Known first try</small></div>'+
+ '<div class="stat"><strong>'+progress.dueWords+'</strong><small>Ready to revisit</small></div></div>'+
+ '<span class="label-chip">'+(progress.delayedRetained?'Some words recalled later':'Your memory journey begins here')+'</span>'+
+ (progress.difficulties.length?'<h3 style="margin-bottom:6px">What we are practising</h3>'+
+ progress.difficulties.map(item=>'<div class="difficulty-pill">'+htmlSafe(item.pattern)+
+ ' · '+item.misses+' practice opportunit'+(item.misses===1?'y':'ies')+'</div>').join(''):'')+
+ '<p class="privacy-note">These are early learning observations, not diagnoses or fixed learning styles.</p>':'')+
+ '</section><aside class="profile-panel"><h3>✦ Your explorer profile</h3>'+
+ '<p>Keep each learner’s practice separate on this device.</p>'+cards+
+ (people.length<6?'<div class="profile-form"><label for="new-alias">Explorer nickname</label>'+
+ '<input id="new-alias" maxlength="18" placeholder="e.g. Star Explorer" autocomplete="off" spellcheck="false">'+
+ '<label for="new-birth">Birth month and year</label>'+
+ '<input id="new-birth" type="month" min="1920-01" max="'+new Date().toISOString().slice(0,7)+'">'+
+ '<button class="alt" onclick="createLocalProfile()">+ Create tester profile</button>'+
+ '<div class="status" id="profile-error" role="status"></div></div>':'')+
+ (p?'<div style="padding-top:13px"><label for="local-theme">Choose how the game looks</label>'+
+ '<select id="local-theme" onchange="setLocalTheme(this.value)">'+themeOptions.map(x=>'<option value="'+x+'"'+
+ (p.theme===x?' selected':'')+'>'+({auto:'Adjust with age',wonder:'Wonder',explorer:'Explorer',adventure:'Adventure',focus:'Simple & calm'}[x])+'</option>').join('')+
+ '</select><button class="alt tiny-action" onclick="deleteLocalProfile()">Delete this tester profile</button></div>':'')+
+ '<p class="privacy-note" style="margin-top:15px">Testing only: profiles and birth month/year stay in this browser, not a server. Anyone using this device can access them. Use nicknames, not real names. Clearing browser data removes your progress.</p>'+
+ '</aside></div>'+
+ '<div class="site-note">For now this demo uses the Year 5–6 test word bank. Proper age-based assessment and secure cross-device accounts are still to be built.</div>';
+}
+const playWithProfile=begin;
+begin=function(){if(!LP.active(localStorage)){renderLanding();return}playWithProfile()};
+welcome=renderLanding;
+renderLanding();
 </script></body></html>
