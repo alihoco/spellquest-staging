@@ -43,12 +43,58 @@ label{display:block;font-weight:800;margin:14px 0 5px}
 .footer{text-align:center;font-size:12px;color:#63708c;padding:18px}
 @media(max-width:500px){.panel{padding:18px}main{padding:12px}.hero{padding:24px}.sound{min-width:58px;padding:13px 14px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style><style>
+/* Spellmaster play-first visual refresh: age-respectful and illustration-free */
+:root{--page-accent:#6554e7;--page-accent2:#27b99f;--page-bg:#edf5ff;--page-text:#24324d}
+body{background:radial-gradient(circle at 9% 13%,#d6f5ff 0,transparent 30%),radial-gradient(circle at 89% 2%,#fbe6ff 0,transparent 40%),linear-gradient(160deg,#edf3ff,#fffbf4 80%);color:var(--page-text)}
+body[data-theme="wonder"]{--page-accent:#8b48cf;--page-accent2:#f1a43b;--page-bg:#fff1df}
+body[data-theme="explorer"]{--page-accent:#6052d4;--page-accent2:#2bc5aa;--page-bg:#eaf3ff}
+body[data-theme="adventure"]{--page-accent:#375dac;--page-accent2:#3ba9c0;--page-bg:#e6f1fc}
+body[data-theme="focus"]{--page-accent:#315a77;--page-accent2:#4a9e91;--page-bg:#eaf1f4}
+main{max-width:940px;padding-top:24px}
+.logo{color:var(--page-accent);font-size:27px;letter-spacing:-1px}
+.hero{position:relative;overflow:hidden;background:linear-gradient(120deg,#302666,var(--page-accent) 55%,#7f7ee8);padding:36px 38px;min-height:204px;box-shadow:0 18px 35px #392b8030}
+.hero:before{content:"✦";position:absolute;font-size:125px;right:28px;top:-35px;opacity:.16;transform:rotate(17deg)}
+.hero:after{content:"✧";position:absolute;font-size:125px;right:130px;bottom:-74px;opacity:.16}
+.hero h1{position:relative;max-width:620px;font-size:clamp(30px,5.8vw,50px);line-height:1.11;letter-spacing:-1.5px}
+.hero p{max-width:580px;font-size:16px;opacity:.93}
+.panel{box-shadow:0 20px 60px #23365b12;padding:30px}
+button{background:var(--page-accent)}
+button.alt{background:#edf0ff;color:#382f83}
+button.play-now{font-size:clamp(20px,4vw,26px);letter-spacing:.2px;border-radius:22px;padding:21px 30px;min-height:75px;background:linear-gradient(125deg,var(--page-accent),#514ce2);box-shadow:0 10px 0 #2b2675,0 18px 30px #5547ba33;display:inline-flex;gap:16px;align-items:center;justify-content:center;transition:transform .12s}
+button.play-now:active{transform:translateY(4px);box-shadow:0 6px 0 #2b2675}
+.play-icon{background:#ffffff2b;display:inline-grid;place-items:center;border-radius:100%;width:45px;height:45px}
+.start-layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(230px,.9fr);gap:26px;align-items:start}
+.start-kicker{letter-spacing:2px;font-weight:850;color:var(--page-accent);font-size:12px;text-transform:uppercase}
+.start-desc{max-width:500px;color:#50617e;font-size:16px}
+.decor-orb{height:148px;border-radius:26px;background:radial-gradient(circle at 40% 30%,#fff6ba,transparent 45%),linear-gradient(140deg,#e2d8ff,#b8e7f1);display:grid;place-items:center;font-size:76px;box-shadow:inset 0 0 0 1px #fff}
+.profile-panel{background:#f5f5ff;border:1px solid #e5e4fb;border-radius:22px;padding:18px}
+.profile-panel h3{margin:0 0 6px;font-size:17px}
+.profile-panel p{font-size:13px;color:#5f6b81;margin:0 0 12px}
+.profile-choice{width:100%;display:flex;align-items:center;justify-content:space-between;text-align:left;gap:6px;background:#fff;border:2px solid #e4e3fa;color:#2b3452;padding:13px;border-radius:14px;margin:7px 0}
+.profile-choice.selected{border-color:var(--page-accent);background:#f5f2ff}
+.profile-choice small{color:#64748b;font-weight:500}
+.profile-form label{font-size:13px;margin:8px 0 3px}
+.profile-form input,.profile-form select{width:100%;font-size:16px;border:1px solid #c5cbe2;border-radius:12px;padding:11px;background:white;margin:3px 0 9px}
+.profile-form input{height:48px}
+.profile-form button{width:100%}
+.privacy-note{font-size:12px!important;color:#667488!important;line-height:1.5!important}
+.statline{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:15px 0}
+.stat{background:#f1f4ff;border-radius:14px;padding:10px;text-align:center}
+.stat strong{display:block;font-size:23px;color:var(--page-accent)}
+.stat small{color:#61708b;font-size:11px}
+.difficulty-pill{background:#fff7e8;padding:8px 11px;border-radius:10px;margin:5px 0;font-size:13px;color:#574d37}
+.tiny-action{font-size:12px;min-height:34px;padding:6px 10px}
+.label-chip{display:inline-block;padding:5px 9px;background:#eefaf4;color:#276852;border-radius:9px;font-size:12px;font-weight:750}
+.site-note{padding:8px 0;font-size:12px;color:#6a7890}
+@media(max-width:660px){.start-layout{grid-template-columns:1fr}.hero{padding:24px;min-height:165px}.panel{padding:20px}.decor-orb{display:none}button.play-now{width:100%}}
 </style></head>
 <body><main><header><a class="logo" href="/">✨ Spellmaster</a><span class="muted small">Better today than yesterday</span></header>
-<section class="hero"><span class="eyebrow">YOUR OWN SPELLING ADVENTURE</span><h1>Hear it. Say it. Spell it.</h1><p>Learn Year 6 spellings one step at a time, with a friendly voice to explain every stage.</p></section>
+<section class="hero"><span class="eyebrow">YOUR OWN SPELLING ADVENTURE</span><h1>Discover words. Build confidence.</h1><p>Little challenges, a patient voice, and a teacher that remembers what helps you learn.</p></section>
 <section class="panel" id="app"></section>
-<div class="footer">Year 5–6 spelling adventures · Learn at your own pace · Your progress stays in this browser</div></main>
+<div class="footer">Staging teaching pilot · Year 5–6 word set · Test profiles and progress stay on this device</div></main>
 <script src="/spelling-feedback.js"></script>
+<script src="/learner-profiles.js"></script>
 <script>
 const WORDS=[
  {word:'necessary',spelling:['ne','ces','sa','ry'],sounds:['ness','uh','ser','ee']},
@@ -244,14 +290,14 @@ let lastErrorFeedback=null;
 function errorFeedbackForCurrent(){return lastErrorFeedback||{clip:'spellmaster-error-generic-middle',text:'Look at the middle of the correct word. Then have another go.'}}
 function adaptiveToday(){const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}
 function adaptiveDatePlus(date,n){const d=new Date(date+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)}
-function adaptiveLoad(){try{return JSON.parse(localStorage.getItem(ADAPTIVE_KEY)||'{}')}catch(e){return {}}}
+function adaptiveLoad(){try{const profile=window.SpellmasterProfiles?.active(localStorage);if(!profile)return {};return JSON.parse(localStorage.getItem(window.SpellmasterProfiles.historyKey(profile))||'{}')}catch(e){return {}}}
 function adaptiveSave(word,ok,fromReview,afterHelp,errorCategory=null){
  const all=adaptiveLoad(),entry=all[word]||{events:[],retained:0};
  if(fromReview&&ok&&!afterHelp)entry.retained++;
  entry.events.push({date:adaptiveToday(),correct:ok,mode:'independent_keyboard',afterHelp:!!afterHelp,review:!!fromReview,error_category:ok?null:errorCategory});
  entry.next=adaptiveDatePlus(adaptiveToday(),ok?(entry.retained>=2?14:entry.retained?3:1):1);
  entry.vault=ok?(entry.retained?'protected':'collected'):'recovery_quest';
- all[word]=entry;localStorage.setItem(ADAPTIVE_KEY,JSON.stringify(all));
+ all[word]=entry;const profile=window.SpellmasterProfiles?.active(localStorage);if(profile)localStorage.setItem(window.SpellmasterProfiles.historyKey(profile),JSON.stringify(all));
 }
 function adaptiveSelect(){
  const all=adaptiveLoad(),day=adaptiveToday();
