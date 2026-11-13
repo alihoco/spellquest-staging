@@ -38,8 +38,9 @@ function expandOfficial(raw){
 }
 const patterns={};
 function record(word,band,role,sourceRaw,officialEntryIndex=null,groupHint=null){
- const id='en-'+word.toLowerCase().replace(/[^a-z]+/g,'-').replace(/-$/,'');
- if(!/^[a-zA-Z]+$/.test(word))throw Error('Non-word entered: '+word);
+ word=word.toLowerCase().replace(/’/g,"'");
+ const id='en-'+word.replace(/[^a-z]+/g,'-').replace(/-$/,'');
+ if(!/^[a-z]+(?:'[a-z]+)?$/.test(word))throw Error('Non-word entered: '+word);
  const status=role==='statutory_wordlist'?'statutory':'nonstatutory';
  const bandAge={year1:[5,6],year2:[6,7],year3_4:[7,9],year5_6:[9,11]}[band];
  let tags=[];
@@ -58,13 +59,13 @@ function record(word,band,role,sourceRaw,officialEntryIndex=null,groupHint=null)
    provenance:{publisher:'Department for Education',document:'English Appendix 1: Spelling',url:PAGE},
    teaching_groups:tags.map(x=>({id:x,label:GROUPS[x]||x,annotation_status:'provisional_nonclinical'})),
    teaching_approval:'curriculum_inventory_only',sound_alignment_approved:false,word_definition_approved:false,
-   notes:status==='statutory'?'Year-band provenance does not imply a child's ability limit.':'Example or common-exception role is not a 100-word statutory list.'
+   notes:status==='statutory'?'Year-band provenance does not imply a learner’s ability limit.':'Example or common-exception role is not a 100-word statutory list.'
  };
 }
 function buildCatalog(){
  const map=new Map();
  function add(word,band,role,raw,index,hint=null){
-  const key=word.toLowerCase();
+  const key=word.toLowerCase().replace(/’/g,"'");
   if(!map.has(key)){map.set(key,record(word,band,role,raw,index,hint));return}
   const old=map.get(key);
   if(old.curriculum_role!=='statutory_wordlist'&&role==='statutory_wordlist'){
