@@ -166,6 +166,8 @@ for(const word of AUTO_NEXT_WORDS)CLIPS['spellmaster-next-'+word+'-v1']='Here is
 CLIPS['spellmaster-right-short-v1']='You got that spelling right.';
 CLIPS['spellmaster-learned-short-v1']='You worked that one out.';
 
+// Curated, proportionate and replayable correct-answer celebrations.
+Object.assign(CLIPS,require('./celebration-feedback.js').audioClips());
 const cache=new Map(),limits=new Map();let daily={day:'',count:0};
 function send(res,code,obj,headers={}){res.writeHead(code,{'Content-Type':'application/json','Cache-Control':'no-store',...headers});res.end(JSON.stringify(obj))}
 http.createServer(async(req,res)=>{
