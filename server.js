@@ -160,6 +160,12 @@ CLIPS['spellmaster-bonus-end-v1']='That was a good recap. You can return to your
 CLIPS['spellmaster-bonus-right-v1']='You remembered that word!';
 CLIPS['spellmaster-bonus-miss-v1']='That one needs another visit. We can practise it again soon.';
 CLIPS['spellmaster-avatar-choice-v1']='Well done! Choose one reward for your avatar. You can pick a hat, glasses, shoes, clothes or a new hairstyle. Your choice will be saved.';
+// One contiguous spoken announcement avoids a separate autoplay boundary between prompt and target.
+const AUTO_NEXT_WORDS=['necessary','embarrass','accommodate','government','foreign','familiar','environment','privilege','rhythm','temperature'];
+for(const word of AUTO_NEXT_WORDS)CLIPS['spellmaster-next-'+word+'-v1']='Here is your next word: '+word+'.';
+CLIPS['spellmaster-right-short-v1']='You got that spelling right.';
+CLIPS['spellmaster-learned-short-v1']='You worked that one out.';
+
 const cache=new Map(),limits=new Map();let daily={day:'',count:0};
 function send(res,code,obj,headers={}){res.writeHead(code,{'Content-Type':'application/json','Cache-Control':'no-store',...headers});res.end(JSON.stringify(obj))}
 http.createServer(async(req,res)=>{
