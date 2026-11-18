@@ -20,7 +20,7 @@
  }
  function choose(storage,id){if(!readProfiles(storage).some(p=>p.id===id))throw Error('Unknown local learner');storage.setItem(ACTIVE,id);return active(storage)}
  function updateTheme(storage,id,theme){if(!['auto','wonder','explorer','adventure','focus'].includes(theme))throw Error('Unknown theme');const all=readProfiles(storage);const p=all.find(x=>x.id===id);if(!p)throw Error('Unknown learner');p.theme=theme;storage.setItem(KEY,JSON.stringify(all));return p;}
- function forget(storage,id){const all=readProfiles(storage);if(!all.some(p=>p.id===id))return;storage.removeItem('spellmaster-staging-intake-v1:'+id);storage.removeItem('spellmaster-local-splitter-v1:'+id);storage.setItem(KEY,JSON.stringify(all.filter(p=>p.id!==id)));if(storage.getItem(ACTIVE)===id)storage.removeItem(ACTIVE)}
+ function forget(storage,id){const all=readProfiles(storage);if(!all.some(p=>p.id===id))return;storage.removeItem('spellmaster-staging-intake-v1:'+id);storage.removeItem('spellmaster-local-splitter-v1:'+id);storage.removeItem('spellmaster-bonus-v1:'+id);storage.setItem(KEY,JSON.stringify(all.filter(p=>p.id!==id)));if(storage.getItem(ACTIVE)===id)storage.removeItem(ACTIVE)}
  function historyKey(profile){if(!profile?.id||!/^lp-[a-z0-9]+$/.test(profile.id))throw Error('Local learner profile required');return 'spellmaster-staging-intake-v1:'+profile.id}
  const WORD_PATTERNS={
  necessary:'Single C / double S',embarrass:'Double R / double S',accommodate:'Double C / double M',
