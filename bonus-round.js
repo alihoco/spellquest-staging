@@ -4,6 +4,15 @@
 (function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;if(root)root.SpellmasterBonus=api;})(typeof globalThis!=='undefined'?globalThis:null,function(){
 'use strict';
 const KEY='spellmaster-bonus-v1:';
+const AVATAR_ITEMS=Object.freeze([
+ {id:'star-explorer-hat',name:'Star Explorer Hat',icon:'🎩',slot:'hat'},
+ {id:'comet-trainers',name:'Comet Trainers',icon:'👟',slot:'shoes'},
+ {id:'discovery-glasses',name:'Discovery Glasses',icon:'👓',slot:'glasses'},
+ {id:'adventure-coat',name:'Adventure Coat',icon:'🧥',slot:'coat'},
+ {id:'trail-trousers',name:'Trail Trousers',icon:'👖',slot:'trousers'},
+ {id:'starlight-dress',name:'Starlight Dress',icon:'👗',slot:'dress'},
+ {id:'rainbow-hair',name:'Rainbow Hair',icon:'🌈',slot:'hair'}
+]);
 function target(recent=[]){
  const items=recent.slice(-10);
  const struggling=items.filter(x=>x.initial===false||x.attempts>1).length;
@@ -25,23 +34,46 @@ function grade(words,answers){
  const details=words.map((w,i)=>({word:w,correct:String(answers[i]||'').trim().toLowerCase().replace(/[^a-z]/g,'')===w}));
  const correct=details.filter(x=>x.correct).length;
  return {correct,total:words.length,perfect:correct===words.length,details,delayedMastery:false,
-  coins:correct===words.length?25:correct*2,bonusPoints:correct===words.length?100:correct*10,hatEarned:correct===words.length};
+  coins:correct===words.length?25:correct*2,bonusPoints:correct===words.length?100:correct*10,avatarItemChoiceEarned:correct===words.length};
 }
 function key(profile){if(!profile||!/^lp-[a-z0-9]+$/.test(profile.id))throw Error('Local learner profile required');return KEY+profile.id;}
 function read(storage,profile){try{const o=JSON.parse(storage.getItem(key(profile))||'{}');return {coins:Number.isSafeInteger(o.coins)&&o.coins>=0?o.coins:0,
   bonusPoints:Number.isSafeInteger(o.bonusPoints)&&o.bonusPoints>=0?o.bonusPoints:0,
-  hats:Array.isArray(o.hats)?o.hats:[],rounds:Array.isArray(o.rounds)?o.rounds:[]}}catch{return {coins:0,hats:[],rounds:[]}}}
+  hats:Array.isArray(o.hats)?o.hats:[],inventory:Array.isArray(o.inventory)?o.inventory:Array.isArray(o.hats)?o.hats:[],
+  rounds:Array.isArray(o.rounds)?o.rounds:[]}}catch{return {coins:0,bonusPoints:0,hats:[],inventory:[],rounds:[]}}}
 function award(storage,profile,roundId,graded){
  if(!graded||!Array.isArray(graded.details)||!Number.isInteger(graded.coins))throw Error('Invalid reward result');
  if(!/^round-[a-z0-9-]+$/.test(roundId))throw Error('Invalid round ID');
  const data=read(storage,profile);
  if(data.rounds.some(x=>x.id===roundId))return {alreadyAwarded:true,...data};
  data.coins+=graded.coins;data.bonusPoints+=graded.bonusPoints;
- if(graded.hatEarned&&!data.hats.includes('star-explorer-hat'))data.hats.push('star-explorer-hat');
  data.rounds.push({id:roundId,at:new Date().toISOString(),correct:graded.correct,total:graded.total,
-  coins:graded.coins,bonusPoints:graded.bonusPoints,perfect:graded.perfect,category:'immediate_retrieval',notMastery:true});
+  coins:graded.coins,bonusPoints:graded.bonusPoints,perfect:graded.perfect,
+  avatarChoice:graded.perfect?'pending':null,avatarItemId:null,
+  category:'immediate_retrieval',notMastery:true});
  data.rounds=data.rounds.slice(-200);
  storage.setItem(key(profile),JSON.stringify(data));return {alreadyAwarded:false,...data};
 }
-return {target,chooseRound,grade,read,award,key};
+function availableChoices(storage,profile){
+ const state=read(storage,profile);
+ return AVATAR_ITEMS.filter(item=>!state.inventory.includes(item.id));
+}
+function chooseAvatarReward(storage,profile,roundId,itemId){
+ const item=AVATAR_ITEMS.find(x=>x.id===itemId);
+ if(!item)throw Error('Unknown avatar reward');
+ const state=read(storage,profile);
+ const round=state.rounds.find(x=>x.id===roundId);
+ if(!round||!round.perfect)throw Error('Bonus choice not earned');
+ if(round.avatarChoice!=='pending')return {alreadyClaimed:true,selected:round.avatarItemId||null,...state};
+ if(state.inventory.includes(itemId))throw Error('Item already owned: choose another reward');
+ round.avatarChoice='claimed';round.avatarItemId=itemId;
+ state.inventory.push(itemId);
+ if(item.slot==='hat'&&!state.hats.includes(itemId))state.hats.push(itemId);
+ storage.setItem(key(profile),JSON.stringify(state));
+ return {alreadyClaimed:false,selected:itemId,...state};
+}
+function pendingRewards(storage,profile){
+ return read(storage,profile).rounds.filter(x=>x.perfect&&x.avatarChoice==='pending').map(x=>x.id);
+}
+return {target,chooseRound,grade,read,award,availableChoices,chooseAvatarReward,pendingRewards,AVATAR_ITEMS,key};
 });
