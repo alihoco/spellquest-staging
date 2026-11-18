@@ -25,20 +25,21 @@ function grade(words,answers){
  const details=words.map((w,i)=>({word:w,correct:String(answers[i]||'').trim().toLowerCase().replace(/[^a-z]/g,'')===w}));
  const correct=details.filter(x=>x.correct).length;
  return {correct,total:words.length,perfect:correct===words.length,details,delayedMastery:false,
-  coins:correct===words.length?25:correct*2,hatEarned:correct===words.length};
+  coins:correct===words.length?25:correct*2,bonusPoints:correct===words.length?100:correct*10,hatEarned:correct===words.length};
 }
 function key(profile){if(!profile||!/^lp-[a-z0-9]+$/.test(profile.id))throw Error('Local learner profile required');return KEY+profile.id;}
 function read(storage,profile){try{const o=JSON.parse(storage.getItem(key(profile))||'{}');return {coins:Number.isSafeInteger(o.coins)&&o.coins>=0?o.coins:0,
+  bonusPoints:Number.isSafeInteger(o.bonusPoints)&&o.bonusPoints>=0?o.bonusPoints:0,
   hats:Array.isArray(o.hats)?o.hats:[],rounds:Array.isArray(o.rounds)?o.rounds:[]}}catch{return {coins:0,hats:[],rounds:[]}}}
 function award(storage,profile,roundId,graded){
  if(!graded||!Array.isArray(graded.details)||!Number.isInteger(graded.coins))throw Error('Invalid reward result');
  if(!/^round-[a-z0-9-]+$/.test(roundId))throw Error('Invalid round ID');
  const data=read(storage,profile);
  if(data.rounds.some(x=>x.id===roundId))return {alreadyAwarded:true,...data};
- data.coins+=graded.coins;
+ data.coins+=graded.coins;data.bonusPoints+=graded.bonusPoints;
  if(graded.hatEarned&&!data.hats.includes('star-explorer-hat'))data.hats.push('star-explorer-hat');
  data.rounds.push({id:roundId,at:new Date().toISOString(),correct:graded.correct,total:graded.total,
-  coins:graded.coins,perfect:graded.perfect,category:'immediate_retrieval',notMastery:true});
+  coins:graded.coins,bonusPoints:graded.bonusPoints,perfect:graded.perfect,category:'immediate_retrieval',notMastery:true});
  data.rounds=data.rounds.slice(-200);
  storage.setItem(key(profile),JSON.stringify(data));return {alreadyAwarded:false,...data};
 }
