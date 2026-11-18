@@ -16,14 +16,14 @@ Reinforce just-taught words through a quick **independent spelling recap** befor
 1. The narrator invites a voluntary 'Memory Challenge'.
 2. Each word is spoken aloud; the learner spells independently using their normal input. Correct spelling, chosen dividers, letter banks and memory cues are entirely absent from the answer interface.
 3. Between questions, give brief, non-shaming feedback. No full teaching lecture repeated. If incorrect, schedule relevant future practice rather than treating a recap error as failure.
-4. A final score shows `correct / total`. A perfect round earns a proportional **immediate** bonus of 25 coins and the cosmetic **Star Explorer Hat**, once per profile; other correct recall responses earn 2 coins each.
+4. A final score shows `correct / total`. A perfect round earns a proportional **immediate** bonus of **25 coins, 100 bonus points and the cosmetic Star Explorer Hat**. Partial rounds earn 2 coins and 10 bonus points per independently recalled spelling. The hat entitlement is granted once per profile; coins/points are awarded once per round ID.
 5. All results are marked `same_session_recall`, **not** delayed mastery. Genuine retained learning still needs review on another day. Cosmetic rewards must not be interpreted as certification of spelling ability.
 6. Allow the learner to finish or continue learning without pressure. Reward event IDs must be idempotent to prevent duplicates.
 7. No real-money currency, loot boxes, public leaderboard, penalty for errors, loss of earlier coins or loss of existing achievements.
 
 ## Storage and implementation
 - Browser-level `bonus-round.js` derives the adaptive selection and scores words; `year6.html` handles an audio-first recap and separates bonus events from due-delayed review.
-- Local-only `learner_id` namespace holds coin balance, Star Explorer Hat entitlement and capped bonus history. Deleting a local tester profile removes its bonus records.
+- Local-only `learner_id` namespace holds coin balance, bonus-point total, Star Explorer Hat entitlement and capped bonus history. Deleting a local tester profile removes its bonus records.
 - These are temporary staging economy records, not a secure cloud account, an avatar shop or an actual hat-rendering asset. No real cross-device entitlement exists yet.
 - Narrator clips are served from `server.js`; voice playback needs manual device QA as do all staging audio flows.
 
