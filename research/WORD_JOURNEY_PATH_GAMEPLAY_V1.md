@@ -39,3 +39,8 @@ Example using the word **foreign**:
 - Co-design and test with dyslexic learners; aim for interest, not distraction or pressure.
 
 **Release criterion:** Accurate letter reconstruction, no target leakage during unaided recall, no shame on error, motion/accessibility checks, and evidence collection distinct from claims of educational efficacy.
+
+
+## Future coin shop and avatar upgrades
+
+Collected coins from completed Word Journey routes will eventually support a private [Coin Shop and Avatar Customisation](COIN_SHOP_AND_AVATAR_CUSTOMISATION_V1.md). Learners can purchase cosmetics, age-appropriate clothes, backgrounds, companions and optional adventure decoration, but **not** spelling mastery, extra teaching quality, or shortcuts around independent recall. Coins are spendable; retained mastery, existing trophies and Word Vault history never are. No real-money purchases, loot boxes, gambling-style prizes, lost balances for mistakes, or peer wealth competition.
