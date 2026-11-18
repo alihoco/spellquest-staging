@@ -22,7 +22,7 @@ function prepare(catalogue,approvedPilot={}){
  if(!catalogue||!Array.isArray(catalogue.words))throw Error('Curriculum word bank missing');
  const seen=new Set();
  const words=catalogue.words.map(w=>{
-  if(!w||!/^en-[a-z]+(?:-[a-z]+)*$/.test(w.id)||!(/^[a-z]+$/.test(w.word))||
+  if(!w||!/^en-[a-z]+(?:-[a-z]+)*$/.test(w.id)||!(/^[a-z]+(?:'[a-z]+)?$/.test(w.word))||
     !validBand(w.curriculum_band)||seen.has(w.word))throw Error('Invalid/duplicate curriculum spelling');
   seen.add(w.word);
   const pilot=approvedPilot[w.word];
