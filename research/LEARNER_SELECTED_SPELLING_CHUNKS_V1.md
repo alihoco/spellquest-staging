@@ -45,3 +45,10 @@ Save only under a scoped `learner_id` and `word_id`: `grouping_version`, `positi
 
 ## Release status
 This specification and a headless chunking/persistence policy are committed. No student-facing drag UI or production server-side account storage has been released yet. Specialist review is required for formal segmentation.
+
+
+## Working staging prototype — 18 November 2026
+
+The optional UI is now implemented in the existing Year 6 staging review and short-review steps (`year6.html`, `spelling-chunks-ui.js`). It allows tapping the gaps between letters on touch devices and dragging active divider handles with a desktop pointer, and always reconstructs the exact correct word. The learner can choose the suggested split, save a different split, or skip the feature. A saved custom split is shown automatically in later supported-teaching explanations; the original educator-curated/approved linguistic data is unchanged and **no custom split or hint is shown in the unaided spelling entry**. Custom choices are scoped to the local learner profile and erased with that profile.
+
+The local event log counts the offer, opening, editing, different grouping saved, default kept, later reuse, changes and resets; feedback on the profile page reports the **local** changed-opportunity ratio. A locally saved choice is evidence of preference, not a claim of efficacy. The independent randomised A/B/C study and measurement of active learning time, 7-day/28-day retained accuracy **have not been implemented**, and no child research data are being centrally collected. The updated study and adoption specification is [PERSONAL_WORD_GROUPING_ADOPTION_AND_RETENTION_STUDY_V1.md](PERSONAL_WORD_GROUPING_ADOPTION_AND_RETENTION_STUDY_V1.md). Pending quality review, the feature remains an experimental memory aid, not endorsed phonics teaching.
