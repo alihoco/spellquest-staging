@@ -14,6 +14,10 @@ history.embarrass={events:[{date:'2026-11-15',correct:true}],next:today};
 const due=sel.select({words,history,session:[],today,runCount:0});
 assert.equal(due.kind,'due');
 assert.equal(words[due.i].word,'embarrass');
+const earlyMix=sel.select({words,history:{necessary:{events:[{correct:true}],next:later},embarrass:{events:[{correct:true}],next:later}},
+ session:[{word:'necessary'},{word:'embarrass'}],today,runCount:2});
+assert.equal(earlyMix.kind,'practice','Interleave a previous spelling after two initial words');
+assert.equal(words[earlyMix.i].word,'necessary','Avoid immediately repeating the last word');
 const session=[{word:'necessary',initial:true},{word:'government',initial:true},{word:'privilege',initial:true},
  {word:'foreign',initial:true},{word:'environment',initial:true}];
 const combined=sel.select({words,history,session,today,runCount:5});
