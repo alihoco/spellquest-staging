@@ -43,7 +43,7 @@
   nodeTrack.replaceChildren();list.replaceChildren();
   for(let i=1;i<=total;i++){
    const complete=v.active&&i<v.count;
-   const current=v.active&&i===v.count;
+   const current=(v.active&&i===v.count)||(!v.active&&v.currentStage==='welcome'&&i===1);
    const box=document.createElement('div');box.className='sm-node '+(complete?'done':current?'active':'future');
    if(current)box.setAttribute('aria-current','step');
    const circle=document.createElement('span');circle.className='sm-node-circle';
