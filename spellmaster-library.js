@@ -14,7 +14,7 @@
  '<div class="sm-character-hint"><strong>✦ Better today than yesterday</strong><p>Look for the little steps forward. Your explorer will celebrate what you learn.</p></div>';
  const side=document.createElement('aside');side.className='sm-side';side.setAttribute('aria-label','Adventure and rewards');
  side.innerHTML='<details class="sm-side-box" id="sm-adventure"><summary>🗺️ Your Adventure</summary><div class="sm-side-body"><ul id="sm-journey-list"></ul><div class="sm-mini-meter"><span id="sm-journey-meter"></span></div><small id="sm-journey-caption">Your personal journey</small></div></details>'+
- '<details class="sm-side-box" id="sm-rewards"><summary>🏆 Your Rewards</summary><div class="sm-side-body"><div class="sm-reward-row"><span class="sm-reward-icon">🪙</span><div><div class="sm-count" id="sm-coin-count">0</div><small>Coins from bonus rounds</small></div></div><div class="sm-reward-row"><span class="sm-reward-icon">✨</span><div><div class="sm-count" id="sm-item-count">0</div><small>Avatar items earned</small></div></div><small>Coins and cosmetics are separate from lasting spelling mastery.</small></div></details>'+
+ '<details class="sm-side-box" id="sm-rewards"><summary>🏆 Your Rewards</summary><div class="sm-side-body"><div class="sm-reward-row"><span class="sm-reward-icon">🪙</span><div><div class="sm-count" id="sm-coin-count">0</div><small>Coins from bonus rounds</small></div></div><div class="sm-reward-row"><span class="sm-reward-icon">✦</span><div><div class="sm-count" id="sm-point-count">0</div><small>Bonus points</small></div></div><div class="sm-reward-row"><span class="sm-reward-icon">✨</span><div><div class="sm-count" id="sm-item-count">0</div><small>Avatar items earned</small></div></div><small>Coins and cosmetics are separate from lasting spelling mastery.</small></div></details>'+
  '<details class="sm-side-box" id="sm-profile"><summary>🎒 Your Explorer</summary><div class="sm-side-body"><div class="sm-reward-row"><span class="sm-reward-icon">📖</span><div><strong id="sm-profile-name">Explorer</strong><small id="sm-profile-style">Your chosen style</small></div></div><small>Choose how the adventure looks from your local tester profile. A secure wardrobe will be added later.</small></div></details>';
  layout.append(character,app,side);
  const isMobile=window.matchMedia('(max-width:780px)').matches;
@@ -37,7 +37,7 @@
   const previewCount=5;
   const total=Math.max(previewCount,Math.min(10,v.count+(v.currentStage==='bonus-question'?1:0)));
   const signature=JSON.stringify([v.profile?.id||'none',v.profile?.alias||'',v.profile?.theme||'',v.currentStage,v.count,done,
-    v.bonus?.coins||0,v.bonus?.inventory?.length||0]);
+    v.bonus?.coins||0,v.bonus?.bonusPoints||0,v.bonus?.inventory?.length||0]);
   if(signature===lastSignature)return;
   lastSignature=signature;
   nodeTrack.replaceChildren();list.replaceChildren();
@@ -63,12 +63,14 @@
   const meter=side.querySelector('#sm-journey-meter');if(meter)meter.style.width=Math.min(100,Math.round((v.count>0?Math.max(v.count-1,0):0)/total*100))+'%';
   text('sm-journey-caption',v.active?'Word '+v.count+' of this adventure · No race to finish':'Learn at your own pace');
   text('sm-coin-count',String(v.bonus?.coins||0));
+  text('sm-point-count',String(v.bonus?.bonusPoints||0));
   text('sm-item-count',String(v.bonus?.inventory?.length||0));
   text('sm-profile-name',v.profile?.alias||'Your explorer');
   text('sm-profile-style',v.profile?('Theme: '+(v.profile.theme==='auto'?'Age-adjusted':v.profile.theme)):'Local tester profile');
   const avatarTitle=character.querySelector('h3');
   if(avatarTitle)avatarTitle.textContent=v.profile?.alias?('Explorer '+v.profile.alias):'Meet your explorer';
   document.body.dataset.smStage=v.currentStage;
+  character.classList.toggle('is-celebrating',v.currentStage==='success'||v.currentStage==='bonus-result');
  }
  function schedule(){if(scheduled)return;scheduled=true;requestAnimationFrame(render)}
  const observer=new MutationObserver(schedule);observer.observe(app,{childList:true,subtree:true,characterData:true});
