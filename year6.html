@@ -107,6 +107,17 @@ button.play-now:active{transform:translateY(4px);box-shadow:0 6px 0 #2b2675}
 .word-group-row .spelling-row{margin:0;flex:1 1 auto}
 .word-group-change{flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;min-height:46px;white-space:normal;text-align:center}
 @media(max-width:500px){.word-group-row{align-items:stretch;gap:12px}.word-group-change{width:100%;justify-content:center}}
+</style><style>
+.bonus-card{background:linear-gradient(135deg,#f5ebff,#fff7e7);border:2px solid #e5cef7;padding:24px;border-radius:24px;margin:15px 0;text-align:center}
+.bonus-title{font-size:clamp(28px,4.5vw,40px);color:#44318c;margin:12px 0}
+.bonus-trophy{font-size:55px;line-height:1.2;display:block;margin:10px}
+.bonus-stars{font-size:30px;letter-spacing:6px}
+.bonus-meter{height:11px;border-radius:20px;background:#ebe2fb;overflow:hidden;margin:14px auto;max-width:350px}
+.bonus-meter div{height:100%;background:linear-gradient(90deg,#62c8a1,#735dde)}
+.bonus-currency{display:inline-flex;align-items:center;gap:8px;background:#fff6d9;padding:11px 17px;border-radius:15px;color:#60430b;font-weight:750;margin:6px}
+.bonus-perfect{box-shadow:0 0 0 3px #e4b963,0 15px 40px #9b72ed2b}
+.bonus-hat{background:#fff1c4;padding:14px;border-radius:14px;margin:10px 0}
+@media(prefers-reduced-motion:no-preference){.bonus-perfect .bonus-trophy{animation:bonus-pop .6s ease-out}@keyframes bonus-pop{0%{transform:scale(.5)}70%{transform:scale(1.13)}100%{transform:scale(1)}}}
 </style></head>
 <body><main><header><a class="logo" href="/">✨ Spellmaster</a><span class="muted small">Better today than yesterday</span></header>
 <section class="hero"><span class="eyebrow">YOUR OWN SPELLING ADVENTURE</span><h1>Discover words. Build confidence.</h1><p>Little challenges, a patient voice, and a teacher that remembers what helps you learn.</p></section>
@@ -114,6 +125,7 @@ button.play-now:active{transform:translateY(4px);box-shadow:0 6px 0 #2b2675}
 <div class="footer">Staging teaching pilot · Year 5–6 word set · Test profiles and progress stay on this device</div></main>
 <script src="/spelling-feedback.js"></script>
 <script src="/learner-profiles.js"></script>
+<script src="/bonus-round.js"></script>
 <script src="/spelling-chunks-ui.js"></script>
 <script>
 const WORDS=[
@@ -362,6 +374,7 @@ welcome();
 // The formal curriculum and sound teaching gates remain separate.
 const ADAPTIVE_KEY='spellmaster-staging-intake-v1';
 let runCount=0,runStart=0,runFirst=0,runNew=0,runSeen=new Set(),runResults=[],runReview=false;
+let bonusReviewedThrough=0,bonusRound=null,bonusPosition=0,bonusAnswers=[],bonusRoundId=null;
 let lastErrorFeedback=null;
 function errorFeedbackForCurrent(){return lastErrorFeedback||{clip:'spellmaster-error-generic-middle',text:'Look at the middle of the correct word. Then have another go.'}}
 function adaptiveToday(){const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}
@@ -396,6 +409,7 @@ function adaptiveStartWord(){
 }
 begin=function(){
  runCount=0;runStart=Date.now();runFirst=0;runNew=0;runSeen=new Set();runResults=[];runReview=false;
+ bonusReviewedThrough=0;bonusRound=null;bonusPosition=0;bonusAnswers=[];bonusRoundId=null;
  idx=0;first=0;results=[];narration=true;
  localStorage.setItem('spellquest-audio-first','on');
  introAudio();
@@ -424,8 +438,87 @@ check=function(retry){
  }
  if(ok){runSeen.add(word);success(retry)}else if(retry){shortReview()}else{review()}
 };
+function startBonusRound(plan){
+ stop();bonusRound=plan;bonusPosition=0;bonusAnswers=[];
+ bonusRoundId='round-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);
+ stage='bonus-intro';
+ app.innerHTML='<div class="bonus-card"><span class="bonus-trophy" aria-hidden="true">🏆</span>'+
+ '<span class="eyebrow">SPELLMASTER BONUS ROUND</span><h2 class="bonus-title">The Memory Challenge!</h2>'+
+ '<p>You have explored '+plan.count+' words. Can you remember them without clues?</p>'+
+ '<p class="small muted">We will say each word aloud. This is a quick recap, not a long-term mastery test.</p>'+
+ soundVoice()+'<div class="actions" style="justify-content:center"><button onclick="startBonusQuestion()">▶ Start bonus round</button>'+
+ '<button class="alt" onclick="skipBonusRound()">Not now</button></div></div>';
+ voiceSet();if(narration)talk(['spellmaster-bonus-welcome-v1']);
+}
+function skipBonusRound(){stop();bonusRound=null;nextAfterBonus()}
+function startBonusQuestion(){
+ if(!bonusRound||bonusPosition>=bonusRound.words.length){finishBonusRound();return}
+ stop();stage='bonus-question';const word=bonusRound.words[bonusPosition],total=bonusRound.words.length;
+ app.innerHTML='<span class="eyebrow">BONUS WORD '+(bonusPosition+1)+' OF '+total+'</span>'+
+ '<div class="bonus-meter"><div style="width:'+((bonusPosition/total)*100)+'%"></div></div>'+
+ '<h2>Listen and remember</h2><p>Try spelling the word without any clues.</p>'+
+ '<div class="actions"><button class="alt" onclick="playBonusWord()">🔊 Hear the word</button></div>'+
+ '<label for="bonus-answer">Your spelling</label><input id="bonus-answer" aria-label="Spell the bonus word" autocapitalize="off" autocomplete="off" spellcheck="false" onkeydown="if(event.key===\'Enter\')checkBonusWord()">'+
+ soundVoice()+'<div class="actions"><button onclick="checkBonusWord()">Check my spelling</button>'+
+ '<button class="alt" onclick="skipBonusRound()">Finish bonus round later</button></div>';
+ voiceSet();if(narration)playBonusWord();
+}
+async function playBonusWord(){
+ stop();const t=ticket;await talk(['spellmaster-bonus-question-v1','y6-'+bonusRound.words[bonusPosition]],t);
+}
+function recordBonusRecall(word,correct){
+ const profile=LP.active(localStorage);if(!profile)return;
+ const entries=adaptiveLoad(),item=entries[word];if(!item)return;
+ item.events.push({date:adaptiveToday(),correct,independent:true,bonus:true,phase:'same_session_recall',
+  review:false,afterHelp:true,error_category:correct?null:'bonus_recall_miss'});
+ if(!correct){item.next=adaptiveDatePlus(adaptiveToday(),1);item.vault='recovery_quest'}
+ entries[word]=item;
+ localStorage.setItem(LP.historyKey(profile),JSON.stringify(entries));
+}
+function checkBonusWord(){
+ const input=$('bonus-answer');if(!input||!input.value.trim())return;
+ const word=bonusRound.words[bonusPosition],answer=input.value.toLowerCase().replace(/[^a-z]/g,'');
+ const correct=answer===word;bonusAnswers.push(answer);recordBonusRecall(word,correct);
+ stop();stage='bonus-feedback';
+ app.innerHTML='<div class="bonus-card"><span class="bonus-trophy" aria-hidden="true">'+(correct?'✦':'🧩')+'</span>'+
+ '<h2>'+(correct?'You remembered it!':'One to revisit')+'</h2>'+
+ '<p>'+(correct?'That spelling came from you.':'We can practise that word another day.')+'</p>'+
+ soundVoice()+'<div class="actions" style="justify-content:center"><button onclick="advanceBonusWord()">'+
+ (bonusPosition+1===bonusRound.words.length?'See my bonus results':'Next bonus word')+'</button></div></div>';
+ voiceSet();if(narration)speak(correct?'spellmaster-bonus-right-v1':'spellmaster-bonus-miss-v1');
+}
+function advanceBonusWord(){bonusPosition++;if(bonusPosition>=bonusRound.words.length)finishBonusRound();else startBonusQuestion()}
+function finishBonusRound(){
+ stop();stage='bonus-result';if(!bonusRound)return;
+ const outcome=window.SpellmasterBonus.grade(bonusRound.words,bonusAnswers);
+ const profile=LP.active(localStorage),reward=profile?window.SpellmasterBonus.award(localStorage,profile,bonusRoundId,outcome):null;
+ const rewardText=outcome.perfect?'All '+outcome.total+' spellings remembered!':'You remembered '+outcome.correct+' of '+outcome.total+' spellings.';
+ app.innerHTML='<div class="bonus-card '+(outcome.perfect?'bonus-perfect':'')+'">'+
+ '<span class="bonus-trophy" aria-hidden="true">'+(outcome.perfect?'🏆':'✨')+'</span>'+
+ '<span class="eyebrow">BONUS ROUND COMPLETE</span><h2 class="bonus-title">'+(outcome.perfect?'Superstar bonus!':'Adventure progress!')+'</h2>'+
+ '<p>'+rewardText+'</p><div class="bonus-currency">🪙 +'+outcome.coins+' bonus coins</div>'+
+ (outcome.perfect?'<div class="bonus-hat"><strong>🎩 Star Explorer Hat unlocked!</strong><p class="small">A cosmetic reward for completing this bonus round. It is not a long-term mastery badge.</p></div>':'<p>Every word has another chance to be remembered later.</p>')+
+ '<p class="small muted">These coins and your hat stay with this browser’s learner profile. A separate review on another day checks lasting memory.</p>'+
+ (reward?'<p class="small">Your coin total: '+reward.coins+'</p>':'')+
+ soundVoice()+'<div class="actions" style="justify-content:center"><button onclick="nextAfterBonus()">Continue adventure</button>'+
+ '<button class="alt" onclick="finish()">Finish for today</button></div></div>';
+ voiceSet();if(narration)speak(outcome.perfect?'spellmaster-bonus-perfect-v1':'spellmaster-bonus-complete-v1');
+ bonusRound=null;
+}
+function nextAfterBonus(){
+ stop();const elapsed=(Date.now()-runStart)/60000,upcoming=adaptiveSelect();
+ if(!upcoming||elapsed>=12){finish();return}
+ stage='choice';
+ app.innerHTML='<span class="eyebrow">YOUR CHOICE</span><h2>Keep exploring?</h2>'+
+ '<p>Your bonus round is complete. Would you like another challenge or finish for today?</p>'+
+ soundVoice()+'<div class="actions"><button onclick="adaptiveStartWord()">Another word →</button>'+
+ '<button class="alt" onclick="finish()">Finish for today</button></div>';
+ voiceSet();
+}
 next=function(){
- stop();const elapsed=(Date.now()-runStart)/60000,selection=adaptiveSelect();
+ stop();const plan=window.SpellmasterBonus?.chooseRound(runResults,bonusReviewedThrough);
+ if(plan){bonusReviewedThrough=runResults.length;startBonusRound(plan);return}
+ const elapsed=(Date.now()-runStart)/60000,selection=adaptiveSelect();
  if(!selection||elapsed>=12)return finish();
  stage='choice';
  const text=elapsed>=8?'You have enjoyed a good short session. Would you like another word, or finish for today?':
@@ -472,6 +565,7 @@ function renderLanding(){
  const people=LP.readProfiles(localStorage),p=LP.active(localStorage);
  document.body.dataset.theme=p?currentTheme(p):'explorer';
  const progress=p?LP.summary(adaptiveLoad(),adaptiveToday()):null;
+ const bonuses=p&&window.SpellmasterBonus?window.SpellmasterBonus.read(localStorage,p):null;
  const splitter=p&&window.SpellmasterChunkUI?window.SpellmasterChunkUI.summary(window.SpellmasterChunkUI.read(localStorage,p)):null;
  const cards=people.map(x=>'<button class="profile-choice '+(p&&p.id===x.id?'selected':'')+
  '" onclick="chooseLocalProfile(\''+x.id+'\')"><span>✦ '+htmlSafe(x.alias)+'</span><small>'+
@@ -488,6 +582,7 @@ function renderLanding(){
  '<div class="stat"><strong>'+progress.initialCorrect+'</strong><small>Known first try</small></div>'+
  '<div class="stat"><strong>'+progress.dueWords+'</strong><small>Ready to revisit</small></div></div>'+
  '<span class="label-chip">'+(progress.delayedRetained?'Some words recalled later':'Your memory journey begins here')+'</span>'+
+ (bonuses&&bonuses.rounds.length?'<div class="bonus-currency">🪙 '+bonuses.coins+' coins</div>'+ (bonuses.hats.includes('star-explorer-hat')?'<div class="label-chip">🎩 Star Explorer Hat earned</div>':''):'')+
  (progress.difficulties.length?'<h3 style="margin-bottom:6px">What we are practising</h3>'+
  progress.difficulties.map(item=>'<div class="difficulty-pill">'+htmlSafe(item.pattern)+
  ' · '+item.misses+' practice opportunit'+(item.misses===1?'y':'ies')+'</div>').join(''):'')+
