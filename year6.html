@@ -140,9 +140,10 @@ button.play-now:active{transform:translateY(4px);box-shadow:0 6px 0 #2b2675}
 <script src="/bonus-round.js"></script>
 <script src="/celebration-feedback.js"></script>
 <script src="/mixed-word-selection.js"></script>
+<script src="/adaptive-curriculum.js"></script>
 <script src="/spelling-chunks-ui.js"></script>
 <script>
-const WORDS=[
+let WORDS=[
  {word:'necessary',spelling:['ne','ces','sa','ry'],sounds:['ness','uh','ser','ee']},
  {word:'embarrass',spelling:['em','bar','rass'],sounds:['im','bar','uhs']},
  {word:'accommodate',spelling:['ac','com','mo','date'],sounds:['uh','kom','uh','dayt']},
@@ -154,6 +155,29 @@ const WORDS=[
  {word:'rhythm',spelling:['rhyth','m'],sounds:['rith','um']},
  {word:'temperature',spelling:['tem','per','a','ture'],sounds:['tem','pruh','chuh']}
 ];
+const PILOT_BY_WORD=Object.fromEntries(WORDS.map(w=>[w.word,w]));
+let curriculumLoaded=false,curriculumLoadPromise=null,curriculumLoadFailure='';
+function wordAudioClip(word=WORDS[idx]){
+ return word?.id?'catalogue-word-'+word.id+'-v1':'y6-'+word.word;
+}
+function nextAudioClip(word=WORDS[idx]){
+ return word?.id?'catalogue-next-'+word.id+'-v1':'spellmaster-next-'+word.word+'-v1';
+}
+async function ensureCurriculumLoaded(){
+ if(curriculumLoaded)return WORDS;
+ if(curriculumLoadPromise)return curriculumLoadPromise;
+ curriculumLoadPromise=fetch('/core/national-curriculum-catalogue.json',{cache:'force-cache'})
+  .then(async r=>{if(!r.ok)throw Error('The curriculum library could not be loaded');return r.json()})
+  .then(raw=>{
+   const converted=window.SpellmasterCurriculum.prepare(raw,PILOT_BY_WORD);
+   WORDS=converted;
+   curriculumLoaded=true;curriculumLoadFailure='';
+   return WORDS;
+  })
+  .catch(error=>{curriculumLoadFailure=String(error?.message||error);throw error})
+  .finally(()=>{curriculumLoadPromise=null});
+ return curriculumLoadPromise;
+}
 const app=document.getElementById('app'),$=id=>document.getElementById(id);
 const ENDPOINT='https://spellquest-voice-staging.onrender.com/api/voice';
 let voice=sessionStorage.getItem('spellquest-ai-voice')||'marin';
@@ -248,7 +272,7 @@ function question(auto=false){
 }
 async function instructionAudio(){
  stop();const t=ticket,word=WORDS[idx]?.word;if(!word)return false;
- const clips=runCount>1?['spellmaster-next-'+word+'-v1']:['y6-v08-prompt','y6-'+word];
+ const clips=runCount>1?[nextAudioClip(WORDS[idx])]:['y6-v08-prompt',wordAudioClip(WORDS[idx])];
  const ok=await talk(clips,t);
  if(!ok&&t===ticket&&stage==='question'){
   setStatus('The word could not be heard. Tap Hear word again before spelling.');
@@ -260,7 +284,7 @@ async function instructionAudio(){
 function replayCurrentWord(){
  stop();const t=ticket;const word=WORDS[idx]?.word;
  if(!word)return false;
- return speak('y6-'+word,t);
+ return speak(wordAudioClip(WORDS[idx]),t);
 }
 function check(retry){
  const inp=$('answer');const guess=inp.value.toLowerCase().replace(/[^a-z]/g,'');if(!guess){inp.focus();return}
@@ -355,7 +379,7 @@ function review(){
 async function reviewAudio(){
  stop();stage='review';const t=ticket,w=WORDS[idx],host=$('review-content');if(!host)return;
  host.innerHTML='<div class="note"><strong>First, hear the complete word.</strong><p>You can say it aloud if you like.</p></div>';
- let ok=await speak('y6-'+w.word,t);if(!ok)return;
+ let ok=await speak(wordAudioClip(w),t);if(!ok)return;
  if(!(await pause(pace==='extra'?1700:900,t)))return;
  host.innerHTML='<div class="note"><strong>Now look at the correct spelling.</strong></div>'+
  '<div class="word-group-row"><div class="spelling-row">'+visualTeachingGroups(w).map(x=>'<span>'+x+'</span>').join('')+'</div>'+ 
@@ -391,12 +415,12 @@ function retry(){
  stop();stage='retry';
  app.innerHTML='<span class="eyebrow">LET’S TRY THIS WORD AGAIN</span>'+progress()+
  '<h2>Now it’s your turn</h2><p>Listen to the word, then spell it.</p>'+
- '<div class="actions"><button class="alt" onclick="speak(\'y6-'+WORDS[idx].word+'\')">🔊 Hear word again</button></div>'+
+ '<div class="actions"><button class="alt" onclick="replayCurrentWord()">🔊 Hear word again</button></div>'+
  '<label for="answer">Your spelling</label><input id="answer" autocapitalize="off" autocomplete="off" spellcheck="false" onkeydown="if(event.key===\'Enter\')check(true)">'+soundVoice()+
  '<div class="actions"><button onclick="check(true)">Check my spelling →</button><button class="alt" onclick="review()">Hear the lesson again</button></div>';
  voiceSet();if(narration)retryAudio();
 }
-async function retryAudio(){stop();const prompt=results[idx]?.attempts>1?[]:['spellmaster-retry-brief-v2'];await talk([...prompt,'y6-'+WORDS[idx].word],ticket)}
+async function retryAudio(){stop();const prompt=results[idx]?.attempts>1?[]:['spellmaster-retry-brief-v2'];await talk([...prompt,wordAudioClip(WORDS[idx])],ticket)}
 function next(){idx++;if(idx===WORDS.length)finish();else question(true)}
 function finish(){
  stop();stage='finished';const learned=results.filter(r=>r.learned).length;
@@ -419,7 +443,12 @@ let runCount=0,runStart=0,runFirst=0,runNew=0,runSeen=new Set(),runResults=[],ru
 let runKind="new",lastBreakPromptAt=0;
 let bonusReviewedThrough=0,bonusRound=null,bonusPosition=0,bonusAnswers=[],bonusRoundId=null;
 let lastErrorFeedback=null;
-function errorFeedbackForCurrent(){return lastErrorFeedback||{clip:'spellmaster-error-generic-middle',text:'Look at the middle of the correct word. Then have another go.'}}
+function errorFeedbackForCurrent(){
+ const w=WORDS[idx];
+ if(w?.id&&!PILOT_BY_WORD[w.word])return {clip:'spellmaster-catalogue-help-v1',
+  text:'Look carefully at the correct spelling. Notice the order of the letters. You can choose visual groups that help you remember it. This word is awaiting a reviewed, word-specific explanation.'};
+ return lastErrorFeedback||{clip:'spellmaster-error-generic-middle',text:'Look at the middle of the correct word. Then have another go.'};
+}
 function adaptiveToday(){const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}
 function adaptiveDatePlus(date,n){const d=new Date(date+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)}
 function adaptiveLoad(){try{const profile=window.SpellmasterProfiles?.active(localStorage);if(!profile)return {};return JSON.parse(localStorage.getItem(window.SpellmasterProfiles.historyKey(profile))||'{}')}catch(e){return {}}}
@@ -435,14 +464,23 @@ function adaptiveSave(word,ok,fromReview,afterHelp,errorCategory=null){
  entry.vault=ok?(entry.retained?'protected':'collected'):'recovery_quest';
  all[word]=entry;const profile=window.SpellmasterProfiles?.active(localStorage);if(profile)localStorage.setItem(window.SpellmasterProfiles.historyKey(profile),JSON.stringify(all));
 }
+function currentPlacement(){
+ const p=window.SpellmasterProfiles?.active(localStorage);
+ return p?window.SpellmasterCurriculum.readPlacement(localStorage,p,window.SpellmasterProfiles.ageInYears(p.birth)):null;
+}
 function adaptiveSelect(){
+ const pool=curriculumLoaded?window.SpellmasterCurriculum.pool(WORDS,adaptiveLoad(),currentPlacement()):WORDS;
  return window.SpellmasterMixedWords.select({
-  words:WORDS,history:adaptiveLoad(),session:runResults,today:adaptiveToday(),runCount,runNew
+  words:pool,history:adaptiveLoad(),session:runResults,today:adaptiveToday(),runCount,runNew
  });
 }
 function adaptiveStartWord(){
  const selection=adaptiveSelect();if(!selection)return finish();
- idx=selection.i;runKind=selection.kind;runReview=selection.review;runCount++;
+ const selectedWords=curriculumLoaded?window.SpellmasterCurriculum.pool(WORDS,adaptiveLoad(),currentPlacement()):WORDS;
+ const selected=selectedWords[selection.i];if(!selected)return finish();
+ idx=WORDS.findIndex(w=>w.word===selected.word);
+ if(idx<0)return finish();
+ runKind=selection.kind;runReview=selection.review;runCount++;
  if(runKind==='new')runNew++;
  question(true);
  const heading=app.querySelector('.eyebrow');
@@ -487,12 +525,18 @@ check=function(retry){
  const guess=input.value.toLowerCase().replace(/[^a-z]/g,'');
  if(!guess){input.focus();return}
  const word=WORDS[idx].word,ok=guess===word;
- if(!ok)lastErrorFeedback=window.SpellmasterFeedback.diagnose(word,guess);
+ if(!ok)lastErrorFeedback=WORDS[idx]?.id&&!PILOT_BY_WORD[word]?null:
+  window.SpellmasterFeedback.diagnose(word,guess);
  if(!retry){
   results[idx]={word,initial:ok,learned:ok,attempts:1};
   runResults.push({word,initial:ok,learned:ok,review:runReview,kind:runKind});
   if(ok){first++;runFirst++}
   adaptiveSave(word,ok,runReview,false,ok?null:lastErrorFeedback?.id);
+  if(curriculumLoaded&&runKind==='new'){
+   const profile=window.SpellmasterProfiles?.active(localStorage);
+   if(profile)window.SpellmasterCurriculum.recordIndependent(localStorage,profile,
+    window.SpellmasterProfiles.ageInYears(profile.birth),WORDS[idx],ok);
+  }
  }else{
   results[idx].attempts++;
   runResults[runResults.length-1].attempts=results[idx].attempts;
