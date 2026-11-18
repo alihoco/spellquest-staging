@@ -125,17 +125,135 @@ header{padding:7px}.hero h1{font-size:18px!important}
 @keyframes sm-success-pop{0%{transform:scale(.97)}40%{transform:scale(1.045) rotate(-1deg)}100%{transform:scale(1)}}
 }
 
-/* Soft rounded typography for approachable, legible word practice. */
-:root{--sm-font:'Nunito','Trebuchet MS',Arial,sans-serif}
-html,body,button,input,select,textarea{font-family:var(--sm-font)!important}
-header .logo,.hero h1,#app h2,#app.panel:before,
-.sm-path-head,.sm-avatar-card h3,.sm-side-box summary,
-.sm-count{font-family:var(--sm-font)!important}
-header .logo{font-weight:1000!important;letter-spacing:-.7px!important}
-.hero h1,#app h2{font-weight:900!important;letter-spacing:-.55px!important}
-.sm-side-box summary,.sm-avatar-card h3,.sm-path-head{font-weight:900!important}
-#app p,#app .tip,#app .note,#app label,.sm-side-body,.sm-character-hint{font-weight:650}
-#app .spelling-row span,#app .sound,
-#app .chunk-letter,#app .chunk-preview span{font-family:var(--sm-font)!important;font-weight:950;letter-spacing:.015em}
-#app button{font-weight:900}
-#app input{font-weight:750;letter-spacing:.015em}
+/* SPELLMASTER TYPOGRAPHY V2
+ * Fredoka = game headings/controls. Nunito = learning text, learner input,
+ * correct spelling chunks, and explanations. All sizes respond to viewport.
+ * Keep spelling readable, not decorative; voice-led learning unchanged.
+ */
+:root {
+ --font-display: "Fredoka", "Trebuchet MS", sans-serif;
+ --font-body: "Nunito", "Trebuchet MS", Arial, sans-serif;
+ --fs-hero: 2.625rem;      /* 42px */
+ --fs-heading: 1.75rem;   /* 28px */
+ --fs-card: 1.375rem;     /* 22px */
+ --fs-body: 1.125rem;     /* 18px */
+ --fs-helper: 1rem;      /* 16px */
+ --fs-button: 1.0625rem; /* 17px */
+ --fs-primary-button: 1.25rem; /* 20px */
+ --fs-chunk: 1.875rem;   /* 30px */
+ --fs-input: 1.5rem;     /* 24px */
+ --fs-feedback: 1.125rem;
+ --fs-overline: .75rem;  /* 12px */
+ --lh-body: 1.55;
+}
+html { font-family: var(--font-body); -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+body, input, textarea, select { font-family:var(--font-body)!important; }
+body { line-height:var(--lh-body); }
+p, li { line-height:var(--lh-body); }
+
+/* Display typography — playful without affecting teaching words. */
+header .logo, .hero h1, #app h1, #app h2, #app h3,
+#app.panel:before, #app .bonus-title,
+.sm-path-head, .sm-avatar-card h3, .sm-side-box summary,
+.sm-node-label, .sm-count, .sm-avatar-pill,
+#app button, .sm-side-body button,
+.sm-side-box .sm-side-body button, .sm-character.is-celebrating .sm-avatar-card:after {
+ font-family:var(--font-display)!important;
+}
+header .logo { font-weight:700!important; letter-spacing:-.015em!important; }
+.hero h1 { font-family:var(--font-display)!important; font-size:var(--fs-hero)!important;
+ font-weight:700!important; line-height:1.05!important; letter-spacing:-.012em!important; }
+#app h1, #app h2 { font-size:var(--fs-heading)!important; font-weight:700!important;
+ line-height:1.15!important; letter-spacing:-.012em!important; }
+#app h3 { font-size:var(--fs-card); font-weight:600; line-height:1.2; }
+#app.panel:before { font-size:clamp(.9rem,1.6vw,1.25rem)!important; font-weight:600!important;
+ line-height:1.25; letter-spacing:.025em; }
+.sm-side-box summary, .sm-avatar-card h3 {font-size:var(--fs-card)!important;
+ font-weight:600!important;line-height:1.2;}
+.sm-path-head { font-size:var(--fs-helper)!important; font-weight:600!important; }
+.sm-node-label {font-weight:600;letter-spacing:.015em;font-size:var(--fs-overline);}
+.sm-count { font-weight:700; font-size:clamp(1.375rem,2vw,1.875rem); }
+
+/* Short learning instructions and helpful copy. */
+#app, #app p, #app li, #app .tip, #app .note,
+#app .voice, #app .good, #app .result,
+.sm-side-body, .sm-character-hint {
+ font-family:var(--font-body)!important;
+}
+#app p, #app li { font-size:var(--fs-body); font-weight:400; line-height:var(--lh-body); }
+#app .small, #app .muted.small, #app .privacy-note,
+#app .site-note, #app .status, .sm-side-body, .sm-character-hint {
+ font-size:var(--fs-helper)!important;line-height:1.5!important;font-weight:600!important;
+}
+#app .tip p, #app .note p {font-weight:400;}
+#app .tip strong, #app .note strong, #app .good, #app .result strong {
+ font-family:var(--font-body)!important;font-weight:700!important;
+}
+#app .good {font-size:var(--fs-feedback);line-height:1.45;}
+#app label, #app .voice label {font-family:var(--font-body)!important;
+ font-size:var(--fs-helper)!important;font-weight:700!important;line-height:1.45;}
+#app .eyebrow, .hero .eyebrow, #app .start-kicker {
+ font-family:var(--font-display)!important;font-size:var(--fs-overline)!important;
+ font-weight:600!important;line-height:1.3!important;letter-spacing:.06em!important;
+}
+
+/* Controls: game-like labels, but touch-friendly and easy to scan. */
+#app button:not(.chunk-boundary):not(.avatar-choice-item),
+.sm-side-body button {
+ font-family:var(--font-display)!important;font-weight:600!important;
+ font-size:var(--fs-button)!important;line-height:1.2;min-height:48px;
+ letter-spacing:.002em;white-space:normal;
+}
+#app .play-now, #app .bonus-card > .actions button:first-child {
+ font-family:var(--font-display)!important;font-size:var(--fs-primary-button)!important;
+ font-weight:600!important;line-height:1.15;
+}
+#app .tiny-action {font-size:var(--fs-helper)!important;min-height:44px;}
+#app .chunk-boundary {font-family:var(--font-body)!important;min-height:44px;}
+#app .avatar-choice-item .item-title {font-family:var(--font-display);font-weight:600;}
+
+/* Correct letterforms: keep consistent, neutral, accurate spelling. */
+#app .spelling-row span, #app .sound, #app .chunk-letter,
+#app .chunk-preview span, #app .wordpieces span {
+ font-family:var(--font-body)!important;font-weight:800!important;
+ font-size:var(--fs-chunk)!important;line-height:1.15!important;
+ letter-spacing:.01em!important;
+}
+#app .spelling-row, #app .sound-row {gap:10px;}
+#app .spelling-row span {padding:12px 16px;border-radius:14px;}
+#app .chunk-letter {padding:10px 4px;}
+#app input, #app textarea, #app select {
+ font-family:var(--font-body)!important;font-weight:700!important;
+ line-height:1.2;letter-spacing:.01em;
+}
+#app input#answer, #app input#bonus-answer {
+ font-size:var(--fs-input)!important;min-height:56px;
+}
+#app input:not(#answer):not(#bonus-answer) {font-size:var(--fs-helper);}
+#app .voice select {font-size:var(--fs-helper);}
+#app .bonus-card h2 {font-family:var(--font-display)!important;}
+#app .bonus-title {font-size:var(--fs-heading)!important;line-height:1.15;}
+
+/* No over-tight text on small screens; keep the learning hierarchy. */
+@media (max-width: 1023px) {
+ :root {
+  --fs-hero:2.125rem;--fs-heading:1.5rem;--fs-card:1.25rem;
+  --fs-body:1.0625rem;--fs-helper:.9375rem;--fs-button:1rem;
+  --fs-primary-button:1.125rem;--fs-chunk:1.625rem;
+  --fs-input:1.375rem;--fs-feedback:1.0625rem;
+ }
+}
+@media (max-width: 600px) {
+ :root {
+  --fs-hero:1.75rem;--fs-heading:1.375rem;--fs-card:1.125rem;
+  --fs-body:1rem;--fs-helper:.875rem;--fs-button:.9375rem;
+  --fs-primary-button:1.125rem;--fs-chunk:1.5rem;
+  --fs-input:1.25rem;--fs-feedback:1rem;--fs-overline:.6875rem;
+ }
+ #app .spelling-row, #app .sound-row {gap:8px;}
+ #app .spelling-row span {padding:12px 13px;}
+ #app .chunk-preview {gap:7px;}
+ #app .word-group-change {min-height:48px;}
+ #app .status {font-size:.875rem!important;}
+}
+/* Users can resize browser text; nothing should lock content height. */
