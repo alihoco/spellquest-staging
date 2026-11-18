@@ -12,7 +12,7 @@ assert.match(html,/function assist\(guess\)/);
 assert.match(html,/function celebrate\(\)/);
 assert.match(html,/function bonusStart\(\)/);
 assert.match(html,/function bonusEnd\(\)/);
-assert.match(html,/function groupFor/);
+assert.match(html,/function groups/);
 assert.match(html,/function renderDividers/);
 assert.match(html,/if\(guess===list\[step\]\.word\)/);
 assert.match(html,/if\(guess===list\[step\]\.word\)/);
