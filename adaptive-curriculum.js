@@ -6,6 +6,16 @@
 'use strict';
 const BANDS=['year1','year2','year3_4','year5_6'];
 const PILOT=['necessary','embarrass','accommodate','government','foreign','familiar','environment','privilege','rhythm','temperature'];
+/* Early placement probes are drawn from the actual DfE inventory; selected
+ * across different spelling structures rather than only the shortest words.
+ * Not a validated diagnostic instrument or fixed testing list.
+ */
+const PLACEMENT_PROBES={
+ year1:['said','come','today','ask','where','love'],
+ year2:['could','people','water','beautiful','again','after'],
+ year3_4:['answer','different','important','decide','occasion','remember'],
+ year5_6:['necessary','government','privilege','accommodate','environment','familiar']
+};
 function validBand(v){return BANDS.includes(v)}
 function ageStartingBand(age){
  if(!Number.isFinite(age))return 'year3_4';
@@ -101,7 +111,7 @@ function pool(allWords,history,placement){
  const unambiguous=w=>!w.teachingGroups?.includes('homophone_context')&&!PRONUNCIATION_CONTEXT_REQUIRED.has(w.word);
  const current=allWords.filter(w=>unambiguous(w)&&w.band===band&&!history?.[w.word]?.events?.length);
  const known=allWords.filter(w=>unambiguous(w)&&history?.[w.word]?.events?.length);
- const prior=PILOT.reduce((acc,w,i)=>(acc[w]=i,acc),{});
+ const prior=PLACEMENT_PROBES[band].reduce((acc,w,i)=>(acc[w]=i,acc),{});
  current.sort((a,b)=>{
   const ai=prior[a.word],bi=prior[b.word];if(ai!==undefined||bi!==undefined)return (ai??1000)-(bi??1000);
   const role=w=>w.curriculumRole==='common_exception'?0:w.curriculumRole==='statutory_wordlist'?1:2;
