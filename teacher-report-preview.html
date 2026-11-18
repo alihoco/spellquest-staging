@@ -1,0 +1,101 @@
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#2c224b">
+<title>Spellmaster — Teacher Reporting Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/membership-welcome.css?v=1">
+<style>
+.report{padding:25px;margin:0 auto 25px}.report h2{font:700 clamp(23px,3vw,32px) Fredoka,sans-serif;margin:0 0 6px;color:#412b67}
+.report .lead{color:#62536e;margin:3px 0 20px;line-height:1.5}.report-controls{display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:12px 0 18px}
+.report-controls label{display:block;font-weight:800;font-size:13px;margin:0 0 5px}.report-controls select{padding:10px 13px;min-height:44px;border:2px solid #c5b5d8;border-radius:12px;background:#fff;font-family:Nunito,sans-serif}
+.metric-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:19px 0 24px}
+.metric{background:#fffaf1;border:2px solid #e6d0ad;border-radius:16px;padding:15px}.metric strong{display:block;font:700 30px Fredoka;color:#563889}.metric span{font-size:13px;color:#605170;font-weight:750}
+.report-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:17px}.report-panel{background:#fffdf8;border:2px solid #e7d2b4;border-radius:19px;padding:18px;min-width:0}
+.report-panel h3{font:600 21px Fredoka;color:#483171;margin:0 0 13px}.report-table{border-collapse:collapse;width:100%;font-size:14px}.report-table th,.report-table td{padding:12px 9px;text-align:left;border-bottom:1px solid #e9dbc8}
+.report-table th{background:#f5eaf5;font-size:12px;color:#624c74}.report-table tbody tr:last-child td{border:0}
+.report-table td strong{font-weight:850}.tag{font-size:11px;border-radius:99px;padding:5px 9px;background:#e8f4ea;color:#297456;font-weight:800;white-space:nowrap}
+.tag.revisit{background:#fff1d8;color:#805b23}.tag.building{background:#e8ecfc;color:#5262a3}
+.bar-chart{display:grid;gap:13px}.chart-item strong{font-size:13px}.chart-track{height:13px;border-radius:40px;background:#e9dbef;overflow:hidden;margin-top:5px}
+.chart-track span{height:100%;display:block;background:linear-gradient(90deg,#6856bd,#b994e1);border-radius:40px}
+.detail{margin-top:16px;padding:18px;border:2px solid #d9bfdf;border-radius:18px;background:#f9f1ff}
+.detail h3{font:600 19px Fredoka;margin:0 0 8px}.detail p,.detail li{line-height:1.5;color:#5d5470;font-size:14px}
+.detail ul{padding-left:20px}.mock{background:#fff0cc;border:1px solid #d6b06b;padding:12px 16px;border-radius:13px;color:#5d492b;font-size:13px;line-height:1.5}
+@media(max-width:900px){.metric-row{grid-template-columns:repeat(2,1fr)}.report-grid{grid-template-columns:1fr}}
+@media(max-width:580px){.report{padding:16px}.metric-row{gap:8px}.metric{padding:11px}.metric strong{font-size:25px}.report-panel{padding:12px}.report-table{font-size:12px}.report-table th,.report-table td{padding:10px 4px}.metric span{font-size:11px}.report-controls{display:block}}
+</style></head><body><div class="wrap">
+<header class="top"><a class="brand" href="/welcome.html">✦ Spellmaster</a><nav class="topnav" aria-label="Preview navigation"><a href="/welcome.html">Memberships</a><a href="/year6.html">Teaching pilot</a></nav></header>
+<section class="hero"><div class="eyebrow">FUTURE TEACHER DASHBOARD · DESIGN PREVIEW</div>
+<h1>See every little step forward.</h1><p>Keep an eye on independent spellings, helpful teaching strategies and what needs revisiting — without ranking children against each other.</p></section>
+<section class="paper report"><h2>Oak Class — Teacher view</h2><p class="lead">An illustrative reporting dashboard for a school membership. Every learner, name and metric on this page is fictional.</p>
+<div class="mock"><strong>Demonstration only:</strong> This page contains invented sample data and does not connect to real school accounts or pupil information. A teacher must sign in securely before viewing actual pupils in a future release.</div>
+<div class="report-controls"><div><label for="class-select">Class</label><select id="class-select"><option>Oak Class (fictional)</option><option>Willow Class (fictional)</option></select></div><div><label for="report-period">Time period</label><select id="report-period"><option value="28">Last 28 days</option><option value="7">Last 7 days</option><option value="90">Last 90 days</option></select></div></div>
+<div class="metric-row">
+<div class="metric"><strong id="m-pupils">6</strong><span>Demo learners</span></div>
+<div class="metric"><strong id="m-words">47</strong><span>Words explored</span></div>
+<div class="metric"><strong id="m-independent">69%</strong><span>Independent spelling accuracy</span></div>
+<div class="metric"><strong id="m-revisits">12</strong><span>Words due for review</span></div>
+</div>
+<div class="report-grid">
+<div class="report-panel"><h3>Individual learner journeys</h3>
+<div style="overflow-x:auto"><table class="report-table"><thead><tr><th>Learner</th><th>Starting point</th><th>Words explored</th><th>Independent</th><th>Next step</th></tr></thead><tbody id="learners"></tbody></table></div>
+<p style="font-size:12px;color:#786d7b">Select a learner to see their progress over time, support strategies and review opportunities. No peer ranking.</p>
+</div>
+<div class="report-panel"><h3>Spelling patterns to support</h3>
+<div class="bar-chart" id="patterns"></div>
+<div class="detail"><h3>What this means</h3><p>Pattern reports identify spelling features that pupils have encountered difficulty with. They are teaching observations, not diagnoses or fixed learning-style labels.</p></div>
+</div>
+</div>
+<div class="detail" id="learner-detail" aria-live="polite"><h3>Choose a learner</h3><p>See their recorded starting point, recent independent recall, supported practice and forthcoming reviews.</p></div>
+<div class="report-grid" style="margin-top:17px">
+<div class="report-panel"><h3>Learning over time</h3><div class="bar-chart" id="progress-chart"></div><p class="tiny">A real report would use actual time-stamped independent attempts and delayed review results, not scores inferred from reward coins.</p></div>
+<div class="report-panel"><h3>Actions for the teacher</h3><p>Identify pupils needing extra support, assign reviewed word sets, view individual word histories and export authorised reports.</p>
+<p>Permissions will be restricted to the school and classes the teacher is allowed to manage; pupil accounts won't be publicly searchable.</p>
+<a class="btn outline" href="/welcome.html">Return to membership page</a></div>
+</div></section>
+<footer class="footer">✦ Spellmaster — Better today than yesterday.<br>Teacher dashboard preview · All sample data are fictional.</footer>
+</div>
+<script>
+const samples=[
+ {id:'l1',name:'Avery',start:'Year 2 patterns',words:12,independent:83,status:'On track',baseline:48,now:83,due:1,detail:'Remembering common patterns independently; continue delayed review.'},
+ {id:'l2',name:'Robin',start:'Year 3 patterns',words:10,independent:70,status:'On track',baseline:41,now:70,due:2,detail:'Steady progress with independent retrieval after structured teaching.'},
+ {id:'l3',name:'Sam',start:'Year 1 patterns',words:6,independent:50,status:'Revisit soon',baseline:29,now:50,due:4,detail:'Needs additional support with letter patterns and shorter review intervals.'},
+ {id:'l4',name:'Taylor',start:'Year 5 patterns',words:8,independent:88,status:'On track',baseline:64,now:88,due:1,detail:'Ready for more challenging words while continuing periodic retrieval.'},
+ {id:'l5',name:'Morgan',start:'Year 3 patterns',words:6,independent:67,status:'Building',baseline:40,now:67,due:2,detail:'Benefits from revisiting selected words and reviewing specific error patterns.'},
+ {id:'l6',name:'Jordan',start:'Year 2 patterns',words:5,independent:60,status:'Building',baseline:36,now:60,due:2,detail:'Continue structured practice and check delayed independent recall.'}
+];
+const $=id=>document.getElementById(id);
+let active=samples[0];
+function draw(){
+ const days=Number($('report-period').value),factor=days===7?.38:days===90?1.42:1;
+ const pupils=$('class-select').selectedIndex===0?samples:samples.slice(1,5);
+ $('m-pupils').textContent=pupils.length;$('m-words').textContent=Math.round(pupils.reduce((a,x)=>a+x.words,0)*factor);
+ $('m-independent').textContent=Math.round(pupils.reduce((a,x)=>a+x.independent,0)/pupils.length)+'%';
+ $('m-revisits').textContent=Math.max(0,Math.round(pupils.reduce((a,x)=>a+x.due,0)*factor));
+ const tbody=$('learners');tbody.replaceChildren();
+ for(const learner of pupils){
+  const tr=document.createElement('tr'),tds=[learner.name,learner.start,String(Math.max(1,Math.round(learner.words*factor))),learner.independent+'%',learner.status];
+  tds.forEach((value,i)=>{const td=document.createElement('td');if(i===0){const b=document.createElement('button');b.className='btn outline';b.style.cssText='padding:7px 11px;min-height:36px;font-size:13px';b.textContent=value;b.onclick=()=>show(learner);td.append(b)}else{td.textContent=value;if(i===4){td.className='tag '+(value==='Revisit soon'?'revisit':value==='Building'?'building':'')}}tr.append(td)});
+  tbody.append(tr)
+ }
+ const chart=$('patterns');chart.replaceChildren();
+ for(const [label,pct] of [['Double letters',64],['Unstressed vowels',55],['Suffixes and roots',42],['Unusual spellings',30]]){
+  const row=document.createElement('div');row.className='chart-item';
+  const name=document.createElement('strong');name.textContent=label;
+  const track=document.createElement('div');track.className='chart-track';const bar=document.createElement('span');bar.style.width=pct+'%';track.append(bar);row.append(name,track);chart.append(row)
+ }
+ if(!pupils.some(x=>x.id===active.id))active=pupils[0];show(active)
+}
+function show(learner){active=learner;
+ const detail=$('learner-detail');detail.replaceChildren();
+ const title=document.createElement('h3');title.textContent=learner.name+' — personal learning journey';
+ const description=document.createElement('p');description.textContent='Starting level: '+learner.start+'. Words explored: '+learner.words+'. Review words due: '+learner.due+'.';
+ const note=document.createElement('p');note.textContent=learner.detail;
+ const summary=document.createElement('p');summary.textContent='Independent spelling accuracy: '+learner.baseline+'% at starting assessment → '+learner.now+'% at latest practice (fictional demonstration).';
+ detail.append(title,description,summary,note);
+ const chart=$('progress-chart');chart.replaceChildren();
+ for(const [label,pct] of [['Starting assessment',learner.baseline],['Recent independent spelling',learner.now]]){
+  const row=document.createElement('div');row.className='chart-item';const name=document.createElement('strong');name.textContent=label+' · '+pct+'%';
+  const track=document.createElement('div');track.className='chart-track';const bar=document.createElement('span');bar.style.width=pct+'%';track.append(bar);row.append(name,track);chart.append(row)
+ }
+}
+$('class-select').onchange=draw;$('report-period').onchange=draw;draw();
+</script></body></html>
