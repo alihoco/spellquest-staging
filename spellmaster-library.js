@@ -34,14 +34,15 @@
  }
  function render(){
   scheduled=false;const v=state(),done=v.outcomes.filter(x=>x.learned).length;
-  const previewCount=5;
-  const total=Math.max(previewCount,Math.min(10,v.count+(v.currentStage==='bonus-question'?1:0)));
+  // A five-stop rolling window: no implied ten-word limit.
+  const firstVisible=v.active?Math.max(1,v.count-2):1;
+  const lastVisible=firstVisible+4;
   const signature=JSON.stringify([v.profile?.id||'none',v.profile?.alias||'',v.profile?.theme||'',v.currentStage,v.count,done,
     v.bonus?.coins||0,v.bonus?.bonusPoints||0,v.bonus?.inventory?.length||0]);
   if(signature===lastSignature)return;
   lastSignature=signature;
   nodeTrack.replaceChildren();list.replaceChildren();
-  for(let i=1;i<=total;i++){
+  for(let i=firstVisible;i<=lastVisible;i++){
    const complete=v.active&&i<v.count;
    const current=(v.active&&i===v.count)||(!v.active&&v.currentStage==='welcome'&&i===1);
    const box=document.createElement('div');box.className='sm-node '+(complete?'done':current?'active':'future');
@@ -50,7 +51,7 @@
    circle.textContent=complete?'✓':current?'★':String(i);
    const label=document.createElement('span');label.className='sm-node-label';label.textContent='Word '+i;
    box.append(circle,label);nodeTrack.append(box);
-   if(i<=5){
+   if(i>=firstVisible&&i<=lastVisible){
     const item=document.createElement('li');
     const marker=document.createElement('span');marker.className='sm-list-mark';
     marker.textContent=complete?'✓':current?'➜':'○';
@@ -60,7 +61,8 @@
   }
   const pathTitle=path.querySelector('.sm-path-head');
   if(pathTitle)pathTitle.textContent=v.currentStage.startsWith('bonus')?'🏆 Bonus memory challenge':v.currentStage==='welcome'?'✦ Your spelling adventure':'✦ Your word journey';
-  const meter=side.querySelector('#sm-journey-meter');if(meter)meter.style.width=Math.min(100,Math.round((v.count>0?Math.max(v.count-1,0):0)/total*100))+'%';
+  const meter=side.querySelector('#sm-journey-meter');
+  if(meter)meter.style.width=(v.active?Math.min(100,(((v.count-1)%5)+1)*20):0)+'%';
   text('sm-journey-caption',v.active?'Word '+v.count+' of this adventure · No race to finish':'Learn at your own pace');
   text('sm-coin-count',String(v.bonus?.coins||0));
   text('sm-point-count',String(v.bonus?.bonusPoints||0));
