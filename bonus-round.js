@@ -9,7 +9,7 @@ function target(recent=[]){
  const struggling=items.filter(x=>x.initial===false||x.attempts>1).length;
  // Three for substantial difficulty; five normally; ten if all first-try correct.
  if(items.length>=3&&struggling>=2)return 3;
- if(items.length>=10&&struggling===0)return 10;
+ if(items.length>=5&&struggling===0)return 10;
  return 5;
 }
 function chooseRound(results,previousCount=0){
