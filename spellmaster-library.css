@@ -2,8 +2,8 @@
 :root{--sm-ink:#282449;--sm-plum:#402468;--sm-gold:#f5c866;--sm-paper:#fff4d8;--sm-wood:#49304c;--sm-border:#d49c55}
 html{background:#111d3c}
 body{min-height:100vh;background:
- linear-gradient(180deg,#131a39bb 0%,#1e1b3ca0 50%,#1c1434b5 100%),
- url('/assets/spellmaster/magical-library.svg') center top/cover fixed no-repeat,#1c2545!important;color:var(--sm-ink)}
+ linear-gradient(180deg,#121028a3 0%,#21162d66 52%,#1d102e9a 100%),
+ url('/assets/spellmaster/library-cinematic.webp') center top/cover fixed no-repeat,#1c2545!important;color:var(--sm-ink)}
 body[data-theme="wonder"]{--sm-plum:#713795;--sm-gold:#ffca74}
 body[data-theme="adventure"]{--sm-plum:#36486f;--sm-gold:#e6bd6f}
 body[data-theme="focus"]{--sm-plum:#344f5d;--sm-gold:#d6bd86}
@@ -257,3 +257,21 @@ header .logo { font-weight:700!important; letter-spacing:-.015em!important; }
  #app .status {font-size:.875rem!important;}
 }
 /* Users can resize browser text; nothing should lock content height. */
+
+/* Premium painted illustration pass. The gameplay is still live text and controls. */
+.sm-avatar-card{background:linear-gradient(165deg,#392343d9,#1b1738ec);
+ border-color:#dcac68;box-shadow:0 9px 0 #21182e,0 18px 38px #0a061aab}
+.sm-avatar-illustration{height:clamp(225px,27vw,370px);object-fit:contain;
+ object-position:bottom;filter:drop-shadow(0 11px 14px #0504118f)}
+.sm-avatar-card:before{content:"";position:absolute;inset:2px;background:radial-gradient(ellipse at 55% 40%,#db9f6d42,transparent 66%);pointer-events:none}
+.sm-avatar-card>*{position:relative}
+.sm-side-box{border-color:#cb965f;box-shadow:inset 0 0 0 2px #ffefcc,0 7px 0 #352337,0 18px 34px #07061bb0}
+#app.panel{border-color:#c28e55;box-shadow:inset 0 0 0 3px #ffe6aa,inset 0 0 42px #edb56b26,0 13px 0 #603c45,0 30px 65px #09061ac9}
+.sm-path{border-color:#dfb579;background:linear-gradient(180deg,#563562eb,#282048f5)}
+@media(max-width:1120px){.sm-avatar-illustration{height:100px;width:94px}}
+@media(max-width:780px){
+ body{background-image:linear-gradient(180deg,#160e2aa8,#140f228a),url('/assets/spellmaster/library-cinematic.webp')!important;
+ background-position:center top!important;background-size:cover!important;background-attachment:scroll!important}
+ .sm-avatar-illustration{height:90px;width:86px}
+}
+@media(max-width:420px){.sm-avatar-illustration{height:78px;width:78px}}
