@@ -88,6 +88,20 @@ button.play-now:active{transform:translateY(4px);box-shadow:0 6px 0 #2b2675}
 .label-chip{display:inline-block;padding:5px 9px;background:#eefaf4;color:#276852;border-radius:9px;font-size:12px;font-weight:750}
 .site-note{padding:8px 0;font-size:12px;color:#6a7890}
 @media(max-width:660px){.start-layout{grid-template-columns:1fr}.hero{padding:24px;min-height:165px}.panel{padding:20px}.decor-orb{display:none}button.play-now{width:100%}}
+</style><style>
+.chunk-workshop{margin:16px 0;background:#f7f4ff;border:2px solid #e4daf9;padding:16px;border-radius:18px}
+.chunk-head{display:flex;align-items:center;gap:14px;justify-content:space-between;flex-wrap:wrap}
+.chunk-head strong{font-size:17px}.chunk-head p{margin:4px 0}
+.chunk-editor{padding-top:12px}
+.chunk-letters{display:flex;align-items:center;flex-wrap:wrap;gap:0;margin:15px 0 9px;justify-content:center}
+.chunk-letter{background:#fff;border:1px solid #e1dcef;border-radius:8px;min-width:25px;padding:9px 2px;text-align:center;font-size:clamp(21px,4vw,30px);font-weight:850}
+.chunk-boundary{width:20px;min-width:20px;padding:5px 0;min-height:44px;background:transparent;color:#aaa2c5;border:0;border-radius:5px;font-weight:900;font-size:22px}
+.chunk-boundary.active{background:#6354cc;color:white}
+.chunk-boundary:hover{background:#d5c9ff;color:#44388c}
+.chunk-boundary.active:hover{color:white;background:#4438b0}
+.chunk-preview{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0 16px}
+.chunk-preview span{background:#e6e3ff;border:1px solid #c9c1f2;padding:8px 13px;border-radius:10px;font-size:20px;font-weight:750}
+@media(max-width:500px){.chunk-workshop{padding:12px}.chunk-letters{justify-content:flex-start}.chunk-letter{min-width:19px;padding:9px 0}.chunk-boundary{width:19px;min-width:19px}}
 </style></head>
 <body><main><header><a class="logo" href="/">✨ Spellmaster</a><span class="muted small">Better today than yesterday</span></header>
 <section class="hero"><span class="eyebrow">YOUR OWN SPELLING ADVENTURE</span><h1>Discover words. Build confidence.</h1><p>Little challenges, a patient voice, and a teacher that remembers what helps you learn.</p></section>
@@ -95,6 +109,7 @@ button.play-now:active{transform:translateY(4px);box-shadow:0 6px 0 #2b2675}
 <div class="footer">Staging teaching pilot · Year 5–6 word set · Test profiles and progress stay on this device</div></main>
 <script src="/spelling-feedback.js"></script>
 <script src="/learner-profiles.js"></script>
+<script src="/spelling-chunks-ui.js"></script>
 <script>
 const WORDS=[
  {word:'necessary',spelling:['ne','ces','sa','ry'],sounds:['ness','uh','ser','ee']},
@@ -218,6 +233,15 @@ async function successAudio(){stop();await talk([results[idx].initial?'y6-correc
 // Teaching is sound-led through the verified complete word, but we must not
 // present pseudo-phonetic spellings as written words. Accurate specialist-reviewed
 // phoneme/grapheme alignment is still pending.
+function mountPersonalGrouping(target){
+ const profile=window.SpellmasterProfiles?.active(localStorage);
+ const host=document.querySelector(target);
+ const w=WORDS[idx];if(!profile||!host||!w||!window.SpellmasterChunkUI)return;
+ const key=runStart+':'+runCount+':'+w.word;
+ return window.SpellmasterChunkUI.mount({host,word:w.word,teacherChunks:w.spelling,profile,
+  storage:localStorage,opportunity:key,onNotice:message=>{const t=host.querySelector('.chunk-notice');
+    if(t)t.textContent=message;}});
+}
 function review(){
  stop();stage='review';const w=WORDS[idx];
  app.innerHTML='<span class="eyebrow">LET’S LEARN THIS WORD</span>'+progress()+
@@ -240,7 +264,10 @@ async function reviewAudio(){
  const feedback=errorFeedbackForCurrent();
  const tip=host.querySelector('.tip');if(tip)tip.innerHTML='<strong>Notice this part</strong><p>'+feedback.text+'</p>';
  ok=await speak(feedback.clip,t);
- if(ok&&t===ticket&&stage==='review')setStatus('Ready to try spelling again.');
+ if(ok&&t===ticket&&stage==='review'){
+  mountPersonalGrouping('#review-content');
+  setStatus('Ready to try spelling again.');
+ }
 }
 function shortReview(){
  stop();stage='short-review';const w=WORDS[idx];
@@ -252,7 +279,7 @@ function shortReview(){
  soundVoice()+
  '<div class="actions"><button onclick="retry()">🙈 Hide and try once more</button>'+
  '<button class="alt" onclick="next()">Come back to this later</button></div>';
- voiceSet();if(narration)shortReviewAudio();
+ voiceSet();mountPersonalGrouping('#app');if(narration)shortReviewAudio();
 }
 async function shortReviewAudio(){
  stop();const t=ticket;await speak(errorFeedbackForCurrent().clip,t);
