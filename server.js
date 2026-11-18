@@ -146,6 +146,13 @@ Object.assign(CLIPS,require('./spelling-feedback.js').audioClips());
 CLIPS['spellmaster-chunk-option-v1']='You can make your own letter groups if you like. Click between letters or drag a divider to group the word in a way that helps you remember it.';
 CLIPS['spellmaster-bonus-welcome-v1']='Bonus round! Let us see which words you remember from this adventure. I will say each word. Spell it without hints, just like before. You can take your time.';
 CLIPS['spellmaster-bonus-question-v1']='Here is your bonus word.';
+// Numbered prompts prevent repetitive narration during a flowing recap.
+const BONUS_ORDINALS=['one','two','three','four','five','six','seven','eight','nine','ten'];
+for(let i=0;i<BONUS_ORDINALS.length;i++){
+ CLIPS['spellmaster-bonus-word-'+(i+1)+'-v2']="Here's bonus word "+BONUS_ORDINALS[i]+".";
+}
+CLIPS['spellmaster-bonus-last-v2']="Here's your last bonus word.";
+
 CLIPS['spellmaster-bonus-next-v1']='On to the next bonus word.';
 CLIPS['spellmaster-bonus-perfect-v1']='A brilliant bonus round! You remembered every word independently. You have earned super bonus coins and a Star Explorer hat for your avatar!';
 CLIPS['spellmaster-bonus-complete-v1']='Bonus round complete. You have earned coins for the words you remembered. We will practise the others again soon.';
