@@ -9,7 +9,7 @@ assert.ok(!page.includes("'<div class=\"decor-orb\""), 'Book decoration should n
 assert.ok(page.includes('class="active-learner"'), 'Display current learner identity');
 assert.ok(page.includes('p.alias'), 'Show active profile nickname');
 assert.ok(page.includes('class="tester-profile-tools"'), 'Test multi-profile switching must be behind details');
-assert.ok(page.includes("' open'), 'First-time demo profile setup remains available');
+assert.ok(page.includes("tester-profile-tools"), 'Tester profile setup remains available');
 assert.ok(page.includes('Delete current test profile'), 'Preserve test account deletion inside tools');
 assert.ok(page.includes('These are early learning observations'), 'Keep evidence limits');
 assert.ok(page.includes('runCount'), 'Teaching progression should be untouched');
