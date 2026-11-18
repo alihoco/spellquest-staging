@@ -1,5 +1,5 @@
 <!doctype html><html lang="en-GB">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#554ac4"><title>Spellmaster — Year 6 Sound-First Adventure</title>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#554ac4"><title>Spellmaster — Your Personal Spelling Adventure</title>
 <style>
 :root{font-family:system-ui,"Trebuchet MS",Arial,sans-serif;color:#24324f;background:#f6f5fe}*{box-sizing:border-box}
 body{margin:0;background:linear-gradient(120deg,#e7f8ff,#fff6ef 55%,#f1eaff);min-height:100vh}
@@ -134,7 +134,7 @@ button.play-now:active{transform:translateY(4px);box-shadow:0 6px 0 #2b2675}
 <body><main><header><a class="logo" href="/" aria-label="Spellmaster home"><img class="brand-art" src="/assets/spellmaster/spellmaster-logo-ornate.webp" width="1120" height="373" alt="Spellmaster" loading="eager" decoding="async"></a><span class="muted small">Better today than yesterday</span></header>
 <section class="hero"><span class="eyebrow">YOUR OWN SPELLING ADVENTURE</span><h1>Discover words. Build confidence.</h1><p>Little challenges, a patient voice, and a teacher that remembers what helps you learn.</p></section>
 <section class="panel" id="app"></section>
-<div class="footer">Staging teaching pilot · Year 5–6 word set · Test profiles and progress stay on this device</div></main>
+<div class="footer">Staging curriculum adventure · 615-word England inventory · Progress stays in this browser</div></main>
 <script src="/spelling-feedback.js"></script>
 <script src="/learner-profiles.js"></script>
 <script src="/bonus-round.js"></script>
@@ -575,7 +575,7 @@ async function playBonusWord(){
  stop();const t=ticket;
  const last=bonusPosition===bonusRound.words.length-1;
  const intro=last?'spellmaster-bonus-last-v2':'spellmaster-bonus-word-'+(bonusPosition+1)+'-v2';
- await talk([intro,'y6-'+bonusRound.words[bonusPosition]],t);
+ await talk([intro,wordAudioClip(WORDS.find(w=>w.word===bonusRound.words[bonusPosition]))],t);
 }
 function recordBonusRecall(word,correct){
  const profile=LP.active(localStorage);if(!profile)return;
@@ -796,7 +796,23 @@ function renderLanding(){
  '<div class="site-note">For now this demo teaches the original ten Year 5–6 test words; the larger curriculum catalogue is for curriculum review, not approved narration. <a href=\"/curriculum-library.html\">Browse the 615-word curriculum library</a>. Proper age-based assessment and secure cross-device accounts are still to be built.</div>';
 }
 const playWithProfile=begin;
-begin=function(){if(!LP.active(localStorage)){renderLanding();return}playWithProfile()};
+begin=async function(){
+ if(!LP.active(localStorage)){renderLanding();return}
+ stop();stage='curriculum-loading';
+ app.innerHTML='<span class="eyebrow">YOUR SPELLING ADVENTURE</span><h2>Preparing your words</h2>'+
+ '<p>Loading the England curriculum word bank and your personal starting point…</p>'+
+ '<div class="note" role="status">This uses only your local test profile. Nothing has been submitted to a school account.</div>';
+ try{await ensureCurriculumLoaded()}
+ catch(error){
+  stage='curriculum-error';
+  app.innerHTML='<h2>Word bank unavailable</h2><p>We could not load the wider curriculum just now. Your saved progress is safe.</p>'+
+   '<div class="actions"><button onclick="begin()">Try loading again</button>'+
+   '<button class="alt" onclick="renderLanding()">Back to my explorer</button></div>';
+  return;
+ }
+ // Keep the existing first-game narration and progress-history behaviour.
+ stage='welcome';playWithProfile();
+};
 welcome=renderLanding;
 renderLanding();
 </script><script src="/spellmaster-library.js?v=5"></script>
