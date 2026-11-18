@@ -97,7 +97,8 @@ function pool(allWords,history,placement){
  const band=validBand(placement?.currentBand)?placement.currentBand:'year3_4';
  // A homophone must have a reviewed spoken sentence/context before it can be
  // independently assessed: the same spoken word could require multiple spellings.
- const unambiguous=w=>!w.teachingGroups?.includes('homophone_context');
+ const PRONUNCIATION_CONTEXT_REQUIRED=new Set(['live','minute','use']);
+ const unambiguous=w=>!w.teachingGroups?.includes('homophone_context')&&!PRONUNCIATION_CONTEXT_REQUIRED.has(w.word);
  const current=allWords.filter(w=>unambiguous(w)&&w.band===band&&!history?.[w.word]?.events?.length);
  const known=allWords.filter(w=>unambiguous(w)&&history?.[w.word]?.events?.length);
  const prior=PILOT.reduce((acc,w,i)=>(acc[w]=i,acc),{});
