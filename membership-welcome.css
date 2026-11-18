@@ -4,3 +4,8 @@
 
 /* Real illustrated library art on the staging membership welcome page. */
 @media(max-width:640px){body{background-attachment:scroll;background-position:center top}}
+
+/* Shared approved Spellmaster magical-book wordmark. */
+.top .brand{display:inline-flex;align-items:center;flex:0 1 auto;text-shadow:none;min-width:0}
+.top .brand .brand-art{width:clamp(215px,27vw,342px);height:auto;object-fit:contain;display:block;filter:drop-shadow(0 6px 8px #08051a9c)}
+@media(max-width:640px){.top .brand .brand-art{width:clamp(166px,47vw,230px)}.topnav{justify-content:flex-end}}
