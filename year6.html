@@ -263,10 +263,11 @@ async function reviewAudio(){
  '<div class="tip"><strong>Notice this part</strong><p>'+errorFeedbackForCurrent().text+'</p></div>';
  const feedback=errorFeedbackForCurrent();
  const tip=host.querySelector('.tip');if(tip)tip.innerHTML='<strong>Notice this part</strong><p>'+feedback.text+'</p>';
+ mountPersonalGrouping('#review-content');
  ok=await speak(feedback.clip,t);
  if(ok&&t===ticket&&stage==='review'){
-  mountPersonalGrouping('#review-content');
   setStatus('Ready to try spelling again.');
+  await speak('spellmaster-chunk-option-v1',t);
  }
 }
 function shortReview(){
@@ -282,7 +283,8 @@ function shortReview(){
  voiceSet();mountPersonalGrouping('#app');if(narration)shortReviewAudio();
 }
 async function shortReviewAudio(){
- stop();const t=ticket;await speak(errorFeedbackForCurrent().clip,t);
+ stop();const t=ticket;const ok=await speak(errorFeedbackForCurrent().clip,t);
+ if(ok&&t===ticket&&stage==='short-review')await speak('spellmaster-chunk-option-v1',t);
 }
 function retry(){
  stop();stage='retry';
@@ -423,6 +425,7 @@ function renderLanding(){
  const people=LP.readProfiles(localStorage),p=LP.active(localStorage);
  document.body.dataset.theme=p?currentTheme(p):'explorer';
  const progress=p?LP.summary(adaptiveLoad(),adaptiveToday()):null;
+ const splitter=p&&window.SpellmasterChunkUI?window.SpellmasterChunkUI.summary(window.SpellmasterChunkUI.read(localStorage,p)):null;
  const cards=people.map(x=>'<button class="profile-choice '+(p&&p.id===x.id?'selected':'')+
  '" onclick="chooseLocalProfile(\''+x.id+'\')"><span>✦ '+htmlSafe(x.alias)+'</span><small>'+
  (p&&p.id===x.id?'Current explorer ✓':'Switch')+'</small></button>').join('');
@@ -442,6 +445,7 @@ function renderLanding(){
  progress.difficulties.map(item=>'<div class="difficulty-pill">'+htmlSafe(item.pattern)+
  ' · '+item.misses+' practice opportunit'+(item.misses===1?'y':'ies')+'</div>').join(''):'')+
  '<p class="privacy-note">These are early learning observations, not diagnoses or fixed learning styles.</p>':'')+
+ (splitter&&splitter.offered?'<div class="note"><strong>Your word groups</strong><p class="small">You tried your own grouping for '+splitter.changedOpportunities+' of '+splitter.offered+' word opportunities. Saved groups reused: '+splitter.reuses+'.</p><p class="privacy-note">This shows feature use, not whether it improved spelling. Data stays in this browser.</p></div>':'')+
  '</section><aside class="profile-panel"><h3>✦ Your explorer profile</h3>'+
  '<p>Keep each learner’s practice separate on this device.</p>'+cards+
  (people.length<6?'<div class="profile-form"><label for="new-alias">Explorer nickname</label>'+
