@@ -8,6 +8,8 @@ Status: **Staging UX previews and permission-policy code only.** No production a
 - Personal: £10/year, exactly one learner. Guardian may manage a child account; a child does not need an email.
 - School 30: £50/year, up to 30 **active distinct pupil IDs** belonging to one institution.
 - School Unlimited: £100/year, unlimited pupils **within one authenticated school tenant**, not a multi-school group licence.
+- **All three plans offer one calendar month free** before the relevant annual membership applies: Personal £10/year, School 30 £50/year, School Unlimited £100/year. The exact checkout copy must disclose the trial end, first charge, renewal and cancellation rules prior to sign-up. Whether a payment method is requested at trial registration is *not yet decided*; do not imply no card is required.
+- Trial entitlements should be `trialing` with an explicit `validUntil` and the same permitted pupil limit as the selected paid plan. Keep trial eligibility and repeat-trial prevention on the authenticated billing server; avoid exposing a perpetual reset or trusting browser flags. Paused/cancelled/expired trials must not silently convert without documented payment authorisation.
 - Teacher roles/admin staff accounts do not consume pupil seats. A learner present in multiple classes occupies one seat.
 - Annual price is the user-approved target, but VAT treatment, legal terms and auto-renewal policy need validation before launch.
 - Every learner gets the same core pedagogical tools. Schools add staff management, class reporting and administration.
@@ -73,3 +75,7 @@ Shared server APIs and native packages for iOS/Android can reuse the same respon
 4. Implement subscription provider, secure webhooks, idempotent renewals, billing entitlements, cancellation/charge handling and pricing clarity.
 5. Validate reporting with educator testing and accessibility/child privacy review before exposing any class/pupil data.
 6. Native-app billing and store policy review, signing, and distribution if shipping mobile apps.
+
+## Delivery scope (November 2026 decision)
+
+Prioritise the **online web platform only**. Native iOS/Android packaging and app-store billing are explicitly deferred; do not spend development effort on them during the current stage. Prioritise secure cross-device online learner identity, teacher reporting and a fully approved web subscription flow.
