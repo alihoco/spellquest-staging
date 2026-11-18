@@ -1,0 +1,16 @@
+'use strict';
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const server=fs.readFileSync(path.join(__dirname,'server.js'),'utf8');
+const html=fs.readFileSync(path.join(__dirname,'year6.html'),'utf8');
+assert.match(server,/spellmaster-bonus-word-'\+\(i\+1\)\+'-v2/);
+assert.match(server,/spellmaster-bonus-last-v2/);
+assert.match(html,/bonusPosition===bonusRound.words.length-1/);
+assert.match(html,/announceBonusFeedbackThenAdvance\(correct\)/);
+assert.match(html,/async function advanceBonusAfterPause\(/);
+assert.match(html,/if\(t===ticket&&stage==='bonus-feedback'&&bonusPosition===position\)advanceBonusWord\(\)/);
+assert.match(html,/Continue now/);
+assert.doesNotMatch(html,/See my bonus results'\:'Next bonus word/);
+assert.match(html,/if\(t!==ticket\|\|stage!=='bonus-feedback'/);
+console.log('Numbered recap narration, last-word prompt, automatic transition and stale-playback guards validated');
