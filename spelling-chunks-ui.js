@@ -42,7 +42,7 @@
    keptDefault:count('default_kept'),reuses:count('custom_reused'),resets:count('custom_reset'),
    changeRate:offered.size?changed.size/offered.size:null};
  }
- function mount({host,word,teacherChunks,profile,storage,opportunity,onNotice}){
+ function mount({host,word,teacherChunks,profile,storage,opportunity,onNotice,onSpeakInstruction}){
   if(!host||!word||!profile)return;
   const defaultCuts=fromChunks(word,teacherChunks);
   if(!validCuts(word,defaultCuts))return;
@@ -55,6 +55,11 @@
   host.append(root);
   log(storage,profile,'offered',word,opportunity);
   const editor=root.querySelector('.chunk-editor'),open=root.querySelector('.chunk-open');
+  if(typeof onSpeakInstruction==='function'){
+   const listen=document.createElement('button');listen.type='button';listen.className='alt tiny-action';
+   listen.textContent='🔊 How to split';listen.setAttribute('aria-label','Hear how to make your own word groups');
+   listen.addEventListener('click',onSpeakInstruction);root.querySelector('.chunk-head').append(listen);
+  }
   const status=document.createElement('p');status.className='small muted chunk-notice';status.setAttribute('role','status');root.append(status);
   let cuts=initial.slice(),edited=false;
   function paint(){
