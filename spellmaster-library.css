@@ -124,3 +124,18 @@ header{padding:7px}.hero h1{font-size:18px!important}
 .sm-character.is-celebrating .sm-avatar-illustration{animation:sm-success-pop 900ms ease-out 1}
 @keyframes sm-success-pop{0%{transform:scale(.97)}40%{transform:scale(1.045) rotate(-1deg)}100%{transform:scale(1)}}
 }
+
+/* Soft rounded typography for approachable, legible word practice. */
+:root{--sm-font:'Nunito','Trebuchet MS',Arial,sans-serif}
+html,body,button,input,select,textarea{font-family:var(--sm-font)!important}
+header .logo,.hero h1,#app h2,#app.panel:before,
+.sm-path-head,.sm-avatar-card h3,.sm-side-box summary,
+.sm-count{font-family:var(--sm-font)!important}
+header .logo{font-weight:1000!important;letter-spacing:-.7px!important}
+.hero h1,#app h2{font-weight:900!important;letter-spacing:-.55px!important}
+.sm-side-box summary,.sm-avatar-card h3,.sm-path-head{font-weight:900!important}
+#app p,#app .tip,#app .note,#app label,.sm-side-body,.sm-character-hint{font-weight:650}
+#app .spelling-row span,#app .sound,
+#app .chunk-letter,#app .chunk-preview span{font-family:var(--sm-font)!important;font-weight:950;letter-spacing:.015em}
+#app button{font-weight:900}
+#app input{font-weight:750;letter-spacing:.015em}
