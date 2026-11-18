@@ -70,8 +70,8 @@ function recordIndependent(storage,profile,ageYears,word,correct){
  state.observations=state.observations.slice(-500);
  const current=state.currentBand;
  if(word.band===current){
-  const since=state.moves.length?state.moves[state.moves.length-1].at:'';
-  const bandAttempts=state.observations.filter(x=>x.band===current&&(!since||x.at>since));
+  const since=state.moves.length?state.moves[state.moves.length-1].observationCount||0:0;
+  const bandAttempts=state.observations.slice(since).filter(x=>x.band===current);
   const unique=[];const used=new Set();
   for(let i=bandAttempts.length-1;i>=0&&unique.length<5;i--){
    if(!used.has(bandAttempts[i].word)){unique.unshift(bandAttempts[i]);used.add(bandAttempts[i].word)}
@@ -84,7 +84,7 @@ function recordIndependent(storage,profile,ageYears,word,correct){
    const move=up&&pos<BANDS.length-1?pos+1:down&&pos>0?pos-1:pos;
    if(move!==pos){
     const to=BANDS[move];
-    state.moves.push({from:current,to,at:new Date().toISOString(),evidence:{attempts:scored.length,correct:right},reason:up?'confident_independent_accuracy':'support_needed'});
+    state.moves.push({from:current,to,at:new Date().toISOString(),observationCount:state.observations.length,evidence:{attempts:scored.length,correct:right},reason:up?'confident_independent_accuracy':'support_needed'});
     state.currentBand=to;
    }
   }
@@ -95,8 +95,11 @@ function recordIndependent(storage,profile,ageYears,word,correct){
 function pool(allWords,history,placement){
  if(!Array.isArray(allWords)||!allWords.length)return [];
  const band=validBand(placement?.currentBand)?placement.currentBand:'year3_4';
- const current=allWords.filter(w=>w.band===band&&!history?.[w.word]?.events?.length);
- const known=allWords.filter(w=>history?.[w.word]?.events?.length);
+ // A homophone must have a reviewed spoken sentence/context before it can be
+ // independently assessed: the same spoken word could require multiple spellings.
+ const unambiguous=w=>!w.teachingGroups?.includes('homophone_context');
+ const current=allWords.filter(w=>unambiguous(w)&&w.band===band&&!history?.[w.word]?.events?.length);
+ const known=allWords.filter(w=>unambiguous(w)&&history?.[w.word]?.events?.length);
  const prior=PILOT.reduce((acc,w,i)=>(acc[w]=i,acc),{});
  current.sort((a,b)=>{
   const ai=prior[a.word],bi=prior[b.word];if(ai!==undefined||bi!==undefined)return (ai??1000)-(bi??1000);
