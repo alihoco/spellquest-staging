@@ -268,7 +268,12 @@ async function introduceSplitterOnce(t){
 }
 function openWordGrouping(){
  const control=app.querySelector('.chunk-workshop .chunk-open');
- if(control){control.click();return}
+ if(control){
+  const editor=control.closest('.chunk-workshop')?.querySelector('.chunk-editor');
+  if(editor?.hidden)control.click();
+  control.closest('.chunk-workshop')?.scrollIntoView({behavior:'smooth',block:'center'});
+  return;
+ }
  const status=$('audio-status');
  if(status)status.textContent='The word grouping tool will appear with the spelling.';
 }
