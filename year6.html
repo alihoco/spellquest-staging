@@ -534,7 +534,7 @@ check=function(retry){
   runResults.push({word,initial:ok,learned:ok,review:runReview,kind:runKind});
   if(ok){first++;runFirst++}
   adaptiveSave(word,ok,runReview,false,ok?null:lastErrorFeedback?.id);
-  if(curriculumLoaded&&runKind==='new'){
+  if(curriculumLoaded&&(runKind==='new'||runKind==='due')){
    const profile=window.SpellmasterProfiles?.active(localStorage);
    if(profile)window.SpellmasterCurriculum.recordIndependent(localStorage,profile,
     window.SpellmasterProfiles.ageInYears(profile.birth),WORDS[idx],ok);
