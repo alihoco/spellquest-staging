@@ -139,6 +139,7 @@ button.play-now:active{transform:translateY(4px);box-shadow:0 6px 0 #2b2675}
 <script src="/learner-profiles.js"></script>
 <script src="/bonus-round.js"></script>
 <script src="/celebration-feedback.js"></script>
+<script src="/mixed-word-selection.js"></script>
 <script src="/spelling-chunks-ui.js"></script>
 <script>
 const WORDS=[
@@ -215,7 +216,10 @@ function replay(){
  if(stage==='success')return successAudio();
  if(stage==='finished')return speak('y6-v08-complete');
 }
-function progress(){const n=Math.min(8,Math.max(0,runCount));return '<div class="progress" role="progressbar" aria-label="Today’s adventure" aria-valuemin="0" aria-valuemax="8" aria-valuenow="'+n+'"><div style="width:'+(n/8*100)+'%"></div></div>'}
+function progress(){
+ const n=Math.min(5,Math.max(0,((Math.max(runCount,1)-1)%5)+1));
+ return '<div class="progress" role="progressbar" aria-label="Current five-word chapter" aria-valuemin="0" aria-valuemax="5" aria-valuenow="'+n+'"><div style="width:'+(n/5*100)+'%"></div></div>';
+}
 function welcome(){
  stop();stage='welcome';
  app.innerHTML='<span class="eyebrow">WELCOME, WORD EXPLORER!</span><h2>Your adventure starts here 🌟</h2>'+
@@ -412,6 +416,7 @@ welcome();
 // The formal curriculum and sound teaching gates remain separate.
 const ADAPTIVE_KEY='spellmaster-staging-intake-v1';
 let runCount=0,runStart=0,runFirst=0,runNew=0,runSeen=new Set(),runResults=[],runReview=false;
+let runKind="new",lastBreakPromptAt=0;
 let bonusReviewedThrough=0,bonusRound=null,bonusPosition=0,bonusAnswers=[],bonusRoundId=null;
 let lastErrorFeedback=null;
 function errorFeedbackForCurrent(){return lastErrorFeedback||{clip:'spellmaster-error-generic-middle',text:'Look at the middle of the correct word. Then have another go.'}}
@@ -421,42 +426,55 @@ function adaptiveLoad(){try{const profile=window.SpellmasterProfiles?.active(loc
 function adaptiveSave(word,ok,fromReview,afterHelp,errorCategory=null){
  const all=adaptiveLoad(),entry=all[word]||{events:[],retained:0};
  if(fromReview&&ok&&!afterHelp)entry.retained++;
- entry.events.push({date:adaptiveToday(),correct:ok,mode:'independent_keyboard',afterHelp:!!afterHelp,review:!!fromReview,error_category:ok?null:errorCategory});
- entry.next=adaptiveDatePlus(adaptiveToday(),ok?(entry.retained>=2?14:entry.retained?3:1):1);
+ entry.events.push({date:adaptiveToday(),correct:ok,mode:'independent_keyboard',afterHelp:!!afterHelp,
+  review:!!fromReview,phase:runKind==='practice'?'same_session_practice':fromReview?'delayed_due':'new_word',
+  error_category:ok?null:errorCategory});
+ // Repeated same-session practice cannot increase retained mastery or defer a future due date.
+ if(!(runKind==='practice'&&ok&&typeof entry.next==='string'))
+  entry.next=adaptiveDatePlus(adaptiveToday(),ok?(entry.retained>=2?14:entry.retained?3:1):1);
  entry.vault=ok?(entry.retained?'protected':'collected'):'recovery_quest';
  all[word]=entry;const profile=window.SpellmasterProfiles?.active(localStorage);if(profile)localStorage.setItem(window.SpellmasterProfiles.historyKey(profile),JSON.stringify(all));
 }
 function adaptiveSelect(){
- const all=adaptiveLoad(),day=adaptiveToday();
- const due=WORDS.map((w,i)=>({i,word:w.word,record:all[w.word]}))
-  .filter(x=>x.record&&x.record.next<=day&&!runSeen.has(x.word))
-  .sort((a,b)=>a.record.next.localeCompare(b.record.next));
- const fresh=WORDS.map((w,i)=>({i,word:w.word})).filter(x=>!all[x.word]&&!runSeen.has(x.word));
- if(!due.length&&!fresh.length)return null;
- if(due.length&&(runCount%3!==2||!fresh.length))return {i:due[0].i,review:true};
- if(fresh.length)return {i:fresh[0].i,review:false};
- return {i:due[0].i,review:true};
+ return window.SpellmasterMixedWords.select({
+  words:WORDS,history:adaptiveLoad(),session:runResults,today:adaptiveToday(),runCount,runNew
+ });
 }
 function adaptiveStartWord(){
  const selection=adaptiveSelect();if(!selection)return finish();
- idx=selection.i;runReview=selection.review;runCount++;
- if(!runReview)runNew++;
+ idx=selection.i;runKind=selection.kind;runReview=selection.review;runCount++;
+ if(runKind==='new')runNew++;
  question(true);
  const heading=app.querySelector('.eyebrow');
- if(heading)heading.textContent=(runReview?'MEMORY QUEST':'NEW WORD')+' · CHALLENGE '+runCount;
+ if(heading)heading.textContent=({due:'MEMORY QUEST',practice:'WORD PRACTICE',new:'NEW WORD'}[runKind]||'WORD CHALLENGE')+' · CHALLENGE '+runCount;
+}
+function introKey(){
+ const p=window.SpellmasterProfiles?.active(localStorage);
+ return p?'spellmaster-welcome-heard-v1:'+p.id:null;
+}
+function hearWelcomeAgain(){
+ stop();const t=ticket;
+ return talk(['spellmaster-adaptive-welcome-v1'],t);
 }
 begin=function(){
  runCount=0;runStart=Date.now();runFirst=0;runNew=0;runSeen=new Set();runResults=[];runReview=false;
+ runKind='new';lastBreakPromptAt=0;
  praiseState=window.SpellmasterPraise.makeState(Math.floor(Math.random()*10));currentPraise=null;
  bonusReviewedThrough=0;bonusRound=null;bonusPosition=0;bonusAnswers=[];bonusRoundId=null;
  idx=0;first=0;results=[];narration=true;
  localStorage.setItem('spellquest-audio-first','on');
+ const key=introKey();
+ if(key&&localStorage.getItem(key)==='heard'){adaptiveStartWord();return}
  introAudio();
 };
 introAudio=async function(){
  stop();const t=ticket;
  const ok=await talk(['spellmaster-adaptive-welcome-v1'],t);
- if(ok&&t===ticket&&stage==='welcome')adaptiveStartWord();
+ if(t!==ticket||stage!=='welcome')return;
+ const key=introKey();
+ if(ok&&key)localStorage.setItem(key,'heard');
+ // An unavailable welcome clip must not prevent a word challenge.
+ adaptiveStartWord();
 };
 check=function(retry){
  const input=$('answer');if(!input)return;
@@ -466,7 +484,7 @@ check=function(retry){
  if(!ok)lastErrorFeedback=window.SpellmasterFeedback.diagnose(word,guess);
  if(!retry){
   results[idx]={word,initial:ok,learned:ok,attempts:1};
-  runResults.push({word,initial:ok,learned:ok,review:runReview});
+  runResults.push({word,initial:ok,learned:ok,review:runReview,kind:runKind});
   if(ok){first++;runFirst++}
   adaptiveSave(word,ok,runReview,false,ok?null:lastErrorFeedback?.id);
  }else{
@@ -687,7 +705,9 @@ function renderLanding(){
  '<p>'+(p&&progress&&progress.dueWords?'You have '+progress.dueWords+' word'+(progress.dueWords===1?'':'s')+' ready to revisit.':
  p&&progress&&progress.wordsSeen?'You have explored '+progress.wordsSeen+' word'+(progress.wordsSeen===1?'':'s')+'. Keep discovering!':
  'Listen, practise and collect words as you go.')+'</p></div></div>'+
- (p?'<div style="margin-top:20px"><button class="play-now" onclick="begin()"><span class="play-icon">▶</span> Play now</button><p class="small" style="margin-top:15px">✦ Explore your new magical library. The spelling teacher and personal word practice stay the same.</p></div>':
+ (p?'<div style="margin-top:20px"><button class="play-now" onclick="begin()"><span class="play-icon">▶</span> Play now</button>'+
+ '<button class="alt tiny-action" style="margin:14px 0 0 10px" onclick="hearWelcomeAgain()">🔊 Hear welcome again</button>'+
+ '<p class="small" style="margin-top:15px">✦ Practise at your own pace, including words you have seen before.</p></div>':
  '<p class="note">Create a local tester profile to start. This is not yet a secure account.</p>')+
  (progress?'<div class="statline"><div class="stat"><strong>'+progress.wordsSeen+'</strong><small>Words explored</small></div>'+
  '<div class="stat"><strong>'+progress.initialCorrect+'</strong><small>Known first try</small></div>'+
