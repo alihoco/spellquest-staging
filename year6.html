@@ -619,8 +619,8 @@ function showAvatarRewardChoice(profile,roundId){
  if(continuation)continuation.before(area);else app.append(area);
 }
 function nextAfterBonus(){
- stop();const elapsed=(Date.now()-runStart)/60000,upcoming=adaptiveSelect();
- if(!upcoming||elapsed>=12){finish();return}
+ stop();const upcoming=adaptiveSelect();
+ if(!upcoming){finish();return}
  stage='choice';
  app.innerHTML='<span class="eyebrow">YOUR CHOICE</span><h2>Keep exploring?</h2>'+
  '<p>Your bonus round is complete. Would you like another challenge or finish for today?</p>'+
@@ -629,18 +629,20 @@ function nextAfterBonus(){
  voiceSet();
 }
 next=function(){
- stop();const plan=window.SpellmasterBonus?.chooseRound(runResults,bonusReviewedThrough);
+ stop();
+ const plan=window.SpellmasterBonus?.chooseRound(runResults,bonusReviewedThrough);
  if(plan){bonusReviewedThrough=runResults.length;startBonusRound(plan);return}
- const elapsed=(Date.now()-runStart)/60000,selection=adaptiveSelect();
- if(!selection||elapsed>=12)return finish();
- if(elapsed<8){adaptiveStartWord();return}
+ const selection=adaptiveSelect();
+ if(!selection)return finish();
+ const elapsed=(Date.now()-runStart)/60000;
+ // A gentle check-in about every eight minutes; no maximum time or number of words.
+ if(elapsed<8||elapsed-lastBreakPromptAt<8){adaptiveStartWord();return}
+ lastBreakPromptAt=elapsed;
  stage='choice';
- const text=elapsed>=8?'You have enjoyed a good short session. Would you like another word, or finish for today?':
- runFirst>=2?'You already knew some of those! They are saved for later memory checks. Would you like another word?':
- 'Ready to explore another word, or would you prefer to finish here?';
- app.innerHTML='<span class="eyebrow">YOUR CHOICE</span><h2>Keep exploring?</h2><p>'+text+'</p>'+
- '<div class="note">There is no fixed weekly word limit. Previously learned words will come back on another day.</div>'+
- soundVoice()+'<div class="actions"><button onclick="adaptiveStartWord()">Another word →</button>'+
+ app.innerHTML='<span class="eyebrow">YOUR CHOICE</span><h2>Keep exploring?</h2>'+
+ '<p>You have had a good practice session. Would you like to continue or finish for today?</p>'+
+ '<div class="note">A short break can help. You can keep practising whenever you want. Old and new words stay in the adventure together.</div>'+
+ soundVoice()+'<div class="actions"><button onclick="adaptiveStartWord()">Keep exploring →</button>'+
  '<button class="alt" onclick="finish()">Finish for today</button></div>';
  voiceSet();
 };
@@ -648,7 +650,7 @@ finish=function(){
  stop();stage='finished';
  const remembered=runResults.filter(x=>x.initial).length;
  app.innerHTML='<span class="eyebrow">YOUR JOURNEY</span><h2>Look how far you have come! 🌟</h2>'+
- '<div class="good">You explored <strong>'+runCount+'</strong> words. <strong>'+remembered+
+ '<div class="good">You completed <strong>'+runCount+'</strong> word challenges across <strong>'+new Set(runResults.map(x=>x.word)).size+'</strong> different words. <strong>'+remembered+
  '</strong> were correct on the first try.</div>'+
  '<p>Words you knew are saved for later review. Tricky words will return with a fresh opportunity to learn.</p>'+
  runResults.map(x=>'<div class="result"><strong>'+x.word+'</strong> — '+
