@@ -14,6 +14,8 @@ assert.ok(page.includes("runKind==='new'"),'New word accounting must exclude rep
 assert.ok(page.includes("phase:runKind==='practice'?'same_session_practice'"),'Practice must be labelled clearly');
 assert.ok(page.includes("spellmaster-welcome-heard-v1:"),'One-time introduction flag missing');
 assert.ok(page.includes("localStorage.getItem(key)==='heard'"),'Subsequent games must skip the long intro');
+assert.ok(page.includes('const hasPlayedBefore=Object.values(existingHistory)'), 'Earlier learner histories also skip the long welcome');
+assert.ok(page.includes("if(hasPlayedBefore)localStorage.setItem(key,'heard')"), 'Previous learners must have their welcome marked once');
 assert.ok(page.includes('hearWelcomeAgain()'),'Welcome intro must remain replayable');
 assert.ok(page.includes('if(ok&&key)localStorage.setItem(key'), 'Failed narration must not count as heard');
 assert.ok(page.includes('adaptiveStartWord();')&&page.includes('An unavailable welcome clip'),'Failed intro should not trap players');
@@ -21,6 +23,7 @@ assert.ok(!page.includes('elapsed>=12'),'No fixed twelve-minute game ending');
 assert.ok(page.includes("elapsed-lastBreakPromptAt<8"),'Gentle optional recurring break prompt');
 assert.ok(!hud.includes('Math.min(10,v.count'),'Dynamic word path cannot cap at ten');
 assert.ok(hud.includes('firstVisible=v.active?Math.max(1,v.count-2):1'),'Rolling word path is required');
+assert.ok(page.includes('spellmaster-library.js?v=5'), 'Staging must refresh the uncapped journey path');
 assert.ok(profiles.includes("storage.removeItem('spellmaster-welcome-heard-v1:'+id)"),'Profile deletion clears welcome history');
 const words=['necessary','embarrass','accommodate','government','foreign','familiar','environment','privilege','rhythm','temperature'].map(word=>({word}));
 const stored=Object.fromEntries(words.map(w=>[w.word,{events:[{correct:true,date:'2026-11-17'}],next:'2026-12-01'}]));
