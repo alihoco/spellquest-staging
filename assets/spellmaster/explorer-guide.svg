@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="720" viewBox="0 0 500 720">
+<defs><linearGradient id="coat" x2="1" y2="1"><stop stop-color="#7661ae"/><stop offset=".5" stop-color="#493b88"/><stop offset="1" stop-color="#253c68"/></linearGradient>
+<linearGradient id="face" x2=".8" y2="1"><stop stop-color="#ffe0b5"/><stop offset=".7" stop-color="#f4b784"/><stop offset="1" stop-color="#d68e69"/></linearGradient>
+<linearGradient id="hair" x2="1" y2=".6"><stop stop-color="#7e4235"/><stop offset="1" stop-color="#432744"/></linearGradient>
+<linearGradient id="book" x2=".8" y2="1"><stop stop-color="#e4a647"/><stop offset="1" stop-color="#805037"/></linearGradient>
+<filter id="shade"><feDropShadow dx="0" dy="13" stdDeviation="11" flood-color="#18142f" flood-opacity=".55"/></filter></defs>
+<ellipse cx="248" cy="682" rx="179" ry="25" fill="#160c23" opacity=".32"/>
+<g filter="url(#shade)">
+<!-- feet and trousers -->
+<path d="M155 555l-10 96 69 4 31-81 29 82 73-10-18-105Z" fill="#3d3962" stroke="#392a48" stroke-width="10"/>
+<path d="M134 651q-13 25 8 31h93q22-16-2-31Z" fill="#5a3442" stroke="#30283d" stroke-width="10"/>
+<path d="M266 651q-10 25 11 31h93q24-16-2-31Z" fill="#5a3442" stroke="#30283d" stroke-width="10"/>
+<!-- body and bag -->
+<path d="M108 393Q134 364 179 376l155-5q65 11 70 71l17 125q-8 57-85 48l-183-1q-63-3-58-65Z" fill="url(#coat)" stroke="#4b3452" stroke-width="12"/>
+<path d="M111 440q-46 24-50 87q-9 51 23 55l44-22 23-98Z" fill="#bf9279" stroke="#55394c" stroke-width="11"/>
+<path d="M372 426q62 29 60 87l-15 46-60-24-31-90Z" fill="#bf9279" stroke="#55394c" stroke-width="11"/>
+<path d="M148 398l-22 182 33 26 31-172M327 392l20 211" stroke="#d5a466" stroke-width="17" fill="none"/>
+<rect x="130" y="516" width="42" height="55" rx="12" fill="#a06b56" stroke="#613a48" stroke-width="7"/>
+<path d="M181 390l59 63 65-65" fill="#e1b36e" stroke="#604d68" stroke-width="12"/>
+<path d="M215 434l52 47 18-57" fill="#a55271" stroke="#563553" stroke-width="7"/>
+<!-- hair behind face -->
+<path d="M123 272q-33-145 105-165 125-11 145 106l-2 118q-41 49-106 63l-111-35Z" fill="url(#hair)" stroke="#4a2d3c" stroke-width="12"/>
+<!-- neck -->
+<rect x="219" y="335" width="64" height="79" rx="22" fill="#d89c7c" stroke="#704d56" stroke-width="9"/>
+<!-- ears -->
+<ellipse cx="124" cy="272" rx="29" ry="41" fill="#e5a783" stroke="#895b5d" stroke-width="8"/>
+<ellipse cx="377" cy="272" rx="28" ry="41" fill="#e5a783" stroke="#895b5d" stroke-width="8"/>
+<!-- head -->
+<path d="M138 190q22-73 117-75 90 0 117 88l-4 93q-12 86-109 97-112-3-123-100Z" fill="url(#face)" stroke="#704459" stroke-width="11"/>
+<!-- fringe -->
+<path d="M134 215q4-113 114-120 89-6 129 94-29-4-55-27-47 35-104 28-34 34-84 25Z" fill="url(#hair)" stroke="#4b2a3b" stroke-width="10"/>
+<path d="M155 171q33-67 93-55" fill="none" stroke="#a76d4e" stroke-width="12" stroke-linecap="round" opacity=".8"/>
+<!-- eyes -->
+<ellipse cx="207" cy="263" rx="23" ry="29" fill="white"/><ellipse cx="303" cy="263" rx="23" ry="29" fill="white"/>
+<ellipse cx="212" cy="267" rx="13" ry="19" fill="#3b8266"/><ellipse cx="298" cy="267" rx="13" ry="19" fill="#3b8266"/>
+<circle cx="215" cy="268" r="7" fill="#172e46"/><circle cx="299" cy="268" r="7" fill="#172e46"/>
+<circle cx="215" cy="259" r="5" fill="#fff"/><circle cx="302" cy="259" r="5" fill="#fff"/>
+<!-- brows and nose -->
+<path d="M185 226q16-10 31 0M288 225q17-10 32 2" stroke="#63404d" stroke-width="8" fill="none" stroke-linecap="round"/>
+<path d="M257 270l-8 40q13 8 24 0" fill="none" stroke="#c08071" stroke-width="7" stroke-linecap="round"/>
+<!-- smile -->
+<path d="M219 335q39 31 76-3" fill="#6d3343" stroke="#8a4349" stroke-width="8" stroke-linecap="round"/>
+<path d="M232 339q23 12 49 1" fill="none" stroke="#fff4e5" stroke-width="7"/>
+<ellipse cx="181" cy="315" rx="24" ry="12" fill="#e88983" opacity=".55"/><ellipse cx="331" cy="314" rx="24" ry="12" fill="#e88983" opacity=".55"/>
+<!-- goggles -->
+<path d="M138 153q109-45 226 8" fill="none" stroke="#8a5b42" stroke-width="22"/>
+<circle cx="199" cy="147" r="32" fill="#c59e63" stroke="#5a3e4b" stroke-width="10"/><circle cx="199" cy="147" r="23" fill="#70c7db" stroke="#e9e2a6" stroke-width="7"/>
+<circle cx="296" cy="143" r="32" fill="#c59e63" stroke="#5a3e4b" stroke-width="10"/><circle cx="296" cy="143" r="23" fill="#70c7db" stroke="#e9e2a6" stroke-width="7"/>
+<!-- open spell book -->
+<path d="M111 479q80-31 139 1 75-42 164-7l-15 147q-98-30-146 8-65-39-145-10Z" fill="url(#book)" stroke="#4e3244" stroke-width="13"/>
+<path d="M249 482v140" stroke="#653d47" stroke-width="10"/>
+<path d="M129 499q64-13 102 10M128 524q66-14 99 9M274 511q52-20 113-13M274 538q49-23 109-15" stroke="#fae6b0" stroke-width="7" fill="none" opacity=".8"/>
+<path d="M251 525l8 17 20 3-15 14 4 20-17-9-18 9 5-20-15-14 20-3Z" fill="#ffe4a0" stroke="#9f734f" stroke-width="3"/>
+<!-- right hand holding book -->
+<path d="M360 490q38-16 50 9l-13 37q-20 7-48-6Z" fill="#f0b38c" stroke="#88585c" stroke-width="8"/>
+<!-- sparkles -->
+<path d="M69 377l8 17 17 8-17 8-8 17-8-17-17-8 17-8Z" fill="#ffe9a0" stroke="#d39d4a" stroke-width="3"/>
+<circle cx="433" cy="355" r="7" fill="#fff5bd"/><circle cx="93" cy="340" r="5" fill="#fff5bd"/>
+</g></svg>
