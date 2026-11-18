@@ -19,7 +19,7 @@ function select({words=[],history={},session=[],today,runCount=0,runNew=0,seen=[
  // Due later-day independent retrieval has priority, especially early in the adventure.
  if(due.length&&(runCount%3!==2||!fresh.length))return {i:due[0].i,review:true,kind:'due'};
  // Mix a familiar word after at least two other turns, while newer material remains.
- if(runCount>=3&&runCount%3===2&&used.size>=3){
+ if(runCount>=2&&runCount%3===2&&used.size>=2){
   const mixed=pickPractice(words,history,session,{excludeRecent:recent,excludeNeverTaught:true});
   if(mixed)return {i:mixed.i,review:false,kind:'practice'};
  }
