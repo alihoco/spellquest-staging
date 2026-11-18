@@ -229,14 +229,28 @@ function question(auto=false){
  stop();stage='question';const w=WORDS[idx];
  app.innerHTML='<span class="eyebrow">SPELLING CHALLENGE '+runCount+'</span>'+progress()+
  '<h2>Listen, then spell</h2><p>Listen to the word. Type the spelling when you are ready. You can hear it as often as you need.</p>'+
- '<div class="actions"><button class="alt" onclick="speak(\'y6-'+WORDS[idx].word+'\')">🔊 Hear word again</button><button class="alt" onclick="instructionAudio()">🔊 Replay instructions</button></div>'+
+ '<div class="actions"><button class="alt" data-word-replay="true" onclick="replayCurrentWord()">🔊 Hear word again</button><button class="alt" onclick="instructionAudio()">🔊 Replay instructions</button></div>'+
  '<label for="answer">Your spelling</label><input id="answer" aria-label="Type the spelling of the spoken word" autocapitalize="off" autocomplete="off" spellcheck="false" onkeydown="if(event.key===\'Enter\')check(false)">'+soundVoice()+
- '<button onclick="check(false)">Check my spelling →</button>';
- voiceSet();warm(['y6-v08-prompt','y6-'+w.word,'y6-v08-wrong','y6-v08-sounds']);
+ '<div class="actions"><button onclick="check(false)">Check my spelling →</button>'+
+ '<button class="alt" onclick="finish()">Finish for today</button></div>';
+ voiceSet();
  if(auto&&narration)instructionAudio();
 }
 async function instructionAudio(){
- stop();const t=ticket;await talk(['y6-v08-prompt','y6-'+WORDS[idx].word],t);
+ stop();const t=ticket,word=WORDS[idx]?.word;if(!word)return false;
+ const clips=runCount>1?['spellmaster-next-'+word+'-v1']:['y6-v08-prompt','y6-'+word];
+ const ok=await talk(clips,t);
+ if(!ok&&t===ticket&&stage==='question'){
+  setStatus('The word could not be heard. Tap Hear word again before spelling.');
+  const button=app.querySelector('[data-word-replay]');
+  if(button)button.focus({preventScroll:true});
+ }
+ return ok;
+}
+function replayCurrentWord(){
+ stop();const t=ticket;const word=WORDS[idx]?.word;
+ if(!word)return false;
+ return speak('y6-'+word,t);
 }
 function check(retry){
  const inp=$('answer');const guess=inp.value.toLowerCase().replace(/[^a-z]/g,'');if(!guess){inp.focus();return}
@@ -249,11 +263,22 @@ function success(improved){
  stop();stage='success';
  app.innerHTML='<span class="eyebrow">SPELLING CHALLENGE '+runCount+'</span>'+progress()+
  '<h2>'+(improved?'You worked it out 🌱':'That spelling came from you ✓')+'</h2>'+
- '<div class="good">That spelling came from you. Every word you learn is your own progress.</div>'+
- soundVoice()+'<div class="actions"><button onclick="next()">Next word →</button><button class="alt" onclick="successAudio()">🔊 Replay encouragement</button></div>';
- voiceSet();if(narration)successAudio();
+ '<div class="good">'+(improved?'You remembered the spelling after practising.':'You spelled that word independently.')+'</div>'+
+ '<p class="small muted" role="status">Moving to your next challenge…</p>'+
+ soundVoice()+'<div class="actions"><button class="alt" onclick="next()">Continue now</button>'+
+ '<button class="alt" onclick="finish()">Finish for today</button></div>';
+ voiceSet();successAudio();
 }
-async function successAudio(){stop();await talk([results[idx].initial?'y6-correct':'y6-improved'],ticket)}
+async function successAudio(){
+ stop();const t=ticket;
+ if(narration){
+  await talk([results[idx].initial?'spellmaster-right-short-v1':'spellmaster-learned-short-v1'],t);
+ }
+ if(t!==ticket||stage!=='success')return;
+ // A short recognition is enough; the next question announces its own complete word.
+ if(!(await pause(650,t)))return;
+ if(t===ticket&&stage==='success')next();
+}
 // Teaching is sound-led through the verified complete word, but we must not
 // present pseudo-phonetic spellings as written words. Accurate specialist-reviewed
 // phoneme/grapheme alignment is still pending.
@@ -583,6 +608,7 @@ next=function(){
  if(plan){bonusReviewedThrough=runResults.length;startBonusRound(plan);return}
  const elapsed=(Date.now()-runStart)/60000,selection=adaptiveSelect();
  if(!selection||elapsed>=12)return finish();
+ if(elapsed<8){adaptiveStartWord();return}
  stage='choice';
  const text=elapsed>=8?'You have enjoyed a good short session. Would you like another word, or finish for today?':
  runFirst>=2?'You already knew some of those! They are saved for later memory checks. Would you like another word?':
@@ -591,7 +617,7 @@ next=function(){
  '<div class="note">There is no fixed weekly word limit. Previously learned words will come back on another day.</div>'+
  soundVoice()+'<div class="actions"><button onclick="adaptiveStartWord()">Another word →</button>'+
  '<button class="alt" onclick="finish()">Finish for today</button></div>';
- voiceSet();if(narration)talk(['y6-v08-next']);
+ voiceSet();
 };
 finish=function(){
  stop();stage='finished';
