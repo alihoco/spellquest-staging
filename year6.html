@@ -680,7 +680,12 @@ function renderLanding(){
  '<h2 style="font-size:clamp(28px,4vw,39px);line-height:1.15;margin:12px 0">'+
  (p?'Ready to discover, '+htmlSafe(p.alias)+'?':'Every great speller starts somewhere.')+'</h2>'+
  '<p class="start-desc">Hear a word, give it a go, and get helpful clues when you need them. Take a break whenever you want.</p>'+
- '<div class="decor-orb" aria-hidden="true">✦📚✦</div>'+
+ '<div class="next-chapter" aria-label="Your next chapter"><span class="chapter-icon" aria-hidden="true">✦</span>'+
+ '<div><span class="chapter-kicker">YOUR NEXT CHAPTER</span>'+
+ '<h3>'+(p&&progress&&progress.dueWords?'Words to remember':'A word adventure awaits')+'</h3>'+
+ '<p>'+(p&&progress&&progress.dueWords?'You have '+progress.dueWords+' word'+(progress.dueWords===1?'':'s')+' ready to revisit.':
+ p&&progress&&progress.wordsSeen?'You have explored '+progress.wordsSeen+' word'+(progress.wordsSeen===1?'':'s')+'. Keep discovering!':
+ 'Listen, practise and collect words as you go.')+'</p></div></div>'+
  (p?'<div style="margin-top:20px"><button class="play-now" onclick="begin()"><span class="play-icon">▶</span> Play now</button><p class="small" style="margin-top:15px">✦ Explore your new magical library. The spelling teacher and personal word practice stay the same.</p></div>':
  '<p class="note">Create a local tester profile to start. This is not yet a secure account.</p>')+
  (progress?'<div class="statline"><div class="stat"><strong>'+progress.wordsSeen+'</strong><small>Words explored</small></div>'+
@@ -695,18 +700,23 @@ function renderLanding(){
  ' · '+item.misses+' practice opportunit'+(item.misses===1?'y':'ies')+'</div>').join(''):'')+
  '<p class="privacy-note">These are early learning observations, not diagnoses or fixed learning styles.</p>':'')+
  (splitter&&splitter.offered?'<div class="note"><strong>Your word groups</strong><p class="small">You tried your own grouping for '+splitter.changedOpportunities+' of '+splitter.offered+' word opportunities. Saved groups reused: '+splitter.reuses+'.</p><p class="privacy-note">This shows feature use, not whether it improved spelling. Data stays in this browser.</p></div>':'')+
- '</section><aside class="profile-panel"><h3>✦ Your explorer profile</h3>'+
- '<p>Keep each learner’s practice separate on this device.</p>'+cards+
+ '</section><aside class="profile-panel"><h3>✦ Your explorer</h3>'+
+ '<p>One explorer at a time. Your learning journey belongs to you.</p>'+
+ (p?'<div class="active-learner" aria-label="Current explorer"><span class="active-learner-icon" aria-hidden="true">✦</span>'+
+ '<div><strong>'+htmlSafe(p.alias)+'</strong><small>Current explorer · Personal progress</small></div></div>':'')+
+ '<details class="tester-profile-tools"'+(p?'':' open')+'><summary>⚙ Tester profile tools</summary>'+
+ '<p class="privacy-note">Only for local staging tests. In the finished game, switching learners requires authorised sign-in.</p>'+cards+
  (people.length<6?'<div class="profile-form"><label for="new-alias">Explorer nickname</label>'+
  '<input id="new-alias" maxlength="18" placeholder="e.g. Star Explorer" autocomplete="off" spellcheck="false">'+
  '<label for="new-birth">Birth month and year</label>'+
  '<input id="new-birth" type="month" min="1920-01" max="'+new Date().toISOString().slice(0,7)+'">'+
  '<button class="alt" onclick="createLocalProfile()">+ Create tester profile</button>'+
  '<div class="status" id="profile-error" role="status"></div></div>':'')+
+ '</details>'+
  (p?'<div style="padding-top:13px"><label for="local-theme">Choose how the game looks</label>'+
  '<select id="local-theme" onchange="setLocalTheme(this.value)">'+themeOptions.map(x=>'<option value="'+x+'"'+
  (p.theme===x?' selected':'')+'>'+({auto:'Adjust with age',wonder:'Wonder',explorer:'Explorer',adventure:'Adventure',focus:'Simple & calm'}[x])+'</option>').join('')+
- '</select><button class="alt tiny-action" onclick="deleteLocalProfile()">Delete this tester profile</button></div>':'')+
+ '</select></div>':'')+
  '<p class="privacy-note" style="margin-top:15px">Testing only: profiles and birth month/year stay in this browser, not a server. Anyone using this device can access them. Use nicknames, not real names. Clearing browser data removes your progress.</p>'+
  '</aside></div>'+
  '<div class="site-note">For now this demo teaches the original ten Year 5–6 test words; the larger curriculum catalogue is for curriculum review, not approved narration. <a href=\"/curriculum-library.html\">Browse the 615-word curriculum library</a>. Proper age-based assessment and secure cross-device accounts are still to be built.</div>';
