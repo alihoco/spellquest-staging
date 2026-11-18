@@ -168,6 +168,19 @@ CLIPS['spellmaster-learned-short-v1']='You worked that one out.';
 
 // Curated, proportionate and replayable correct-answer celebrations.
 Object.assign(CLIPS,require('./celebration-feedback.js').audioClips());
+// Full England curriculum word INVENTORY: on-demand TTS of the correctly spelled
+// whole word only. These audio drafts and no linguistic splits are NOT specialist
+// approved, and the service never voices a learner's attempted/misspelled input.
+const CURRICULUM=require('./core/national-curriculum-catalogue.json');
+if(CURRICULUM.words.length!==615)throw Error('Curriculum import needs validation');
+for(const entry of CURRICULUM.words){
+ if(!/^en-[a-z-]+$/.test(entry.id)||!/^[a-z]+$/.test(entry.word))
+  throw Error('Curriculum voice allowlist failed validation');
+ CLIPS['catalogue-word-'+entry.id+'-v1']=entry.word;
+ CLIPS['catalogue-next-'+entry.id+'-v1']='Here is your next word. '+entry.word+'.';
+}
+CLIPS['spellmaster-catalogue-help-v1']='Look at the correct spelling closely. Notice the order of the letters. You can make your own visual groups, then hide the word and try it again.';
+
 const cache=new Map(),limits=new Map();let daily={day:'',count:0};
 function send(res,code,obj,headers={}){res.writeHead(code,{'Content-Type':'application/json','Cache-Control':'no-store',...headers});res.end(JSON.stringify(obj))}
 http.createServer(async(req,res)=>{
