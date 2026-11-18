@@ -150,6 +150,8 @@ CLIPS['spellmaster-bonus-next-v1']='On to the next bonus word.';
 CLIPS['spellmaster-bonus-perfect-v1']='A brilliant bonus round! You remembered every word independently. You have earned super bonus coins and a Star Explorer hat for your avatar!';
 CLIPS['spellmaster-bonus-complete-v1']='Bonus round complete. You have earned coins for the words you remembered. We will practise the others again soon.';
 CLIPS['spellmaster-bonus-end-v1']='That was a good recap. You can return to your adventure or finish for today.';
+CLIPS['spellmaster-bonus-right-v1']='You remembered that word!';
+CLIPS['spellmaster-bonus-miss-v1']='That one needs another visit. We can practise it again soon.';
 const cache=new Map(),limits=new Map();let daily={day:'',count:0};
 function send(res,code,obj,headers={}){res.writeHead(code,{'Content-Type':'application/json','Cache-Control':'no-store',...headers});res.end(JSON.stringify(obj))}
 http.createServer(async(req,res)=>{
