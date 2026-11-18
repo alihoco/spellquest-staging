@@ -5,6 +5,16 @@ assert.equal(a.plan('personal').amountGbp,10);
 assert.equal(a.plan('school_30').amountGbp,50);
 assert.equal(a.plan('school_unlimited').amountGbp,100);
 assert.equal(a.plan('school_unlimited').pupilLimit,null);
+for(const id of ['personal','school_30','school_unlimited'])
+ assert.equal(a.plan(id).trialMonths,1,'All membership plans must offer 1 month free');
+assert.equal(a.trialEndsAt('2026-11-18T10:30:00.000Z'),'2026-12-18T10:30:00.000Z');
+assert.equal(a.trialEndsAt('2027-01-31T10:30:00.000Z'),'2027-02-28T10:30:00.000Z');
+assert.equal(a.trialEndsAt('2028-01-31T10:30:00.000Z'),'2028-02-29T10:30:00.000Z');
+assert.throws(()=>a.trialEndsAt('not-a-date'));
+const trial={status:'trialing',validUntil:a.trialEndsAt('2026-11-18T10:30:00.000Z')};
+assert.equal(a.canAddLearner({planId:'school_30',activeLearners:0,subscription:trial,asOf:'2026-11-20T10:00:00Z'}).allowed,true);
+assert.equal(a.canAddLearner({planId:'school_30',activeLearners:0,subscription:trial,asOf:'2026-12-19T10:00:00Z'}).reason,'subscription_inactive');
+
 const sub={status:'active',validUntil:'2027-11-18T00:00:00Z'},asOf='2026-11-18T21:00:00Z';
 assert.equal(a.canAddLearner({planId:'personal',activeLearners:0,subscription:sub,asOf}).allowed,true);
 assert.equal(a.canAddLearner({planId:'personal',activeLearners:1,subscription:sub,asOf}).reason,'seat_limit');
