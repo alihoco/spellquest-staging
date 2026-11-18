@@ -464,7 +464,13 @@ begin=function(){
  idx=0;first=0;results=[];narration=true;
  localStorage.setItem('spellquest-audio-first','on');
  const key=introKey();
- if(key&&localStorage.getItem(key)==='heard'){adaptiveStartWord();return}
+ const existingHistory=adaptiveLoad();
+ const hasPlayedBefore=Object.values(existingHistory).some(entry=>Array.isArray(entry?.events)&&entry.events.length>0);
+ // Existing local testers already played before this flag was introduced.
+ if(key&&(localStorage.getItem(key)==='heard'||hasPlayedBefore)){
+  if(hasPlayedBefore)localStorage.setItem(key,'heard');
+  adaptiveStartWord();return;
+ }
  introAudio();
 };
 introAudio=async function(){
@@ -749,5 +755,5 @@ const playWithProfile=begin;
 begin=function(){if(!LP.active(localStorage)){renderLanding();return}playWithProfile()};
 welcome=renderLanding;
 renderLanding();
-</script><script src="/spellmaster-library.js?v=4"></script>
+</script><script src="/spellmaster-library.js?v=5"></script>
 </body></html>
