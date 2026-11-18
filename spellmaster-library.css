@@ -116,3 +116,11 @@ header{padding:7px}.hero h1{font-size:18px!important}
 .sm-avatar-illustration{height:74px;width:75px}
 }
 @media(prefers-reduced-motion:reduce){.sm-avatar-card,.sm-side-box{transition:none!important}}
+
+/* Gentle celebratory emphasis, outside the teaching task. */
+.sm-character.is-celebrating .sm-avatar-card{box-shadow:0 0 0 4px #ffdb8266,0 9px 0 #251a2f,0 14px 34px #edb65577}
+.sm-character.is-celebrating .sm-avatar-card:after{content:"✦  Great progress!  ✦";position:absolute;left:9%;right:9%;top:6px;padding:5px;border-radius:9px;background:#fff4d9;color:#5d3875;font-size:11px;font-weight:900;box-shadow:0 2px 8px #24133555;pointer-events:none}
+@media(prefers-reduced-motion:no-preference){
+.sm-character.is-celebrating .sm-avatar-illustration{animation:sm-success-pop 900ms ease-out 1}
+@keyframes sm-success-pop{0%{transform:scale(.97)}40%{transform:scale(1.045) rotate(-1deg)}100%{transform:scale(1)}}
+}
