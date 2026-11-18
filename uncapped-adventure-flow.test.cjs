@@ -1,0 +1,32 @@
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs');
+const page=fs.readFileSync(__dirname+'/year6.html','utf8');
+const hud=fs.readFileSync(__dirname+'/spellmaster-library.js','utf8');
+const profiles=fs.readFileSync(__dirname+'/learner-profiles.js','utf8');
+const selector=require('./mixed-word-selection.js');
+for(const script of page.split('<script>').slice(1).map(s=>s.split('</script>')[0]))new Function(script);
+new Function(hud);
+assert.ok(page.includes('mixed-word-selection.js'),'Mixed selection module not loaded');
+assert.ok(page.includes('SpellmasterMixedWords.select'),'Adaptive selector must use mixed policy');
+assert.ok(page.includes("kind:'practice'")===false,'UI should not hard-code unrelated policy');
+assert.ok(page.includes("runKind==='practice'&&ok"),'Same-session practise must not defer future retention');
+assert.ok(page.includes("runKind==='new'"),'New word accounting must exclude repeated practice');
+assert.ok(page.includes("phase:runKind==='practice'?'same_session_practice'"),'Practice must be labelled clearly');
+assert.ok(page.includes("spellmaster-welcome-heard-v1:"),'One-time introduction flag missing');
+assert.ok(page.includes("localStorage.getItem(key)==='heard'"),'Subsequent games must skip the long intro');
+assert.ok(page.includes('hearWelcomeAgain()'),'Welcome intro must remain replayable');
+assert.ok(page.includes('if(ok&&key)localStorage.setItem(key'), 'Failed narration must not count as heard');
+assert.ok(page.includes('adaptiveStartWord();')&&page.includes('An unavailable welcome clip'),'Failed intro should not trap players');
+assert.ok(!page.includes('elapsed>=12'),'No fixed twelve-minute game ending');
+assert.ok(page.includes("elapsed-lastBreakPromptAt<8"),'Gentle optional recurring break prompt');
+assert.ok(!hud.includes('Math.min(10,v.count'),'Dynamic word path cannot cap at ten');
+assert.ok(hud.includes('firstVisible=v.active?Math.max(1,v.count-2):1'),'Rolling word path is required');
+assert.ok(profiles.includes("storage.removeItem('spellmaster-welcome-heard-v1:'+id)"),'Profile deletion clears welcome history');
+const words=['necessary','embarrass','accommodate','government','foreign','familiar','environment','privilege','rhythm','temperature'].map(word=>({word}));
+const stored=Object.fromEntries(words.map(w=>[w.word,{events:[{correct:true,date:'2026-11-17'}],next:'2026-12-01'}]));
+for(const turns of [0,1,9,10,50,100,500]){
+ const session=Array.from({length:turns},(_,i)=>({word:words[i%words.length].word,initial:true}));
+ const candidate=selector.select({words,history:stored,session,today:'2026-11-18',runCount:turns});
+ assert.ok(candidate && candidate.kind==='practice','Fully exposed pilot must still offer word '+turns);
+}
+console.log('Long-term learner history, intro-once, no 12-minute cutoff and uncapped mixed-practice regression checks passed.');
