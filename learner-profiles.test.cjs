@@ -6,6 +6,10 @@ const alice=p.add(store,{alias:'Explorer One',birth:'2020-07'});
 assert.ok(alice.id.startsWith('lp-'));
 assert.equal(p.ageInYears(alice.birth,new Date('2026-11-13T09:00:00Z')),6);
 assert.equal(p.themeForAge(6),'wonder');
+assert.equal(p.updateSchoolYear(store,alice.id,1).schoolYear,1);
+assert.equal(p.active(store).schoolYear,1);
+assert.throws(()=>p.updateSchoolYear(store,alice.id,9));
+
 const bob=p.add(store,{alias:'Word Fox',birth:'2013-05'});
 assert.notEqual(p.historyKey(alice),p.historyKey(bob));
 assert.equal(p.active(store).id,bob.id);
@@ -19,6 +23,9 @@ const sample={necessary:{retained:0,next:'2026-11-13',events:[
  {correct:true,afterHelp:false}]}};
 const s=p.summary(sample,'2026-11-13');
 assert.equal(s.wordsSeen,2);
+const expanded={...sample,answer:{retained:0,next:'2026-11-16',events:[{correct:true,afterHelp:false}]}};
+assert.equal(p.summary(expanded,'2026-11-13').wordsSeen,3,'All curriculum words count, not only pilot words');
+
 assert.equal(s.dueWords,1);
 assert.equal(s.initialCorrect,1);
 assert.equal(s.delayedRetained,1);
