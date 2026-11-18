@@ -15,7 +15,7 @@
  function write(storage,profile,state){storage.setItem(key(profile),JSON.stringify(state))}
  function log(storage,profile,action,word,opportunity,extra={}){
   const state=read(storage,profile);
-  if(['offered','opened'].includes(action)&&state.events.some(e=>e.action===action&&e.opportunity===opportunity))return state;
+  if(['offered','opened','custom_reused'].includes(action)&&state.events.some(e=>e.action===action&&e.opportunity===opportunity))return state;
   state.events.push({action,word,opportunity,at:new Date().toISOString(),...extra});
   state.events=state.events.slice(-1500);write(storage,profile,state);return state;
  }
@@ -23,10 +23,11 @@
   if(!validCuts(word,defaultCuts)||!validCuts(word,selectedCuts))throw Error('Invalid grouping');
   const state=read(storage,profile),custom=!same(defaultCuts,selectedCuts);
   const prior=state.preferences[word];
+  const sameAsPrior=!!prior&&same(prior.cuts,selectedCuts);
   state.preferences[word]={spelling:word,cuts:selectedCuts.slice(),defaultCuts:defaultCuts.slice(),custom,
-   savedAt:new Date().toISOString(),revisions:(prior?.revisions||0)+1};
+   lastSavedOpportunity:opportunity,savedAt:new Date().toISOString(),revisions:(prior?.revisions||0)+(sameAsPrior?0:1)};
   write(storage,profile,state);
-  log(storage,profile,custom?'custom_saved':'default_kept',word,opportunity,{changed:custom});
+  log(storage,profile,sameAsPrior?'previous_grouping_confirmed':custom?'custom_saved':'default_kept',word,opportunity,{changed:custom&&!sameAsPrior});
   if(prior?.custom&&!custom)log(storage,profile,'custom_reset',word,opportunity);
   if(prior?.custom&&custom&&!same(prior.cuts,selectedCuts))log(storage,profile,'custom_revised',word,opportunity);
   return {custom,cuts:selectedCuts.slice()};
@@ -54,6 +55,7 @@
   host.append(root);
   log(storage,profile,'offered',word,opportunity);
   const editor=root.querySelector('.chunk-editor'),open=root.querySelector('.chunk-open');
+  const status=document.createElement('p');status.className='small muted chunk-notice';status.setAttribute('role','status');root.append(status);
   let cuts=initial.slice(),edited=false;
   function paint(){
    editor.replaceChildren();
@@ -100,7 +102,7 @@
     editor.hidden=!editor.hidden;
     if(!editor.hidden){
       log(storage,profile,'opened',word,opportunity);
-      if(saved?.custom)log(storage,profile,'custom_reused',word,opportunity);
+      if(saved?.custom&&saved.lastSavedOpportunity!==opportunity)log(storage,profile,'custom_reused',word,opportunity);
       paint();
     }
   };
