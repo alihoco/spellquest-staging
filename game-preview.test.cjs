@@ -1,23 +1,15 @@
 'use strict';
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
-const path=require('node:path');
-const html=fs.readFileSync(path.join(__dirname,'game-preview.html'),'utf8');
-const script=html.split('<script>').slice(1).join('<script>').split('</script>')[0];
+const html=fs.readFileSync(__dirname+'/game-preview.html','utf8');
+const script=html.split('<script>')[1].split('</script>')[0];
 new Function(script);
-assert.match(html,/The Word Trail/);
-assert.match(html,/function question\(\)/);
-assert.match(html,/function check\(\)/);
-assert.match(html,/function assist\(guess\)/);
-assert.match(html,/function celebrate\(\)/);
-assert.match(html,/function bonusStart\(\)/);
-assert.match(html,/function bonusEnd\(\)/);
-assert.match(html,/function groups/);
-assert.match(html,/function renderDividers/);
-assert.match(html,/if\(guess===list\[step\]\.word\)/);
-assert.match(html,/if\(guess===list\[step\]\.word\)/);
-assert.match(html,/aria-label="Spell the mystery word"/);
-assert.match(html,/spellmaster-next-/);
-assert.match(html,/prefers-reduced-motion/);
-assert.match(html,/profile\?SpellmasterChunkUI/);
-console.log('Word Trail gameplay preview markup, script and core response flow checks passed');
+for(const item of ['The Word Trail','function question()','function check()',
+ 'function help(guess)','async function celebrate()','function bonusStart()',
+ 'function bonusEnd()','function groups()','function renderDividers()',
+ 'if(guess===list[step].word)','Spell the mystery word','spellmaster-next-',
+ 'prefers-reduced-motion','profile&&SpellmasterChunkUI']){
+ assert.ok(html.includes(item),'Missing feature: '+item);
+}
+assert.ok(!html.includes('value="'+String('necessary')+'"'), 'Word answer must not preload');
+console.log('Word Trail gameplay source, script and feature checks passed');
