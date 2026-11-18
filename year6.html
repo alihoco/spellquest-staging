@@ -128,7 +128,7 @@ button.play-now:active{transform:translateY(4px);box-shadow:0 6px 0 #2b2675}
 </style><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/spellmaster-library.css?v=5">
+<link rel="stylesheet" href="/spellmaster-library.css?v=6">
 </head>
 <body><main><header><a class="logo" href="/">✨ Spellmaster</a><span class="muted small">Better today than yesterday</span></header>
 <section class="hero"><span class="eyebrow">YOUR OWN SPELLING ADVENTURE</span><h1>Discover words. Build confidence.</h1><p>Little challenges, a patient voice, and a teacher that remembers what helps you learn.</p></section>
@@ -712,6 +712,7 @@ function renderLanding(){
  '<input id="new-birth" type="month" min="1920-01" max="'+new Date().toISOString().slice(0,7)+'">'+
  '<button class="alt" onclick="createLocalProfile()">+ Create tester profile</button>'+
  '<div class="status" id="profile-error" role="status"></div></div>':'')+
+ (p?'<button class="alt tiny-action" style="margin:5px 12px 9px" onclick="deleteLocalProfile()">Delete current test profile</button>':'')+
  '</details>'+
  (p?'<div style="padding-top:13px"><label for="local-theme">Choose how the game looks</label>'+
  '<select id="local-theme" onchange="setLocalTheme(this.value)">'+themeOptions.map(x=>'<option value="'+x+'"'+
