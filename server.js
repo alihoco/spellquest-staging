@@ -174,7 +174,7 @@ Object.assign(CLIPS,require('./celebration-feedback.js').audioClips());
 const CURRICULUM=require('./core/national-curriculum-catalogue.json');
 if(CURRICULUM.words.length!==615)throw Error('Curriculum import needs validation');
 for(const entry of CURRICULUM.words){
- if(!/^en-[a-z-]+$/.test(entry.id)||!/^[a-z]+$/.test(entry.word))
+ if(!/^en-[a-z-]+$/.test(entry.id)||!/^[a-z]+(?:'[a-z]+)?$/.test(entry.word))
   throw Error('Curriculum voice allowlist failed validation');
  CLIPS['catalogue-word-'+entry.id+'-v1']=entry.word;
  CLIPS['catalogue-next-'+entry.id+'-v1']='Here is your next word. '+entry.word+'.';
