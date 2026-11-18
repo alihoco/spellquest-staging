@@ -496,10 +496,11 @@ function finishBonusRound(){
  app.innerHTML='<div class="bonus-card '+(outcome.perfect?'bonus-perfect':'')+'">'+
  '<span class="bonus-trophy" aria-hidden="true">'+(outcome.perfect?'🏆':'✨')+'</span>'+
  '<span class="eyebrow">BONUS ROUND COMPLETE</span><h2 class="bonus-title">'+(outcome.perfect?'Superstar bonus!':'Adventure progress!')+'</h2>'+
- '<p>'+rewardText+'</p><div class="bonus-currency">🪙 +'+outcome.coins+' bonus coins</div>'+
+ '<p>'+rewardText+'</p><div class="bonus-currency">🪙 +'+outcome.coins+' bonus coins</div>'+ 
+ '<div class="bonus-currency">✦ +'+outcome.bonusPoints+' bonus points</div>'+
  (outcome.perfect?'<div class="bonus-hat"><strong>🎩 Star Explorer Hat unlocked!</strong><p class="small">A cosmetic reward for completing this bonus round. It is not a long-term mastery badge.</p></div>':'<p>Every word has another chance to be remembered later.</p>')+
  '<p class="small muted">These coins and your hat stay with this browser’s learner profile. A separate review on another day checks lasting memory.</p>'+
- (reward?'<p class="small">Your coin total: '+reward.coins+'</p>':'')+
+ (reward?'<p class="small">Your coin total: '+reward.coins+' · Bonus points: '+reward.bonusPoints+'</p>':'')+
  soundVoice()+'<div class="actions" style="justify-content:center"><button onclick="nextAfterBonus()">Continue adventure</button>'+
  '<button class="alt" onclick="finish()">Finish for today</button></div></div>';
  voiceSet();if(narration)speak(outcome.perfect?'spellmaster-bonus-perfect-v1':'spellmaster-bonus-complete-v1');
@@ -582,7 +583,7 @@ function renderLanding(){
  '<div class="stat"><strong>'+progress.initialCorrect+'</strong><small>Known first try</small></div>'+
  '<div class="stat"><strong>'+progress.dueWords+'</strong><small>Ready to revisit</small></div></div>'+
  '<span class="label-chip">'+(progress.delayedRetained?'Some words recalled later':'Your memory journey begins here')+'</span>'+
- (bonuses&&bonuses.rounds.length?'<div class="bonus-currency">🪙 '+bonuses.coins+' coins</div>'+ (bonuses.hats.includes('star-explorer-hat')?'<div class="label-chip">🎩 Star Explorer Hat earned</div>':''):'')+
+ (bonuses&&bonuses.rounds.length?'<div class="bonus-currency">🪙 '+bonuses.coins+' coins · ✦ '+bonuses.bonusPoints+' bonus points</div>'+ (bonuses.hats.includes('star-explorer-hat')?'<div class="label-chip">🎩 Star Explorer Hat earned</div>':''):'')+
  (progress.difficulties.length?'<h3 style="margin-bottom:6px">What we are practising</h3>'+
  progress.difficulties.map(item=>'<div class="difficulty-pill">'+htmlSafe(item.pattern)+
  ' · '+item.misses+' practice opportunit'+(item.misses===1?'y':'ies')+'</div>').join(''):'')+
