@@ -10,7 +10,7 @@
  const layout=document.createElement('div');layout.className='sm-layout';
  app.before(layout);
  const character=document.createElement('aside');character.className='sm-character';character.setAttribute('aria-label','Your explorer');
- character.innerHTML='<div class="sm-avatar-card"><img class="sm-avatar-illustration" src="/assets/spellmaster/explorer-guide.svg" alt="Friendly illustrated word explorer holding a magical book" loading="eager"><div class="sm-character-text"><h3>Meet your explorer</h3><p class="sm-avatar-sub">An adventure to remember your words</p><span class="sm-avatar-pill">✦ Word Explorer</span></div></div>'+
+ character.innerHTML='<div class="sm-avatar-card"><img class="sm-avatar-illustration" src="/assets/spellmaster/explorer-painted.webp" alt="Friendly illustrated word explorer holding a magical book" loading="eager"><div class="sm-character-text"><h3>Meet your explorer</h3><p class="sm-avatar-sub">An adventure to remember your words</p><span class="sm-avatar-pill">✦ Word Explorer</span></div></div>'+
  '<div class="sm-character-hint"><strong>✦ Better today than yesterday</strong><p>Look for the little steps forward. Your explorer will celebrate what you learn.</p></div>';
  const side=document.createElement('aside');side.className='sm-side';side.setAttribute('aria-label','Adventure and rewards');
  side.innerHTML='<details class="sm-side-box" id="sm-adventure"><summary>🗺️ Your Adventure</summary><div class="sm-side-body"><ul id="sm-journey-list"></ul><div class="sm-mini-meter"><span id="sm-journey-meter"></span></div><small id="sm-journey-caption">Your personal journey</small></div></details>'+
