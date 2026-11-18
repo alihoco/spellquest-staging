@@ -40,6 +40,11 @@ assert.ok(p2.find(w=>w.word==='necessary'),'Previously encountered words remain 
 const one=words.find(x=>x.word==='one');
 assert.ok(one.teachingGroups.includes('homophone_context'));
 assert.equal(p2.some(x=>x.word==='one'),false,'No bare homophone tests');
+for(const ambiguous of ['live','minute','use'])
+ assert.equal(api.pool(words,{}, {currentBand:words.find(w=>w.word===ambiguous).band}).some(w=>w.word===ambiguous),false,
+ 'No uncontextualised homograph quiz: '+ambiguous);
+const playable=api.BANDS.flatMap(b=>api.pool(words,{}, {currentBand:b}));
+assert.equal(playable.length,588,'The bank contains 615 entries, with 27 held for spoken context');
 api.resetStartingPoint(store,{...learner,schoolYear:5},10);
 assert.equal(api.readPlacement(store,{...learner,schoolYear:5},10).currentBand,'year5_6');
 assert.throws(()=>api.prepare({words:[]}),/count/);
