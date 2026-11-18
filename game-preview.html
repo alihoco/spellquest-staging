@@ -1,0 +1,117 @@
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Spellmaster — Word Trail playable preview</title><style>
+*{box-sizing:border-box}:root{font-family:ui-rounded,"Trebuchet MS",system-ui,sans-serif;color:#26375b}body{margin:0;min-height:100vh;background:linear-gradient(130deg,#e3f5ff,#f2eaff)}
+header{max-width:1050px;margin:auto;padding:18px;display:flex;justify-content:space-between;align-items:center;gap:12px}header a{text-decoration:none;color:#4a409d;font-weight:950;font-size:25px}header small{color:#718099}
+main{max-width:1050px;margin:auto;padding:0 14px 24px}.game{background:white;border-radius:27px;overflow:hidden;box-shadow:0 24px 55px #3044812b}
+.top{background:#26396f;color:white;padding:15px 22px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.top strong{letter-spacing:2px}.badge{background:#ffffff29;border-radius:999px;padding:7px 13px;font-size:13px;font-weight:900}
+.scene{position:relative;height:clamp(295px,42vw,425px);overflow:hidden;background:linear-gradient(#81c9f3,#dbf8fc 57%,#a4d5ac 57%,#80bf94)}
+.sun{position:absolute;right:13%;top:9%;width:80px;height:80px;border-radius:100%;background:#ffe6a1;box-shadow:0 0 0 14px #ffe8a14a}.hill{position:absolute;bottom:-100px;width:65%;height:250px;border-radius:55% 55% 0 0;background:#70b992}.hill.one{left:-22%}.hill.two{right:-24%;background:#55a88d}
+.scene svg{position:absolute;inset:0;width:100%;height:100%}.road{fill:none;stroke:#fff2d2;stroke-width:34;stroke-linecap:round}.dashes{fill:none;stroke:#b99a67;stroke-width:3;stroke-dasharray:8 15}
+#avatar{position:absolute;z-index:3;font-size:48px;left:12%;top:78%;transform:translate(-50%,-50%);transition:left .72s ease,top .72s ease;filter:drop-shadow(0 5px 4px #30475f60)}
+#avatar.instant{transition:none}.scenery{position:absolute;font-size:40px;bottom:8%}.scene-tag{position:absolute;top:17px;left:17px;background:#ffffffd9;padding:10px 15px;border-radius:14px;z-index:4;font-size:13px;font-weight:850;color:#394b79}
+#points circle{fill:#ffedac;stroke:#c9a14f;stroke-width:3}#points text{text-anchor:middle;fill:#3b3974;font-size:18px;font-weight:900}
+.bottom{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:24px;padding:26px 30px}.over{color:#6b50b8;text-transform:uppercase;letter-spacing:1.7px;font-weight:900;font-size:12px}
+h1{font-size:clamp(34px,5vw,50px);letter-spacing:-1px;line-height:1.05;margin:8px 0 12px;color:#233968}h2{font-size:clamp(25px,4vw,34px);margin:8px 0 12px;color:#233968}
+p{line-height:1.52;color:#536584}button,input{font:inherit}button{border:0;border-radius:15px;padding:12px 19px;min-height:48px;background:#604eca;color:white;cursor:pointer;font-weight:850}
+button.secondary{background:#eae6fa;color:#40357b}button:focus-visible,input:focus-visible{outline:4px solid #ffd073;outline-offset:3px}
+.big{background:linear-gradient(#ffde91,#f4af51);color:#62401d;border-radius:20px;font-size:23px;padding:19px 29px;box-shadow:0 7px 0 #c78d42;min-height:76px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}.answer{max-width:460px;width:100%;font-size:26px;padding:15px;border:3px solid #bfcef0;border-radius:14px;margin-top:10px}
+.side{background:#f0f3ff;border-radius:20px;padding:18px;align-self:start}.side h3{margin-top:0}.side div{padding:9px 0;border-bottom:1px solid #d8def1}.side strong{display:block;color:#4f4097;font-size:23px}.side small{color:#677994}.side button{width:100%;margin-top:11px;font-size:13px}
+.chunks{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.chunks span{font-size:22px;background:#e6edff;border-radius:11px;padding:9px 14px;font-weight:900}
+.tip{background:#fff6e2;border-radius:14px;border:1px solid #eed9ad;padding:13px;color:#57462d;margin:12px 0}
+.divider-line{display:flex;gap:2px;align-items:center;flex-wrap:wrap}.divider-line span{padding:5px 4px;font-size:19px;font-weight:900;background:#eef2fc}
+.divider-line button{min-width:21px;min-height:36px;padding:3px;background:#e4e1fc;color:#6654ad}.divider-line button.active{background:#6f58ca;color:white}
+.prizes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.prizes button{background:#f2edff;color:#423b86;border:2px solid #d3c9f7;padding:12px}.prizes span{display:block;font-size:38px}
+.note{font-size:12px;color:#61738a}.footer{text-align:center;padding:15px;font-size:12px;color:#677690}
+@media(max-width:700px){.bottom{grid-template-columns:1fr;padding:19px}.side{display:flex;gap:12px;flex-wrap:wrap}.side h3{width:100%}.side button{width:auto}.scene{height:320px}.actions button{flex:1 1 145px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style></head><body>
+<header><a href="/year6.html">✦ Spellmaster</a><small>Playable gameplay concept · The Word Trail</small></header>
+<main><div class="game"><div class="top"><strong>✧ THE WORD TRAIL</strong><span id="round" class="badge">3-word adventure</span><span id="top-coins" class="badge">🪙 0 coins</span></div>
+<div class="scene"><div class="sun"></div><div class="hill one"></div><div class="hill two"></div>
+<span class="scenery" style="left:6%">🌳</span><span class="scenery" style="left:47%;bottom:4%">🌼</span><span class="scenery" style="right:8%">🌲</span>
+<div class="scene-tag" id="scene-title">✦ The Whispering Woods</div>
+<svg viewBox="0 0 900 420" preserveAspectRatio="none" aria-hidden="true"><path class="road" d="M110 330 C154 305 200 285 245 284 S338 160 400 187 S505 300 585 239 S710 113 785 131"/><path class="dashes" d="M110 330 C154 305 200 285 245 284 S338 160 400 187 S505 300 585 239 S710 113 785 131"/><g id="points"></g></svg>
+<div id="avatar" aria-label="Your explorer" role="img">🧑‍🚀</div></div>
+<div class="bottom"><section id="lesson" aria-live="polite"></section>
+<aside class="side"><h3>🎒 Explorer pouch</h3><div><small>Preview coins</small><strong id="coins">0 🪙</strong></div><div><small>Words collected</small><strong id="collected">0 / 3</strong></div><button id="sound" class="secondary">🔊 Voice on</button><button id="restart" class="secondary">↻ Start again</button><p id="audio-status" class="note" role="status"></p></aside>
+</div></div><div class="footer">Experimental game art and reward concept. Words never appear before an independent answer; no long-term mastery is claimed.</div></main>
+<script src="/spelling-feedback.js"></script><script src="/learner-profiles.js"></script><script src="/spelling-chunks-ui.js"></script>
+<script>
+const list=[{word:'foreign',chunks:['for','eign'],tip:'The word ends with E I G N.'},
+{word:'necessary',chunks:['ne','ces','sa','ry'],tip:'One C and two S letters.'},
+{word:'rhythm',chunks:['rhyth','m'],tip:'Rhythm begins with R H and uses Y.'}];
+const $=x=>document.getElementById(x),wait=ms=>new Promise(r=>setTimeout(r,ms));
+let step=0,coins=0,done=0,state='home',enabled=true,active=null,seq=0,custom={},cuts=[],bonusAt=0,bonusScore=0;
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches,profile=SpellmasterProfiles.active(localStorage);
+function status(s){$('audio-status').textContent=s}
+function stop(){seq++;if(active){active.pause();active=null}}
+async function speak(clip){if(!enabled)return false;stop();const mark=seq;status('🔊 Preparing narration…');
+ try{const r=await fetch('https://spellquest-voice-staging.onrender.com/api/voice?voice=marin&clip='+encodeURIComponent(clip));if(!r.ok)throw Error('voice');
+ const url=URL.createObjectURL(await r.blob());if(mark!==seq){URL.revokeObjectURL(url);return false}
+ const a=new Audio(url);active=a;await a.play();status('🔊 Narrator speaking…');
+ return await new Promise(resolve=>{const finish=ok=>{URL.revokeObjectURL(url);if(mark===seq){active=null;status(ok?'':'Audio unavailable. Try replay.')}resolve(ok)};
+ a.onended=()=>finish(true);a.onerror=()=>finish(false)});
+ }catch(e){if(mark===seq)status('Audio could not play. Tap Hear word to replay.');return false}}
+function avatar(x,y,instant=false){const el=$('avatar');if(instant)el.classList.add('instant');el.style.left=x/9+'%';el.style.top=y/4.2+'%';if(instant)requestAnimationFrame(()=>el.classList.remove('instant'))}
+function update(){ $('top-coins').textContent='🪙 '+coins+' coins';$('coins').textContent=coins+' 🪙';$('collected').textContent=done+' / 3';$('round').textContent=state==='bonus'?'Bonus challenge':'Word '+Math.min(step+1,3)+' of 3'}
+function home(){stop();step=0;coins=0;done=0;custom={};state='home';update();avatar(110,330,true);$('points').replaceChildren();
+ $('lesson').innerHTML='<span class="over">Welcome, explorer</span><h1>The Word Trail</h1><p>Hear a word, spell it, then follow a winding path collecting coins for each of your letter groups.</p><div class="actions"><button class="big" id="play">▶ Play now</button><button class="secondary" id="intro">🔊 Meet the teacher</button></div><p class="note">Three word challenges, a short recap and one avatar reward to discover.</p>';
+ $('play').onclick=question;$('intro').onclick=()=>speak('spellmaster-adaptive-welcome-v1');}
+function question(){stop();state='answer';update();avatar(110,330,true);$('points').replaceChildren();$('scene-title').textContent='✦ Your next spelling';
+ $('lesson').innerHTML='<span class="over">Listen and spell</span><h2>Mystery word</h2><p>Listen carefully and spell the word to unlock the path.</p><button id="listen" class="secondary">🔊 Hear word again</button><br><input id="answer" class="answer" aria-label="Spell the mystery word" autocomplete="off" autocapitalize="off" spellcheck="false"><div class="actions"><button id="check">Check spelling</button><button id="leave" class="secondary">Finish</button></div>';
+ $('listen').onclick=()=>speak('y6-'+list[step].word);$('check').onclick=check;$('leave').onclick=finish;$('answer').onkeydown=e=>{if(e.key==='Enter')check()};
+ speak('spellmaster-next-'+list[step].word+'-v1')}
+function groups(){const w=list[step],p=profile&&SpellmasterChunkUI.read(localStorage,profile).preferences[w.word];
+ if(p?.custom&&SpellmasterChunkUI.validCuts(w.word,p.cuts))return SpellmasterChunkUI.groups(w.word,p.cuts);
+ return custom[w.word]||w.chunks;}
+function check(){if(state!=='answer')return;const guess=$('answer').value.toLowerCase().replace(/[^a-z]/g,'');if(!guess)return;
+ if(guess===list[step].word){done++;celebrate()}else help(guess)}
+function help(guess){stop();state='help';const w=list[step],diagnosis=SpellmasterFeedback.diagnose(w.word,guess);
+ $('lesson').innerHTML='<span class="over">A helpful clue</span><h2>Look at the tricky bit</h2><div class="tip" id="hint"></div><div class="chunks" id="chunks"></div><p>Try placing your own dividers between letters:</p><div class="divider-line" id="divider"></div><div class="actions"><button id="again">Try again</button><button class="secondary" id="hear">🔊 Hear the hint</button></div>';
+ $('hint').textContent=diagnosis?.text||w.tip;cuts=SpellmasterChunkUI.fromChunks(w.word,groups());renderDividers();
+ $('hear').onclick=()=>speak(diagnosis?.clip||'y6-tip-'+w.word);$('again').onclick=retry;
+ speak(diagnosis?.clip||'y6-tip-'+w.word)}
+function renderDividers(){const w=list[step],holder=$('divider'),preview=$('chunks');holder.replaceChildren();preview.replaceChildren();
+ for(const s of SpellmasterChunkUI.groups(w.word,cuts)){const x=document.createElement('span');x.textContent=s;preview.append(x)}
+ for(let i=0;i<w.word.length;i++){const letter=document.createElement('span');letter.textContent=w.word[i];holder.append(letter);
+ if(i===w.word.length-1)continue;const pos=i+1,b=document.createElement('button');b.className=cuts.includes(pos)?'active':'';b.textContent=cuts.includes(pos)?'│':'·';b.setAttribute('aria-label','Toggle divider after letter '+pos);
+ b.onclick=()=>{const next=cuts.includes(pos)?cuts.filter(x=>x!==pos):[...cuts,pos].sort((a,b)=>a-b);if(next.length<=4){cuts=next;renderDividers()}};holder.append(b)}
+ const save=document.createElement('button');save.className='secondary';save.textContent='Use my groups';save.onclick=()=>{custom[w.word]=SpellmasterChunkUI.groups(w.word,cuts);
+ if(profile)SpellmasterChunkUI.choice(localStorage,profile,w.word,SpellmasterChunkUI.fromChunks(w.word,w.chunks),cuts,'preview-'+Date.now());
+ status('Your groups are saved for the reward path.')};holder.append(save)}
+function retry(){stop();state='answer';$('lesson').innerHTML='<span class="over">Another try</span><h2>Spell the word</h2><button id="listen" class="secondary">🔊 Hear word</button><br><input id="answer" class="answer" aria-label="Spell the word without hints" autocomplete="off" autocapitalize="off" spellcheck="false"><div class="actions"><button id="check">Check spelling</button></div>';
+ $('listen').onclick=()=>speak('y6-'+list[step].word);$('check').onclick=check;$('answer').onkeydown=e=>{if(e.key==='Enter')check()};speak('y6-'+list[step].word)}
+async function celebrate(){stop();state='path';const w=list[step],parts=groups();coins+=parts.length*3;update();
+ $('scene-title').textContent='🪙 Collected!';$('lesson').innerHTML='<span class="over">Your spelling path</span><h2>Follow your word!</h2><p>Each stop follows your letter grouping in the correct spelling.</p><div class="chunks" id="chunks"></div><div class="tip">🪙 +'+(parts.length*3)+' preview coins</div><div class="actions"><button id="continue">Continue</button></div>';
+ for(const x of parts){const span=document.createElement('span');span.textContent=x;$('chunks').append(span)}
+ $('continue').onclick=advance;const points=[[245,284],[400,187],[585,239],[785,131]];
+ for(let i=0;i<parts.length;i++){if(state!=='path')return;const j=parts.length===1?3:Math.round(i*3/(parts.length-1)),[x,y]=points[j];
+ const g=document.createElementNS('http://www.w3.org/2000/svg','g');g.setAttribute('transform','translate('+x+','+y+')');
+ const circle=document.createElementNS('http://www.w3.org/2000/svg','circle');circle.setAttribute('r','28');g.append(circle);
+ const text=document.createElementNS('http://www.w3.org/2000/svg','text');text.setAttribute('y','6');text.textContent=parts[i];g.append(text);
+ $('points').append(g);avatar(x,y);if(!reduced)await wait(900)}
+ status('Your coins are collected. Continue when ready.')}
+function advance(){stop();step++;if(step>=3)bonusStart();else question()}
+function bonusStart(){state='bonus';update();$('scene-title').textContent='🏆 A quick recap';
+ $('lesson').innerHTML='<span class="over">Bonus round</span><h2>The memory challenge</h2><p>Spell the three words again with no letter clues. Remember them all to choose an avatar reward.</p><div class="actions"><button class="big" id="start">▶ Bonus round</button><button class="secondary" id="skip">Finish</button></div>';
+ $('start').onclick=()=>{bonusAt=0;bonusScore=0;bonusQuestion()};$('skip').onclick=finish}
+function bonusQuestion(){stop();state='bonusAnswer';const w=list[bonusAt];$('scene-title').textContent='Bonus word '+(bonusAt+1);
+ $('lesson').innerHTML='<span class="over">Bonus '+(bonusAt+1)+' / 3</span><h2>Remember the word</h2><button class="secondary" id="listen">🔊 Hear word</button><br><input id="answer" class="answer" aria-label="Bonus spelling" autocomplete="off" autocapitalize="off" spellcheck="false"><div class="actions"><button id="check">Check spelling</button></div>';
+ $('listen').onclick=()=>speak('y6-'+w.word);$('check').onclick=bonusCheck;$('answer').onkeydown=e=>{if(e.key==='Enter')bonusCheck()};
+ const intro=bonusAt===2?'spellmaster-bonus-last-v2':'spellmaster-bonus-word-'+(bonusAt+1)+'-v2';
+ speak(intro).then(ok=>{if(ok&&state==='bonusAnswer')speak('y6-'+w.word)})}
+function bonusCheck(){if(state!=='bonusAnswer')return;const answer=$('answer').value.toLowerCase().replace(/[^a-z]/g,'');if(!answer)return;
+ if(answer===list[bonusAt].word)bonusScore++;bonusAt++;if(bonusAt===3)bonusEnd();else bonusQuestion()}
+function bonusEnd(){stop();state='end';const win=bonusScore===3;coins+=win?25:bonusScore*2;update();
+ $('lesson').innerHTML='<span class="over">Adventure complete</span><h2>'+(win?'Superstar bonus! 🏆':'Great exploring! ✨')+'</h2><p>You remembered '+bonusScore+' of three bonus words.</p><div class="tip">🪙 '+coins+' preview coins earned</div>'+
+ (win?'<p>Choose a free avatar item:</p><div class="prizes" id="prizes"></div>':'')+'<div class="actions"><button id="finish">Finish adventure</button></div>';
+ $('finish').onclick=finish;
+ if(win){for(const [emoji,name] of [['🎩','Explorer hat'],['👓','Star glasses'],['👟','Trail trainers']]){
+  const b=document.createElement('button');b.innerHTML='<span>'+emoji+'</span>'+name;
+  b.onclick=()=>{$('prizes').replaceChildren();$('prizes').textContent=emoji+' '+name+' chosen in this preview!'};$('prizes').append(b)}}
+ speak(win?'spellmaster-bonus-perfect-choice-v2':'spellmaster-bonus-complete-v1')}
+function finish(){stop();state='end';$('lesson').innerHTML='<span class="over">Short gameplay preview</span><h2>Adventure complete</h2><p>You collected '+coins+' preview coins and explored '+done+' words.</p><p>This is a first concept for Spellmaster gameplay. The teaching game and true mastery tracking are kept separate.</p><div class="actions"><button class="big" id="restartGame">↻ Play again</button><button class="secondary" id="teaching">Teaching game</button></div>';
+ $('restartGame').onclick=home;$('teaching').onclick=()=>location.href='/year6.html'}
+$('sound').onclick=()=>{enabled=!enabled;stop();$('sound').textContent=enabled?'🔊 Voice on':'🔇 Voice off'};
+$('restart').onclick=home;home();
+</script></body></html>
