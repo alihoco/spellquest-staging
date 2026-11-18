@@ -10,17 +10,23 @@
  function themeForAge(years){return years<=7?'wonder':years<=11?'explorer':years<=16?'adventure':'focus'}
  function readProfiles(storage){return safeRead(storage,KEY,[]).filter(p=>p&&typeof p.id==='string'&&validBirth(p.birth));}
  function active(storage){const id=storage.getItem(ACTIVE);return readProfiles(storage).find(p=>p.id===id)||null;}
- function add(storage,{alias,birth,theme='auto'}={}){
+ function add(storage,{alias,birth,theme='auto',schoolYear=null}={}){
+  if(schoolYear!==null&&schoolYear!==''&&(!Number.isInteger(schoolYear)||schoolYear<1||schoolYear>6))throw Error('Choose a valid school year');
   if(!validBirth(birth))throw Error('Select a valid birth month and year');
   const name=cleanAlias(alias);if(name.length<2)throw Error('Choose a short nickname (at least two letters)');
   const all=readProfiles(storage);if(all.length>=6)throw Error('This test allows up to six profiles on one device');
   const id='lp-'+Array.from({length:3},()=>Math.random().toString(36).slice(2,10)).join('');
-  const p={id,alias:name,birth,theme:['auto','wonder','explorer','adventure','focus'].includes(theme)?theme:'auto',created:new Date().toISOString()};
+  const p={id,alias:name,birth,theme:['auto','wonder','explorer','adventure','focus'].includes(theme)?theme:'auto',schoolYear:Number.isInteger(schoolYear)?schoolYear:null,created:new Date().toISOString()};
   all.push(p);storage.setItem(KEY,JSON.stringify(all));storage.setItem(ACTIVE,id);return p;
  }
  function choose(storage,id){if(!readProfiles(storage).some(p=>p.id===id))throw Error('Unknown local learner');storage.setItem(ACTIVE,id);return active(storage)}
  function updateTheme(storage,id,theme){if(!['auto','wonder','explorer','adventure','focus'].includes(theme))throw Error('Unknown theme');const all=readProfiles(storage);const p=all.find(x=>x.id===id);if(!p)throw Error('Unknown learner');p.theme=theme;storage.setItem(KEY,JSON.stringify(all));return p;}
- function forget(storage,id){const all=readProfiles(storage);if(!all.some(p=>p.id===id))return;storage.removeItem('spellmaster-staging-intake-v1:'+id);storage.removeItem('spellmaster-local-splitter-v1:'+id);storage.removeItem('spellmaster-bonus-v1:'+id);storage.removeItem('spellmaster-welcome-heard-v1:'+id);storage.setItem(KEY,JSON.stringify(all.filter(p=>p.id!==id)));if(storage.getItem(ACTIVE)===id)storage.removeItem(ACTIVE)}
+ function updateSchoolYear(storage,id,year=null){
+ if(year!==null&&(!Number.isInteger(year)||year<1||year>6))throw Error('Invalid school year');
+ const all=readProfiles(storage),p=all.find(x=>x.id===id);if(!p)throw Error('Unknown learner');
+ p.schoolYear=year;storage.setItem(KEY,JSON.stringify(all));return p;
+}
+function forget(storage,id){const all=readProfiles(storage);if(!all.some(p=>p.id===id))return;storage.removeItem('spellmaster-staging-intake-v1:'+id);storage.removeItem('spellmaster-local-splitter-v1:'+id);storage.removeItem('spellmaster-bonus-v1:'+id);storage.removeItem('spellmaster-welcome-heard-v1:'+id);storage.removeItem('spellmaster-placement-v1:'+id);storage.setItem(KEY,JSON.stringify(all.filter(p=>p.id!==id)));if(storage.getItem(ACTIVE)===id)storage.removeItem(ACTIVE)}
  function historyKey(profile){if(!profile?.id||!/^lp-[a-z0-9]+$/.test(profile.id))throw Error('Local learner profile required');return 'spellmaster-staging-intake-v1:'+profile.id}
  const WORD_PATTERNS={
  necessary:'Single C / double S',embarrass:'Double R / double S',accommodate:'Double C / double M',
@@ -49,5 +55,5 @@
   return {wordsSeen:words.length,attempts:tries,correctAttempts:correct,initialCorrect:first,delayedRetained:retained,dueWords:due,difficulties,
    explanation:'Observations from this browser, not a diagnosis or learning-style label.'};
  }
- return {KEY,ACTIVE,readProfiles,active,add,choose,updateTheme,forget,historyKey,summary,ageInYears,themeForAge,validBirth};
+ return {KEY,ACTIVE,readProfiles,active,add,choose,updateTheme,updateSchoolYear,forget,historyKey,summary,ageInYears,themeForAge,validBirth};
 });
