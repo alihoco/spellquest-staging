@@ -246,13 +246,28 @@ function repaintTeachingGroups(groups){
  const row=app.querySelector('.spelling-row');if(!row)return;
  row.replaceChildren();for(const g of groups){const span=document.createElement('span');span.textContent=g;row.append(span)}
 }
+function replayWordHint(){
+ stop();const t=ticket;return speak(errorFeedbackForCurrent().clip,t);
+}
+function splitterIntroKey(){
+ const p=window.SpellmasterProfiles?.active(localStorage);
+ return p?'spellmaster-splitter-introduction-v1:'+p.id:null;
+}
+function speakSplitterInstructions(){
+ stop();const t=ticket;return speak('spellmaster-chunk-option-v1',t);
+}
+async function introduceSplitterOnce(t){
+ const key=splitterIntroKey();if(!key||localStorage.getItem(key)==='heard'||t!==ticket||!narration)return;
+ const ok=await speak('spellmaster-chunk-option-v1',t);
+ if(ok&&t===ticket)localStorage.setItem(key,'heard');
+}
 function mountPersonalGrouping(target){
  const profile=window.SpellmasterProfiles?.active(localStorage);
  const host=document.querySelector(target);
  const w=WORDS[idx];if(!profile||!host||!w||!window.SpellmasterChunkUI)return;
  const key=runStart+':'+runCount+':'+w.word;
  return window.SpellmasterChunkUI.mount({host,word:w.word,teacherChunks:w.spelling,profile,
-  storage:localStorage,opportunity:key,onNotice:message=>{const t=host.querySelector('.chunk-notice');
+  storage:localStorage,opportunity:key,onSpeakInstruction:speakSplitterInstructions,onNotice:message=>{const t=host.querySelector('.chunk-notice');
     if(t)t.textContent=message;
     repaintTeachingGroups(visualTeachingGroups(w));}});
 }
@@ -274,14 +289,14 @@ async function reviewAudio(){
  if(!(await pause(pace==='extra'?1700:900,t)))return;
  host.innerHTML='<div class="note"><strong>Now look at the correct spelling.</strong></div>'+
  '<div class="spelling-row">'+visualTeachingGroups(w).map(x=>'<span>'+x+'</span>').join('')+'</div>'+
- '<div class="tip"><strong>Notice this part</strong><p>'+errorFeedbackForCurrent().text+'</p></div>';
+ '<div class="tip"><strong>Notice this part</strong><p>'+errorFeedbackForCurrent().text+'</p><button class="alt tiny-action" onclick="replayWordHint()">🔊 Hear this hint</button></div>';
  const feedback=errorFeedbackForCurrent();
- const tip=host.querySelector('.tip');if(tip)tip.innerHTML='<strong>Notice this part</strong><p>'+feedback.text+'</p>';
+ const tip=host.querySelector('.tip');if(tip)tip.innerHTML='<strong>Notice this part</strong><p>'+feedback.text+'</p><button class="alt tiny-action" onclick="replayWordHint()">🔊 Hear this hint</button>';
  mountPersonalGrouping('#review-content');
  ok=await speak(feedback.clip,t);
- if(ok&&t===ticket&&stage==='review'){
-  setStatus('Ready to try spelling again.');
-  await speak('spellmaster-chunk-option-v1',t);
+ if(t===ticket&&stage==='review'){
+  if(ok)setStatus('Ready to try spelling again.');
+  await introduceSplitterOnce(t);
  }
 }
 function shortReview(){
@@ -290,7 +305,7 @@ function shortReview(){
  app.innerHTML='<span class="eyebrow">ONE QUICK REMINDER</span>'+progress()+
  '<h2>Let’s focus on one detail</h2>'+
  '<div class="spelling-row">'+visualTeachingGroups(w).map(x=>'<span>'+x+'</span>').join('')+'</div>'+
- '<p>'+errorFeedbackForCurrent().text+'</p>'+
+ '<p>'+errorFeedbackForCurrent().text+'</p><button class="alt tiny-action" onclick="replayWordHint()">🔊 Hear this hint</button>'+
  soundVoice()+
  '<div class="actions"><button onclick="retry()">🙈 Hide and try once more</button>'+
  '<button class="alt" onclick="next()">Come back to this later</button></div>';
@@ -298,7 +313,7 @@ function shortReview(){
 }
 async function shortReviewAudio(){
  stop();const t=ticket;const ok=await speak(errorFeedbackForCurrent().clip,t);
- if(ok&&t===ticket&&stage==='short-review')await speak('spellmaster-chunk-option-v1',t);
+ if(t===ticket&&stage==='short-review')await introduceSplitterOnce(t);
 }
 function retry(){
  stop();stage='retry';
