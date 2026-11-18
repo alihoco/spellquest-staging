@@ -464,7 +464,11 @@ function startBonusQuestion(){
  voiceSet();if(narration)playBonusWord();
 }
 async function playBonusWord(){
- stop();const t=ticket;await talk(['spellmaster-bonus-question-v1','y6-'+bonusRound.words[bonusPosition]],t);
+ if(!bonusRound||stage!=='bonus-question')return;
+ stop();const t=ticket;
+ const last=bonusPosition===bonusRound.words.length-1;
+ const intro=last?'spellmaster-bonus-last-v2':'spellmaster-bonus-word-'+(bonusPosition+1)+'-v2';
+ await talk([intro,'y6-'+bonusRound.words[bonusPosition]],t);
 }
 function recordBonusRecall(word,correct){
  const profile=LP.active(localStorage);if(!profile)return;
@@ -476,6 +480,7 @@ function recordBonusRecall(word,correct){
  localStorage.setItem(LP.historyKey(profile),JSON.stringify(entries));
 }
 function checkBonusWord(){
+ if(stage!=='bonus-question'||!bonusRound)return;
  const input=$('bonus-answer');if(!input||!input.value.trim())return;
  const word=bonusRound.words[bonusPosition],answer=input.value.toLowerCase().replace(/[^a-z]/g,'');
  const correct=answer===word;bonusAnswers.push(answer);recordBonusRecall(word,correct);
@@ -483,9 +488,27 @@ function checkBonusWord(){
  app.innerHTML='<div class="bonus-card"><span class="bonus-trophy" aria-hidden="true">'+(correct?'✦':'🧩')+'</span>'+
  '<h2>'+(correct?'You remembered it!':'One to revisit')+'</h2>'+
  '<p>'+(correct?'That spelling came from you.':'We can practise that word another day.')+'</p>'+
- soundVoice()+'<div class="actions" style="justify-content:center"><button onclick="advanceBonusWord()">'+
- (bonusPosition+1===bonusRound.words.length?'See my bonus results':'Next bonus word')+'</button></div></div>';
- voiceSet();if(narration)speak(correct?'spellmaster-bonus-right-v1':'spellmaster-bonus-miss-v1');
+ '<p class="small muted" id="bonus-transition-status" role="status">'+
+ (bonusPosition+1===bonusRound.words.length?'Preparing your bonus results…':'Your next bonus word is coming…')+'</p>'+
+ soundVoice()+'<div class="actions" style="justify-content:center"><button class="alt" onclick="advanceBonusWord()" aria-label="Continue bonus round now">'+
+ (bonusPosition+1===bonusRound.words.length?'Show results now':'Continue now')+'</button>'+
+ '<button class="alt" onclick="skipBonusRound()">Finish bonus round later</button></div></div>';
+ voiceSet();if(narration)announceBonusFeedbackThenAdvance(correct);
+ else advanceBonusAfterPause();
+}
+async function announceBonusFeedbackThenAdvance(correct){
+ const t=ticket,position=bonusPosition;
+ const ok=await speak(correct?'spellmaster-bonus-right-v1':'spellmaster-bonus-miss-v1',t);
+ if(t!==ticket||stage!=='bonus-feedback'||bonusPosition!==position)return;
+ // Preserve a moment for encouragement without requiring another click.
+ if(ok){if(!(await pause(550,t)))return}
+ else{setStatus('Voice unavailable. Use Continue now, or try Replay on the next word.');if(!(await pause(1000,t)))return}
+ if(t===ticket&&stage==='bonus-feedback'&&bonusPosition===position)advanceBonusWord();
+}
+async function advanceBonusAfterPause(){
+ const t=ticket,position=bonusPosition;
+ if(!(await pause(1100,t)))return;
+ if(t===ticket&&stage==='bonus-feedback'&&bonusPosition===position)advanceBonusWord();
 }
 function advanceBonusWord(){bonusPosition++;if(bonusPosition>=bonusRound.words.length)finishBonusRound();else startBonusQuestion()}
 function finishBonusRound(){
