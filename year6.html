@@ -133,6 +133,7 @@ button.play-now:active{transform:translateY(4px);box-shadow:0 6px 0 #2b2675}
 <script src="/spelling-feedback.js"></script>
 <script src="/learner-profiles.js"></script>
 <script src="/bonus-round.js"></script>
+<script src="/celebration-feedback.js"></script>
 <script src="/spelling-chunks-ui.js"></script>
 <script>
 const WORDS=[
@@ -259,23 +260,23 @@ function check(retry){
  else{results[idx].attempts++;if(yes)results[idx].learned=true}
  if(yes)success(retry);else review();
 }
+let praiseState=window.SpellmasterPraise.makeState(Math.floor(Math.random()*10)),currentPraise=null;
 function success(improved){
  stop();stage='success';
+ currentPraise=window.SpellmasterPraise.next(praiseState,improved?'after_help':'first');
  app.innerHTML='<span class="eyebrow">SPELLING CHALLENGE '+runCount+'</span>'+progress()+
  '<h2>'+(improved?'You worked it out 🌱':'That spelling came from you ✓')+'</h2>'+
- '<div class="good">'+(improved?'You remembered the spelling after practising.':'You spelled that word independently.')+'</div>'+
- '<p class="small muted" role="status">Moving to your next challenge…</p>'+
+ '<div class="good" role="status">'+currentPraise.text+'</div>'+
+ '<p class="small muted">Moving to your next challenge…</p>'+
  soundVoice()+'<div class="actions"><button class="alt" onclick="next()">Continue now</button>'+
  '<button class="alt" onclick="finish()">Finish for today</button></div>';
  voiceSet();successAudio();
 }
 async function successAudio(){
  stop();const t=ticket;
- if(narration){
-  await talk([results[idx].initial?'spellmaster-right-short-v1':'spellmaster-learned-short-v1'],t);
- }
+ if(narration&&currentPraise)await talk([currentPraise.clip],t);
  if(t!==ticket||stage!=='success')return;
- // A short recognition is enough; the next question announces its own complete word.
+ // Brief authentic praise, without requiring a second click.
  if(!(await pause(650,t)))return;
  if(t===ticket&&stage==='success')next();
 }
@@ -441,6 +442,7 @@ function adaptiveStartWord(){
 }
 begin=function(){
  runCount=0;runStart=Date.now();runFirst=0;runNew=0;runSeen=new Set();runResults=[];runReview=false;
+ praiseState=window.SpellmasterPraise.makeState(Math.floor(Math.random()*10));currentPraise=null;
  bonusReviewedThrough=0;bonusRound=null;bonusPosition=0;bonusAnswers=[];bonusRoundId=null;
  idx=0;first=0;results=[];narration=true;
  localStorage.setItem('spellquest-audio-first','on');
