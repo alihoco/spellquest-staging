@@ -46,3 +46,14 @@ Randomise/counterbalance comparable words and session structures as allowed by e
 
 ## Release constraints
 Before building rewards UI, implement reliable persistence of word state, due dates, first-attempt correctness, assistance and mastery evidence. Separate *Word Vault story state* from *actual educational mastery state*. No claims of validated optimal dosage yet.
+
+
+## Staging no-lockout refinement — 18 November 2026
+
+The earlier 3-new-words/week and 5–8-minute figures are **optional starting recommendations**, not access limits or established scientific optima. User-approved product policy: **no hard cap on the number of word challenges** a learner may voluntarily undertake. Provide a non-coercive break/finish choice around eight minutes and periodically thereafter, rather than ending sessions at twelve minutes.
+
+The ten-word UK Year 5–6 staging pilot is **not an approved open-ended word library**. When all ten have been attempted, the game must **continue through varied practice of previously taught words** (or an appropriate due review), not stop or display a locked account. Fresh approved teaching words can be added later after linguistic/audio signoff. Do not misrepresent re-presented words as previously unseen.
+
+Current `mixed-word-selection.js` uses a provisional 2 new / 1 old practice rhythm when fresh items exist, prioritises actual due reviews first, avoids adjacent repeats where possible, and rotates across the existing reviewed pilot pool. No same-session repetition may increase delayed independent mastery or reset a future review due date merely for being correct. Real delayed recall on a subsequent day remains the retention metric.
+
+The long audio introduction is now played only for a newly created learner who has no saved attempts and has not previously completed the introduction. Existing profiles are grandfathered into the familiar short flow; the introduction can still be requested manually. This is browser-local staging behaviour, not secure cross-device account state.
