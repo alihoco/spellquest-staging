@@ -34,7 +34,7 @@ function forget(storage,id){const all=readProfiles(storage);if(!all.some(p=>p.id
  familiar:'Middle vowel',privilege:'Middle vowel',rhythm:'Silent letter pattern',temperature:'Unstressed vowel'
  };
  function summary(progress,today=new Date().toISOString().slice(0,10)){
-  const words=Object.entries(progress||{}).filter(([w,v])=>WORD_PATTERNS[w]&&v&&Array.isArray(v.events));
+  const words=Object.entries(progress||{}).filter(([w,v])=>/^[a-z]+$/.test(w)&&v&&Array.isArray(v.events));
   let tries=0,correct=0,first=0,due=0,retained=0;const issues={};
   for(const [word,v] of words){
    const attempts=v.events.filter(x=>x&&typeof x.correct==='boolean');
