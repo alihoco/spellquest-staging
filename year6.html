@@ -102,6 +102,11 @@ button.play-now:active{transform:translateY(4px);box-shadow:0 6px 0 #2b2675}
 .chunk-preview{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0 16px}
 .chunk-preview span{background:#e6e3ff;border:1px solid #c9c1f2;padding:8px 13px;border-radius:10px;font-size:20px;font-weight:750}
 @media(max-width:500px){.chunk-workshop{padding:12px}.chunk-letters{justify-content:flex-start}.chunk-letter{min-width:19px;padding:9px 0}.chunk-boundary{width:19px;min-width:19px}}
+</style><style>
+.word-group-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:16px 0}
+.word-group-row .spelling-row{margin:0;flex:1 1 auto}
+.word-group-change{flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;min-height:46px;white-space:normal;text-align:center}
+@media(max-width:500px){.word-group-row{align-items:stretch;gap:12px}.word-group-change{width:100%;justify-content:center}}
 </style></head>
 <body><main><header><a class="logo" href="/">✨ Spellmaster</a><span class="muted small">Better today than yesterday</span></header>
 <section class="hero"><span class="eyebrow">YOUR OWN SPELLING ADVENTURE</span><h1>Discover words. Build confidence.</h1><p>Little challenges, a patient voice, and a teacher that remembers what helps you learn.</p></section>
@@ -261,6 +266,12 @@ async function introduceSplitterOnce(t){
  const ok=await speak('spellmaster-chunk-option-v1',t);
  if(ok&&t===ticket)localStorage.setItem(key,'heard');
 }
+function openWordGrouping(){
+ const control=app.querySelector('.chunk-workshop .chunk-open');
+ if(control){control.click();return}
+ const status=$('audio-status');
+ if(status)status.textContent='The word grouping tool will appear with the spelling.';
+}
 function mountPersonalGrouping(target){
  const profile=window.SpellmasterProfiles?.active(localStorage);
  const host=document.querySelector(target);
@@ -288,7 +299,8 @@ async function reviewAudio(){
  let ok=await speak('y6-'+w.word,t);if(!ok)return;
  if(!(await pause(pace==='extra'?1700:900,t)))return;
  host.innerHTML='<div class="note"><strong>Now look at the correct spelling.</strong></div>'+
- '<div class="spelling-row">'+visualTeachingGroups(w).map(x=>'<span>'+x+'</span>').join('')+'</div>'+
+ '<div class="word-group-row"><div class="spelling-row">'+visualTeachingGroups(w).map(x=>'<span>'+x+'</span>').join('')+'</div>'+ 
+ '<button type="button" class="alt word-group-change" onclick="openWordGrouping()">✦ Make my own groups</button></div>'+
  '<div class="tip"><strong>Notice this part</strong><p>'+errorFeedbackForCurrent().text+'</p><button class="alt tiny-action" onclick="replayWordHint()">🔊 Hear this hint</button></div>';
  const feedback=errorFeedbackForCurrent();
  const tip=host.querySelector('.tip');if(tip)tip.innerHTML='<strong>Notice this part</strong><p>'+feedback.text+'</p><button class="alt tiny-action" onclick="replayWordHint()">🔊 Hear this hint</button>';
@@ -304,7 +316,8 @@ function shortReview(){
  // Brief focused revision after a SECOND unsuccessful attempt.
  app.innerHTML='<span class="eyebrow">ONE QUICK REMINDER</span>'+progress()+
  '<h2>Let’s focus on one detail</h2>'+
- '<div class="spelling-row">'+visualTeachingGroups(w).map(x=>'<span>'+x+'</span>').join('')+'</div>'+
+ '<div class="word-group-row"><div class="spelling-row">'+visualTeachingGroups(w).map(x=>'<span>'+x+'</span>').join('')+'</div>'+ 
+ '<button type="button" class="alt word-group-change" onclick="openWordGrouping()">✦ Make my own groups</button></div>'+
  '<p>'+errorFeedbackForCurrent().text+'</p><button class="alt tiny-action" onclick="replayWordHint()">🔊 Hear this hint</button>'+
  soundVoice()+
  '<div class="actions"><button onclick="retry()">🙈 Hide and try once more</button>'+
