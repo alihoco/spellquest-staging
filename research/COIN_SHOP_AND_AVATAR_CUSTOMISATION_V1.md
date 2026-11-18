@@ -52,3 +52,8 @@ A shopper may change the avatar's look and scenery while keeping its personal Wo
 - Apply privacy safeguards and guardian controls; all child data processing requires the appropriate legal/privacy assessment.
 
 **Release gate:** No real currency; no influence on mastery; secure profile ownership; high privacy defaults; accessible shop; clear purchase undo; ethical learning and engagement review.
+
+
+## Bonus-round free avatar choice
+
+A perfect Bonus Round unlocks **one item of the learner's choice**, not a fixed hat. Initial staging selections: hats, glasses, trainers, coats, trousers, dresses and hair appearances. The item is chosen without spending coins and retained in the pseudonymous tester profile. Unclaimed items remain available to select later; earning, choosing and equipping are separate states. The current selection screen is a prototype; the graphical dressing room is not yet implemented. Do not infer preferred clothes from gender or assign child-specific fashions rigidly by age.
