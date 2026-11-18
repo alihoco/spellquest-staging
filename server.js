@@ -144,6 +144,12 @@ CLIPS['y6-review-first-instruction']='Let us look at the correct written spellin
 // Only fixed, reviewed-draft feedback strings are ever eligible for TTS. No free-form user attempt is spoken.
 Object.assign(CLIPS,require('./spelling-feedback.js').audioClips());
 CLIPS['spellmaster-chunk-option-v1']='You can make your own letter groups if you like. Click between letters or drag a divider to group the word in a way that helps you remember it.';
+CLIPS['spellmaster-bonus-welcome-v1']='Bonus round! Let us see which words you remember from this adventure. I will say each word. Spell it without hints, just like before. You can take your time.';
+CLIPS['spellmaster-bonus-question-v1']='Here is your bonus word.';
+CLIPS['spellmaster-bonus-next-v1']='On to the next bonus word.';
+CLIPS['spellmaster-bonus-perfect-v1']='A brilliant bonus round! You remembered every word independently. You have earned super bonus coins and a Star Explorer hat for your avatar!';
+CLIPS['spellmaster-bonus-complete-v1']='Bonus round complete. You have earned coins for the words you remembered. We will practise the others again soon.';
+CLIPS['spellmaster-bonus-end-v1']='That was a good recap. You can return to your adventure or finish for today.';
 const cache=new Map(),limits=new Map();let daily={day:'',count:0};
 function send(res,code,obj,headers={}){res.writeHead(code,{'Content-Type':'application/json','Cache-Control':'no-store',...headers});res.end(JSON.stringify(obj))}
 http.createServer(async(req,res)=>{
