@@ -118,6 +118,13 @@ button.play-now:active{transform:translateY(4px);box-shadow:0 6px 0 #2b2675}
 .bonus-perfect{box-shadow:0 0 0 3px #e4b963,0 15px 40px #9b72ed2b}
 .bonus-hat{background:#fff1c4;padding:14px;border-radius:14px;margin:10px 0}
 @media(prefers-reduced-motion:no-preference){.bonus-perfect .bonus-trophy{animation:bonus-pop .6s ease-out}@keyframes bonus-pop{0%{transform:scale(.5)}70%{transform:scale(1.13)}100%{transform:scale(1)}}}
+</style><style>
+.avatar-choice-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:12px;margin:18px 0}
+.avatar-choice-item{min-height:120px;background:#fff;color:#3a3371;border:2px solid #dcd3f0;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:13px}
+.avatar-choice-item:hover,.avatar-choice-item:focus-visible{border-color:#6554d2;background:#f3eefe}
+.avatar-choice-item .item-icon{font-size:40px}
+.avatar-choice-item .item-title{font-size:13px;font-weight:750}
+@media(max-width:460px){.avatar-choice-grid{grid-template-columns:repeat(2,1fr)}}
 </style></head>
 <body><main><header><a class="logo" href="/">✨ Spellmaster</a><span class="muted small">Better today than yesterday</span></header>
 <section class="hero"><span class="eyebrow">YOUR OWN SPELLING ADVENTURE</span><h1>Discover words. Build confidence.</h1><p>Little challenges, a patient voice, and a teacher that remembers what helps you learn.</p></section>
@@ -521,13 +528,45 @@ function finishBonusRound(){
  '<span class="eyebrow">BONUS ROUND COMPLETE</span><h2 class="bonus-title">'+(outcome.perfect?'Superstar bonus!':'Adventure progress!')+'</h2>'+
  '<p>'+rewardText+'</p><div class="bonus-currency">🪙 +'+outcome.coins+' bonus coins</div>'+ 
  '<div class="bonus-currency">✦ +'+outcome.bonusPoints+' bonus points</div>'+
- (outcome.perfect?'<div class="bonus-hat"><strong>🎩 Star Explorer Hat unlocked!</strong><p class="small">A cosmetic reward for completing this bonus round. It is not a long-term mastery badge.</p></div>':'<p>Every word has another chance to be remembered later.</p>')+
+ (outcome.perfect?'<div class="bonus-hat"><strong>✨ Choose an avatar reward!</strong><p class="small">You earned one free cosmetic item of your choice. It is not a long-term mastery badge.</p></div>':'<p>Every word has another chance to be remembered later.</p>')+
  '<p class="small muted">These coins and your hat stay with this browser’s learner profile. A separate review on another day checks lasting memory.</p>'+
  (reward?'<p class="small">Your coin total: '+reward.coins+' · Bonus points: '+reward.bonusPoints+'</p>':'')+
  soundVoice()+'<div class="actions" style="justify-content:center"><button onclick="nextAfterBonus()">Continue adventure</button>'+
  '<button class="alt" onclick="finish()">Finish for today</button></div></div>';
- voiceSet();if(narration)speak(outcome.perfect?'spellmaster-bonus-perfect-v1':'spellmaster-bonus-complete-v1');
+ voiceSet();
+ if(outcome.perfect&&profile&&reward){
+   const claimRow=reward.rounds.find(x=>x.id===bonusRoundId);
+   if(claimRow?.avatarChoice==='pending')showAvatarRewardChoice(profile,bonusRoundId);
+ }
+ if(narration)speak(outcome.perfect?'spellmaster-bonus-perfect-choice-v2':'spellmaster-bonus-complete-v1');
  bonusRound=null;
+}
+function showAvatarRewardChoice(profile,roundId){
+ const area=document.createElement('div');area.className='bonus-card';
+ area.id='avatar-reward-choice';area.innerHTML='<h3>Choose your superstar avatar item</h3>'+
+ '<p>Pick one reward. You can change how your avatar looks later when the dressing room is built.</p>'+
+ '<div class="avatar-choice-grid"></div><p class="small muted" role="status" id="avatar-choice-message"></p>';
+ const grid=area.querySelector('.avatar-choice-grid');
+ const items=window.SpellmasterBonus.availableChoices(localStorage,profile);
+ if(!items.length){area.innerHTML='<p>All current avatar items collected! More rewards will be added.</p>';
+   const continuation=app.querySelector('.actions');if(continuation)continuation.before(area);else app.append(area);return;}
+ for(const item of items){
+   const b=document.createElement('button');b.type='button';b.className='avatar-choice-item';
+   const icon=document.createElement('span');icon.className='item-icon';icon.textContent=item.icon;
+   const label=document.createElement('span');label.className='item-title';label.textContent=item.name;
+   b.append(icon,label);
+   b.addEventListener('click',()=>{
+     try{
+       const result=window.SpellmasterBonus.chooseAvatarReward(localStorage,profile,roundId,item.id);
+       if(result.alreadyClaimed)return;
+       area.innerHTML='<div class="bonus-hat"><strong>'+item.icon+' '+item.name+' is yours!</strong>'+
+       '<p>This item is now in your avatar collection. No coins were spent.</p></div>';
+     }catch(err){const status=area.querySelector('#avatar-choice-message');if(status)status.textContent='Please choose a different item.';}
+   });
+   grid.append(b);
+ }
+ const continuation=app.querySelector('.actions');
+ if(continuation)continuation.before(area);else app.append(area);
 }
 function nextAfterBonus(){
  stop();const elapsed=(Date.now()-runStart)/60000,upcoming=adaptiveSelect();
@@ -584,12 +623,22 @@ function deleteLocalProfile(){
  if(!confirm('Delete this tester profile and its locally saved spelling history from this device?'))return;
  LP.forget(localStorage,p.id);renderLanding();
 }
+function claimPendingAvatarItem(){
+ const p=LP.active(localStorage),due=p?window.SpellmasterBonus.pendingRewards(localStorage,p):[];
+ if(!p||!due.length)return;
+ stop();stage='avatar-reward';
+ app.innerHTML='<div class="bonus-card"><h2>Your earned avatar reward</h2>'+
+ '<p>You can choose any of the items below. Your coins and spelling progress are unchanged.</p>'+
+ '<div class="actions"><button class="alt" onclick="renderLanding()">Back to adventure</button></div></div>';
+ showAvatarRewardChoice(p,due[0]);
+}
 function renderLanding(){
  stop();stage='welcome';
  const people=LP.readProfiles(localStorage),p=LP.active(localStorage);
  document.body.dataset.theme=p?currentTheme(p):'explorer';
  const progress=p?LP.summary(adaptiveLoad(),adaptiveToday()):null;
  const bonuses=p&&window.SpellmasterBonus?window.SpellmasterBonus.read(localStorage,p):null;
+ const unclaimed=p&&window.SpellmasterBonus?window.SpellmasterBonus.pendingRewards(localStorage,p):[];
  const splitter=p&&window.SpellmasterChunkUI?window.SpellmasterChunkUI.summary(window.SpellmasterChunkUI.read(localStorage,p)):null;
  const cards=people.map(x=>'<button class="profile-choice '+(p&&p.id===x.id?'selected':'')+
  '" onclick="chooseLocalProfile(\''+x.id+'\')"><span>✦ '+htmlSafe(x.alias)+'</span><small>'+
@@ -606,7 +655,9 @@ function renderLanding(){
  '<div class="stat"><strong>'+progress.initialCorrect+'</strong><small>Known first try</small></div>'+
  '<div class="stat"><strong>'+progress.dueWords+'</strong><small>Ready to revisit</small></div></div>'+
  '<span class="label-chip">'+(progress.delayedRetained?'Some words recalled later':'Your memory journey begins here')+'</span>'+
- (bonuses&&bonuses.rounds.length?'<div class="bonus-currency">🪙 '+bonuses.coins+' coins · ✦ '+bonuses.bonusPoints+' bonus points</div>'+ (bonuses.hats.includes('star-explorer-hat')?'<div class="label-chip">🎩 Star Explorer Hat earned</div>':''):'')+
+ (bonuses&&bonuses.rounds.length?'<div class="bonus-currency">🪙 '+bonuses.coins+' coins · ✦ '+bonuses.bonusPoints+' bonus points</div>'+
+ (bonuses.inventory.length?'<div class="label-chip">✨ '+bonuses.inventory.length+' avatar item'+(bonuses.inventory.length===1?'':'s')+' collected</div>':'')+
+ (unclaimed.length?'<p class="note">You have '+unclaimed.length+' unclaimed avatar reward'+(unclaimed.length===1?'':'s')+'.</p><button class="alt" onclick="claimPendingAvatarItem()">Choose my reward</button>':''):'')+
  (progress.difficulties.length?'<h3 style="margin-bottom:6px">What we are practising</h3>'+
  progress.difficulties.map(item=>'<div class="difficulty-pill">'+htmlSafe(item.pattern)+
  ' · '+item.misses+' practice opportunit'+(item.misses===1?'y':'ies')+'</div>').join(''):'')+
