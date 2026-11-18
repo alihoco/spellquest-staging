@@ -379,8 +379,10 @@ function review(){
 async function reviewAudio(){
  stop();stage='review';const t=ticket,w=WORDS[idx],host=$('review-content');if(!host)return;
  host.innerHTML='<div class="note"><strong>First, hear the complete word.</strong><p>You can say it aloud if you like.</p></div>';
- let ok=await speak(wordAudioClip(w),t);if(!ok)return;
- if(!(await pause(pace==='extra'?1700:900,t)))return;
+ let ok=await speak(wordAudioClip(w),t);
+ if(t!==ticket)return;
+ if(!ok)setStatus('The word narration was unavailable. You can still review the correct spelling below and replay the lesson.');
+ if(ok&&!(await pause(pace==='extra'?1700:900,t)))return;
  host.innerHTML='<div class="note"><strong>Now look at the correct spelling.</strong></div>'+
  '<div class="word-group-row"><div class="spelling-row">'+visualTeachingGroups(w).map(x=>'<span>'+x+'</span>').join('')+'</div>'+ 
  '<button type="button" class="alt word-group-change" onclick="openWordGrouping()">✦ Make my own groups</button></div>'+
@@ -446,7 +448,7 @@ let lastErrorFeedback=null;
 function errorFeedbackForCurrent(){
  const w=WORDS[idx];
  if(w?.id&&!PILOT_BY_WORD[w.word])return {clip:'spellmaster-catalogue-help-v1',
-  text:'Look carefully at the correct spelling. Notice the order of the letters. You can choose visual groups that help you remember it. This word is awaiting a reviewed, word-specific explanation.'};
+  text:'Look carefully at the correct spelling. Notice the order of the letters. You can make your own letter groups to help you remember it, then hide the word and try again.'};
  return lastErrorFeedback||{clip:'spellmaster-error-generic-middle',text:'Look at the middle of the correct word. Then have another go.'};
 }
 function adaptiveToday(){const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}
