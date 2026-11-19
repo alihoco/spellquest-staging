@@ -17,7 +17,22 @@
   const all=readProfiles(storage);if(all.length>=6)throw Error('This test allows up to six profiles on one device');
   const id='lp-'+Array.from({length:3},()=>Math.random().toString(36).slice(2,10)).join('');
   const p={id,alias:name,birth:validBirth(birth)?birth:null,ageYears:Number.isInteger(ageYears)?ageYears:null,theme:['auto','wonder','explorer','adventure','focus'].includes(theme)?theme:'auto',schoolYear:Number.isInteger(schoolYear)?schoolYear:null,created:new Date().toISOString()};
-  all.push(p);storage.setItem(KEY,JSON.stringify(all));storage.setItem(ACTIVE,id);return p;
+  all.push(p);storage.setItem(KEY,JSON.stringify(all));storage.setItem(ACTIVE,id);
+  // Only transfer an earlier guest diagnostic if this is the FIRST profile on
+  // this browser: never guess which sibling an unassigned assessment belongs to.
+  if(all.length===1){
+   try{
+    const raw=storage.getItem('spellmaster-starting-assessment-v1:guest');
+    const previous=raw?JSON.parse(raw):null;
+    if(previous&&Array.isArray(previous.responses)&&previous.responses.length===10&&
+       previous.placement&&['year1','year2','year3_4','year5_6'].includes(previous.placement.currentBand)){
+     storage.setItem('spellmaster-starting-assessment-v1:'+id,JSON.stringify({...previous,transferredFromGuest:true}));
+     storage.setItem('spellmaster-placement-v1:'+id,JSON.stringify(previous.placement));
+     storage.removeItem('spellmaster-starting-assessment-v1:guest');
+    }
+   }catch{}
+  }
+  return p;
  }
  function choose(storage,id){if(!readProfiles(storage).some(p=>p.id===id))throw Error('Unknown local learner');storage.setItem(ACTIVE,id);return active(storage)}
  function updateTheme(storage,id,theme){if(!['auto','wonder','explorer','adventure','focus'].includes(theme))throw Error('Unknown theme');const all=readProfiles(storage);const p=all.find(x=>x.id===id);if(!p)throw Error('Unknown learner');p.theme=theme;storage.setItem(KEY,JSON.stringify(all));return p;}
@@ -26,7 +41,7 @@
  const all=readProfiles(storage),p=all.find(x=>x.id===id);if(!p)throw Error('Unknown learner');
  p.schoolYear=year;storage.setItem(KEY,JSON.stringify(all));return p;
 }
-function forget(storage,id){const all=readProfiles(storage);if(!all.some(p=>p.id===id))return;storage.removeItem('spellmaster-staging-intake-v1:'+id);storage.removeItem('spellmaster-local-splitter-v1:'+id);storage.removeItem('spellmaster-bonus-v1:'+id);storage.removeItem('spellmaster-welcome-heard-v1:'+id);storage.removeItem('spellmaster-placement-v1:'+id);storage.setItem(KEY,JSON.stringify(all.filter(p=>p.id!==id)));if(storage.getItem(ACTIVE)===id)storage.removeItem(ACTIVE)}
+function forget(storage,id){const all=readProfiles(storage);if(!all.some(p=>p.id===id))return;storage.removeItem('spellmaster-staging-intake-v1:'+id);storage.removeItem('spellmaster-starting-assessment-v1:'+id);storage.removeItem('spellmaster-local-splitter-v1:'+id);storage.removeItem('spellmaster-bonus-v1:'+id);storage.removeItem('spellmaster-welcome-heard-v1:'+id);storage.removeItem('spellmaster-placement-v1:'+id);storage.setItem(KEY,JSON.stringify(all.filter(p=>p.id!==id)));if(storage.getItem(ACTIVE)===id)storage.removeItem(ACTIVE)}
  function historyKey(profile){if(!profile?.id||!/^lp-[a-z0-9]+$/.test(profile.id))throw Error('Local learner profile required');return 'spellmaster-staging-intake-v1:'+profile.id}
  const WORD_PATTERNS={
  necessary:'Single C / double S',embarrass:'Double R / double S',accommodate:'Double C / double M',
