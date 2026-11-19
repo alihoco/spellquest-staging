@@ -139,7 +139,7 @@ button.play-now:active{transform:translateY(4px);box-shadow:0 6px 0 #2b2675}
 <script src="/learner-profiles.js"></script><script src="/account-client.js?v=1"></script><script src="/cloud-learning.js?v=1"></script>
 <script src="/bonus-round.js"></script>
 <script src="/celebration-feedback.js"></script>
-<script src="/mixed-word-selection.js"></script>
+<script src="/mixed-word-selection.js"></script><script src="/retention-checkpoints.js?v=1"></script>
 <script src="/adaptive-curriculum.js"></script>
 <script src="/spelling-chunks-ui.js"></script><script src="/grouping-measurement.js?v=1"></script>
 <script>
@@ -497,15 +497,32 @@ function adaptiveDatePlus(date,n){const d=new Date(date+'T12:00:00Z');d.setUTCDa
 function adaptiveLoad(){try{const profile=window.SpellmasterProfiles?.active(spellStorage);if(!profile)return {};return JSON.parse(spellStorage.getItem(window.SpellmasterProfiles.historyKey(profile))||'{}')}catch(e){return {}}}
 function adaptiveSave(word,ok,fromReview,afterHelp,errorCategory=null){
  const all=adaptiveLoad(),entry=all[word]||{events:[],retained:0};
+ const today=adaptiveToday(),checkpoints=window.SpellmasterCheckpoints;
  if(fromReview&&ok&&!afterHelp)entry.retained++;
- entry.events.push({date:adaptiveToday(),correct:ok,mode:'independent_keyboard',afterHelp:!!afterHelp,
+ let checkpoint=null;
+ if(checkpoints){
+  checkpoints.initialise(entry,today);
+  if(fromReview&&!afterHelp){
+   const result=checkpoints.observe(entry,today,ok,{independent:true,assisted:false});
+   checkpoint=result.checkpoint;
+  }
+ }
+ entry.events.push({date:today,correct:ok,mode:'independent_keyboard',afterHelp:!!afterHelp,
   review:!!fromReview,phase:runKind==='practice'?'same_session_practice':fromReview?'delayed_due':'new_word',
+  checkpointId:checkpoint?.id||null,checkpointOnTime:checkpoint?.withinWindow??null,
   error_category:ok?null:errorCategory});
- // Repeated same-session practice cannot increase retained mastery or defer a future due date.
+ const nextCheckpoint=checkpoints?.nextDue(entry,today)||null;
+ // A failed word may be revisited tomorrow; this never fabricates a missed
+ // 7/28 day assessment or calls assisted success retained mastery.
+ const recovery=ok?null:adaptiveDatePlus(today,1);
  if(!(runKind==='practice'&&ok&&typeof entry.next==='string'))
-  entry.next=adaptiveDatePlus(adaptiveToday(),ok?(entry.retained>=2?14:entry.retained?3:1):1);
+  entry.next=nextCheckpoint&&recovery?(nextCheckpoint<recovery?nextCheckpoint:recovery):
+   nextCheckpoint||recovery||adaptiveDatePlus(today,14);
  entry.vault=ok?(entry.retained?'protected':'collected'):'recovery_quest';
- all[word]=entry;const profile=window.SpellmasterProfiles?.active(spellStorage);if(profile)spellStorage.setItem(window.SpellmasterProfiles.historyKey(profile),JSON.stringify(all));
+ all[word]=entry;
+ const profile=window.SpellmasterProfiles?.active(spellStorage);
+ if(profile)spellStorage.setItem(window.SpellmasterProfiles.historyKey(profile),JSON.stringify(all));
+ return checkpoint;
 }
 function currentPlacement(){
  const p=window.SpellmasterProfiles?.active(spellStorage);
@@ -576,7 +593,7 @@ check=function(retry){
   results[idx]={word,initial:ok,learned:ok,attempts:1};
   runResults.push({word,initial:ok,learned:ok,review:runReview,kind:runKind});
   if(ok){first++;runFirst++}
-  adaptiveSave(word,ok,runReview,false,ok?null:lastErrorFeedback?.id);
+  const retentionObservation=adaptiveSave(word,ok,runReview,false,ok?null:lastErrorFeedback?.id);
   if(curriculumLoaded&&(runKind==='new'||runKind==='due')){
    const profile=window.SpellmasterProfiles?.active(spellStorage);
    if(profile)window.SpellmasterCurriculum.recordIndependent(spellStorage,profile,
@@ -597,7 +614,8 @@ check=function(retry){
    correct:ok,afterHelp:!!retry,kind:runKind,review:!!runReview
   }):null;
   window.SpellmasterAccount.saveEvent('spelling_attempt',{word,correct:ok,review:!!runReview,afterHelp:!!retry,
-   band:WORDS[idx]?.band||null,at:new Date().toISOString(),grouping}).catch(()=>{});
+   band:WORDS[idx]?.band||null,at:new Date().toISOString(),grouping,
+   retentionCheckpoint:!retry&&runReview?window.SpellmasterCheckpoints?.due(adaptiveLoad()[word],adaptiveToday())?.id||null:null}).catch(()=>{});
  }
  if(ok){runSeen.add(word);success(retry)}else if(retry){shortReview()}else{review()}
 };
