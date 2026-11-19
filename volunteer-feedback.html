@@ -4,4 +4,4 @@ document.getElementById('copy').onclick=async()=>{
  const report=['Spellmaster voluntary tester feedback','Device: '+val('device'),'Area: '+val('flow'),'Spoken guidance: '+val('audio'),'Ease of use: '+val('ease'),'What worked: '+val('liked'),'Difficulties: '+val('hard'),'Suggestions: '+val('ideas')].join('\n');
  try{await navigator.clipboard.writeText(report);document.getElementById('feedback-status').textContent='Copied! You can now paste this feedback into a message to your volunteer coordinator.';}catch{document.getElementById('feedback-status').textContent='Clipboard unavailable; select and copy your responses manually.';}
 };
-</script></body></html>
+</script><script src="/spellmaster-reader.js?v=1"></script></body></html>
