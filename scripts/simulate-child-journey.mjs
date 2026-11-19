@@ -35,7 +35,7 @@ try{
  await page.goto(origin+'/starting-assessment.html',{waitUntil:'domcontentloaded',timeout:45000});
  await capture(page,'01-assessment-welcome-mobile');
  data.assessment.push({step:'welcome',text:await page.locator('#welcome').innerText()});
- await page.locator('#welcome button').click();
+ await page.locator('#welcome > button').click();
  await capture(page,'02-assessment-question-mobile');
  const inputs=['sed','come','nite','becos','enuf','faverit','nesesary','enviroment','rithm','acomodate'];
  for(let i=0;i<inputs.length;i++){
