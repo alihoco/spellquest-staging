@@ -54,6 +54,7 @@ try{
  await page.goto(origin+'/year6.html',{waitUntil:'domcontentloaded',timeout:45000});
  await page.waitForTimeout(1500);
  await capture(page,'04-adventure-entry-mobile');
+ data.game.guestProfileTop=await page.locator('#new-alias').evaluate(el=>Math.round(el.getBoundingClientRect().top)).catch(()=>null);
  const name=page.locator('#new-alias');
  if(await name.count()){
   await name.fill('Star Explorer');
@@ -61,6 +62,7 @@ try{
   await page.getByRole('button',{name:/Create tester profile/}).click();
   await page.waitForTimeout(600);
   await capture(page,'05-adventure-age-nine-home-mobile');
+  data.game.quickStartTop=await page.locator('#app button.quick-play').evaluate(el=>Math.round(el.getBoundingClientRect().top)).catch(()=>null);
   data.game.transferredGuestBaseline=await page.evaluate(()=>{const p=SpellmasterProfiles.active(localStorage);const r=localStorage.getItem('spellmaster-starting-assessment-v1:'+p?.id);return r?JSON.parse(r).transferredFromGuest===true:false});
   const start=page.getByRole('button',{name:/Start|Begin|Continue|Play|Adventure/}).filter({visible:true});
   data.game.startButtonTexts=await start.allTextContents();
@@ -123,6 +125,8 @@ try{
  await capture(page,'11-family-adult-step-mobile');
  data.game.familyStep2Visible=await page.locator('#family-step2').isVisible();
  if(data.game.wordInputPosition&&data.game.wordInputPosition.top>650)throw Error('Mobile spelling input still appears too far below the fold');
+ if(data.game.guestProfileTop!==null&&data.game.guestProfileTop>800)throw Error('Guest profile creation still requires excessive scrolling');
+ if(data.game.quickStartTop!==null&&data.game.quickStartTop>750)throw Error('First Play control is too low on mobile');
  if(!data.game.transferredGuestBaseline)throw Error('Guest diagnostic did not transfer to the new local profile');
  if(!data.game.familyStep2Visible)throw Error('Adult family signup step is not available');
  data.narration={browserRequestsMocked:true,notAudioQualityVerified:true};
