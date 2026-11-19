@@ -40,9 +40,10 @@ try{
  await capture(page,'02-assessment-question-mobile');
  const inputs=['sed','come','nite','becos','enuf','faverit','nesesary','enviroment','rithm','acomodate'];
  for(let i=0;i<inputs.length;i++){
+  const actual=await page.evaluate(()=>typeof current==='object'&&current?current.word:null);
   await page.locator('#answer').fill(inputs[i]);
   const visible=await page.locator('#count').innerText();
-  data.assessment.push({number:i+1,display:visible,entered:inputs[i],spellcheck:await page.locator('#answer').getAttribute('spellcheck')});
+  data.assessment.push({number:i+1,display:visible,wordUsed:actual,entered:inputs[i],spellcheck:await page.locator('#answer').getAttribute('spellcheck')});
   await page.locator('#quiz .actions button').first().click();
  }
  await page.waitForSelector('#done:not(.hidden)',{timeout:8000});
@@ -60,6 +61,7 @@ try{
   await page.getByRole('button',{name:/Create tester profile/}).click();
   await page.waitForTimeout(600);
   await capture(page,'05-adventure-age-nine-home-mobile');
+  data.game.transferredGuestBaseline=await page.evaluate(()=>{const p=SpellmasterProfiles.active(localStorage);const r=localStorage.getItem('spellmaster-starting-assessment-v1:'+p?.id);return r?JSON.parse(r).transferredFromGuest===true:false});
   const start=page.getByRole('button',{name:/Start|Begin|Continue|Play|Adventure/}).filter({visible:true});
   data.game.startButtonTexts=await start.allTextContents();
   let clicked=false;
@@ -78,6 +80,7 @@ try{
    await page.waitForTimeout(1200);
    if(await page.locator('#answer').count()){
     await capture(page,'06-first-spelling-question-mobile');
+    data.game.wordInputPosition=await page.locator('#answer').evaluate(el=>({top:Math.round(el.getBoundingClientRect().top),bottom:Math.round(el.getBoundingClientRect().bottom)}));
     data.game.firstPrompt=(await page.locator('#app').innerText()).slice(0,950);
     await page.locator('#answer').fill('speling');
     const check=page.locator('#app button').filter({hasText:/Check my spelling|Check spelling/}).first();
@@ -105,6 +108,11 @@ try{
  await page.goto(origin+'/family-signup.html',{waitUntil:'domcontentloaded'});
  await page.waitForTimeout(600);
  await capture(page,'10-family-signup-mobile');
+ await page.locator('#alias').fill('Young Explorer');
+ await page.locator('#age').selectOption('9');
+ await page.locator('#family-next').click();
+ await capture(page,'11-family-adult-step-mobile');
+ data.game.familyStep2Visible=await page.locator('#family-step2').isVisible();
  data.narration={browserRequestsMocked:true,notAudioQualityVerified:true};
 }catch(e){errors.push('JOURNEY FAILURE: '+e.stack?.slice(0,1800))}
 finally{await browser.close()}
