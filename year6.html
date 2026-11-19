@@ -807,7 +807,7 @@ function currentTheme(p){return p.theme==='auto'?
 function createLocalProfile(){
  const alias=$('new-alias')?.value||'',birth='',ageYears=Number($('new-age')?.value||0);
  const yearValue=$('new-school-year')?.value||'';
- try{LP.add(spellStorage,{alias,birth,ageYears,schoolYear:yearValue?Number(yearValue):null});renderLanding()}
+ try{LP.add(spellStorage,{alias,birth,ageYears,schoolYear:yearValue?Number(yearValue):null});renderLanding();window.scrollTo({top:0,behavior:'instant'})}
  catch(e){const el=$('profile-error');if(el)el.textContent=e.message}
 }
 function chooseLocalProfile(id){try{LP.choose(spellStorage,id);renderLanding()}catch(e){const el=$('profile-error');if(el)el.textContent=e.message}}
@@ -937,7 +937,7 @@ const renderPresentation=()=>{
  document.body.classList.toggle('lesson-active',playing);
  if(stage!==previousPresentationStage){
   previousPresentationStage=stage;
-  if(playing)requestAnimationFrame(()=>window.scrollTo({top:0,behavior:'instant'}));
+  requestAnimationFrame(()=>window.scrollTo({top:0,behavior:'instant'}));
  }
 };
 new MutationObserver(renderPresentation).observe(app,{childList:true,subtree:false});
