@@ -42,7 +42,7 @@
    keptDefault:count('default_kept'),reuses:count('custom_reused'),resets:count('custom_reset'),
    changeRate:offered.size?changed.size/offered.size:null};
  }
- function mount({host,word,teacherChunks,profile,storage,opportunity,onNotice,onSpeakInstruction}){
+ function mount({host,word,teacherChunks,profile,storage,opportunity,onNotice,onSpeakInstruction,onGroupingSaved,onGroupingExposed}){
   if(!host||!word||!profile)return;
   const defaultCuts=fromChunks(word,teacherChunks);
   if(!validCuts(word,defaultCuts))return;
@@ -54,6 +54,8 @@
    '<button class="alt tiny-action chunk-open" type="button">✦ Try splitting</button></div><div class="chunk-editor" hidden></div>';
   host.append(root);
   log(storage,profile,'offered',word,opportunity);
+  // The actual spelling groups have been shown in the supported lesson.
+  if(typeof onGroupingExposed==='function')onGroupingExposed({word,opportunity,selectedCuts:initial,defaultCuts:defaultCuts.slice(),reason:'supported_review'});
   const editor=root.querySelector('.chunk-editor'),open=root.querySelector('.chunk-open');
   if(typeof onSpeakInstruction==='function'){
    const listen=document.createElement('button');listen.type='button';listen.className='alt tiny-action';
@@ -92,6 +94,8 @@
    const save=document.createElement('button');save.type='button';save.textContent='Use my groups';save.onclick=()=>{
      const result=choice(storage,profile,word,defaultCuts,cuts,opportunity);
      if(onNotice)onNotice(result.custom?'Your groups are saved for next time.':'You kept the suggested groups.');
+     if(typeof onGroupingSaved==='function')onGroupingSaved({word,opportunity,cuts:result.cuts,custom:result.custom,defaultCuts:defaultCuts.slice()});
+     if(typeof onGroupingExposed==='function')onGroupingExposed({word,opportunity,selectedCuts:result.cuts,defaultCuts:defaultCuts.slice(),reason:'saved_selection'});
      root.querySelector('.chunk-head p').textContent=result.custom?'Your own grouping is saved.':'The suggested grouping is saved.';
      editor.hidden=true;open.textContent='✦ Change my groups';
    };
