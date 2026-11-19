@@ -11,5 +11,5 @@ for(const id of ['spellmaster-error-government-missing_n','spellmaster-error-nec
 assert.ok(html.includes('function replayWordHint()'));
 assert.ok(html.includes('Hear this hint'));
 assert.ok(html.includes('introduceSplitterOnce(t)'));
-assert.ok(html.includes("localStorage.setItem(key,'heard')"));
+assert.ok(html.includes("spellStorage.setItem(key,'heard')"));
 console.log('Hint audio allowlist and once-per-learner divider introduction wiring passed');
