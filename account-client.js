@@ -7,7 +7,17 @@
  function selectedLearner(){return sessionStorage.getItem(learnerKey);}
  function setAuth(result){if(!result?.token||!result?.learner?.id&&!result?.account)throw Error('Invalid account response');sessionStorage.setItem(sessionKey,result.token);if(result.learner?.id)sessionStorage.setItem(learnerKey,result.learner.id);}
  function selectLearner(id){if(!/^[\da-f-]{36}$/i.test(id))throw Error('Invalid learner');sessionStorage.setItem(learnerKey,id);}
- function signOut(){const old=token();sessionStorage.removeItem(sessionKey);sessionStorage.removeItem(learnerKey);if(old)fetch(base+'/logout',{method:'POST',headers:{Authorization:'Bearer '+old},mode:'cors'}).catch(()=>{});}
+ function signOut(){
+  const old=token();
+  let profile=null;try{profile=JSON.parse(sessionStorage.getItem('spellmaster-cloud-active-v1')||'null')}catch{}
+  if(profile?.id&&/^lp-[a-z0-9]+$/.test(profile.id)){
+   for(const prefix of ['spellmaster-staging-intake-v1:','spellmaster-placement-v1:','spellmaster-bonus-v1:','spellmaster-local-splitter-v1:','spellmaster-welcome-heard-v1:','spellmaster-splitter-introduction-v1:'])sessionStorage.removeItem(prefix+profile.id);
+  }
+  sessionStorage.removeItem('spellmaster-cloud-active-v1');
+  sessionStorage.removeItem(sessionKey);
+  sessionStorage.removeItem(learnerKey);
+  if(old)fetch(base+'/logout',{method:'POST',headers:{Authorization:'Bearer '+old},mode:'cors'}).catch(()=>{});
+ }
  async function request(path,{method='GET',body,authenticated=true}={}){
   const headers={'Accept':'application/json'};
   if(body!==undefined)headers['Content-Type']='application/json';
