@@ -420,8 +420,9 @@ function review(){
  '<p>Look at the letters. You can make your own groups.</p>'+
  '<div id="review-content"><p class="now">🔊 The teacher will guide you.</p></div>'+
  soundVoice()+
- '<div class="actions"><button class="alt" onclick="reviewAudio()">🔊 Hear this lesson again</button>'+
- '<button onclick="retry()">🙈 Hide it and try spelling</button><button class="alt" onclick="next()">Save for later</button></div>';
+ '<div class="actions"><button onclick="retry()">🙈 Hide it and try spelling</button>'+
+ '<button class="alt" onclick="reviewAudio()">🔊 Hear the lesson again</button>'+
+ '<button class="alt" onclick="next()">Save for later</button></div>';
  voiceSet();if(narration)reviewAudio();
 }
 async function reviewAudio(){
@@ -845,7 +846,9 @@ function renderLanding(){
  '" onclick="chooseLocalProfile(\''+x.id+'\')"><span>✦ '+htmlSafe(x.alias)+'</span><small>'+
  (p&&p.id===x.id?'Current explorer ✓':'Switch')+'</small></button>').join('');
  const themeOptions=['auto','wonder','explorer','adventure','focus'];
- app.innerHTML='<div class="start-layout"><section><span class="start-kicker">Welcome to your next adventure</span>'+
+ app.innerHTML='<div class="start-layout"><section>'+
+ (p?'<button class="play-now quick-play" onclick="begin()">▶ Start spelling</button>':'')+
+ '<span class="start-kicker">Welcome to your next adventure</span>'+
  '<h2 style="font-size:clamp(28px,4vw,39px);line-height:1.15;margin:12px 0">'+
  (p?'Ready to discover, '+htmlSafe(p.alias)+'?':'Every great speller starts somewhere.')+'</h2>'+
  '<p class="start-desc">Hear a word, give it a go, and get helpful clues when you need them. Take a break whenever you want.</p>'+
