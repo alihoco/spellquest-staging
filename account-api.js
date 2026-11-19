@@ -36,8 +36,9 @@ async function execute(req,res,path){if(!path.startsWith('/api/account/'))return
  const ip=String(req.headers['x-forwarded-for']||req.socket.remoteAddress||'').slice(0,80);
  if(!rate(ip)){send(res,429,{error:'Too many requests. Please try again later.'},headers);return true;}
  try{
-  if(path==='/api/account/status'&&req.method==='GET'){send(res,200,{available:true},headers);return true;}
+  if(path==='/api/account/status'&&req.method==='GET'){const table=await pool.query("SELECT to_regclass('public.accounts') AS accounts,to_regclass('public.learners') AS learners");const ready=Boolean(table.rows[0]?.accounts&&table.rows[0]?.learners&&process.env.ACCOUNT_REGISTRATION_ENABLED==='true');send(res,200,{available:ready},headers);return true;}
   if(path==='/api/account/register'&&req.method==='POST'){
+   if(process.env.ACCOUNT_REGISTRATION_ENABLED!=='true')throw inputError('Registrations are not activated yet.',503);
    const body=await readBody(req),name=username(body.username),pw=password(body.password),kind=body.kind;
    if(!['adult','guardian'].includes(kind)||body.acceptedTerms!==true)throw inputError('Please choose an account type and accept the terms.');
    const profile=learnerInput(body.learner,kind);
