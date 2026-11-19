@@ -10,6 +10,9 @@
       "id": "en-a",
       "word": "a",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "a"
       ],
@@ -28,6 +31,9 @@
       "id": "en-about",
       "word": "about",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "a",
         "bout"
@@ -47,6 +53,9 @@
       "id": "en-accident",
       "word": "accident",
       "band": "year3_4",
+      "feature_tags": [
+        "consonant_double"
+      ],
       "visual_units": [
         "ac",
         "ci",
@@ -67,6 +76,11 @@
       "id": "en-accidentally",
       "word": "accidentally",
       "band": "year3_4",
+      "feature_tags": [
+        "consonant_double",
+        "suffix_family",
+        "multisyllable"
+      ],
       "visual_units": [
         "ac",
         "ci",
@@ -89,6 +103,10 @@
       "id": "en-accommodate",
       "word": "accommodate",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double",
+        "multisyllable"
+      ],
       "visual_units": [
         "ac",
         "com",
@@ -110,6 +128,10 @@
       "id": "en-accompany",
       "word": "accompany",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double",
+        "multisyllable"
+      ],
       "visual_units": [
         "ac",
         "com",
@@ -131,6 +153,11 @@
       "id": "en-according",
       "word": "according",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double",
+        "suffix_family",
+        "multisyllable"
+      ],
       "visual_units": [
         "accord",
         "ing"
@@ -150,6 +177,9 @@
       "id": "en-achieve",
       "word": "achieve",
       "band": "year5_6",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "a",
         "chieve"
@@ -169,6 +199,9 @@
       "id": "en-actual",
       "word": "actual",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "ac",
         "tu",
@@ -189,6 +222,10 @@
       "id": "en-actually",
       "word": "actually",
       "band": "year3_4",
+      "feature_tags": [
+        "consonant_double",
+        "suffix_family"
+      ],
       "visual_units": [
         "actual",
         "ly"
@@ -208,6 +245,9 @@
       "id": "en-address",
       "word": "address",
       "band": "year3_4",
+      "feature_tags": [
+        "consonant_double"
+      ],
       "visual_units": [
         "ad",
         "dress"
@@ -227,6 +267,9 @@
       "id": "en-afraid",
       "word": "afraid",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "a",
         "fraid"
@@ -246,6 +289,9 @@
       "id": "en-after",
       "word": "after",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "af",
         "ter"
@@ -265,6 +311,10 @@
       "id": "en-again",
       "word": "again",
       "band": "year2",
+      "feature_tags": [
+        "early_exception",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "a",
         "gain"
@@ -284,6 +334,9 @@
       "id": "en-age",
       "word": "age",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "age"
       ],
@@ -302,6 +355,10 @@
       "id": "en-aggressive",
       "word": "aggressive",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double",
+        "multisyllable"
+      ],
       "visual_units": [
         "ag",
         "gres",
@@ -322,6 +379,9 @@
       "id": "en-air",
       "word": "air",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "air"
       ],
@@ -340,6 +400,9 @@
       "id": "en-alphabet",
       "word": "alphabet",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "al",
         "pha",
@@ -360,6 +423,10 @@
       "id": "en-although",
       "word": "although",
       "band": "year3_4",
+      "feature_tags": [
+        "vowel_digraph",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "al",
         "though"
@@ -379,6 +446,9 @@
       "id": "en-amateur",
       "word": "amateur",
       "band": "year5_6",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "am",
         "a",
@@ -399,6 +469,9 @@
       "id": "en-ancient",
       "word": "ancient",
       "band": "year5_6",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "an",
         "cient"
@@ -418,6 +491,9 @@
       "id": "en-animal",
       "word": "animal",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "an",
         "i",
@@ -438,6 +514,10 @@
       "id": "en-annoy",
       "word": "annoy",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph",
+        "consonant_double"
+      ],
       "visual_units": [
         "an",
         "noy"
@@ -457,6 +537,9 @@
       "id": "en-answer",
       "word": "answer",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "an",
         "swer"
@@ -476,6 +559,9 @@
       "id": "en-any",
       "word": "any",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "any"
       ],
@@ -494,6 +580,9 @@
       "id": "en-apparent",
       "word": "apparent",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double"
+      ],
       "visual_units": [
         "ap",
         "par",
@@ -514,6 +603,10 @@
       "id": "en-appear",
       "word": "appear",
       "band": "year3_4",
+      "feature_tags": [
+        "consonant_double",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "ap",
         "pear"
@@ -533,6 +626,10 @@
       "id": "en-apple",
       "word": "apple",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "consonant_double"
+      ],
       "visual_units": [
         "ap",
         "ple"
@@ -552,6 +649,10 @@
       "id": "en-appreciate",
       "word": "appreciate",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double",
+        "multisyllable"
+      ],
       "visual_units": [
         "ap",
         "pre",
@@ -573,6 +674,9 @@
       "id": "en-are",
       "word": "are",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "are"
       ],
@@ -591,6 +695,9 @@
       "id": "en-arm",
       "word": "arm",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "arm"
       ],
@@ -609,6 +716,9 @@
       "id": "en-around",
       "word": "around",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "a",
         "round"
@@ -628,6 +738,9 @@
       "id": "en-arrive",
       "word": "arrive",
       "band": "year3_4",
+      "feature_tags": [
+        "consonant_double"
+      ],
       "visual_units": [
         "ar",
         "rive"
@@ -647,6 +760,9 @@
       "id": "en-ask",
       "word": "ask",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "ask"
       ],
@@ -665,6 +781,10 @@
       "id": "en-astronaut",
       "word": "astronaut",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph",
+        "multisyllable"
+      ],
       "visual_units": [
         "astro",
         "naut"
@@ -684,6 +804,10 @@
       "id": "en-attached",
       "word": "attached",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double",
+        "suffix_family"
+      ],
       "visual_units": [
         "at",
         "tached"
@@ -703,6 +827,9 @@
       "id": "en-august",
       "word": "august",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "au",
         "gust"
@@ -722,6 +849,9 @@
       "id": "en-author",
       "word": "author",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "au",
         "thor"
@@ -741,6 +871,11 @@
       "id": "en-available",
       "word": "available",
       "band": "year5_6",
+      "feature_tags": [
+        "suffix_family",
+        "vowel_digraph",
+        "multisyllable"
+      ],
       "visual_units": [
         "a",
         "vail",
@@ -762,6 +897,9 @@
       "id": "en-average",
       "word": "average",
       "band": "year5_6",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "av",
         "er",
@@ -782,6 +920,9 @@
       "id": "en-awkward",
       "word": "awkward",
       "band": "year5_6",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "awk",
         "ward"
@@ -801,6 +942,10 @@
       "id": "en-babies",
       "word": "babies",
       "band": "year2",
+      "feature_tags": [
+        "suffix_family",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "bab",
         "ies"
@@ -820,6 +965,9 @@
       "id": "en-back",
       "word": "back",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "b",
         "a",
@@ -840,6 +988,9 @@
       "id": "en-badge",
       "word": "badge",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "b",
         "a",
@@ -860,6 +1011,9 @@
       "id": "en-bank",
       "word": "bank",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "b",
         "ank"
@@ -879,6 +1033,10 @@
       "id": "en-bare",
       "word": "bare",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph",
+        "homophone_context"
+      ],
       "visual_units": [
         "b",
         "are"
@@ -898,6 +1056,9 @@
       "id": "en-bargain",
       "word": "bargain",
       "band": "year5_6",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "bar",
         "gain"
@@ -917,6 +1078,9 @@
       "id": "en-bath",
       "word": "bath",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "b",
         "a",
@@ -937,6 +1101,10 @@
       "id": "en-be",
       "word": "be",
       "band": "year1",
+      "feature_tags": [
+        "early_exception",
+        "homophone_context"
+      ],
       "visual_units": [
         "be"
       ],
@@ -955,6 +1123,10 @@
       "id": "en-bear",
       "word": "bear",
       "band": "year2",
+      "feature_tags": [
+        "homophone_context",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "b",
         "ear"
@@ -974,6 +1146,9 @@
       "id": "en-beard",
       "word": "beard",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "b",
         "ear",
@@ -994,6 +1169,12 @@
       "id": "en-beautiful",
       "word": "beautiful",
       "band": "year2",
+      "feature_tags": [
+        "early_exception",
+        "suffix_family",
+        "vowel_digraph",
+        "multisyllable"
+      ],
       "visual_units": [
         "beau",
         "ti",
@@ -1014,6 +1195,10 @@
       "id": "en-because",
       "word": "because",
       "band": "year2",
+      "feature_tags": [
+        "early_exception",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "be",
         "cause"
@@ -1033,6 +1218,10 @@
       "id": "en-bedroom",
       "word": "bedroom",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "bed",
         "room"
@@ -1052,6 +1241,10 @@
       "id": "en-bee",
       "word": "bee",
       "band": "year2",
+      "feature_tags": [
+        "homophone_context",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "bee"
       ],
@@ -1070,6 +1263,9 @@
       "id": "en-before",
       "word": "before",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "be",
         "fore"
@@ -1089,6 +1285,9 @@
       "id": "en-behind",
       "word": "behind",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "be",
         "hind"
@@ -1108,6 +1307,9 @@
       "id": "en-believe",
       "word": "believe",
       "band": "year3_4",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "be",
         "lieve"
@@ -1127,6 +1329,9 @@
       "id": "en-bicycle",
       "word": "bicycle",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "bi",
         "cycle"
@@ -1146,6 +1351,9 @@
       "id": "en-bird",
       "word": "bird",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "bird"
       ],
@@ -1164,6 +1372,11 @@
       "id": "en-blackberry",
       "word": "blackberry",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern",
+        "consonant_double",
+        "multisyllable"
+      ],
       "visual_units": [
         "black",
         "berry"
@@ -1183,6 +1396,9 @@
       "id": "en-blew",
       "word": "blew",
       "band": "year2",
+      "feature_tags": [
+        "homophone_context"
+      ],
       "visual_units": [
         "bl",
         "ew"
@@ -1202,6 +1418,9 @@
       "id": "en-blow",
       "word": "blow",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "bl",
         "ow"
@@ -1221,6 +1440,10 @@
       "id": "en-blue",
       "word": "blue",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph",
+        "homophone_context"
+      ],
       "visual_units": [
         "bl",
         "ue"
@@ -1240,6 +1463,9 @@
       "id": "en-boat",
       "word": "boat",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "b",
         "oa",
@@ -1260,6 +1486,9 @@
       "id": "en-book",
       "word": "book",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "b",
         "oo",
@@ -1280,6 +1509,9 @@
       "id": "en-both",
       "word": "both",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "b",
         "o",
@@ -1300,6 +1532,10 @@
       "id": "en-bottle",
       "word": "bottle",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "consonant_double"
+      ],
       "visual_units": [
         "bot",
         "tle"
@@ -1319,6 +1555,9 @@
       "id": "en-boy",
       "word": "boy",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "boy"
       ],
@@ -1337,6 +1576,9 @@
       "id": "en-bread",
       "word": "bread",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "br",
         "ea",
@@ -1357,6 +1599,10 @@
       "id": "en-break",
       "word": "break",
       "band": "year2",
+      "feature_tags": [
+        "early_exception",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "br",
         "ea",
@@ -1377,6 +1623,9 @@
       "id": "en-breath",
       "word": "breath",
       "band": "year3_4",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "br",
         "ea",
@@ -1397,6 +1646,9 @@
       "id": "en-breathe",
       "word": "breathe",
       "band": "year3_4",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "breath",
         "e"
@@ -1416,6 +1668,9 @@
       "id": "en-bridge",
       "word": "bridge",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "br",
         "i",
@@ -1436,6 +1691,11 @@
       "id": "en-bright",
       "word": "bright",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern",
+        "vowel_digraph",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "br",
         "igh",
@@ -1456,6 +1716,9 @@
       "id": "en-brown",
       "word": "brown",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "br",
         "ow",
@@ -1476,6 +1739,9 @@
       "id": "en-bruise",
       "word": "bruise",
       "band": "year5_6",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "br",
         "ui",
@@ -1496,6 +1762,9 @@
       "id": "en-build",
       "word": "build",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "b",
         "ui",
@@ -1516,6 +1785,9 @@
       "id": "en-burst",
       "word": "burst",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "burst"
       ],
@@ -1534,6 +1806,10 @@
       "id": "en-business",
       "word": "business",
       "band": "year3_4",
+      "feature_tags": [
+        "consonant_double",
+        "suffix_family"
+      ],
       "visual_units": [
         "busi",
         "ness"
@@ -1553,6 +1829,9 @@
       "id": "en-busy",
       "word": "busy",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "bus",
         "y"
@@ -1572,6 +1851,10 @@
       "id": "en-buzz",
       "word": "buzz",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern",
+        "consonant_double"
+      ],
       "visual_units": [
         "b",
         "u",
@@ -1592,6 +1875,9 @@
       "id": "en-by",
       "word": "by",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "by"
       ],
@@ -1610,6 +1896,9 @@
       "id": "en-calendar",
       "word": "calendar",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "cal",
         "en",
@@ -1630,6 +1919,9 @@
       "id": "en-came",
       "word": "came",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "came"
       ],
@@ -1648,6 +1940,9 @@
       "id": "en-camel",
       "word": "camel",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "cam",
         "el"
@@ -1667,6 +1962,9 @@
       "id": "en-capital",
       "word": "capital",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "cap",
         "i",
@@ -1687,6 +1985,9 @@
       "id": "en-car",
       "word": "car",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "car"
       ],
@@ -1705,6 +2006,9 @@
       "id": "en-care",
       "word": "care",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "care"
       ],
@@ -1723,6 +2027,9 @@
       "id": "en-careful",
       "word": "careful",
       "band": "year2",
+      "feature_tags": [
+        "suffix_family"
+      ],
       "visual_units": [
         "care",
         "ful"
@@ -1742,6 +2049,11 @@
       "id": "en-carries",
       "word": "carries",
       "band": "year2",
+      "feature_tags": [
+        "suffix_family",
+        "consonant_double",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "car",
         "ries"
@@ -1761,6 +2073,10 @@
       "id": "en-carrot",
       "word": "carrot",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern",
+        "consonant_double"
+      ],
       "visual_units": [
         "car",
         "rot"
@@ -1780,6 +2096,9 @@
       "id": "en-catch",
       "word": "catch",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "c",
         "a",
@@ -1800,6 +2119,9 @@
       "id": "en-category",
       "word": "category",
       "band": "year5_6",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "cat",
         "e",
@@ -1821,6 +2143,10 @@
       "id": "en-caught",
       "word": "caught",
       "band": "year3_4",
+      "feature_tags": [
+        "vowel_digraph",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "c",
         "aught"
@@ -1840,6 +2166,10 @@
       "id": "en-cell",
       "word": "cell",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "consonant_double"
+      ],
       "visual_units": [
         "c",
         "ell"
@@ -1859,6 +2189,9 @@
       "id": "en-cemetery",
       "word": "cemetery",
       "band": "year5_6",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "cem",
         "e",
@@ -1880,6 +2213,9 @@
       "id": "en-centre",
       "word": "centre",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "cen",
         "tre"
@@ -1899,6 +2235,9 @@
       "id": "en-century",
       "word": "century",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "cen",
         "tu",
@@ -1919,6 +2258,9 @@
       "id": "en-certain",
       "word": "certain",
       "band": "year3_4",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "cer",
         "tain"
@@ -1938,6 +2280,9 @@
       "id": "en-chair",
       "word": "chair",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "ch",
         "air"
@@ -1957,6 +2302,9 @@
       "id": "en-change",
       "word": "change",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "ch",
         "ange"
@@ -1976,6 +2324,9 @@
       "id": "en-charge",
       "word": "charge",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "ch",
         "arge"
@@ -1995,6 +2346,9 @@
       "id": "en-child",
       "word": "child",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "ch",
         "ild"
@@ -2014,6 +2368,9 @@
       "id": "en-children",
       "word": "children",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "chil",
         "dren"
@@ -2033,6 +2390,10 @@
       "id": "en-christmas",
       "word": "christmas",
       "band": "year2",
+      "feature_tags": [
+        "early_exception",
+        "multisyllable"
+      ],
       "visual_units": [
         "christ",
         "mas"
@@ -2052,6 +2413,9 @@
       "id": "en-church",
       "word": "church",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "ch",
         "ur",
@@ -2072,6 +2436,9 @@
       "id": "en-circle",
       "word": "circle",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "cir",
         "cle"
@@ -2091,6 +2458,9 @@
       "id": "en-city",
       "word": "city",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "cit",
         "y"
@@ -2110,6 +2480,10 @@
       "id": "en-class",
       "word": "class",
       "band": "year2",
+      "feature_tags": [
+        "early_exception",
+        "consonant_double"
+      ],
       "visual_units": [
         "cl",
         "ass"
@@ -2129,6 +2503,9 @@
       "id": "en-climb",
       "word": "climb",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "cl",
         "imb"
@@ -2148,6 +2525,9 @@
       "id": "en-clothes",
       "word": "clothes",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "clo",
         "thes"
@@ -2167,6 +2547,9 @@
       "id": "en-clue",
       "word": "clue",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "cl",
         "ue"
@@ -2186,6 +2569,9 @@
       "id": "en-coach",
       "word": "coach",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "c",
         "oa",
@@ -2206,6 +2592,9 @@
       "id": "en-coat",
       "word": "coat",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "c",
         "oa",
@@ -2226,6 +2615,9 @@
       "id": "en-coin",
       "word": "coin",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "c",
         "oi",
@@ -2246,6 +2638,9 @@
       "id": "en-cold",
       "word": "cold",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "c",
         "old"
@@ -2265,6 +2660,9 @@
       "id": "en-come",
       "word": "come",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "co",
         "me"
@@ -2284,6 +2682,11 @@
       "id": "en-committee",
       "word": "committee",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double",
+        "vowel_digraph",
+        "multisyllable"
+      ],
       "visual_units": [
         "com",
         "mit",
@@ -2304,6 +2707,10 @@
       "id": "en-communicate",
       "word": "communicate",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double",
+        "multisyllable"
+      ],
       "visual_units": [
         "com",
         "mu",
@@ -2325,6 +2732,10 @@
       "id": "en-community",
       "word": "community",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double",
+        "multisyllable"
+      ],
       "visual_units": [
         "com",
         "mu",
@@ -2346,6 +2757,10 @@
       "id": "en-competition",
       "word": "competition",
       "band": "year5_6",
+      "feature_tags": [
+        "suffix_family",
+        "multisyllable"
+      ],
       "visual_units": [
         "com",
         "pe",
@@ -2367,6 +2782,9 @@
       "id": "en-complete",
       "word": "complete",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "com",
         "plete"
@@ -2386,6 +2804,10 @@
       "id": "en-conscience",
       "word": "conscience",
       "band": "year5_6",
+      "feature_tags": [
+        "vowel_digraph",
+        "multisyllable"
+      ],
       "visual_units": [
         "con",
         "science"
@@ -2405,6 +2827,11 @@
       "id": "en-conscious",
       "word": "conscious",
       "band": "year5_6",
+      "feature_tags": [
+        "suffix_family",
+        "vowel_digraph",
+        "multisyllable"
+      ],
       "visual_units": [
         "con",
         "scious"
@@ -2424,6 +2851,9 @@
       "id": "en-consider",
       "word": "consider",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "con",
         "sid",
@@ -2444,6 +2874,9 @@
       "id": "en-continue",
       "word": "continue",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "con",
         "tin",
@@ -2464,6 +2897,9 @@
       "id": "en-controversy",
       "word": "controversy",
       "band": "year5_6",
+      "feature_tags": [
+        "multisyllable"
+      ],
       "visual_units": [
         "con",
         "tro",
@@ -2485,6 +2921,10 @@
       "id": "en-convenience",
       "word": "convenience",
       "band": "year5_6",
+      "feature_tags": [
+        "vowel_digraph",
+        "multisyllable"
+      ],
       "visual_units": [
         "con",
         "ven",
@@ -2505,6 +2945,10 @@
       "id": "en-copies",
       "word": "copies",
       "band": "year2",
+      "feature_tags": [
+        "suffix_family",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "cop",
         "ies"
@@ -2524,6 +2968,10 @@
       "id": "en-correspond",
       "word": "correspond",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double",
+        "multisyllable"
+      ],
       "visual_units": [
         "cor",
         "re",
@@ -2544,6 +2992,10 @@
       "id": "en-could",
       "word": "could",
       "band": "year2",
+      "feature_tags": [
+        "early_exception",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "c",
         "ould"
@@ -2563,6 +3015,9 @@
       "id": "en-crawl",
       "word": "crawl",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "cr",
         "aw",
@@ -2583,6 +3038,9 @@
       "id": "en-criticise",
       "word": "criticise",
       "band": "year5_6",
+      "feature_tags": [
+        "multisyllable"
+      ],
       "visual_units": [
         "critic",
         "ise"
@@ -2602,6 +3060,9 @@
       "id": "en-cry",
       "word": "cry",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "cry"
       ],
@@ -2620,6 +3081,9 @@
       "id": "en-curiosity",
       "word": "curiosity",
       "band": "year5_6",
+      "feature_tags": [
+        "multisyllable"
+      ],
       "visual_units": [
         "cur",
         "i",
@@ -2642,6 +3106,9 @@
       "id": "en-dare",
       "word": "dare",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "dare"
       ],
@@ -2660,6 +3127,9 @@
       "id": "en-day",
       "word": "day",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "d",
         "ay"
@@ -2679,6 +3149,9 @@
       "id": "en-dear",
       "word": "dear",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "d",
         "ear"
@@ -2698,6 +3171,9 @@
       "id": "en-decide",
       "word": "decide",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "de",
         "cide"
@@ -2717,6 +3193,9 @@
       "id": "en-definite",
       "word": "definite",
       "band": "year5_6",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "def",
         "in",
@@ -2737,6 +3216,9 @@
       "id": "en-describe",
       "word": "describe",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "de",
         "scribe"
@@ -2756,6 +3238,9 @@
       "id": "en-desperate",
       "word": "desperate",
       "band": "year5_6",
+      "feature_tags": [
+        "multisyllable"
+      ],
       "visual_units": [
         "des",
         "per",
@@ -2776,6 +3261,10 @@
       "id": "en-determined",
       "word": "determined",
       "band": "year5_6",
+      "feature_tags": [
+        "suffix_family",
+        "multisyllable"
+      ],
       "visual_units": [
         "de",
         "ter",
@@ -2796,6 +3285,9 @@
       "id": "en-develop",
       "word": "develop",
       "band": "year5_6",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "de",
         "vel",
@@ -2816,6 +3308,9 @@
       "id": "en-dictionary",
       "word": "dictionary",
       "band": "year5_6",
+      "feature_tags": [
+        "multisyllable"
+      ],
       "visual_units": [
         "dic",
         "tion",
@@ -2836,6 +3331,10 @@
       "id": "en-different",
       "word": "different",
       "band": "year3_4",
+      "feature_tags": [
+        "consonant_double",
+        "multisyllable"
+      ],
       "visual_units": [
         "dif",
         "fer",
@@ -2856,6 +3355,10 @@
       "id": "en-difficult",
       "word": "difficult",
       "band": "year3_4",
+      "feature_tags": [
+        "consonant_double",
+        "multisyllable"
+      ],
       "visual_units": [
         "dif",
         "fi",
@@ -2876,6 +3379,9 @@
       "id": "en-dinosaur",
       "word": "dinosaur",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "di",
         "no",
@@ -2896,6 +3402,12 @@
       "id": "en-disappear",
       "word": "disappear",
       "band": "year3_4",
+      "feature_tags": [
+        "consonant_double",
+        "prefix_family",
+        "vowel_digraph",
+        "multisyllable"
+      ],
       "visual_units": [
         "dis",
         "appear"
@@ -2915,6 +3427,12 @@
       "id": "en-disastrous",
       "word": "disastrous",
       "band": "year5_6",
+      "feature_tags": [
+        "suffix_family",
+        "prefix_family",
+        "vowel_digraph",
+        "multisyllable"
+      ],
       "visual_units": [
         "dis",
         "as",
@@ -2935,6 +3453,9 @@
       "id": "en-do",
       "word": "do",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "do"
       ],
@@ -2953,6 +3474,9 @@
       "id": "en-dodge",
       "word": "dodge",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "d",
         "o",
@@ -2973,6 +3497,9 @@
       "id": "en-dolphin",
       "word": "dolphin",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "dol",
         "phin"
@@ -2992,6 +3519,10 @@
       "id": "en-door",
       "word": "door",
       "band": "year2",
+      "feature_tags": [
+        "early_exception",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "d",
         "oor"
@@ -3011,6 +3542,9 @@
       "id": "en-down",
       "word": "down",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "d",
         "ow",
@@ -3031,6 +3565,9 @@
       "id": "en-draw",
       "word": "draw",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "dr",
         "aw"
@@ -3050,6 +3587,9 @@
       "id": "en-dream",
       "word": "dream",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "dr",
         "ea",
@@ -3070,6 +3610,9 @@
       "id": "en-drew",
       "word": "drew",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "dr",
         "ew"
@@ -3089,6 +3632,9 @@
       "id": "en-dry",
       "word": "dry",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "dry"
       ],
@@ -3107,6 +3653,9 @@
       "id": "en-each",
       "word": "each",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "ea",
         "ch"
@@ -3126,6 +3675,10 @@
       "id": "en-early",
       "word": "early",
       "band": "year3_4",
+      "feature_tags": [
+        "suffix_family",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "ear",
         "ly"
@@ -3145,6 +3698,9 @@
       "id": "en-earth",
       "word": "earth",
       "band": "year3_4",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "ear",
         "th"
@@ -3164,6 +3720,9 @@
       "id": "en-edge",
       "word": "edge",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "e",
         "dge"
@@ -3183,6 +3742,10 @@
       "id": "en-eight",
       "word": "eight",
       "band": "year3_4",
+      "feature_tags": [
+        "vowel_digraph",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "eigh",
         "t"
@@ -3202,6 +3765,10 @@
       "id": "en-eighth",
       "word": "eighth",
       "band": "year3_4",
+      "feature_tags": [
+        "vowel_digraph",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "eigh",
         "th"
@@ -3221,6 +3788,9 @@
       "id": "en-elephant",
       "word": "elephant",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "el",
         "e",
@@ -3241,6 +3811,10 @@
       "id": "en-embarrass",
       "word": "embarrass",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double",
+        "multisyllable"
+      ],
       "visual_units": [
         "em",
         "bar",
@@ -3261,6 +3835,9 @@
       "id": "en-enjoy",
       "word": "enjoy",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "en",
         "joy"
@@ -3280,6 +3857,10 @@
       "id": "en-enjoyment",
       "word": "enjoyment",
       "band": "year2",
+      "feature_tags": [
+        "suffix_family",
+        "multisyllable"
+      ],
       "visual_units": [
         "enjoy",
         "ment"
@@ -3299,6 +3880,10 @@
       "id": "en-enough",
       "word": "enough",
       "band": "year3_4",
+      "feature_tags": [
+        "vowel_digraph",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "en",
         "ough"
@@ -3318,6 +3903,10 @@
       "id": "en-environment",
       "word": "environment",
       "band": "year5_6",
+      "feature_tags": [
+        "suffix_family",
+        "multisyllable"
+      ],
       "visual_units": [
         "environ",
         "ment"
@@ -3337,6 +3926,9 @@
       "id": "en-equip",
       "word": "equip",
       "band": "year5_6",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "e",
         "quip"
@@ -3356,6 +3948,10 @@
       "id": "en-equipment",
       "word": "equipment",
       "band": "year5_6",
+      "feature_tags": [
+        "suffix_family",
+        "multisyllable"
+      ],
       "visual_units": [
         "equip",
         "ment"
@@ -3375,6 +3971,10 @@
       "id": "en-equipped",
       "word": "equipped",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double",
+        "suffix_family"
+      ],
       "visual_units": [
         "e",
         "quip",
@@ -3395,6 +3995,11 @@
       "id": "en-especially",
       "word": "especially",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double",
+        "suffix_family",
+        "multisyllable"
+      ],
       "visual_units": [
         "es",
         "pe",
@@ -3416,6 +4021,9 @@
       "id": "en-even",
       "word": "even",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "e",
         "ven"
@@ -3435,6 +4043,9 @@
       "id": "en-every",
       "word": "every",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "ev",
         "ery"
@@ -3454,6 +4065,10 @@
       "id": "en-everybody",
       "word": "everybody",
       "band": "year2",
+      "feature_tags": [
+        "early_exception",
+        "multisyllable"
+      ],
       "visual_units": [
         "every",
         "body"
@@ -3473,6 +4088,10 @@
       "id": "en-exaggerate",
       "word": "exaggerate",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double",
+        "multisyllable"
+      ],
       "visual_units": [
         "ex",
         "ag",
@@ -3494,6 +4113,10 @@
       "id": "en-excellent",
       "word": "excellent",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double",
+        "multisyllable"
+      ],
       "visual_units": [
         "ex",
         "cel",
@@ -3514,6 +4137,9 @@
       "id": "en-exercise",
       "word": "exercise",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "ex",
         "er",
@@ -3534,6 +4160,9 @@
       "id": "en-existence",
       "word": "existence",
       "band": "year5_6",
+      "feature_tags": [
+        "multisyllable"
+      ],
       "visual_units": [
         "ex",
         "is",
@@ -3554,6 +4183,10 @@
       "id": "en-experience",
       "word": "experience",
       "band": "year3_4",
+      "feature_tags": [
+        "vowel_digraph",
+        "multisyllable"
+      ],
       "visual_units": [
         "ex",
         "pe",
@@ -3575,6 +4208,10 @@
       "id": "en-experiment",
       "word": "experiment",
       "band": "year3_4",
+      "feature_tags": [
+        "suffix_family",
+        "multisyllable"
+      ],
       "visual_units": [
         "ex",
         "per",
@@ -3596,6 +4233,10 @@
       "id": "en-explanation",
       "word": "explanation",
       "band": "year5_6",
+      "feature_tags": [
+        "suffix_family",
+        "multisyllable"
+      ],
       "visual_units": [
         "ex",
         "pla",
@@ -3617,6 +4258,9 @@
       "id": "en-extreme",
       "word": "extreme",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "ex",
         "treme"
@@ -3636,6 +4280,9 @@
       "id": "en-eye",
       "word": "eye",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "eye"
       ],
@@ -3654,6 +4301,9 @@
       "id": "en-fair",
       "word": "fair",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "f",
         "air"
@@ -3673,6 +4323,9 @@
       "id": "en-familiar",
       "word": "familiar",
       "band": "year5_6",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "fa",
         "mil",
@@ -3693,6 +4346,9 @@
       "id": "en-family",
       "word": "family",
       "band": "year1",
+      "feature_tags": [
+        "suffix_family"
+      ],
       "visual_units": [
         "fam",
         "i",
@@ -3713,6 +4369,10 @@
       "id": "en-famous",
       "word": "famous",
       "band": "year3_4",
+      "feature_tags": [
+        "suffix_family",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "fam",
         "ous"
@@ -3732,6 +4392,9 @@
       "id": "en-fancy",
       "word": "fancy",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "fan",
         "cy"
@@ -3751,6 +4414,9 @@
       "id": "en-farmyard",
       "word": "farmyard",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "farm",
         "yard"
@@ -3770,6 +4436,9 @@
       "id": "en-fast",
       "word": "fast",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "f",
         "ast"
@@ -3789,6 +4458,9 @@
       "id": "en-father",
       "word": "father",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "fa",
         "ther"
@@ -3808,6 +4480,10 @@
       "id": "en-favourite",
       "word": "favourite",
       "band": "year3_4",
+      "feature_tags": [
+        "vowel_digraph",
+        "multisyllable"
+      ],
       "visual_units": [
         "fa",
         "vour",
@@ -3828,6 +4504,9 @@
       "id": "en-february",
       "word": "february",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "feb",
         "ru",
@@ -3848,6 +4527,9 @@
       "id": "en-fetch",
       "word": "fetch",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "f",
         "e",
@@ -3868,6 +4550,9 @@
       "id": "en-few",
       "word": "few",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "few"
       ],
@@ -3886,6 +4571,10 @@
       "id": "en-fiction",
       "word": "fiction",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "suffix_family"
+      ],
       "visual_units": [
         "fic",
         "tion"
@@ -3905,6 +4594,9 @@
       "id": "en-find",
       "word": "find",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "f",
         "ind"
@@ -3924,6 +4616,9 @@
       "id": "en-first",
       "word": "first",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "first"
       ],
@@ -3942,6 +4637,9 @@
       "id": "en-five",
       "word": "five",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "five"
       ],
@@ -3960,6 +4658,9 @@
       "id": "en-flew",
       "word": "flew",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "fl",
         "ew"
@@ -3979,6 +4680,10 @@
       "id": "en-flies",
       "word": "flies",
       "band": "year2",
+      "feature_tags": [
+        "suffix_family",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "fl",
         "ies"
@@ -3998,6 +4703,10 @@
       "id": "en-floor",
       "word": "floor",
       "band": "year2",
+      "feature_tags": [
+        "early_exception",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "fl",
         "oor"
@@ -4017,6 +4726,10 @@
       "id": "en-fly",
       "word": "fly",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "suffix_family"
+      ],
       "visual_units": [
         "fly"
       ],
@@ -4035,6 +4748,9 @@
       "id": "en-food",
       "word": "food",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "f",
         "oo",
@@ -4055,6 +4771,9 @@
       "id": "en-foot",
       "word": "foot",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "f",
         "oo",
@@ -4075,6 +4794,11 @@
       "id": "en-football",
       "word": "football",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern",
+        "consonant_double",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "foot",
         "ball"
@@ -4094,6 +4818,9 @@
       "id": "en-foreign",
       "word": "foreign",
       "band": "year5_6",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "for",
         "eign"
@@ -4113,6 +4840,9 @@
       "id": "en-forty",
       "word": "forty",
       "band": "year5_6",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "for",
         "ty"
@@ -4132,6 +4862,9 @@
       "id": "en-forward",
       "word": "forward",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "for",
         "ward"
@@ -4151,6 +4884,9 @@
       "id": "en-forwards",
       "word": "forwards",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "for",
         "wards"
@@ -4170,6 +4906,10 @@
       "id": "en-fossil",
       "word": "fossil",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "consonant_double"
+      ],
       "visual_units": [
         "fos",
         "sil"
@@ -4189,6 +4929,10 @@
       "id": "en-frequently",
       "word": "frequently",
       "band": "year5_6",
+      "feature_tags": [
+        "suffix_family",
+        "multisyllable"
+      ],
       "visual_units": [
         "fre",
         "quent",
@@ -4209,6 +4953,10 @@
       "id": "en-friend",
       "word": "friend",
       "band": "year1",
+      "feature_tags": [
+        "early_exception",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "fr",
         "ie",
@@ -4229,6 +4977,9 @@
       "id": "en-frisky",
       "word": "frisky",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "fris",
         "ky"
@@ -4248,6 +4999,9 @@
       "id": "en-fruit",
       "word": "fruit",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "fr",
         "ui",
@@ -4268,6 +5022,9 @@
       "id": "en-fudge",
       "word": "fudge",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "f",
         "u",
@@ -4288,6 +5045,10 @@
       "id": "en-full",
       "word": "full",
       "band": "year1",
+      "feature_tags": [
+        "early_exception",
+        "consonant_double"
+      ],
       "visual_units": [
         "f",
         "ull"
@@ -4307,6 +5068,10 @@
       "id": "en-funny",
       "word": "funny",
       "band": "year1",
+      "feature_tags": [
+        "suffix_family",
+        "consonant_double"
+      ],
       "visual_units": [
         "fun",
         "ny"
@@ -4326,6 +5091,9 @@
       "id": "en-garden",
       "word": "garden",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "gar",
         "den"
@@ -4345,6 +5113,9 @@
       "id": "en-girl",
       "word": "girl",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "girl"
       ],
@@ -4363,6 +5134,9 @@
       "id": "en-give",
       "word": "give",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "give"
       ],
@@ -4381,6 +5155,10 @@
       "id": "en-gnat",
       "word": "gnat",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "gn",
         "at"
@@ -4400,6 +5178,11 @@
       "id": "en-gnaw",
       "word": "gnaw",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "vowel_digraph",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "gn",
         "aw"
@@ -4419,6 +5202,9 @@
       "id": "en-go",
       "word": "go",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "go"
       ],
@@ -4437,6 +5223,9 @@
       "id": "en-goal",
       "word": "goal",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "g",
         "oa",
@@ -4457,6 +5246,9 @@
       "id": "en-goes",
       "word": "goes",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "go",
         "es"
@@ -4476,6 +5268,9 @@
       "id": "en-gold",
       "word": "gold",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "g",
         "old"
@@ -4495,6 +5290,9 @@
       "id": "en-good",
       "word": "good",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "g",
         "oo",
@@ -4515,6 +5313,10 @@
       "id": "en-government",
       "word": "government",
       "band": "year5_6",
+      "feature_tags": [
+        "suffix_family",
+        "multisyllable"
+      ],
       "visual_units": [
         "govern",
         "ment"
@@ -4534,6 +5336,9 @@
       "id": "en-grammar",
       "word": "grammar",
       "band": "year3_4",
+      "feature_tags": [
+        "consonant_double"
+      ],
       "visual_units": [
         "gram",
         "mar"
@@ -4553,6 +5358,10 @@
       "id": "en-grass",
       "word": "grass",
       "band": "year2",
+      "feature_tags": [
+        "early_exception",
+        "consonant_double"
+      ],
       "visual_units": [
         "gr",
         "ass"
@@ -4572,6 +5381,10 @@
       "id": "en-great",
       "word": "great",
       "band": "year2",
+      "feature_tags": [
+        "early_exception",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "gr",
         "ea",
@@ -4592,6 +5405,9 @@
       "id": "en-green",
       "word": "green",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "gr",
         "ee",
@@ -4612,6 +5428,9 @@
       "id": "en-grew",
       "word": "grew",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "gr",
         "ew"
@@ -4631,6 +5450,9 @@
       "id": "en-group",
       "word": "group",
       "band": "year3_4",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "gr",
         "ou",
@@ -4651,6 +5473,9 @@
       "id": "en-grow",
       "word": "grow",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "gr",
         "ow"
@@ -4670,6 +5495,10 @@
       "id": "en-guarantee",
       "word": "guarantee",
       "band": "year5_6",
+      "feature_tags": [
+        "vowel_digraph",
+        "multisyllable"
+      ],
       "visual_units": [
         "guar",
         "an",
@@ -4690,6 +5519,9 @@
       "id": "en-guard",
       "word": "guard",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "guar",
         "d"
@@ -4709,6 +5541,9 @@
       "id": "en-guide",
       "word": "guide",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "g",
         "ui",
@@ -4729,6 +5564,9 @@
       "id": "en-gym",
       "word": "gym",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "gym"
       ],
@@ -4747,6 +5585,9 @@
       "id": "en-hair",
       "word": "hair",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "h",
         "air"
@@ -4766,6 +5607,9 @@
       "id": "en-half",
       "word": "half",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "ha",
         "lf"
@@ -4785,6 +5629,10 @@
       "id": "en-happy",
       "word": "happy",
       "band": "year1",
+      "feature_tags": [
+        "suffix_family",
+        "consonant_double"
+      ],
       "visual_units": [
         "hap",
         "py"
@@ -4804,6 +5652,9 @@
       "id": "en-harass",
       "word": "harass",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double"
+      ],
       "visual_units": [
         "har",
         "ass"
@@ -4823,6 +5674,9 @@
       "id": "en-has",
       "word": "has",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "has"
       ],
@@ -4841,6 +5695,9 @@
       "id": "en-have",
       "word": "have",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "have"
       ],
@@ -4859,6 +5716,9 @@
       "id": "en-he",
       "word": "he",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "he"
       ],
@@ -4877,6 +5737,9 @@
       "id": "en-head",
       "word": "head",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "h",
         "ea",
@@ -4897,6 +5760,10 @@
       "id": "en-hear",
       "word": "hear",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph",
+        "homophone_context"
+      ],
       "visual_units": [
         "h",
         "ear"
@@ -4916,6 +5783,9 @@
       "id": "en-heard",
       "word": "heard",
       "band": "year3_4",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "h",
         "ear",
@@ -4936,6 +5806,9 @@
       "id": "en-heart",
       "word": "heart",
       "band": "year3_4",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "h",
         "ear",
@@ -4956,6 +5829,10 @@
       "id": "en-height",
       "word": "height",
       "band": "year3_4",
+      "feature_tags": [
+        "vowel_digraph",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "h",
         "eigh",
@@ -4976,6 +5853,10 @@
       "id": "en-here",
       "word": "here",
       "band": "year1",
+      "feature_tags": [
+        "early_exception",
+        "homophone_context"
+      ],
       "visual_units": [
         "h",
         "ere"
@@ -4995,6 +5876,11 @@
       "id": "en-high",
       "word": "high",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern",
+        "vowel_digraph",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "h",
         "igh"
@@ -5014,6 +5900,9 @@
       "id": "en-hiked",
       "word": "hiked",
       "band": "year2",
+      "feature_tags": [
+        "suffix_family"
+      ],
       "visual_units": [
         "hike",
         "d"
@@ -5033,6 +5922,9 @@
       "id": "en-hiking",
       "word": "hiking",
       "band": "year2",
+      "feature_tags": [
+        "suffix_family"
+      ],
       "visual_units": [
         "hik",
         "ing"
@@ -5052,6 +5944,9 @@
       "id": "en-hindrance",
       "word": "hindrance",
       "band": "year5_6",
+      "feature_tags": [
+        "multisyllable"
+      ],
       "visual_units": [
         "hin",
         "drance"
@@ -5071,6 +5966,9 @@
       "id": "en-his",
       "word": "his",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "his"
       ],
@@ -5089,6 +5987,9 @@
       "id": "en-history",
       "word": "history",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "his",
         "tor",
@@ -5109,6 +6010,9 @@
       "id": "en-hold",
       "word": "hold",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "h",
         "old"
@@ -5128,6 +6032,9 @@
       "id": "en-hole",
       "word": "hole",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "hole"
       ],
@@ -5146,6 +6053,9 @@
       "id": "en-home",
       "word": "home",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "home"
       ],
@@ -5164,6 +6074,9 @@
       "id": "en-honk",
       "word": "honk",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "honk"
       ],
@@ -5182,6 +6095,9 @@
       "id": "en-hope",
       "word": "hope",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "hope"
       ],
@@ -5200,6 +6116,10 @@
       "id": "en-hopeless",
       "word": "hopeless",
       "band": "year2",
+      "feature_tags": [
+        "suffix_family",
+        "consonant_double"
+      ],
       "visual_units": [
         "hope",
         "less"
@@ -5219,6 +6139,9 @@
       "id": "en-hospital",
       "word": "hospital",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "hos",
         "pit",
@@ -5239,6 +6162,10 @@
       "id": "en-hour",
       "word": "hour",
       "band": "year2",
+      "feature_tags": [
+        "early_exception",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "h",
         "our"
@@ -5258,6 +6185,10 @@
       "id": "en-house",
       "word": "house",
       "band": "year1",
+      "feature_tags": [
+        "early_exception",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "h",
         "ouse"
@@ -5277,6 +6208,9 @@
       "id": "en-how",
       "word": "how",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "how"
       ],
@@ -5295,6 +6229,9 @@
       "id": "en-huge",
       "word": "huge",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "huge"
       ],
@@ -5313,6 +6250,9 @@
       "id": "en-hurt",
       "word": "hurt",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "hurt"
       ],
@@ -5331,6 +6271,9 @@
       "id": "en-hutch",
       "word": "hutch",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "h",
         "u",
@@ -5351,6 +6294,9 @@
       "id": "en-i",
       "word": "i",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "i"
       ],
@@ -5369,6 +6315,9 @@
       "id": "en-ice",
       "word": "ice",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "ice"
       ],
@@ -5387,6 +6336,9 @@
       "id": "en-identity",
       "word": "identity",
       "band": "year5_6",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "i",
         "den",
@@ -5408,6 +6360,9 @@
       "id": "en-imagine",
       "word": "imagine",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "im",
         "ag",
@@ -5428,6 +6383,10 @@
       "id": "en-immediate",
       "word": "immediate",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double",
+        "multisyllable"
+      ],
       "visual_units": [
         "im",
         "me",
@@ -5449,6 +6408,11 @@
       "id": "en-immediately",
       "word": "immediately",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double",
+        "suffix_family",
+        "multisyllable"
+      ],
       "visual_units": [
         "immediate",
         "ly"
@@ -5468,6 +6432,9 @@
       "id": "en-important",
       "word": "important",
       "band": "year3_4",
+      "feature_tags": [
+        "multisyllable"
+      ],
       "visual_units": [
         "im",
         "por",
@@ -5488,6 +6455,9 @@
       "id": "en-improve",
       "word": "improve",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "im",
         "prove"
@@ -5507,6 +6477,9 @@
       "id": "en-increase",
       "word": "increase",
       "band": "year3_4",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "in",
         "crease"
@@ -5526,6 +6499,9 @@
       "id": "en-individual",
       "word": "individual",
       "band": "year5_6",
+      "feature_tags": [
+        "multisyllable"
+      ],
       "visual_units": [
         "in",
         "di",
@@ -5547,6 +6523,9 @@
       "id": "en-instead",
       "word": "instead",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "in",
         "stead"
@@ -5566,6 +6545,9 @@
       "id": "en-interest",
       "word": "interest",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "in",
         "ter",
@@ -5586,6 +6568,9 @@
       "id": "en-interfere",
       "word": "interfere",
       "band": "year5_6",
+      "feature_tags": [
+        "multisyllable"
+      ],
       "visual_units": [
         "in",
         "ter",
@@ -5606,6 +6591,10 @@
       "id": "en-interrupt",
       "word": "interrupt",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double",
+        "multisyllable"
+      ],
       "visual_units": [
         "in",
         "ter",
@@ -5626,6 +6615,9 @@
       "id": "en-is",
       "word": "is",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "is"
       ],
@@ -5644,6 +6636,9 @@
       "id": "en-island",
       "word": "island",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "is",
         "land"
@@ -5663,6 +6658,9 @@
       "id": "en-join",
       "word": "join",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "j",
         "oi",
@@ -5683,6 +6681,10 @@
       "id": "en-july",
       "word": "july",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "suffix_family"
+      ],
       "visual_units": [
         "ju",
         "ly"
@@ -5702,6 +6704,9 @@
       "id": "en-june",
       "word": "june",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "june"
       ],
@@ -5720,6 +6725,9 @@
       "id": "en-kent",
       "word": "kent",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "kent"
       ],
@@ -5738,6 +6746,9 @@
       "id": "en-kind",
       "word": "kind",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "k",
         "ind"
@@ -5757,6 +6768,9 @@
       "id": "en-kit",
       "word": "kit",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "kit"
       ],
@@ -5775,6 +6789,9 @@
       "id": "en-kitchen",
       "word": "kitchen",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "kit",
         "chen"
@@ -5794,6 +6811,11 @@
       "id": "en-knee",
       "word": "knee",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "vowel_digraph",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "kn",
         "ee"
@@ -5813,6 +6835,11 @@
       "id": "en-knight",
       "word": "knight",
       "band": "year2",
+      "feature_tags": [
+        "homophone_context",
+        "vowel_digraph",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "kn",
         "igh",
@@ -5833,6 +6860,10 @@
       "id": "en-knock",
       "word": "knock",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "kn",
         "ock"
@@ -5852,6 +6883,11 @@
       "id": "en-know",
       "word": "know",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "vowel_digraph",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "kn",
         "ow"
@@ -5871,6 +6907,11 @@
       "id": "en-knowledge",
       "word": "knowledge",
       "band": "year3_4",
+      "feature_tags": [
+        "vowel_digraph",
+        "orthographic_irregularity",
+        "multisyllable"
+      ],
       "visual_units": [
         "know",
         "ledge"
@@ -5890,6 +6931,9 @@
       "id": "en-language",
       "word": "language",
       "band": "year5_6",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "lan",
         "guage"
@@ -5909,6 +6953,9 @@
       "id": "en-last",
       "word": "last",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "l",
         "ast"
@@ -5928,6 +6975,9 @@
       "id": "en-learn",
       "word": "learn",
       "band": "year3_4",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "l",
         "ear",
@@ -5948,6 +6998,9 @@
       "id": "en-leisure",
       "word": "leisure",
       "band": "year5_6",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "lei",
         "sure"
@@ -5967,6 +7020,9 @@
       "id": "en-length",
       "word": "length",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "leng",
         "th"
@@ -5986,6 +7042,9 @@
       "id": "en-library",
       "word": "library",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "li",
         "brar",
@@ -6006,6 +7065,10 @@
       "id": "en-lie",
       "word": "lie",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "lie"
       ],
@@ -6024,6 +7087,11 @@
       "id": "en-light",
       "word": "light",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern",
+        "vowel_digraph",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "l",
         "igh",
@@ -6044,6 +7112,12 @@
       "id": "en-lightning",
       "word": "lightning",
       "band": "year5_6",
+      "feature_tags": [
+        "suffix_family",
+        "vowel_digraph",
+        "orthographic_irregularity",
+        "multisyllable"
+      ],
       "visual_units": [
         "light",
         "ning"
@@ -6063,6 +7137,9 @@
       "id": "en-like",
       "word": "like",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "like"
       ],
@@ -6081,6 +7158,10 @@
       "id": "en-little",
       "word": "little",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "consonant_double"
+      ],
       "visual_units": [
         "lit",
         "tle"
@@ -6100,6 +7181,9 @@
       "id": "en-live",
       "word": "live",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "live"
       ],
@@ -6118,6 +7202,9 @@
       "id": "en-love",
       "word": "love",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "l",
         "ove"
@@ -6137,6 +7224,9 @@
       "id": "en-made",
       "word": "made",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "made"
       ],
@@ -6155,6 +7245,9 @@
       "id": "en-many",
       "word": "many",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "man",
         "y"
@@ -6174,6 +7267,12 @@
       "id": "en-marvellous",
       "word": "marvellous",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double",
+        "suffix_family",
+        "vowel_digraph",
+        "multisyllable"
+      ],
       "visual_units": [
         "mar",
         "vel",
@@ -6194,6 +7293,9 @@
       "id": "en-material",
       "word": "material",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "ma",
         "ter",
@@ -6215,6 +7317,9 @@
       "id": "en-me",
       "word": "me",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "me"
       ],
@@ -6233,6 +7338,9 @@
       "id": "en-meant",
       "word": "meant",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "m",
         "ea",
@@ -6253,6 +7361,10 @@
       "id": "en-measure",
       "word": "measure",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "mea",
         "sure"
@@ -6272,6 +7384,9 @@
       "id": "en-meat",
       "word": "meat",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "m",
         "ea",
@@ -6292,6 +7407,9 @@
       "id": "en-medicine",
       "word": "medicine",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "med",
         "i",
@@ -6312,6 +7430,9 @@
       "id": "en-meet",
       "word": "meet",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "m",
         "ee",
@@ -6332,6 +7453,9 @@
       "id": "en-mention",
       "word": "mention",
       "band": "year3_4",
+      "feature_tags": [
+        "suffix_family"
+      ],
       "visual_units": [
         "men",
         "tion"
@@ -6351,6 +7475,9 @@
       "id": "en-metal",
       "word": "metal",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "met",
         "al"
@@ -6370,6 +7497,10 @@
       "id": "en-middle",
       "word": "middle",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "consonant_double"
+      ],
       "visual_units": [
         "mid",
         "dle"
@@ -6389,6 +7520,9 @@
       "id": "en-mind",
       "word": "mind",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "m",
         "ind"
@@ -6408,6 +7542,9 @@
       "id": "en-minute",
       "word": "minute",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "min",
         "ute"
@@ -6427,6 +7564,12 @@
       "id": "en-mischievous",
       "word": "mischievous",
       "band": "year5_6",
+      "feature_tags": [
+        "suffix_family",
+        "prefix_family",
+        "vowel_digraph",
+        "multisyllable"
+      ],
       "visual_units": [
         "mis",
         "chie",
@@ -6447,6 +7590,10 @@
       "id": "en-miss",
       "word": "miss",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern",
+        "consonant_double"
+      ],
       "visual_units": [
         "m",
         "iss"
@@ -6466,6 +7613,9 @@
       "id": "en-money",
       "word": "money",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "mon",
         "ey"
@@ -6485,6 +7635,9 @@
       "id": "en-moon",
       "word": "moon",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "m",
         "oo",
@@ -6505,6 +7658,9 @@
       "id": "en-more",
       "word": "more",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "more"
       ],
@@ -6523,6 +7679,9 @@
       "id": "en-most",
       "word": "most",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "m",
         "ost"
@@ -6542,6 +7701,10 @@
       "id": "en-motion",
       "word": "motion",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "suffix_family"
+      ],
       "visual_units": [
         "mo",
         "tion"
@@ -6561,6 +7724,9 @@
       "id": "en-mouth",
       "word": "mouth",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "m",
         "ou",
@@ -6581,6 +7747,9 @@
       "id": "en-move",
       "word": "move",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "m",
         "ove"
@@ -6600,6 +7769,9 @@
       "id": "en-mr",
       "word": "mr",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "mr"
       ],
@@ -6618,6 +7790,9 @@
       "id": "en-mrs",
       "word": "mrs",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "mrs"
       ],
@@ -6636,6 +7811,9 @@
       "id": "en-muscle",
       "word": "muscle",
       "band": "year5_6",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "mus",
         "cle"
@@ -6655,6 +7833,9 @@
       "id": "en-my",
       "word": "my",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "my"
       ],
@@ -6673,6 +7854,9 @@
       "id": "en-myth",
       "word": "myth",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "my",
         "th"
@@ -6692,6 +7876,9 @@
       "id": "en-national",
       "word": "national",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "na",
         "tion",
@@ -6712,6 +7899,9 @@
       "id": "en-natural",
       "word": "natural",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "nat",
         "ur",
@@ -6732,6 +7922,10 @@
       "id": "en-naughty",
       "word": "naughty",
       "band": "year3_4",
+      "feature_tags": [
+        "vowel_digraph",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "naugh",
         "ty"
@@ -6751,6 +7945,9 @@
       "id": "en-near",
       "word": "near",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "n",
         "ear"
@@ -6770,6 +7967,10 @@
       "id": "en-necessary",
       "word": "necessary",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double",
+        "multisyllable"
+      ],
       "visual_units": [
         "ne",
         "ces",
@@ -6791,6 +7992,11 @@
       "id": "en-neighbour",
       "word": "neighbour",
       "band": "year5_6",
+      "feature_tags": [
+        "vowel_digraph",
+        "orthographic_irregularity",
+        "multisyllable"
+      ],
       "visual_units": [
         "neigh",
         "bour"
@@ -6810,6 +8016,9 @@
       "id": "en-new",
       "word": "new",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "new"
       ],
@@ -6828,6 +8037,9 @@
       "id": "en-nicer",
       "word": "nicer",
       "band": "year2",
+      "feature_tags": [
+        "suffix_family"
+      ],
       "visual_units": [
         "nice",
         "r"
@@ -6847,6 +8059,9 @@
       "id": "en-nicest",
       "word": "nicest",
       "band": "year2",
+      "feature_tags": [
+        "suffix_family"
+      ],
       "visual_units": [
         "nice",
         "st"
@@ -6866,6 +8081,12 @@
       "id": "en-night",
       "word": "night",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern",
+        "vowel_digraph",
+        "orthographic_irregularity",
+        "homophone_context"
+      ],
       "visual_units": [
         "n",
         "igh",
@@ -6886,6 +8107,9 @@
       "id": "en-no",
       "word": "no",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "no"
       ],
@@ -6904,6 +8128,9 @@
       "id": "en-nostril",
       "word": "nostril",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "nos",
         "tril"
@@ -6923,6 +8150,9 @@
       "id": "en-notch",
       "word": "notch",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "n",
         "o",
@@ -6943,6 +8173,9 @@
       "id": "en-notice",
       "word": "notice",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "no",
         "tice"
@@ -6962,6 +8195,9 @@
       "id": "en-now",
       "word": "now",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "now"
       ],
@@ -6980,6 +8216,9 @@
       "id": "en-nuisance",
       "word": "nuisance",
       "band": "year5_6",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "nui",
         "sance"
@@ -6999,6 +8238,10 @@
       "id": "en-occasion",
       "word": "occasion",
       "band": "year3_4",
+      "feature_tags": [
+        "consonant_double",
+        "suffix_family"
+      ],
       "visual_units": [
         "oc",
         "ca",
@@ -7019,6 +8262,11 @@
       "id": "en-occasionally",
       "word": "occasionally",
       "band": "year3_4",
+      "feature_tags": [
+        "consonant_double",
+        "suffix_family",
+        "multisyllable"
+      ],
       "visual_units": [
         "oc",
         "ca",
@@ -7041,6 +8289,9 @@
       "id": "en-occupy",
       "word": "occupy",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double"
+      ],
       "visual_units": [
         "oc",
         "cu",
@@ -7061,6 +8312,9 @@
       "id": "en-occur",
       "word": "occur",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double"
+      ],
       "visual_units": [
         "oc",
         "cur"
@@ -7080,6 +8334,9 @@
       "id": "en-of",
       "word": "of",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "of"
       ],
@@ -7098,6 +8355,10 @@
       "id": "en-off",
       "word": "off",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern",
+        "consonant_double"
+      ],
       "visual_units": [
         "off"
       ],
@@ -7116,6 +8377,9 @@
       "id": "en-often",
       "word": "often",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "of",
         "ten"
@@ -7135,6 +8399,9 @@
       "id": "en-oil",
       "word": "oil",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "oil"
       ],
@@ -7153,6 +8420,9 @@
       "id": "en-old",
       "word": "old",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "old"
       ],
@@ -7171,6 +8441,9 @@
       "id": "en-once",
       "word": "once",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "on",
         "ce"
@@ -7190,6 +8463,10 @@
       "id": "en-one",
       "word": "one",
       "band": "year1",
+      "feature_tags": [
+        "early_exception",
+        "homophone_context"
+      ],
       "visual_units": [
         "one"
       ],
@@ -7208,6 +8485,10 @@
       "id": "en-only",
       "word": "only",
       "band": "year2",
+      "feature_tags": [
+        "early_exception",
+        "suffix_family"
+      ],
       "visual_units": [
         "on",
         "ly"
@@ -7227,6 +8508,10 @@
       "id": "en-opportunity",
       "word": "opportunity",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double",
+        "multisyllable"
+      ],
       "visual_units": [
         "op",
         "por",
@@ -7248,6 +8533,9 @@
       "id": "en-opposite",
       "word": "opposite",
       "band": "year3_4",
+      "feature_tags": [
+        "consonant_double"
+      ],
       "visual_units": [
         "op",
         "po",
@@ -7268,6 +8556,9 @@
       "id": "en-ordinary",
       "word": "ordinary",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "or",
         "di",
@@ -7289,6 +8580,10 @@
       "id": "en-our",
       "word": "our",
       "band": "year1",
+      "feature_tags": [
+        "early_exception",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "our"
       ],
@@ -7307,6 +8602,9 @@
       "id": "en-out",
       "word": "out",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "out"
       ],
@@ -7325,6 +8623,9 @@
       "id": "en-own",
       "word": "own",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "own"
       ],
@@ -7343,6 +8644,9 @@
       "id": "en-paid",
       "word": "paid",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "p",
         "ai",
@@ -7363,6 +8667,9 @@
       "id": "en-pair",
       "word": "pair",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "p",
         "air"
@@ -7382,6 +8689,9 @@
       "id": "en-parents",
       "word": "parents",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "par",
         "ents"
@@ -7401,6 +8711,9 @@
       "id": "en-park",
       "word": "park",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "park"
       ],
@@ -7419,6 +8732,10 @@
       "id": "en-parliament",
       "word": "parliament",
       "band": "year5_6",
+      "feature_tags": [
+        "suffix_family",
+        "multisyllable"
+      ],
       "visual_units": [
         "par",
         "lia",
@@ -7439,6 +8756,9 @@
       "id": "en-particular",
       "word": "particular",
       "band": "year3_4",
+      "feature_tags": [
+        "multisyllable"
+      ],
       "visual_units": [
         "par",
         "tic",
@@ -7460,6 +8780,9 @@
       "id": "en-party",
       "word": "party",
       "band": "year1",
+      "feature_tags": [
+        "suffix_family"
+      ],
       "visual_units": [
         "par",
         "ty"
@@ -7479,6 +8802,10 @@
       "id": "en-pass",
       "word": "pass",
       "band": "year2",
+      "feature_tags": [
+        "early_exception",
+        "consonant_double"
+      ],
       "visual_units": [
         "p",
         "ass"
@@ -7498,6 +8825,9 @@
       "id": "en-past",
       "word": "past",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "p",
         "ast"
@@ -7517,6 +8847,9 @@
       "id": "en-path",
       "word": "path",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "p",
         "ath"
@@ -7536,6 +8869,9 @@
       "id": "en-peculiar",
       "word": "peculiar",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "pe",
         "cu",
@@ -7556,6 +8892,9 @@
       "id": "en-pedal",
       "word": "pedal",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "ped",
         "al"
@@ -7575,6 +8914,9 @@
       "id": "en-pencil",
       "word": "pencil",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "pen",
         "cil"
@@ -7594,6 +8936,9 @@
       "id": "en-people",
       "word": "people",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "peo",
         "ple"
@@ -7613,6 +8958,9 @@
       "id": "en-perhaps",
       "word": "perhaps",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "per",
         "haps"
@@ -7632,6 +8980,9 @@
       "id": "en-persuade",
       "word": "persuade",
       "band": "year5_6",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "per",
         "suade"
@@ -7651,6 +9002,9 @@
       "id": "en-phonics",
       "word": "phonics",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "phon",
         "ics"
@@ -7670,6 +9024,9 @@
       "id": "en-physical",
       "word": "physical",
       "band": "year5_6",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "phys",
         "ical"
@@ -7689,6 +9046,10 @@
       "id": "en-pie",
       "word": "pie",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "pie"
       ],
@@ -7707,6 +9068,9 @@
       "id": "en-plant",
       "word": "plant",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "pl",
         "ant"
@@ -7726,6 +9090,9 @@
       "id": "en-play",
       "word": "play",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "pl",
         "ay"
@@ -7745,6 +9112,10 @@
       "id": "en-playful",
       "word": "playful",
       "band": "year2",
+      "feature_tags": [
+        "suffix_family",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "play",
         "ful"
@@ -7764,6 +9135,11 @@
       "id": "en-playground",
       "word": "playground",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern",
+        "vowel_digraph",
+        "multisyllable"
+      ],
       "visual_units": [
         "play",
         "ground"
@@ -7783,6 +9159,10 @@
       "id": "en-pleasure",
       "word": "pleasure",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "plea",
         "sure"
@@ -7802,6 +9182,9 @@
       "id": "en-pocket",
       "word": "pocket",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "pock",
         "et"
@@ -7821,6 +9204,9 @@
       "id": "en-point",
       "word": "point",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "p",
         "oi",
@@ -7841,6 +9227,9 @@
       "id": "en-pool",
       "word": "pool",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "p",
         "oo",
@@ -7861,6 +9250,10 @@
       "id": "en-poor",
       "word": "poor",
       "band": "year2",
+      "feature_tags": [
+        "early_exception",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "p",
         "oor"
@@ -7880,6 +9273,9 @@
       "id": "en-popular",
       "word": "popular",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "pop",
         "u",
@@ -7900,6 +9296,9 @@
       "id": "en-position",
       "word": "position",
       "band": "year3_4",
+      "feature_tags": [
+        "suffix_family"
+      ],
       "visual_units": [
         "po",
         "si",
@@ -7920,6 +9319,9 @@
       "id": "en-possess",
       "word": "possess",
       "band": "year3_4",
+      "feature_tags": [
+        "consonant_double"
+      ],
       "visual_units": [
         "pos",
         "sess"
@@ -7939,6 +9341,11 @@
       "id": "en-possession",
       "word": "possession",
       "band": "year3_4",
+      "feature_tags": [
+        "consonant_double",
+        "suffix_family",
+        "multisyllable"
+      ],
       "visual_units": [
         "pos",
         "ses",
@@ -7959,6 +9366,10 @@
       "id": "en-possible",
       "word": "possible",
       "band": "year3_4",
+      "feature_tags": [
+        "consonant_double",
+        "suffix_family"
+      ],
       "visual_units": [
         "pos",
         "si",
@@ -7979,6 +9390,9 @@
       "id": "en-potatoes",
       "word": "potatoes",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "po",
         "ta",
@@ -7999,6 +9413,10 @@
       "id": "en-prejudice",
       "word": "prejudice",
       "band": "year5_6",
+      "feature_tags": [
+        "prefix_family",
+        "multisyllable"
+      ],
       "visual_units": [
         "pre",
         "ju",
@@ -8019,6 +9437,10 @@
       "id": "en-pressure",
       "word": "pressure",
       "band": "year3_4",
+      "feature_tags": [
+        "consonant_double",
+        "prefix_family"
+      ],
       "visual_units": [
         "pres",
         "sure"
@@ -8038,6 +9460,11 @@
       "id": "en-pretty",
       "word": "pretty",
       "band": "year2",
+      "feature_tags": [
+        "early_exception",
+        "consonant_double",
+        "prefix_family"
+      ],
       "visual_units": [
         "pret",
         "ty"
@@ -8057,6 +9484,9 @@
       "id": "en-privilege",
       "word": "privilege",
       "band": "year5_6",
+      "feature_tags": [
+        "multisyllable"
+      ],
       "visual_units": [
         "priv",
         "i",
@@ -8077,6 +9507,9 @@
       "id": "en-probably",
       "word": "probably",
       "band": "year3_4",
+      "feature_tags": [
+        "suffix_family"
+      ],
       "visual_units": [
         "prob",
         "ab",
@@ -8097,6 +9530,11 @@
       "id": "en-profession",
       "word": "profession",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double",
+        "suffix_family",
+        "multisyllable"
+      ],
       "visual_units": [
         "pro",
         "fes",
@@ -8117,6 +9555,10 @@
       "id": "en-programme",
       "word": "programme",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double",
+        "multisyllable"
+      ],
       "visual_units": [
         "pro",
         "gramme"
@@ -8136,6 +9578,9 @@
       "id": "en-promise",
       "word": "promise",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "prom",
         "ise"
@@ -8155,6 +9600,10 @@
       "id": "en-pronunciation",
       "word": "pronunciation",
       "band": "year5_6",
+      "feature_tags": [
+        "suffix_family",
+        "multisyllable"
+      ],
       "visual_units": [
         "pro",
         "nun",
@@ -8177,6 +9626,9 @@
       "id": "en-prove",
       "word": "prove",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "pr",
         "ove"
@@ -8196,6 +9648,10 @@
       "id": "en-pull",
       "word": "pull",
       "band": "year1",
+      "feature_tags": [
+        "early_exception",
+        "consonant_double"
+      ],
       "visual_units": [
         "p",
         "ull"
@@ -8215,6 +9671,9 @@
       "id": "en-purpose",
       "word": "purpose",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "pur",
         "pose"
@@ -8234,6 +9693,9 @@
       "id": "en-push",
       "word": "push",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "p",
         "ush"
@@ -8253,6 +9715,9 @@
       "id": "en-put",
       "word": "put",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "put"
       ],
@@ -8271,6 +9736,9 @@
       "id": "en-quarter",
       "word": "quarter",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "quar",
         "ter"
@@ -8290,6 +9758,9 @@
       "id": "en-question",
       "word": "question",
       "band": "year3_4",
+      "feature_tags": [
+        "suffix_family"
+      ],
       "visual_units": [
         "ques",
         "tion"
@@ -8309,6 +9780,9 @@
       "id": "en-queue",
       "word": "queue",
       "band": "year5_6",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "queue"
       ],
@@ -8327,6 +9801,10 @@
       "id": "en-quiet",
       "word": "quiet",
       "band": "year2",
+      "feature_tags": [
+        "homophone_context",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "qui",
         "et"
@@ -8346,6 +9824,9 @@
       "id": "en-quite",
       "word": "quite",
       "band": "year2",
+      "feature_tags": [
+        "homophone_context"
+      ],
       "visual_units": [
         "qu",
         "ite"
@@ -8365,6 +9846,10 @@
       "id": "en-rabbit",
       "word": "rabbit",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern",
+        "consonant_double"
+      ],
       "visual_units": [
         "rab",
         "bit"
@@ -8384,6 +9869,9 @@
       "id": "en-race",
       "word": "race",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "race"
       ],
@@ -8402,6 +9890,9 @@
       "id": "en-rain",
       "word": "rain",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "r",
         "ai",
@@ -8422,6 +9913,9 @@
       "id": "en-recent",
       "word": "recent",
       "band": "year3_4",
+      "feature_tags": [
+        "prefix_family"
+      ],
       "visual_units": [
         "re",
         "cent"
@@ -8441,6 +9935,10 @@
       "id": "en-recognise",
       "word": "recognise",
       "band": "year5_6",
+      "feature_tags": [
+        "prefix_family",
+        "multisyllable"
+      ],
       "visual_units": [
         "rec",
         "og",
@@ -8461,6 +9959,11 @@
       "id": "en-recommend",
       "word": "recommend",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double",
+        "prefix_family",
+        "multisyllable"
+      ],
       "visual_units": [
         "rec",
         "om",
@@ -8481,6 +9984,9 @@
       "id": "en-regular",
       "word": "regular",
       "band": "year3_4",
+      "feature_tags": [
+        "prefix_family"
+      ],
       "visual_units": [
         "reg",
         "u",
@@ -8501,6 +10007,9 @@
       "id": "en-reign",
       "word": "reign",
       "band": "year3_4",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "r",
         "eign"
@@ -8520,6 +10029,9 @@
       "id": "en-relevant",
       "word": "relevant",
       "band": "year5_6",
+      "feature_tags": [
+        "prefix_family"
+      ],
       "visual_units": [
         "rel",
         "e",
@@ -8540,6 +10052,9 @@
       "id": "en-remember",
       "word": "remember",
       "band": "year3_4",
+      "feature_tags": [
+        "prefix_family"
+      ],
       "visual_units": [
         "re",
         "mem",
@@ -8560,6 +10075,11 @@
       "id": "en-replies",
       "word": "replies",
       "band": "year2",
+      "feature_tags": [
+        "suffix_family",
+        "prefix_family",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "rep",
         "lies"
@@ -8579,6 +10099,10 @@
       "id": "en-reply",
       "word": "reply",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "suffix_family"
+      ],
       "visual_units": [
         "re",
         "ply"
@@ -8598,6 +10122,10 @@
       "id": "en-rescue",
       "word": "rescue",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph",
+        "prefix_family"
+      ],
       "visual_units": [
         "res",
         "cue"
@@ -8617,6 +10145,11 @@
       "id": "en-restaurant",
       "word": "restaurant",
       "band": "year5_6",
+      "feature_tags": [
+        "prefix_family",
+        "vowel_digraph",
+        "multisyllable"
+      ],
       "visual_units": [
         "res",
         "tau",
@@ -8637,6 +10170,9 @@
       "id": "en-rhyme",
       "word": "rhyme",
       "band": "year5_6",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "rh",
         "yme"
@@ -8656,6 +10192,9 @@
       "id": "en-rhythm",
       "word": "rhythm",
       "band": "year5_6",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "rhyth",
         "m"
@@ -8675,6 +10214,9 @@
       "id": "en-ride",
       "word": "ride",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "ride"
       ],
@@ -8693,6 +10235,11 @@
       "id": "en-right",
       "word": "right",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern",
+        "vowel_digraph",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "r",
         "igh",
@@ -8713,6 +10260,9 @@
       "id": "en-road",
       "word": "road",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "r",
         "oa",
@@ -8733,6 +10283,9 @@
       "id": "en-rude",
       "word": "rude",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "rude"
       ],
@@ -8751,6 +10304,9 @@
       "id": "en-rule",
       "word": "rule",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "rule"
       ],
@@ -8769,6 +10325,9 @@
       "id": "en-sacrifice",
       "word": "sacrifice",
       "band": "year5_6",
+      "feature_tags": [
+        "multisyllable"
+      ],
       "visual_units": [
         "sac",
         "ri",
@@ -8789,6 +10348,10 @@
       "id": "en-sadness",
       "word": "sadness",
       "band": "year2",
+      "feature_tags": [
+        "suffix_family",
+        "consonant_double"
+      ],
       "visual_units": [
         "sad",
         "ness"
@@ -8808,6 +10371,9 @@
       "id": "en-safe",
       "word": "safe",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "safe"
       ],
@@ -8826,6 +10392,10 @@
       "id": "en-said",
       "word": "said",
       "band": "year1",
+      "feature_tags": [
+        "early_exception",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "s",
         "ai",
@@ -8846,6 +10416,9 @@
       "id": "en-same",
       "word": "same",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "same"
       ],
@@ -8864,6 +10437,9 @@
       "id": "en-saw",
       "word": "saw",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "saw"
       ],
@@ -8882,6 +10458,9 @@
       "id": "en-say",
       "word": "say",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "say"
       ],
@@ -8900,6 +10479,10 @@
       "id": "en-says",
       "word": "says",
       "band": "year1",
+      "feature_tags": [
+        "early_exception",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "s",
         "ay",
@@ -8920,6 +10503,10 @@
       "id": "en-scared",
       "word": "scared",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph",
+        "suffix_family"
+      ],
       "visual_units": [
         "scare",
         "d"
@@ -8939,6 +10526,10 @@
       "id": "en-school",
       "word": "school",
       "band": "year1",
+      "feature_tags": [
+        "early_exception",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "sch",
         "oo",
@@ -8959,6 +10550,9 @@
       "id": "en-score",
       "word": "score",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "score"
       ],
@@ -8977,6 +10571,10 @@
       "id": "en-sea",
       "word": "sea",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph",
+        "homophone_context"
+      ],
       "visual_units": [
         "sea"
       ],
@@ -8995,6 +10593,9 @@
       "id": "en-secretary",
       "word": "secretary",
       "band": "year5_6",
+      "feature_tags": [
+        "multisyllable"
+      ],
       "visual_units": [
         "sec",
         "re",
@@ -9015,6 +10616,10 @@
       "id": "en-section",
       "word": "section",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "suffix_family"
+      ],
       "visual_units": [
         "sec",
         "tion"
@@ -9034,6 +10639,10 @@
       "id": "en-see",
       "word": "see",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph",
+        "homophone_context"
+      ],
       "visual_units": [
         "see"
       ],
@@ -9052,6 +10661,9 @@
       "id": "en-sentence",
       "word": "sentence",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "sen",
         "tence"
@@ -9071,6 +10683,9 @@
       "id": "en-separate",
       "word": "separate",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "sep",
         "ar",
@@ -9091,6 +10706,9 @@
       "id": "en-share",
       "word": "share",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "share"
       ],
@@ -9109,6 +10727,9 @@
       "id": "en-she",
       "word": "she",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "sh",
         "e"
@@ -9128,6 +10749,9 @@
       "id": "en-shirt",
       "word": "shirt",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "sh",
         "irt"
@@ -9147,6 +10771,9 @@
       "id": "en-shore",
       "word": "shore",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "shore"
       ],
@@ -9165,6 +10792,10 @@
       "id": "en-should",
       "word": "should",
       "band": "year2",
+      "feature_tags": [
+        "early_exception",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "sh",
         "ould"
@@ -9184,6 +10815,9 @@
       "id": "en-shoulder",
       "word": "shoulder",
       "band": "year5_6",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "shoul",
         "der"
@@ -9203,6 +10837,9 @@
       "id": "en-show",
       "word": "show",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "sh",
         "ow"
@@ -9222,6 +10859,9 @@
       "id": "en-side",
       "word": "side",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "side"
       ],
@@ -9240,6 +10880,9 @@
       "id": "en-signature",
       "word": "signature",
       "band": "year5_6",
+      "feature_tags": [
+        "multisyllable"
+      ],
       "visual_units": [
         "sig",
         "na",
@@ -9260,6 +10903,9 @@
       "id": "en-sincere",
       "word": "sincere",
       "band": "year5_6",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "sin",
         "cere"
@@ -9279,6 +10925,10 @@
       "id": "en-sincerely",
       "word": "sincerely",
       "band": "year5_6",
+      "feature_tags": [
+        "suffix_family",
+        "multisyllable"
+      ],
       "visual_units": [
         "sincere",
         "ly"
@@ -9298,6 +10948,9 @@
       "id": "en-sketch",
       "word": "sketch",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "sk",
         "e",
@@ -9318,6 +10971,9 @@
       "id": "en-skin",
       "word": "skin",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "skin"
       ],
@@ -9336,6 +10992,9 @@
       "id": "en-snow",
       "word": "snow",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "sn",
         "ow"
@@ -9355,6 +11014,9 @@
       "id": "en-so",
       "word": "so",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "so"
       ],
@@ -9373,6 +11035,9 @@
       "id": "en-soil",
       "word": "soil",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "s",
         "oi",
@@ -9393,6 +11058,9 @@
       "id": "en-soldier",
       "word": "soldier",
       "band": "year5_6",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "sol",
         "dier"
@@ -9412,6 +11080,9 @@
       "id": "en-some",
       "word": "some",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "s",
         "ome"
@@ -9431,6 +11102,9 @@
       "id": "en-son",
       "word": "son",
       "band": "year2",
+      "feature_tags": [
+        "homophone_context"
+      ],
       "visual_units": [
         "son"
       ],
@@ -9449,6 +11123,9 @@
       "id": "en-soon",
       "word": "soon",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "s",
         "oo",
@@ -9469,6 +11146,9 @@
       "id": "en-sound",
       "word": "sound",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "s",
         "ou",
@@ -9489,6 +11169,9 @@
       "id": "en-special",
       "word": "special",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "spe",
         "cial"
@@ -9508,6 +11191,10 @@
       "id": "en-squirrel",
       "word": "squirrel",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "consonant_double"
+      ],
       "visual_units": [
         "squir",
         "rel"
@@ -9527,6 +11214,9 @@
       "id": "en-start",
       "word": "start",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "start"
       ],
@@ -9545,6 +11235,10 @@
       "id": "en-station",
       "word": "station",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "suffix_family"
+      ],
       "visual_units": [
         "sta",
         "tion"
@@ -9564,6 +11258,9 @@
       "id": "en-stay",
       "word": "stay",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "st",
         "ay"
@@ -9583,6 +11280,10 @@
       "id": "en-steak",
       "word": "steak",
       "band": "year2",
+      "feature_tags": [
+        "early_exception",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "st",
         "ea",
@@ -9603,6 +11304,9 @@
       "id": "en-stomach",
       "word": "stomach",
       "band": "year5_6",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "stom",
         "ach"
@@ -9622,6 +11326,10 @@
       "id": "en-straight",
       "word": "straight",
       "band": "year3_4",
+      "feature_tags": [
+        "vowel_digraph",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "straigh",
         "t"
@@ -9641,6 +11349,9 @@
       "id": "en-strange",
       "word": "strange",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "str",
         "ange"
@@ -9660,6 +11371,9 @@
       "id": "en-strength",
       "word": "strength",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "str",
         "eng",
@@ -9680,6 +11394,11 @@
       "id": "en-sufficient",
       "word": "sufficient",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double",
+        "vowel_digraph",
+        "multisyllable"
+      ],
       "visual_units": [
         "suf",
         "fi",
@@ -9700,6 +11419,9 @@
       "id": "en-sugar",
       "word": "sugar",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "sug",
         "ar"
@@ -9719,6 +11441,9 @@
       "id": "en-suggest",
       "word": "suggest",
       "band": "year5_6",
+      "feature_tags": [
+        "consonant_double"
+      ],
       "visual_units": [
         "sug",
         "gest"
@@ -9738,6 +11463,9 @@
       "id": "en-sun",
       "word": "sun",
       "band": "year2",
+      "feature_tags": [
+        "homophone_context"
+      ],
       "visual_units": [
         "sun"
       ],
@@ -9756,6 +11484,9 @@
       "id": "en-sunk",
       "word": "sunk",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "sunk"
       ],
@@ -9774,6 +11505,9 @@
       "id": "en-sunset",
       "word": "sunset",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "sun",
         "set"
@@ -9793,6 +11527,9 @@
       "id": "en-suppose",
       "word": "suppose",
       "band": "year3_4",
+      "feature_tags": [
+        "consonant_double"
+      ],
       "visual_units": [
         "sup",
         "pose"
@@ -9812,6 +11549,9 @@
       "id": "en-sure",
       "word": "sure",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "s",
         "ure"
@@ -9831,6 +11571,9 @@
       "id": "en-surprise",
       "word": "surprise",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "sur",
         "prise"
@@ -9850,6 +11593,9 @@
       "id": "en-symbol",
       "word": "symbol",
       "band": "year5_6",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "sym",
         "bol"
@@ -9869,6 +11615,9 @@
       "id": "en-system",
       "word": "system",
       "band": "year5_6",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "sys",
         "tem"
@@ -9888,6 +11637,10 @@
       "id": "en-table",
       "word": "table",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "suffix_family"
+      ],
       "visual_units": [
         "ta",
         "ble"
@@ -9907,6 +11660,9 @@
       "id": "en-take",
       "word": "take",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "take"
       ],
@@ -9925,6 +11681,9 @@
       "id": "en-temperature",
       "word": "temperature",
       "band": "year5_6",
+      "feature_tags": [
+        "multisyllable"
+      ],
       "visual_units": [
         "tem",
         "per",
@@ -9946,6 +11705,9 @@
       "id": "en-the",
       "word": "the",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "the"
       ],
@@ -9964,6 +11726,10 @@
       "id": "en-their",
       "word": "their",
       "band": "year2",
+      "feature_tags": [
+        "homophone_context",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "th",
         "eir"
@@ -9983,6 +11749,9 @@
       "id": "en-theme",
       "word": "theme",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "th",
         "eme"
@@ -10002,6 +11771,10 @@
       "id": "en-there",
       "word": "there",
       "band": "year1",
+      "feature_tags": [
+        "early_exception",
+        "homophone_context"
+      ],
       "visual_units": [
         "th",
         "ere"
@@ -10021,6 +11794,9 @@
       "id": "en-therefore",
       "word": "therefore",
       "band": "year3_4",
+      "feature_tags": [
+        "multisyllable"
+      ],
       "visual_units": [
         "there",
         "fore"
@@ -10040,6 +11816,9 @@
       "id": "en-these",
       "word": "these",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "these"
       ],
@@ -10058,6 +11837,9 @@
       "id": "en-they",
       "word": "they",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "th",
         "ey"
@@ -10077,6 +11859,9 @@
       "id": "en-they-re",
       "word": "they're",
       "band": "year2",
+      "feature_tags": [
+        "homophone_context"
+      ],
       "visual_units": [
         "they",
         "'re"
@@ -10096,6 +11881,9 @@
       "id": "en-think",
       "word": "think",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "th",
         "ink"
@@ -10115,6 +11903,9 @@
       "id": "en-third",
       "word": "third",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "th",
         "ird"
@@ -10134,6 +11925,10 @@
       "id": "en-thorough",
       "word": "thorough",
       "band": "year5_6",
+      "feature_tags": [
+        "vowel_digraph",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "thor",
         "ough"
@@ -10153,6 +11948,9 @@
       "id": "en-those",
       "word": "those",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "those"
       ],
@@ -10171,6 +11969,10 @@
       "id": "en-though",
       "word": "though",
       "band": "year3_4",
+      "feature_tags": [
+        "vowel_digraph",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "th",
         "ough"
@@ -10190,6 +11992,10 @@
       "id": "en-thought",
       "word": "thought",
       "band": "year3_4",
+      "feature_tags": [
+        "vowel_digraph",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "th",
         "ought"
@@ -10209,6 +12015,9 @@
       "id": "en-threw",
       "word": "threw",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "thr",
         "ew"
@@ -10228,6 +12037,10 @@
       "id": "en-through",
       "word": "through",
       "band": "year3_4",
+      "feature_tags": [
+        "vowel_digraph",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "thr",
         "ough"
@@ -10247,6 +12060,9 @@
       "id": "en-thunder",
       "word": "thunder",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "thun",
         "der"
@@ -10266,6 +12082,9 @@
       "id": "en-thursday",
       "word": "thursday",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "thurs",
         "day"
@@ -10285,6 +12104,10 @@
       "id": "en-tie",
       "word": "tie",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "tie"
       ],
@@ -10303,6 +12126,9 @@
       "id": "en-time",
       "word": "time",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "time"
       ],
@@ -10321,6 +12147,10 @@
       "id": "en-to",
       "word": "to",
       "band": "year1",
+      "feature_tags": [
+        "early_exception",
+        "homophone_context"
+      ],
       "visual_units": [
         "to"
       ],
@@ -10339,6 +12169,10 @@
       "id": "en-today",
       "word": "today",
       "band": "year1",
+      "feature_tags": [
+        "early_exception",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "to",
         "day"
@@ -10358,6 +12192,9 @@
       "id": "en-toe",
       "word": "toe",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "toe"
       ],
@@ -10376,6 +12213,9 @@
       "id": "en-told",
       "word": "told",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "t",
         "old"
@@ -10395,6 +12235,10 @@
       "id": "en-too",
       "word": "too",
       "band": "year2",
+      "feature_tags": [
+        "homophone_context",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "too"
       ],
@@ -10413,6 +12257,9 @@
       "id": "en-took",
       "word": "took",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "t",
         "oo",
@@ -10433,6 +12280,10 @@
       "id": "en-towards",
       "word": "towards",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "to",
         "wards"
@@ -10452,6 +12303,10 @@
       "id": "en-towel",
       "word": "towel",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "tow",
         "el"
@@ -10471,6 +12326,9 @@
       "id": "en-town",
       "word": "town",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "t",
         "ow",
@@ -10491,6 +12349,9 @@
       "id": "en-toy",
       "word": "toy",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "toy"
       ],
@@ -10509,6 +12370,9 @@
       "id": "en-train",
       "word": "train",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "tr",
         "ai",
@@ -10529,6 +12393,9 @@
       "id": "en-travel",
       "word": "travel",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "trav",
         "el"
@@ -10548,6 +12415,10 @@
       "id": "en-treasure",
       "word": "treasure",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "trea",
         "sure"
@@ -10567,6 +12438,9 @@
       "id": "en-tree",
       "word": "tree",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "tr",
         "ee"
@@ -10586,6 +12460,10 @@
       "id": "en-tries",
       "word": "tries",
       "band": "year2",
+      "feature_tags": [
+        "suffix_family",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "tr",
         "ies"
@@ -10605,6 +12483,9 @@
       "id": "en-true",
       "word": "true",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "tr",
         "ue"
@@ -10624,6 +12505,9 @@
       "id": "en-try",
       "word": "try",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "try"
       ],
@@ -10642,6 +12526,9 @@
       "id": "en-tube",
       "word": "tube",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "tube"
       ],
@@ -10660,6 +12547,9 @@
       "id": "en-tuesday",
       "word": "tuesday",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "tues",
         "day"
@@ -10679,6 +12569,9 @@
       "id": "en-tune",
       "word": "tune",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "tune"
       ],
@@ -10697,6 +12590,10 @@
       "id": "en-tunnel",
       "word": "tunnel",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "consonant_double"
+      ],
       "visual_units": [
         "tun",
         "nel"
@@ -10716,6 +12613,9 @@
       "id": "en-turn",
       "word": "turn",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "turn"
       ],
@@ -10734,6 +12634,9 @@
       "id": "en-twelfth",
       "word": "twelfth",
       "band": "year5_6",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "twel",
         "fth"
@@ -10753,6 +12656,9 @@
       "id": "en-two",
       "word": "two",
       "band": "year2",
+      "feature_tags": [
+        "homophone_context"
+      ],
       "visual_units": [
         "two"
       ],
@@ -10771,6 +12677,9 @@
       "id": "en-undo",
       "word": "undo",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "un",
         "do"
@@ -10790,6 +12699,11 @@
       "id": "en-unfair",
       "word": "unfair",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern",
+        "prefix_family",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "un",
         "fair"
@@ -10809,6 +12723,11 @@
       "id": "en-unhappy",
       "word": "unhappy",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern",
+        "consonant_double",
+        "prefix_family"
+      ],
       "visual_units": [
         "un",
         "happy"
@@ -10828,6 +12747,11 @@
       "id": "en-unload",
       "word": "unload",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern",
+        "prefix_family",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "un",
         "load"
@@ -10847,6 +12771,10 @@
       "id": "en-unlock",
       "word": "unlock",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern",
+        "prefix_family"
+      ],
       "visual_units": [
         "un",
         "lock"
@@ -10866,6 +12794,9 @@
       "id": "en-use",
       "word": "use",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "use"
       ],
@@ -10884,6 +12815,9 @@
       "id": "en-variety",
       "word": "variety",
       "band": "year5_6",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "va",
         "ri",
@@ -10904,6 +12838,10 @@
       "id": "en-various",
       "word": "various",
       "band": "year3_4",
+      "feature_tags": [
+        "suffix_family",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "var",
         "i",
@@ -10924,6 +12862,10 @@
       "id": "en-vegetable",
       "word": "vegetable",
       "band": "year5_6",
+      "feature_tags": [
+        "suffix_family",
+        "multisyllable"
+      ],
       "visual_units": [
         "veg",
         "e",
@@ -10945,6 +12887,9 @@
       "id": "en-vehicle",
       "word": "vehicle",
       "band": "year5_6",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "ve",
         "hi",
@@ -10965,6 +12910,9 @@
       "id": "en-very",
       "word": "very",
       "band": "year1",
+      "feature_tags": [
+        "suffix_family"
+      ],
       "visual_units": [
         "ver",
         "y"
@@ -10984,6 +12932,10 @@
       "id": "en-village",
       "word": "village",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "consonant_double"
+      ],
       "visual_units": [
         "vil",
         "lage"
@@ -11003,6 +12955,9 @@
       "id": "en-wait",
       "word": "wait",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "w",
         "ai",
@@ -11023,6 +12978,9 @@
       "id": "en-war",
       "word": "war",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "war"
       ],
@@ -11041,6 +12999,9 @@
       "id": "en-warm",
       "word": "warm",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "w",
         "arm"
@@ -11060,6 +13021,9 @@
       "id": "en-was",
       "word": "was",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "was"
       ],
@@ -11078,6 +13042,9 @@
       "id": "en-water",
       "word": "water",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "wa",
         "ter"
@@ -11097,6 +13064,9 @@
       "id": "en-way",
       "word": "way",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "way"
       ],
@@ -11115,6 +13085,9 @@
       "id": "en-we",
       "word": "we",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "we"
       ],
@@ -11133,6 +13106,9 @@
       "id": "en-week",
       "word": "week",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "w",
         "ee",
@@ -11153,6 +13129,10 @@
       "id": "en-weight",
       "word": "weight",
       "band": "year3_4",
+      "feature_tags": [
+        "vowel_digraph",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "weigh",
         "t"
@@ -11172,6 +13152,10 @@
       "id": "en-well",
       "word": "well",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern",
+        "consonant_double"
+      ],
       "visual_units": [
         "w",
         "ell"
@@ -11191,6 +13175,9 @@
       "id": "en-were",
       "word": "were",
       "band": "year1",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "w",
         "ere"
@@ -11210,6 +13197,9 @@
       "id": "en-wheel",
       "word": "wheel",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "wh",
         "ee",
@@ -11230,6 +13220,9 @@
       "id": "en-when",
       "word": "when",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "wh",
         "en"
@@ -11249,6 +13242,10 @@
       "id": "en-where",
       "word": "where",
       "band": "year1",
+      "feature_tags": [
+        "early_exception",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "wh",
         "ere"
@@ -11268,6 +13265,9 @@
       "id": "en-which",
       "word": "which",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "wh",
         "ich"
@@ -11287,6 +13287,9 @@
       "id": "en-while",
       "word": "while",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "wh",
         "ile"
@@ -11306,6 +13309,9 @@
       "id": "en-who",
       "word": "who",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "who"
       ],
@@ -11324,6 +13330,9 @@
       "id": "en-whole",
       "word": "whole",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "wh",
         "ole"
@@ -11343,6 +13352,9 @@
       "id": "en-wild",
       "word": "wild",
       "band": "year2",
+      "feature_tags": [
+        "early_exception"
+      ],
       "visual_units": [
         "w",
         "ild"
@@ -11362,6 +13374,9 @@
       "id": "en-woke",
       "word": "woke",
       "band": "year1",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "woke"
       ],
@@ -11380,6 +13395,9 @@
       "id": "en-woman",
       "word": "woman",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "wom",
         "an"
@@ -11399,6 +13417,9 @@
       "id": "en-women",
       "word": "women",
       "band": "year3_4",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "wom",
         "en"
@@ -11418,6 +13439,9 @@
       "id": "en-won",
       "word": "won",
       "band": "year2",
+      "feature_tags": [
+        "homophone_context"
+      ],
       "visual_units": [
         "won"
       ],
@@ -11436,6 +13460,9 @@
       "id": "en-wood",
       "word": "wood",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "w",
         "oo",
@@ -11456,6 +13483,9 @@
       "id": "en-word",
       "word": "word",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "w",
         "or",
@@ -11476,6 +13506,9 @@
       "id": "en-wore",
       "word": "wore",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "w",
         "ore"
@@ -11495,6 +13528,9 @@
       "id": "en-work",
       "word": "work",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "w",
         "or",
@@ -11515,6 +13551,9 @@
       "id": "en-world",
       "word": "world",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "w",
         "or",
@@ -11535,6 +13574,9 @@
       "id": "en-worm",
       "word": "worm",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "w",
         "or",
@@ -11555,6 +13597,9 @@
       "id": "en-worth",
       "word": "worth",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "w",
         "or",
@@ -11575,6 +13620,10 @@
       "id": "en-would",
       "word": "would",
       "band": "year2",
+      "feature_tags": [
+        "early_exception",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "w",
         "ould"
@@ -11594,6 +13643,10 @@
       "id": "en-wrap",
       "word": "wrap",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "wr",
         "ap"
@@ -11613,6 +13666,10 @@
       "id": "en-write",
       "word": "write",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "wr",
         "ite"
@@ -11632,6 +13689,11 @@
       "id": "en-written",
       "word": "written",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "consonant_double",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "writ",
         "ten"
@@ -11651,6 +13713,10 @@
       "id": "en-wrong",
       "word": "wrong",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "wr",
         "ong"
@@ -11670,6 +13736,10 @@
       "id": "en-wrote",
       "word": "wrote",
       "band": "year2",
+      "feature_tags": [
+        "phonics_pattern",
+        "orthographic_irregularity"
+      ],
       "visual_units": [
         "wr",
         "ote"
@@ -11689,6 +13759,9 @@
       "id": "en-yacht",
       "word": "yacht",
       "band": "year5_6",
+      "feature_tags": [
+        "phonics_pattern"
+      ],
       "visual_units": [
         "yacht"
       ],
@@ -11707,6 +13780,9 @@
       "id": "en-yawn",
       "word": "yawn",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "y",
         "aw",
@@ -11727,6 +13803,9 @@
       "id": "en-year",
       "word": "year",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "y",
         "ear"
@@ -11746,6 +13825,10 @@
       "id": "en-you",
       "word": "you",
       "band": "year1",
+      "feature_tags": [
+        "early_exception",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "you"
       ],
@@ -11764,6 +13847,10 @@
       "id": "en-your",
       "word": "your",
       "band": "year1",
+      "feature_tags": [
+        "early_exception",
+        "vowel_digraph"
+      ],
       "visual_units": [
         "y",
         "our"
@@ -11783,6 +13870,9 @@
       "id": "en-zoo",
       "word": "zoo",
       "band": "year1",
+      "feature_tags": [
+        "vowel_digraph"
+      ],
       "visual_units": [
         "zoo"
       ],
