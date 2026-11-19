@@ -1,0 +1,21 @@
+# Spellmaster staging account backend. Adopt existing service only after reviewing Render's planned sync.
+# Database is an existing standalone Render PostgreSQL instance (not managed by this Blueprint).
+services:
+  - type: web
+    name: spellquest-voice-staging
+    runtime: node
+    plan: free
+    region: frankfurt
+    repo: https://github.com/alihoco/spellquest-staging
+    branch: main
+    buildCommand: npm install --omit=dev
+    startCommand: node scripts/migrate.js && npm start
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: spellmaster-accounts
+          property: connectionString
+      - key: DATABASE_SSL
+        value: disable
+      - key: ACCOUNT_REGISTRATION_ENABLED
+        value: "false"
