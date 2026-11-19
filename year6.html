@@ -905,7 +905,7 @@ function renderLanding(){
  '</select><p class="privacy-note">School year never determines spelling ability. Your practice decides.</p></div>':'')+
  (p?.cloud?'<p class="privacy-note">Your learning history is linked to your signed-in account. <a href="/my-account.html">Manage learners</a>.</p>':'<p class="privacy-note" style="margin-top:15px">Guest practice stays in this browser. Use a nickname and age only. Anyone sharing this device may see guest progress.</p>')+
  '</aside></div>'+
- '<div class="site-note">Your age changes how Spellmaster looks, never how we judge spelling. Listen to the words, practise and discover which spellings help you grow. <a href=\"/curriculum-library.html\">Browse the word bank</a>. '+(p?.cloud?'Your learning history is saved to your private account.':'Guest progress remains browser-local.')+'</div>';
+ '<div class="site-note">Your age changes how Spellmaster looks. Spelling can move with your progress, not your age. Listen to the words, practise and discover which spellings help you grow. <a href=\"/curriculum-library.html\">Browse the word bank</a>. '+(p?.cloud?'Your learning history is saved to your private account.':'Guest progress remains browser-local.')+'</div>';
 }
 const playWithProfile=begin;
 begin=async function(){
