@@ -6,7 +6,7 @@ const css=fs.readFileSync(__dirname+'/spellmaster-library.css','utf8');
 for(const code of page.split('<script>').slice(1).map(x=>x.split('</script>')[0]))new Function(code);
 assert.ok(page.includes('class="next-chapter"'), 'Returning learner should see next chapter');
 assert.ok(!page.includes("'<div class=\"decor-orb\""), 'Book decoration should not appear in the learner welcome');
-assert.ok(page.includes('Welcome back, '+"'"+'), 'Display current learner greeting');
+assert.ok(page.includes('Welcome back, '), 'Display current learner greeting');
 assert.ok(page.includes('p.alias'), 'Show active profile nickname');
 assert.ok(page.includes('class="tester-profile-tools entry-settings"'), 'Parent controls must remain behind details');
 assert.ok(page.includes('entry-first-form'), 'First-time nickname and age must be accessible');
