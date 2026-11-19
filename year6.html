@@ -174,7 +174,7 @@ async function ensureCurriculumLoaded(){
    const [reviewed,visualSuggestions]=await Promise.all([
      fetch('/core/approved-visual-word-groups-v1.json',{cache:'no-store'})
       .then(r=>r.ok?r.json():{entries:[]}).catch(()=>({entries:[]})),
-     fetch('/core/visual-word-grouping-proposals-v1.json',{cache:'no-store'})
+     fetch('/core/visual-word-groups-runtime-v1.json',{cache:'force-cache'})
       .then(r=>r.ok?r.json():{entries:[]}).catch(()=>({entries:[]}))
    ]);
    const converted=window.SpellmasterCurriculum.prepare(raw,PILOT_BY_WORD,reviewed,visualSuggestions);
