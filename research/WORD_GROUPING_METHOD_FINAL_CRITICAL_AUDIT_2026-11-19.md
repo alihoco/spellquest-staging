@@ -34,3 +34,10 @@
 7. Avoid age-level inference from diagnosis or age when selecting *spelling difficulty*; keep age for presentation and appropriate input defaults only.
 
 **Release principle:** Learner agency can coexist with evidence-informed language teaching. The former does not remove the need for correctness in the latter.
+
+
+## Follow-through implemented — 19 November 2026
+
+The missing live integration identified in the audit has since been addressed. The game now loads a compact catalogue of all 615 editable visual-memory suggestions without treating them as specialist-approved phoneme, syllable or morphological data. The strict approval gate remains for formal linguistic claims. `spelling-chunks-ui.js` now calls immediate account sync and reports grouping exposure; `year6.html` records the strategy attached to subsequent attempts. An optional, separate adult-only research consent and privacy-safe observational summary pathway have also been added. Consult [GROUPING_OUTCOMES_MEASUREMENT_PROTOCOL_V1.md](GROUPING_OUTCOMES_MEASUREMENT_PROTOCOL_V1.md) for precisely what is measured and what remains unvalidated.
+
+**The instructional gap remains:** most non-pilot words still need specific, linguistically accurate error-targeted explanations. No study has yet shown these particular editable splits to cause better long-term learning.
