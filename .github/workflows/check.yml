@@ -1,0 +1,28 @@
+name: Spellmaster application checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Verify JavaScript syntax
+        run: |
+          node --check server.js
+          node --check account-api.js
+          node --check account-client.js
+          node --check cloud-learning.js
+          node --check learner-profiles.js
+          node --check adaptive-curriculum.js
+      - name: Run project unit tests
+        run: npm test
