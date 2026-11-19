@@ -36,7 +36,7 @@ function starter(profile,ageYears){
 function approvedVisualGroups(word,reviewed){
  const candidate=Array.isArray(reviewed?.entries)?reviewed.entries.find(x=>x?.id===word.id&&x.spelling===word.word):null;
  if(!candidate||candidate.status!=='approved'||candidate.reviewer_role!=='qualified_literacy_specialist'||
-   !candidate.reviewer_ref||!/^\\d{4}-\\d{2}-\\d{2}/.test(candidate.reviewed_at||'')||
+   !candidate.reviewer_ref||!/^\d{4}-\d{2}-\d{2}/.test(candidate.reviewed_at||'')||
    !Array.isArray(candidate.visual_units)||candidate.visual_units.length<1||candidate.visual_units.length>5||
    candidate.visual_units.some(x=>typeof x!=='string'||!x.length)||
    candidate.visual_units.join('')!==word.word)return null;
