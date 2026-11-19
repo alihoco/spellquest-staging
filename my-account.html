@@ -8,4 +8,4 @@ $('password').onkeydown=e=>{if(e.key==='Enter')$('login-button').click()};
 $('logout').onclick=()=>{A.signOut();$('members').classList.add('hidden');$('login').classList.remove('hidden');$('login-message').textContent='You have signed out.'};
 $('add-button').onclick=async()=>{try{const r=await A.request('/learners',{method:'POST',body:{alias:$('new-alias').value,birthMonth:$('new-month').value||null,avatar:$('new-avatar').value}});A.selectLearner(r.learner.id);$('new-alias').value='';await display();}catch(e){$('message').textContent=e.message;}};
 if(A.token())display();else A.configured().then(ok=>{if(!ok){$('login-message').textContent='New registrations are still closed for safeguarding checks. Existing account sign-in remains available.';}});
-</script></body></html>
+</script><script src="/spellmaster-reader.js?v=1"></script></body></html>
