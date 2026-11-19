@@ -18,6 +18,7 @@ jobs:
         run: |
           node --check server.js
           node --check account-api.js
+          node --check scripts/migrate.js
           node --check account-client.js
           node --check cloud-learning.js
           node --check learner-profiles.js
