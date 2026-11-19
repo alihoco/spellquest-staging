@@ -135,7 +135,7 @@ button.play-now:active{transform:translateY(4px);box-shadow:0 6px 0 #2b2675}
 <section class="hero"><span class="eyebrow">YOUR OWN SPELLING ADVENTURE</span><h1>Discover words. Build confidence.</h1><p>Little challenges, a patient voice, and a teacher that remembers what helps you learn.</p></section>
 <section class="panel" id="app"></section>
 <div class="footer">Staging curriculum adventure · 615-word England inventory · Existing teaching pilot progress is currently browser-local. <a href="/my-account.html">My secure account</a> · <a href="/volunteer-feedback.html">Send volunteer feedback</a></div></main>
-<script src="/spelling-feedback.js"></script>
+<script src="/spelling-feedback.js"></script><script src="/spelling-written-feedback.js?v=1"></script>
 <script src="/learner-profiles.js"></script><script src="/account-client.js?v=1"></script><script src="/cloud-learning.js?v=1"></script>
 <script src="/bonus-round.js"></script>
 <script src="/celebration-feedback.js"></script>
@@ -339,7 +339,9 @@ function repaintTeachingGroups(groups){
  row.replaceChildren();for(const g of groups){const span=document.createElement('span');span.textContent=g;row.append(span)}
 }
 function replayWordHint(){
- stop();const t=ticket;return speak(errorFeedbackForCurrent().clip,t);
+ stop();const feedback=errorFeedbackForCurrent();
+ if(feedback.letterLevelOnly&&window.SpellmasterReader)return window.SpellmasterReader.speak(feedback.spoken);
+ return speak(feedback.clip,ticket);
 }
 function splitterIntroKey(){
  const p=window.SpellmasterProfiles?.active(spellStorage);
@@ -424,7 +426,8 @@ async function reviewAudio(){
  const feedback=errorFeedbackForCurrent();
  const tip=host.querySelector('.tip');if(tip)tip.innerHTML='<strong>Notice this part</strong><p>'+feedback.text+'</p><button class="alt tiny-action" onclick="replayWordHint()">🔊 Hear this hint</button>';
  mountPersonalGrouping('#review-content');
- ok=await speak(feedback.clip,t);
+ ok=feedback.letterLevelOnly&&window.SpellmasterReader?
+   await window.SpellmasterReader.speak(feedback.spoken):await speak(feedback.clip,t);
  if(t===ticket&&stage==='review'){
   if(ok)setStatus('Ready to try spelling again.');
   await introduceSplitterOnce(t);
@@ -444,7 +447,9 @@ function shortReview(){
  voiceSet();mountPersonalGrouping('#app');if(narration)shortReviewAudio();
 }
 async function shortReviewAudio(){
- stop();const t=ticket;const ok=await speak(errorFeedbackForCurrent().clip,t);
+ stop();const t=ticket;const feedback=errorFeedbackForCurrent();
+ const ok=feedback.letterLevelOnly&&window.SpellmasterReader?
+  await window.SpellmasterReader.speak(feedback.spoken):await speak(feedback.clip,t);
  if(t===ticket&&stage==='short-review')await introduceSplitterOnce(t);
 }
 function retry(){
@@ -478,11 +483,13 @@ const ADAPTIVE_KEY='spellmaster-staging-intake-v1';
 let runCount=0,runStart=0,runFirst=0,runNew=0,runSeen=new Set(),runResults=[],runReview=false;
 let runKind="new",lastBreakPromptAt=0;
 let bonusReviewedThrough=0,bonusRound=null,bonusPosition=0,bonusAnswers=[],bonusRoundId=null;
-let lastErrorFeedback=null;
+let lastErrorFeedback=null,lastWrittenFeedback=null;
 function errorFeedbackForCurrent(){
  const w=WORDS[idx];
- if(w?.id&&!PILOT_BY_WORD[w.word])return {clip:'spellmaster-catalogue-help-v1',
-  text:'Look carefully at the correct spelling. Notice the order of the letters. You can make your own letter groups to help you remember it, then hide the word and try again.'};
+ if(w?.id&&!PILOT_BY_WORD[w.word]&&lastWrittenFeedback)return {
+  clip:'spellmaster-catalogue-help-v1',text:lastWrittenFeedback.text,
+  spoken:lastWrittenFeedback.spoken,letterLevelOnly:true
+ };
  return lastErrorFeedback||{clip:'spellmaster-error-generic-middle',text:'Look at the middle of the correct word. Then have another go.'};
 }
 function adaptiveToday(){const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}
@@ -558,11 +565,13 @@ introAudio=async function(){
 };
 check=function(retry){
  const input=$('answer');if(!input)return;
- const guess=input.value.toLowerCase().replace(/[^a-z]/g,'');
+ const guess=input.value.toLowerCase().replace(/[^a-z']/g,'');
  if(!guess){input.focus();return}
  const word=WORDS[idx].word,ok=guess===word;
- if(!ok)lastErrorFeedback=WORDS[idx]?.id&&!PILOT_BY_WORD[word]?null:
-  window.SpellmasterFeedback.diagnose(word,guess);
+ if(!ok){
+  lastErrorFeedback=WORDS[idx]?.id&&!PILOT_BY_WORD[word]?null:window.SpellmasterFeedback.diagnose(word,guess);
+  lastWrittenFeedback=window.SpellmasterWrittenFeedback?.lesson(word,guess,visualTeachingGroups(WORDS[idx]))||null;
+ }else lastWrittenFeedback=null;
  if(!retry){
   results[idx]={word,initial:ok,learned:ok,attempts:1};
   runResults.push({word,initial:ok,learned:ok,review:runReview,kind:runKind});
