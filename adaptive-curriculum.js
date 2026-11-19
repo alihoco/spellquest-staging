@@ -31,7 +31,10 @@ function yearStartingBand(year){
  return year===1?'year1':year===2?'year2':year<=4?'year3_4':'year5_6';
 }
 function starter(profile,ageYears){
- return yearStartingBand(profile?.schoolYear)||ageStartingBand(ageYears);
+ // An unassessed learner starts at a neutral provisional sample, irrespective
+ // of age, birthday, school year, neurodiversity or visual theme.
+ // The ten-word independent assessment and subsequent attempts decide placement.
+ return 'year2';
 }
 function approvedVisualGroups(word,reviewed){
  const candidate=Array.isArray(reviewed?.entries)?reviewed.entries.find(x=>x?.id===word.id&&x.spelling===word.word):null;
@@ -74,7 +77,7 @@ function prepare(catalogue,approvedPilot={},reviewed={entries:[]},visualSuggesti
 }
 function seedPreference(profile,ageYears){
  const band=starter(profile,ageYears);
- return {baselineBand:band,currentBand:band,source:yearStartingBand(profile?.schoolYear)?'school_year':'age_month',
+ return {baselineBand:band,currentBand:band,source:'unassessed_neutral_sample',
   observations:[],moves:[],updatedAt:new Date().toISOString(),version:1};
 }
 function placementKey(profile){
