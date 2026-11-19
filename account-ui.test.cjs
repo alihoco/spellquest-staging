@@ -3,7 +3,7 @@ const test=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const vm=require('node:vm');
-const pages=['signup.html','my-account.html','privacy-settings.html','recover-account.html','starting-assessment.html','spelling-sprint.html','year6.html'];
+const pages=['signup.html','family-signup.html','family-pilot-information.html','my-account.html','privacy-settings.html','recover-account.html','starting-assessment.html','spelling-sprint.html','year6.html'];
 test('All account and learner pages contain valid inline JavaScript',()=>{
  for(const page of pages){
   const content=fs.readFileSync(__dirname+'/'+page,'utf8');
@@ -45,4 +45,16 @@ test('Optional grouping research is independent of diagnosis consent and prohibi
  assert.match(api,/grouping_research_consent_at=CASE WHEN \$2 THEN now\(\) ELSE NULL END/);
  assert.match(privacy,/id="group-research"/);
  assert.match(privacy,/id="save-group-research"/);
+});
+
+test('Guardian-only family route is age-only with no diagnosis or email inputs',()=>{
+ const page=fs.readFileSync(__dirname+'/family-signup.html','utf8');
+ const sql=fs.readFileSync(__dirname+'/database/004_guardian_age.sql','utf8');
+ assert.match(page,/id="age"/);
+ assert.match(page,/guardianConfirmed:true,guardianConsent:true/);
+ assert.match(page,/conditionChoice:'not_supplied'/);
+ assert.ok(!page.includes('id="birth"'));
+ assert.ok(!page.includes('id="diagnosis"'));
+ assert.match(sql,/age_years BETWEEN 4 AND 17/);
+ assert.ok(!sql.includes('DO $'));
 });
