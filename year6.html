@@ -210,6 +210,21 @@ const makeUrl=clip=>{
 };
 function warm(clips){for(const clip of clips.slice(0,2))makeUrl(clip).catch(()=>{});}
 function setStatus(msg){const el=$('audio-status');if(el)el.textContent=msg}
+function clipFallbackText(clip){
+ if(clip.startsWith('catalogue-word-en-'))return clip.slice('catalogue-word-en-'.length).replace(/-v\\d+$/,'');
+ const word=clip.match(/^y6-(necessary|embarrass|accommodate|government|foreign|familiar|environment|privilege|rhythm|temperature)$/);
+ if(word)return word[1];
+ const phrases={
+ 'spellmaster-adaptive-welcome-v1':'Welcome to Spellmaster! Listen to the word, and then try spelling it. If it is tricky, I will help you.',
+ 'spellmaster-bonus-right-v1':'Great job! You got that right.',
+ 'spellmaster-bonus-miss-v1':'Good try! We can practise that again.',
+ 'spellmaster-bonus-welcome-v1':'Welcome to your bonus round. Listen and spell each word.',
+ 'spellmaster-bonus-complete-v1':'Great work on your bonus round!',
+ 'spellmaster-bonus-perfect-choice-v2':'Wonderful! You earned a choice of avatar reward.',
+ 'spellmaster-chunk-option-v1':'You can split this written word into letter groups that help you remember it. Tap between letters, then press Use my groups.'
+ };
+ return phrases[clip]||'Keep practising. You can try again whenever you feel ready.';
+}
 function stop(){
  ticket++;
  if(activePlayer){activePlayer.pause();activePlayer.onended=null;activePlayer.onerror=null;activePlayer=null}
@@ -230,8 +245,11 @@ async function speak(clip,t=ticket){
   if(t===ticket){activePlayer=null;setStatus(ok?'':'The voice stopped. Please replay this step.')}
   return t===ticket&&ok;
  }catch(e){
-  if(t===ticket)setStatus('Audio could not play. Please try Replay instructions.');
-  activePlaying=false;return false;
+  if(t!==ticket)return false;
+  setStatus('Using your device voice while the narrator is unavailable.');
+  const ok=await window.SpellmasterReader?.speak(clipFallbackText(clip));
+  if(t===ticket&&!ok)setStatus('Unable to play voice. Check volume and try again.');
+  activePlaying=false;return t===ticket&&!!ok;
  }
 }
 function replaySessionClosing(){
@@ -436,12 +454,11 @@ function mountPersonalGrouping(target){
 function review(){
  stop();stage='review';const w=WORDS[idx];
  app.innerHTML='<span class="eyebrow">LET’S LEARN THIS WORD</span>'+progress()+
- '<h2>Look at the spelling</h2>'+
- '<p>Look at the letters. You can make your own groups.</p>'+
+ '<h2>Not quite right yet — let us work it out 🌱</h2>'+
+ '<p>Good try! Look closely at the tricky part. You can make your own letter groups too.</p>'+
  '<div id="review-content"><p class="now">🔊 The teacher will guide you.</p></div>'+
  soundVoice()+
- '<div class="actions"><button onclick="retry()">🙈 Hide it and try spelling</button>'+
- '<button class="alt" onclick="reviewAudio()">🔊 Hear the lesson again</button>'+
+ '<div class="actions"><button class="alt" onclick="reviewAudio()">🔊 Hear the lesson again</button>'+
  '<button class="alt" onclick="next()">Save for later</button></div>';
  voiceSet();if(narration)reviewAudio();
 }
@@ -454,7 +471,8 @@ async function reviewAudio(){
  if(ok&&!(await pause(pace==='extra'?1700:900,t)))return;
  host.innerHTML='<div class="note"><strong>Now look at the correct spelling.</strong></div>'+
  '<div class="word-group-row"><div class="spelling-row">'+visualTeachingGroups(w).map(x=>'<span>'+x+'</span>').join('')+'</div>'+ 
- '<button type="button" class="alt word-group-change" onclick="openWordGrouping()">✦ Make my own groups</button></div>'+
+ '<button type="button" class="alt word-group-change" onclick="openWordGrouping()">✦ Change letter groups</button></div>'+
+ '<button class="retry-after-review" onclick="retry()">🙈 Ready? Let me spell it!</button>'+
  '<div class="tip"><strong>Notice this part</strong><p>'+errorFeedbackForCurrent().text+'</p><button class="alt tiny-action" onclick="replayWordHint()">🔊 Hear this hint</button></div>';
  const feedback=errorFeedbackForCurrent();
  const tip=host.querySelector('.tip');if(tip)tip.innerHTML='<strong>Notice this part</strong><p>'+feedback.text+'</p><button class="alt tiny-action" onclick="replayWordHint()">🔊 Hear this hint</button>';
@@ -475,7 +493,7 @@ function shortReview(){
  '<button type="button" class="alt word-group-change" onclick="openWordGrouping()">✦ Make my own groups</button></div>'+
  '<p>'+errorFeedbackForCurrent().text+'</p><button class="alt tiny-action" onclick="replayWordHint()">🔊 Hear this hint</button>'+
  soundVoice()+
- '<div class="actions"><button onclick="retry()">🙈 Hide and try once more</button>'+
+ '<div class="actions"><button onclick="retry()">🙈 Ready? Let me spell it!</button>'+
  '<button class="alt" onclick="next()">Come back to this later</button></div>';
  voiceSet();mountPersonalGrouping('#app');if(narration)shortReviewAudio();
 }
@@ -700,21 +718,24 @@ function checkBonusWord(){
  const input=$('bonus-answer');if(!input||!input.value.trim())return;
  const word=bonusRound.words[bonusPosition],answer=input.value.toLowerCase().replace(/[^a-z]/g,'');
  const correct=answer===word;bonusAnswers.push(answer);recordBonusRecall(word,correct);
+ const correctCount=bonusAnswers.filter((a,i)=>a===bonusRound.words[i]).length;
+ const runningPerfect=correct&&correctCount===bonusAnswers.length;
+ const bonusPraise=correct?(runningPerfect&&correctCount>=3?'Wow! All three right so far!':runningPerfect&&correctCount===2?'Wow! Two out of two!':'Great job! You got that right!'):'Good try! We can practise that word again.';
  stop();stage='bonus-feedback';
  app.innerHTML='<div class="bonus-card"><span class="bonus-trophy" aria-hidden="true">'+(correct?'✦':'🧩')+'</span>'+
- '<h2>'+(correct?'You remembered it!':'One to revisit')+'</h2>'+
+ '<h2>'+bonusPraise+'</h2>'+
  '<p>'+(correct?'That spelling came from you.':'We can practise that word another day.')+'</p>'+
  '<p class="small muted" id="bonus-transition-status" role="status">'+
  (bonusPosition+1===bonusRound.words.length?'Preparing your bonus results…':'Your next bonus word is coming…')+'</p>'+
  soundVoice()+'<div class="actions" style="justify-content:center"><button class="alt" onclick="advanceBonusWord()" aria-label="Continue bonus round now">'+
  (bonusPosition+1===bonusRound.words.length?'Show results now':'Continue now')+'</button>'+
  '<button class="alt" onclick="skipBonusRound()">Finish bonus round later</button></div></div>';
- voiceSet();if(narration)announceBonusFeedbackThenAdvance(correct);
+ voiceSet();if(narration)announceBonusFeedbackThenAdvance(correct,bonusPraise);
  else advanceBonusAfterPause();
 }
-async function announceBonusFeedbackThenAdvance(correct){
+async function announceBonusFeedbackThenAdvance(correct,praise){
  const t=ticket,position=bonusPosition;
- const ok=await speak(correct?'spellmaster-bonus-right-v1':'spellmaster-bonus-miss-v1',t);
+ const ok=window.SpellmasterReader?await window.SpellmasterReader.speak(praise):await speak(correct?'spellmaster-bonus-right-v1':'spellmaster-bonus-miss-v1',t);
  if(t!==ticket||stage!=='bonus-feedback'||bonusPosition!==position)return;
  // Preserve a moment for encouragement without requiring another click.
  if(ok){if(!(await pause(550,t)))return}
