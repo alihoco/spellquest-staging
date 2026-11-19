@@ -1,0 +1,57 @@
+/* Spellmaster pilot UX refinement — focus on the active learning step.
+   The existing illustrated library remains on the landing screen; lessons are calm
+   and do not force a learner to scroll past decoration before each answer.
+*/
+@media(max-width:1024px){
+ body.lesson-active main{padding:5px 10px 25px!important}
+ body.lesson-active main>header{padding:5px 4px 7px!important;min-height:54px}
+ body.lesson-active main>header .brand-art{width:160px!important;height:auto!important}
+ body.lesson-active main>header .muted{font-size:10px!important}
+ body.lesson-active main>.hero{display:none!important}
+ body.lesson-active .sm-path,
+ body.lesson-active .sm-character,
+ body.lesson-active .sm-side{display:none!important}
+ body.lesson-active .sm-layout{display:block!important}
+ body.lesson-active #app.panel{margin:6px 0 12px!important;padding:15px 14px 18px!important;border-width:4px!important;min-height:0!important}
+ body.lesson-active #app.panel:before{display:none!important}
+ body.lesson-active #app .eyebrow{font-size:11px!important}
+ body.lesson-active #app h2{font-size:clamp(22px,5vw,27px)!important;margin:8px 0!important}
+ body.lesson-active #app .progress{height:8px!important;margin:8px 0 13px!important}
+ body.lesson-active #app p{margin:6px 0 11px!important;line-height:1.45!important}
+ body.lesson-active #app .actions{margin:9px 0!important;gap:8px!important}
+ body.lesson-active #app .actions button{min-height:48px!important}
+ body.lesson-active #app input#answer{margin:5px 0 8px!important;font-size:25px!important;min-height:59px!important}
+ body.lesson-active #app label[for=answer]{margin:7px 0 1px!important}
+ body.lesson-active #app .voice-options{margin:10px 0 0}
+ body.lesson-active #app .voice-options summary{cursor:pointer;color:#57438c;font-size:13px;padding:7px 2px;font-weight:750}
+ body.lesson-active #app .voice{margin:5px 0!important;padding:9px!important}
+ body.lesson-active #app .status{font-size:12px!important;min-height:18px!important}
+ body.lesson-active #app .word-group-row{margin:9px 0!important}
+ body.lesson-active #app .word-group-row .spelling-row{margin:0!important}
+ body.lesson-active #app .word-group-change{display:none!important}
+ body.lesson-active #app .tip{padding:11px!important;margin:10px 0!important}
+ body.lesson-active #app .tip p{font-size:15px!important}
+ body.lesson-active #app .chunk-workshop{padding:10px!important;margin:10px 0!important}
+ body.lesson-active #app .chunk-head p{font-size:14px!important}
+ body.lesson-active #app .chunk-head strong{font-size:16px!important}
+ body.lesson-active main>.footer{display:none}
+}
+@media(max-width:600px){
+ body.lesson-active #app .actions:last-child{
+  position:sticky;bottom:0;z-index:12;
+  margin-top:10px!important;padding:9px 4px calc(9px + env(safe-area-inset-bottom));
+  background:#fff5e4;border-top:1px solid #ddc6a2;border-radius:12px;
+  box-shadow:0 -5px 20px #50346519;
+ }
+ body.lesson-active #app .actions:last-child button:first-child{background:linear-gradient(#ffe18a,#f1b84d)!important;color:#452d56!important}
+ body.lesson-active #app .actions:last-child button:not(:first-child){background:transparent!important;color:#604577!important;box-shadow:none!important;border:1px solid #ceb5d5}
+ body.lesson-active #app .actions:last-child button{flex:1 1 auto!important}
+ body.lesson-active #app .actions:last-child button:last-child{font-size:13px!important}
+ body.lesson-active #app .spelling-row span{font-size:23px!important;padding:9px 12px!important}
+}
+@media(min-width:1025px){
+ body.lesson-active .sm-character .sm-avatar-card{min-height:100px}
+ body.lesson-active .sm-character .sm-avatar-illustration{height:95px}
+ body.lesson-active .sm-side{opacity:.86}
+ body.lesson-active #app .voice-options summary{cursor:pointer}
+}
