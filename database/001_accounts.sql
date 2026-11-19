@@ -4,6 +4,10 @@ CREATE TABLE IF NOT EXISTS accounts (
  username varchar(50) NOT NULL UNIQUE,
  password_hash text NOT NULL,
  kind varchar(12) NOT NULL CHECK(kind IN ('adult','guardian')),
+ plan_code varchar(30) NOT NULL DEFAULT 'personal_10_gbp_year',
+ trial_started_at timestamptz NOT NULL DEFAULT now(),
+ trial_ends_at timestamptz NOT NULL DEFAULT (now() + interval '1 month'),
+ billing_status varchar(20) NOT NULL DEFAULT 'not_configured',
  created_at timestamptz NOT NULL DEFAULT now(),
  accepted_terms_at timestamptz NOT NULL DEFAULT now(),
  disabled_at timestamptz
