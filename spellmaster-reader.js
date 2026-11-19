@@ -20,7 +20,7 @@
   return (cloned.textContent||'').replace(/\s+/g,' ').trim().slice(0,650);
  }
  function readableText(element){
-  if(element.matches('#save-status,[role="status"],[role="alert"]'))return '';
+  if(element.matches('[role="alert"]')||(element.matches('[role="status"]')&&!element.matches('#save-status')))return '';
   if(element.closest(prohibited))return '';
   let text=plainText(element);
   if(!text||text.length<12||text.length>650)return '';
