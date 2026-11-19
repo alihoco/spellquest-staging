@@ -34,3 +34,15 @@ test('Schema contains account recovery and learner isolation indexes',()=>{
  assert.match(sql,/learner_events_by_learner/);
  assert.match(sql,/learners_owner_idx/);
 });
+
+test('Optional grouping research is independent of diagnosis consent and prohibited for child profiles',()=>{
+ const api=fs.readFileSync(__dirname+'/account-api.js','utf8');
+ const schema=fs.readFileSync(__dirname+'/database/003_grouping_research.sql','utf8');
+ const privacy=fs.readFileSync(__dirname+'/privacy-settings.html','utf8');
+ assert.match(schema,/ADD COLUMN IF NOT EXISTS grouping_research_consent_at/);
+ assert.match(api,/section==='research'/);
+ assert.match(api,/if\(learner\.isChild\)throw inputError/);
+ assert.match(api,/grouping_research_consent_at=CASE WHEN \$2 THEN now\(\) ELSE NULL END/);
+ assert.match(privacy,/id="group-research"/);
+ assert.match(privacy,/id="save-group-research"/);
+});
