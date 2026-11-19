@@ -27,6 +27,7 @@ async function main(){
    learnerId:row.learner_id,
    isChild:row.is_child,
    adultResearchConsent:!!row.grouping_research_consent_at,
+   adultResearchConsentAt:row.grouping_research_consent_at,
    at:row.created_at,
    payload:row.payload
   }));
