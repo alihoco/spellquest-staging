@@ -1,0 +1,31 @@
+name: Spellmaster simulated child visual journey audit
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - scripts/simulate-child-journey.mjs
+      - .github/workflows/child-journey-audit.yml
+jobs:
+  browser-audit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser tooling
+        run: |
+          npm install --no-save playwright@1.58.2
+          npx playwright install --with-deps chromium
+      - name: Simulate nine-year-old spelling journey at mobile and desktop widths
+        run: node scripts/simulate-child-journey.mjs
+      - name: Preserve screenshots and inspection data
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: spellmaster-simulated-nine-year-old-audit
+          path: child-journey-audit/
+          retention-days: 14
