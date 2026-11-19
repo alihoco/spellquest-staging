@@ -13,6 +13,7 @@ const data={date:new Date().toISOString(),persona:'simulated nine-year-old strug
 async function capture(page,name){
  const file=path.join(out,name+'.png');
  await page.screenshot({path:file,fullPage:true});
+ await page.screenshot({path:path.join(out,name+'.jpg'),type:'jpeg',quality:55,fullPage:true});
  screenshots.push(file);
  const size=await page.evaluate(()=>{
   const buttons=[...document.querySelectorAll('button,a.btn,.spellmaster-speaker')].filter(x=>x.getBoundingClientRect().height>0);
