@@ -3,6 +3,8 @@ on:
   workflow_dispatch:
   push:
     paths:
+      - year6.html
+      - pilot-learning-focus.css
       - scripts/simulate-child-journey.mjs
       - scripts/expose-ui-audit-screenshots.mjs
       - .github/workflows/child-journey-audit.yml
