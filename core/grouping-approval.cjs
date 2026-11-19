@@ -7,7 +7,7 @@ function resolve(record,source){
  const item=source.entries.find(x=>x&&x.id===record.id&&x.spelling===record.word);
  if(!item||item.status!=='approved'||item.reviewer_role!=='qualified_literacy_specialist'||
     typeof item.reviewer_ref!=='string'||!item.reviewer_ref.trim()||
-    typeof item.reviewed_at!=='string'||!/^\\d{4}-\\d{2}-\\d{2}/.test(item.reviewed_at)||
+    typeof item.reviewed_at!=='string'||!/^\d{4}-\d{2}-\d{2}/.test(item.reviewed_at)||
     !Array.isArray(item.visual_units)||item.visual_units.length<1||item.visual_units.length>5||
     item.visual_units.some(x=>typeof x!=='string'||!x.length)||
     item.visual_units.join('')!==record.word)return null;
