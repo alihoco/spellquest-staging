@@ -13,11 +13,11 @@ assert.ok(page.includes("runKind==='practice'&&ok"),'Same-session practise must 
 assert.ok(page.includes("runKind==='new'"),'New word accounting must exclude repeated practice');
 assert.ok(page.includes("phase:runKind==='practice'?'same_session_practice'"),'Practice must be labelled clearly');
 assert.ok(page.includes("spellmaster-welcome-heard-v1:"),'One-time introduction flag missing');
-assert.ok(page.includes("localStorage.getItem(key)==='heard'"),'Subsequent games must skip the long intro');
+assert.ok(page.includes("spellStorage.getItem(key)==='heard'"),'Subsequent games must skip the long intro');
 assert.ok(page.includes('const hasPlayedBefore=Object.values(existingHistory)'), 'Earlier learner histories also skip the long welcome');
-assert.ok(page.includes("if(hasPlayedBefore)localStorage.setItem(key,'heard')"), 'Previous learners must have their welcome marked once');
+assert.ok(page.includes("if(hasPlayedBefore)spellStorage.setItem(key,'heard')"), 'Previous learners must have their welcome marked once');
 assert.ok(page.includes('hearWelcomeAgain()'),'Welcome intro must remain replayable');
-assert.ok(page.includes('if(ok&&key)localStorage.setItem(key'), 'Failed narration must not count as heard');
+assert.ok(page.includes('if(ok&&key)spellStorage.setItem(key'), 'Failed narration must not count as heard');
 assert.ok(page.includes('adaptiveStartWord();')&&page.includes('An unavailable welcome clip'),'Failed intro should not trap players');
 assert.ok(!page.includes('elapsed>=12'),'No fixed twelve-minute game ending');
 assert.ok(page.includes("elapsed-lastBreakPromptAt<8"),'Gentle optional recurring break prompt');
