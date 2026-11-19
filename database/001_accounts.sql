@@ -38,6 +38,9 @@ CREATE TABLE IF NOT EXISTS learner_conditions (
 CREATE TABLE IF NOT EXISTS learner_preferences (
  learner_id uuid PRIMARY KEY REFERENCES learners(id) ON DELETE CASCADE,
  choice varchar(20) NOT NULL DEFAULT 'not_supplied' CHECK(choice IN ('selected','none','unsure','prefer_not_to_say','not_supplied')),
+ support_consent_at timestamptz,
+ analysis_consent_at timestamptz,
+ consent_text_version varchar(24),
  updated_at timestamptz NOT NULL DEFAULT now()
 );
 CREATE TABLE IF NOT EXISTS learner_events (
