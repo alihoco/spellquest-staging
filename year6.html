@@ -756,7 +756,9 @@ function finishBonusRound(){
  app.innerHTML='<div class="bonus-card '+(outcome.perfect?'bonus-perfect':'')+'">'+
  '<span class="bonus-trophy" aria-hidden="true">'+(outcome.perfect?'🏆':'✨')+'</span>'+
  '<span class="eyebrow">BONUS ROUND COMPLETE</span><h2 class="bonus-title">'+(outcome.perfect?'Superstar bonus!':'Adventure progress!')+'</h2>'+
- '<p>'+rewardText+'</p><div class="bonus-currency">🪙 +'+outcome.coins+' bonus coins</div>'+ 
+ '<p>'+rewardText+'</p>'+
+ '<div class="coin-transfer" aria-label="Coins move into your collection"><span class="coin-pot"><span class="coin-pot-icon">🏺</span><span>Won coins</span></span><span class="coin-flight" aria-hidden="true">🪙</span><span class="coin-flight" aria-hidden="true">🪙</span><span class="coin-flight" aria-hidden="true">🪙</span><span class="coin-pot"><span class="coin-pot-icon">💰</span><span>Your collection</span></span></div>'+
+ '<div class="bonus-currency">🪙 +'+outcome.coins+' bonus coins</div>'+ 
  '<div class="bonus-currency">✦ +'+outcome.bonusPoints+' bonus points</div>'+
  (outcome.perfect?'<div class="bonus-hat"><strong>✨ Choose an avatar reward!</strong><p class="small">You earned one free cosmetic item of your choice. It is not a long-term mastery badge.</p></div>':'<p>Every word has another chance to be remembered later.</p>')+
  '<p class="small muted">Coins and chosen avatar items stay with this browser’s learner profile. Later review checks lasting memory.</p>'+
