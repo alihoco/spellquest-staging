@@ -193,7 +193,7 @@
         "actual",
         "ly"
       ],
-      "basis": "base_suffix_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -1727,7 +1727,7 @@
         "care",
         "ful"
       ],
-      "basis": "base_suffix_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -3206,7 +3206,7 @@
         "eigh",
         "th"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -3284,7 +3284,7 @@
         "enjoy",
         "ment"
       ],
-      "basis": "base_suffix_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -3360,7 +3360,7 @@
         "equip",
         "ment"
       ],
-      "basis": "base_suffix_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -3830,9 +3830,10 @@
       "band": "year3_4",
       "visual_units": [
         "feb",
-        "ruary"
+        "ru",
+        "ary"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -3841,7 +3842,7 @@
       "linguistic_accuracy_approved": false,
       "audio_segments_approved": false,
       "lesson_approved": false,
-      "review_priority": "medium"
+      "review_priority": "standard"
     },
     {
       "id": "en-fetch",
@@ -5203,7 +5204,7 @@
         "hope",
         "less"
       ],
-      "basis": "base_suffix_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -5452,7 +5453,7 @@
         "immediate",
         "ly"
       ],
-      "basis": "base_suffix_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -7748,7 +7749,7 @@
         "play",
         "ful"
       ],
-      "basis": "base_suffix_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -9184,10 +9185,10 @@
       "word": "shoulder",
       "band": "year5_6",
       "visual_units": [
-        "should",
-        "er"
+        "shoul",
+        "der"
       ],
-      "basis": "base_suffix_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -9282,7 +9283,7 @@
         "sincere",
         "ly"
       ],
-      "basis": "base_suffix_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -10793,7 +10794,7 @@
         "un",
         "fair"
       ],
-      "basis": "prefix_base_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -10812,7 +10813,7 @@
         "un",
         "happy"
       ],
-      "basis": "prefix_base_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
