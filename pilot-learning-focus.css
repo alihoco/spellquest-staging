@@ -74,3 +74,39 @@
  body.needs-profile #app .start-layout>section:first-child .start-desc,
  body.needs-profile #app .start-layout>section:first-child .actions{display:none!important}
 }
+
+/* Learning-first landing page: the guided adventure is the primary activity. */
+#app .next-chapter{align-items:flex-start!important;gap:16px}
+#app .chapter-content{flex:1;min-width:0}
+#app .chapter-content h3{margin:4px 0 7px!important}
+#app .chapter-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-top:16px}
+#app .chapter-actions .play-now.quick-play{
+ display:inline-flex!important;width:auto;min-height:58px!important;margin:0!important;
+ padding:14px 21px!important;font-size:19px!important;letter-spacing:0;
+}
+#app .chapter-actions .play-icon{width:31px;height:31px;font-size:17px}
+#app .chapter-listen{min-height:48px!important;padding:9px 12px!important}
+#app .chapter-setup-hint{margin-top:12px;color:#614b83;font-weight:750}
+#app .sprint-feature{
+ margin:23px 0 15px;padding:21px 22px;border-radius:20px;
+ border:2px solid #d7c4ed;background:linear-gradient(135deg,#f7efff,#fffaf0);
+}
+#app .sprint-feature h3{font-family:var(--font-display)!important;font-size:clamp(23px,2.5vw,29px);margin:6px 0 10px;color:#46336f}
+#app .sprint-feature p{font-size:16px;line-height:1.55;margin:0 0 15px;color:#554b67}
+#app .sprint-start{
+ display:inline-flex;min-height:48px;align-items:center;justify-content:center;
+ border-radius:13px;background:#eee3ff;color:#493382;font-weight:900;
+ padding:11px 18px;text-decoration:none;border:2px solid #d3b9ed;
+}
+#app .sprint-start:focus-visible{outline:4px solid #f4ba48;outline-offset:3px}
+#app .assessment-entry{padding:7px 3px 16px}
+#app .assessment-entry a{display:inline-block;font-weight:850;color:#5940a1}
+#app .assessment-entry p{margin:6px 0 0!important}
+@media(max-width:600px){
+ body:not(.lesson-active) #app .next-chapter{gap:10px!important;padding:16px!important}
+ body:not(.lesson-active) #app .chapter-actions{flex-direction:column;align-items:stretch;gap:9px}
+ body:not(.lesson-active) #app .chapter-actions .quick-play{width:100%!important;min-height:62px!important}
+ body:not(.lesson-active) #app .chapter-listen{width:100%!important}
+ body:not(.lesson-active) #app .sprint-feature{padding:17px 15px;margin:19px 0 12px}
+ body:not(.lesson-active) #app .sprint-start{width:100%}
+}
