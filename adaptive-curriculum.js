@@ -33,7 +33,16 @@ function yearStartingBand(year){
 function starter(profile,ageYears){
  return yearStartingBand(profile?.schoolYear)||ageStartingBand(ageYears);
 }
-function prepare(catalogue,approvedPilot={}){
+function approvedVisualGroups(word,reviewed){
+ const candidate=Array.isArray(reviewed?.entries)?reviewed.entries.find(x=>x?.id===word.id&&x.spelling===word.word):null;
+ if(!candidate||candidate.status!=='approved'||candidate.reviewer_role!=='qualified_literacy_specialist'||
+   !candidate.reviewer_ref||!/^\\d{4}-\\d{2}-\\d{2}/.test(candidate.reviewed_at||'')||
+   !Array.isArray(candidate.visual_units)||candidate.visual_units.length<1||candidate.visual_units.length>5||
+   candidate.visual_units.some(x=>typeof x!=='string'||!x.length)||
+   candidate.visual_units.join('')!==word.word)return null;
+ return candidate.visual_units.slice();
+}
+function prepare(catalogue,approvedPilot={},reviewed={entries:[]}){
  if(!catalogue||!Array.isArray(catalogue.words))throw Error('Curriculum word bank missing');
  const seen=new Set();
  const words=catalogue.words.map(w=>{
@@ -41,11 +50,13 @@ function prepare(catalogue,approvedPilot={}){
     !validBand(w.curriculum_band)||seen.has(w.word))throw Error('Invalid/duplicate curriculum spelling');
   seen.add(w.word);
   const pilot=approvedPilot[w.word];
-  // Default to whole correct orthography only. Draft segmentation is not linguistic truth.
+  const approved=approvedVisualGroups(w,reviewed);
+  // Editorial candidate segments are not a verified sound/meaning mapping.
   return {id:w.id,word:w.word,band:w.curriculum_band,
    curriculumRole:w.curriculum_role,teachingStatus:w.teaching_approval,
    teachingGroups:(w.teaching_groups||[]).map(g=>g.id),
-   spelling:pilot?.spelling?.join('')===w.word?pilot.spelling.slice():(REVIEWABLE_VISUAL_GROUPS[w.word]||[w.word]),
+   spelling:approved|| (pilot?.spelling?.join('')===w.word?pilot.spelling.slice():(REVIEWABLE_VISUAL_GROUPS[w.word]||[w.word])),
+   visualGroupingStatus:approved?'specialist_reviewed':'staging_draft_or_whole_word',
    audioApproved:false,wholeWordDraft:true};
  });
  if(words.length!==615)throw Error('Unexpected curriculum word-count; review updated source before using');
