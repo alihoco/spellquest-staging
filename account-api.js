@@ -5,6 +5,7 @@
 const crypto=require('node:crypto');
 const {Pool}=require('pg');
 const SECURITY=require('./account-security.js');
+const PILOT_MODE=process.env.SPELLMASTER_PILOT_MODE==='adult';
 const pool=process.env.DATABASE_URL?new Pool({connectionString:process.env.DATABASE_URL,ssl:process.env.DATABASE_SSL==='disable'?false:{rejectUnauthorized:true},max:5}):null;
 const VALID_CONDITIONS=new Set(['dyslexia','adhd','autism','dcd','dyscalculia','dld','tourette','other']);
 const VALID_AVATARS=new Set(['fox','owl','dragon','star']);
@@ -37,11 +38,18 @@ async function execute(req,res,path){if(!path.startsWith('/api/account/'))return
  const ip=String(req.headers['x-forwarded-for']||req.socket.remoteAddress||'').slice(0,80);
  if(!rate(ip)){send(res,429,{error:'Too many requests. Please try again later.'},headers);return true;}
  try{
-  if(path==='/api/account/status'&&req.method==='GET'){const table=await pool.query("SELECT to_regclass('public.accounts') AS accounts,to_regclass('public.learners') AS learners");const ready=Boolean(table.rows[0]?.accounts&&table.rows[0]?.learners&&process.env.ACCOUNT_REGISTRATION_ENABLED==='true');send(res,200,{available:ready,serviceReady:true},headers);return true;}
+  if(path==='/api/account/status'&&req.method==='GET'){const table=await pool.query("SELECT to_regclass('public.accounts') AS accounts,to_regclass('public.learners') AS learners");const ready=Boolean(table.rows[0]?.accounts&&table.rows[0]?.learners&&process.env.ACCOUNT_REGISTRATION_ENABLED==='true');send(res,200,{available:ready,serviceReady:true,pilot:ready&&PILOT_MODE?'adult':null},headers);return true;}
   if(path==='/api/account/register'&&req.method==='POST'){
    if(process.env.ACCOUNT_REGISTRATION_ENABLED!=='true')throw inputError('Registrations are not activated yet.',503);
    const body=await readBody(req),name=username(body.username),pw=password(body.password),kind=body.kind;
    if(!['adult','guardian'].includes(kind)||body.acceptedTerms!==true)throw inputError('Please choose an account type and accept the terms.');
+   if(PILOT_MODE){
+    if(kind!=='adult'||body.pilotConfirmed!==true)throw inputError('This limited trial is for adults aged 18 or over only.',403);
+    if(!body.learner||body.learner.isChild===true||body.learner.conditions?.length||body.learner.conditionChoice==='selected'||body.learner.supportConsent===true||body.learner.analysisConsent===true)throw inputError('This trial does not collect children’s information or neurodiversity details.',400);
+    const allowedHash=process.env.SPELLMASTER_PILOT_INVITE_SHA256;
+    const code=typeof body.inviteCode==='string'?body.inviteCode.trim():'';
+    if(!/^[a-f0-9]{64}$/.test(allowedHash||'')||!code||!SECURITY.safeCompareHex(SECURITY.safeHash(code),allowedHash))throw inputError('A valid invitation code is required.',403);
+   }
    const profile=learnerInput(body.learner,kind);
    const client=await pool.connect();try{
     await client.query('BEGIN');
