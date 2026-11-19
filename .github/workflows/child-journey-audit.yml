@@ -9,7 +9,7 @@ jobs:
   browser-audit:
     runs-on: ubuntu-24.04
     permissions:
-      contents: read
+      contents: write
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
@@ -22,6 +22,12 @@ jobs:
           npx playwright install chromium
       - name: Simulate nine-year-old spelling journey at mobile and desktop widths
         run: node scripts/simulate-child-journey.mjs
+      - name: Make synthetic screenshots inspectable without committing files
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: node scripts/expose-ui-audit-screenshots.mjs
       - name: Preserve screenshots and inspection data
         if: always()
         uses: actions/upload-artifact@v4
