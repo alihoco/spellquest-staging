@@ -207,6 +207,7 @@ function stop(){
 }
 async function speak(clip,t=ticket){
  if(t!==ticket)return false;
+ window.SpellmasterReader?.stop();
  setStatus('🔊 Preparing your narrator…');
  try{
   const url=await makeUrl(clip);if(t!==ticket)return false;
@@ -850,4 +851,4 @@ if(window.SpellmasterAccount?.token()){
  });
 }else renderLanding();
 </script><script src="/spellmaster-library.js?v=5"></script>
-<script src="/accessibility-tools.js?v=1"></script></body></html>
+<script src="/accessibility-tools.js?v=2"></script><script src="/spellmaster-reader.js?v=1"></script></body></html>
