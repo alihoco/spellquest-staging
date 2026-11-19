@@ -45,7 +45,12 @@ window.SpellmasterAccount.request('/status',{authenticated:false}).then(result=>
  const available=!!result.available;
  window.spellmasterPilot=available&&result.pilot==='adult';
  document.getElementById('registration-availability').textContent=available?(window.spellmasterPilot?'Invitation-only adult volunteer testing is available.':'Secure account service connected.'):'Registration remains closed. This page is a preview and does not collect private information.';
- document.getElementById('create-account').disabled=!available;
+ document.getElementById('create-account').disabled=!available||result.pilot==='guardian';
+ if(result.pilot==='guardian'){
+   document.getElementById('registration-availability').innerHTML='Family testing is available by private invitation. <a href="/family-signup.html">Continue to parent/guardian sign-up →</a>';
+   document.getElementById('step1').classList.add('hidden');
+   return;
+ }
  if(window.spellmasterPilot){
    for(const id of ['pilot-disclosure','pilot-invite-field','pilot-adult-row'])document.getElementById(id).classList.remove('hidden');
    document.getElementById('account-kind').value='adult';
