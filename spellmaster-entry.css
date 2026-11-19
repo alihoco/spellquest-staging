@@ -120,3 +120,52 @@ body.entry-home #app .entry-assessment>.entry-primary{margin:15px auto 9px!impor
  body.entry-home #app .entry-first-form{padding:14px 13px}
  body.entry-home #app .sprint-feature{margin-top:16px!important}
 }
+
+/* Brand promise: make the Spellmaster principle visible but quieter than Play. */
+.brand-promise{
+ display:flex;align-items:center;justify-content:center;gap:12px;
+ width:fit-content;max-width:calc(100% - 18px);margin:0 auto 15px;
+ padding:8px 24px 9px;border-radius:999px;
+ background:linear-gradient(100deg,#33214fe9,#5d3876ed,#33214fe9);
+ border:1px solid #eac176;box-shadow:0 3px 0 #20152d,0 6px 18px #0e092e70;
+ color:#fff2c9;text-align:center;
+}
+.brand-promise strong{
+ font:700 clamp(15px,1.7vw,20px)/1.2 var(--font-display);
+ letter-spacing:.02em;color:#fff4d4;text-shadow:0 2px 5px #180925;
+}
+.brand-promise em{font-style:normal;color:#ffdf77}
+.brand-promise-sparkle{font-size:18px;color:#ffe3a1}
+header .header-promise-mark{font-size:19px;color:#efc46f;opacity:.8}
+body.lesson-active .brand-promise{padding:4px 15px;margin:0 auto 7px}
+body.lesson-active .brand-promise strong{font-size:13px}
+body.lesson-active .brand-promise-sparkle{font-size:13px}
+#app .session-closing{
+ background:linear-gradient(155deg,#f7e9ff,#fff5d5);
+ border:2px solid #c9a3e5;border-radius:21px;
+ padding:clamp(18px,3vw,30px);margin:22px 0 18px;text-align:center;
+ box-shadow:0 8px 20px #3f277526;
+}
+#app .session-closing-stars{color:#d99a2f;letter-spacing:11px;font-size:21px;margin-bottom:7px}
+#app .session-closing h3{
+ font:700 clamp(22px,3vw,31px)/1.18 var(--font-display)!important;
+ color:#4d327b;margin:7px 0 10px;
+}
+#app .session-closing-copy{font-size:17px!important;max-width:610px;margin:8px auto!important;line-height:1.5!important}
+#app .session-closing-slogan{
+ font:700 clamp(17px,2.1vw,24px)/1.25 var(--font-display)!important;
+ color:#69429f;margin:15px auto 8px!important;
+}
+#app .session-closing-replay{
+ min-height:44px;background:#eee5ff;color:#543990;border:1px solid #d3b7ee;
+ box-shadow:none!important;margin-top:8px;
+}
+@media(max-width:640px){
+ .brand-promise{gap:7px;padding:8px 14px;margin:1px auto 10px}
+ .brand-promise strong{font-size:14px}
+ .brand-promise-sparkle{font-size:13px}
+ header .header-promise-mark{display:none}
+ body.lesson-active .brand-promise{margin:0 auto 5px}
+ #app .session-closing{padding:17px 13px;margin:13px 0}
+ #app .session-closing h3{font-size:23px!important}
+}
