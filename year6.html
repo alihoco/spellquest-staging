@@ -792,9 +792,9 @@ function htmlSafe(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&
 function currentTheme(p){return p.theme==='auto'?
  LP.themeForAge(Number.isInteger(p.ageYears)?p.ageYears:p.birth?LP.ageInYears(p.birth):10):p.theme}
 function createLocalProfile(){
- const alias=$('new-alias')?.value||'',birth=$('new-birth')?.value||'';
+ const alias=$('new-alias')?.value||'',birth='',ageYears=Number($('new-age')?.value||0);
  const yearValue=$('new-school-year')?.value||'';
- try{LP.add(spellStorage,{alias,birth,schoolYear:yearValue?Number(yearValue):null});renderLanding()}
+ try{LP.add(spellStorage,{alias,birth,ageYears,schoolYear:yearValue?Number(yearValue):null});renderLanding()}
  catch(e){const el=$('profile-error');if(el)el.textContent=e.message}
 }
 function chooseLocalProfile(id){try{LP.choose(spellStorage,id);renderLanding()}catch(e){const el=$('profile-error');if(el)el.textContent=e.message}}
@@ -871,10 +871,11 @@ function renderLanding(){
  '<p class="privacy-note">Only for local staging tests. In the finished game, switching learners requires authorised sign-in.</p>'+cards+
  (people.length<6?'<div class="profile-form"><label for="new-alias">Explorer nickname</label>'+
  '<input id="new-alias" maxlength="18" placeholder="e.g. Star Explorer" autocomplete="off" spellcheck="false">'+
- '<label for="new-birth">Birth month and year</label>'+
- '<input id="new-birth" type="month" min="1920-01" max="'+new Date().toISOString().slice(0,7)+'">'+
+ '<label for="new-age">Learner age in years</label>'+
+ '<select id="new-age"><option value="">Choose age</option>'+
+ Array.from({length:14},(_,i)=>'<option value="'+(i+4)+'">'+(i+4)+' years</option>').join('')+'</select>'+
  '<label for="new-school-year">School year (optional)</label>'+
- '<select id="new-school-year"><option value="">Suggest from age</option>'+
+ '<select id="new-school-year"><option value="">Not supplied</option>'+
  [1,2,3,4,5,6].map(y=>'<option value="'+y+'">Year '+y+'</option>').join('')+'</select>'+
  '<p class="privacy-note">School year only decides where we begin. Your spelling can move us up or down.</p>'+
  '<button class="alt" onclick="createLocalProfile()">+ Create tester profile</button>'+
