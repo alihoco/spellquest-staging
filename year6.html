@@ -141,7 +141,7 @@ button.play-now:active{transform:translateY(4px);box-shadow:0 6px 0 #2b2675}
 <script src="/celebration-feedback.js"></script>
 <script src="/mixed-word-selection.js"></script>
 <script src="/adaptive-curriculum.js"></script>
-<script src="/spelling-chunks-ui.js"></script>
+<script src="/spelling-chunks-ui.js"></script><script src="/grouping-measurement.js?v=1"></script>
 <script>
 const spellStorage=window.SpellmasterAccount?.token()?sessionStorage:localStorage;
 let WORDS=[
@@ -360,13 +360,38 @@ function openWordGrouping(){
  const status=$('audio-status');
  if(status)status.textContent='The word grouping tool will appear with the spelling.';
 }
+function measuredGroupingExposure({word,opportunity,selectedCuts,defaultCuts,reason}){
+ const profile=window.SpellmasterProfiles?.active(spellStorage),api=window.SpellmasterChunkUI;
+ const research=window.SpellmasterGroupingMeasurement;
+ if(!profile||!api||!research)return;
+ try{
+  const suggested=api.groups(word,defaultCuts),selected=api.groups(word,selectedCuts);
+  const e=research.exposure({word,suggested,selected,opportunity,source:reason});
+  const prior=api.read(spellStorage,profile);
+  if(prior.events.some(x=>x.action==='grouping_exposed'&&x.opportunity===opportunity&&
+       x.strategy===e.strategy&&JSON.stringify(x.selectedCuts)===JSON.stringify(e.selectedCuts)))return;
+  api.log(spellStorage,profile,'grouping_exposed',word,opportunity,{strategy:e.strategy,suggestedCuts:e.suggestedCuts,selectedCuts:e.selectedCuts,
+   source:e.source,groupingVersion:e.groupingVersion||research.VERSION});
+  if(window.SpellmasterCloud?.status().ready)window.SpellmasterCloud.save();
+ }catch(error){console.warn('Unable to record this visual grouping presentation');}
+}
+function savePersonalGrouping(){
+ const cloud=window.SpellmasterCloud;
+ if(!cloud?.status().ready)return;
+ const host=app.querySelector('.chunk-workshop');
+ const status=host?.querySelector('.chunk-notice');
+ if(status)status.textContent='Your groups are saved on this device; saving to your account…';
+ cloud.save().then(saved=>{if(status?.isConnected)status.textContent=saved?'Your personal grouping was saved to your account.':'Unable to sync this grouping. Your account may need reconnecting.'});
+}
 function mountPersonalGrouping(target){
  const profile=window.SpellmasterProfiles?.active(spellStorage);
  const host=document.querySelector(target);
  const w=WORDS[idx];if(!profile||!host||!w||!window.SpellmasterChunkUI)return;
  const key=runStart+':'+runCount+':'+w.word;
  return window.SpellmasterChunkUI.mount({host,word:w.word,teacherChunks:w.spelling,profile,
-  storage:spellStorage,opportunity:key,onSpeakInstruction:speakSplitterInstructions,onNotice:message=>{const t=host.querySelector('.chunk-notice');
+  storage:spellStorage,opportunity:key,onSpeakInstruction:speakSplitterInstructions,
+  onGroupingSaved:savePersonalGrouping,onGroupingExposed:measuredGroupingExposure,
+  onNotice:message=>{const t=host.querySelector('.chunk-notice');
     if(t)t.textContent=message;
     repaintTeachingGroups(visualTeachingGroups(w));}});
 }
@@ -552,7 +577,14 @@ check=function(retry){
  }
  if(window.SpellmasterCloud?.status().ready){
   window.SpellmasterCloud.save();
-  window.SpellmasterAccount.saveEvent('spelling_attempt',{word,correct:ok,review:!!runReview,afterHelp:!!retry,band:WORDS[idx]?.band||null,at:new Date().toISOString()}).catch(()=>{});
+  const profile=window.SpellmasterProfiles?.active(spellStorage);
+  const measurement=window.SpellmasterGroupingMeasurement;
+  const grouping=measurement&&profile?measurement.annotateAttempt({
+   word,history:window.SpellmasterChunkUI.read(spellStorage,profile),
+   correct:ok,afterHelp:!!retry,kind:runKind,review:!!runReview
+  }):null;
+  window.SpellmasterAccount.saveEvent('spelling_attempt',{word,correct:ok,review:!!runReview,afterHelp:!!retry,
+   band:WORDS[idx]?.band||null,at:new Date().toISOString(),grouping}).catch(()=>{});
  }
  if(ok){runSeen.add(word);success(retry)}else if(retry){shortReview()}else{review()}
 };
