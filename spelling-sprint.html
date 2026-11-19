@@ -17,8 +17,8 @@ function show(id){['setup','practice','finished'].forEach(x=>$(x).classList.togg
 function startSprint(){if(!words.length)return;position=0;attempted=[];show('practice');present()}
 function present(){$('counter').textContent='Word '+(position+1)+' of '+words.length;$('answer').value='';$('feedback').textContent='';$('after').classList.add('hidden');$('answer').disabled=false;requestAnimationFrame(()=>$('answer').focus({preventScroll:true}));say(words[position])}
 function playWord(){say(words[position])}
-function checkAnswer(){const response=normal($('answer').value);if(!response){$('answer').focus();return}const correct=response===words[position];attempted.push({word:words[position],correct});$('feedback').textContent=correct?'You remembered it! Well done.':'Good try. The spelling is '+words[position]+'. Listen once more before continuing.';$('answer').disabled=true;$('after').classList.remove('hidden');if(!correct)say(words[position])}
+async function checkAnswer(){const response=normal($('answer').value);if(!response){$('answer').focus();return}const correct=response===words[position];attempted.push({word:words[position],correct});if(window.SpellmasterAccount?.token()&&window.SpellmasterAccount.selectedLearner()){try{await window.SpellmasterAccount.saveEvent('sprint',{word:words[position],correct,at:new Date().toISOString()});}catch(e){$('status').textContent='This attempt could not be saved to your account.';}}$('feedback').textContent=correct?'You remembered it! Well done.':'Good try. The spelling is '+words[position]+'. Listen once more before continuing.';$('answer').disabled=true;$('after').classList.remove('hidden');if(!correct)say(words[position])}
 function nextWord(){position++;if(position>=words.length){show('finished');return}present()}
 function restart(){startSprint()}function editWords(){show('setup');paint()}
 $('newword').addEventListener('keydown',e=>{if(e.key==='Enter')addWord()});paint();
-</script></body></html>
+</script><script src="/account-client.js?v=1"></script></body></html>
