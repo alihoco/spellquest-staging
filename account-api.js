@@ -5,7 +5,8 @@
 const crypto=require('node:crypto');
 const {Pool}=require('pg');
 const SECURITY=require('./account-security.js');
-const PILOT_MODE=process.env.SPELLMASTER_PILOT_MODE==='adult';
+const PILOT_MODE=process.env.SPELLMASTER_PILOT_MODE||'';
+const ADULT_PILOT=PILOT_MODE==='adult',GUARDIAN_PILOT=PILOT_MODE==='guardian';
 const pool=process.env.DATABASE_URL?new Pool({connectionString:process.env.DATABASE_URL,ssl:process.env.DATABASE_SSL==='disable'?false:{rejectUnauthorized:true},max:5}):null;
 const VALID_CONDITIONS=new Set(['dyslexia','adhd','autism','dcd','dyscalculia','dld','tourette','other']);
 const VALID_AVATARS=new Set(['fox','owl','dragon','star']);
@@ -21,12 +22,17 @@ function tokenHash(token){return crypto.createHash('sha256').update(token).diges
 function newToken(){return crypto.randomBytes(32).toString('base64url');}
 function uuid(){return crypto.randomUUID();}
 function conditionInput(conditions,choice){if(!VALID_CHOICES.has(choice))throw inputError('Invalid condition preference.');if(!Array.isArray(conditions)||conditions.length>VALID_CONDITIONS.size)throw inputError('Invalid condition choices.');if(choice!=='selected'&&conditions.length)throw inputError('Please choose either conditions or a different preference.');if(choice==='selected'&&!conditions.length)throw inputError('Choose at least one condition.');const seen=new Set();return conditions.map(item=>{const code=String(item?.code||'');const status=item?.status;if(!VALID_CONDITIONS.has(code)||!['suspected','diagnosed'].includes(status)||seen.has(code))throw inputError('Invalid or repeated condition selection.');seen.add(code);return {code,status};});}
-function learnerInput(obj,kind){const alias=String(obj?.alias||'').trim();if(alias.length<2||alias.length>32||/[<>\x00-\x1f]/.test(alias))throw inputError('Use a nickname of 2–32 characters.');const birth=obj?.birthMonth||null;if(birth&&(!/^(19|20)\d{2}-(0[1-9]|1[0-2])$/.test(birth)||birth>new Date().toISOString().slice(0,7)))throw inputError('Invalid birth month.');const avatar=obj?.avatar||'fox';if(!VALID_AVATARS.has(avatar))throw inputError('Invalid avatar.');const theme=obj?.theme||'auto';if(!VALID_THEMES.has(theme))throw inputError('Invalid theme.');const isChild=kind==='guardian'?true:obj?.isChild===true;if(kind==='adult'&&isChild)throw inputError('Child profiles require a guardian account.');const choice=obj?.conditionChoice||'not_supplied';const conditions=conditionInput(obj?.conditions||[],choice);const supportConsent=obj?.supportConsent===true,analysisConsent=obj?.analysisConsent===true;if(choice==='selected'&&!supportConsent)throw inputError('Explicit learning-support consent is required for optional condition information.');if(analysisConsent&&!supportConsent)throw inputError('Research consent requires learning-support consent.');return {alias,birth,avatar,theme,isChild,choice,conditions,supportConsent,analysisConsent};}
-async function createLearner(client,accountId,obj,kind){const p=learnerInput(obj,kind),id=uuid();await client.query('INSERT INTO learners(id,account_id,alias,is_child,birth_month,avatar,theme) VALUES($1,$2,$3,$4,$5,$6,$7)',[id,accountId,p.alias,p.isChild,p.birth,p.avatar,p.theme]);await client.query("INSERT INTO learner_preferences(learner_id,choice,support_consent_at,analysis_consent_at,consent_text_version) VALUES($1,$2,CASE WHEN $3 THEN now() ELSE NULL END,CASE WHEN $4 THEN now() ELSE NULL END,CASE WHEN $3 THEN 'v1' ELSE NULL END)",[id,p.choice,p.supportConsent,p.analysisConsent]);for(const x of p.conditions)await client.query('INSERT INTO learner_conditions(learner_id,condition_code,report_status) VALUES($1,$2,$3)',[id,x.code,x.status]);return {id,alias:p.alias,isChild:p.isChild,birthMonth:p.birth,avatar:p.avatar,theme:p.theme};}
+function choiceNeverNeeded(obj){return obj?.conditions?.length>0||obj?.conditionChoice==='selected'||obj?.supportConsent===true||obj?.analysisConsent===true}
+function learnerInput(obj,kind){const alias=String(obj?.alias||'').trim();if(alias.length<2||alias.length>32||/[<>\x00-\x1f]/.test(alias))throw inputError('Use a nickname of 2–32 characters.');const birth=obj?.birthMonth||null;const age=obj?.ageYears==null?null:Number(obj.ageYears);if(birth&&(!/^(19|20)\d{2}-(0[1-9]|1[0-2])$/.test(birth)||birth>new Date().toISOString().slice(0,7)))throw inputError('Invalid birth month.');const avatar=obj?.avatar||'fox';if(!VALID_AVATARS.has(avatar))throw inputError('Invalid avatar.');const theme=obj?.theme||'auto';if(!VALID_THEMES.has(theme))throw inputError('Invalid theme.');const isChild=kind==='guardian'?true:obj?.isChild===true;
+ if(age!==null&&(!Number.isInteger(age)||age<4||age>17))throw inputError('Choose an age between 4 and 17.');
+ if(isChild&&GUARDIAN_PILOT&&(age===null||birth!==null))throw inputError('Choose the learner’s age in years, without a date of birth.');
+ if(isChild&&GUARDIAN_PILOT&&(choiceNeverNeeded(obj)))throw inputError('Please do not provide diagnosis information in this trial.');if(kind==='adult'&&isChild)throw inputError('Child profiles require a guardian account.');const choice=obj?.conditionChoice||'not_supplied';const conditions=conditionInput(obj?.conditions||[],choice);const supportConsent=obj?.supportConsent===true,analysisConsent=obj?.analysisConsent===true;if(choice==='selected'&&!supportConsent)throw inputError('Explicit learning-support consent is required for optional condition information.');if(analysisConsent&&!supportConsent)throw inputError('Research consent requires learning-support consent.');return {alias,birth,age,avatar,theme,isChild,choice,conditions,supportConsent,analysisConsent};}
+async function createLearner(client,accountId,obj,kind){const p=learnerInput(obj,kind),id=uuid();await client.query('INSERT INTO learners(id,account_id,alias,is_child,birth_month,avatar,theme,age_years,guardian_pilot_consent_at,guardian_pilot_consent_version) VALUES($1,$2,$3,$4,$5,$6,$7,$8,CASE WHEN $9 THEN now() ELSE NULL END,CASE WHEN $9 THEN $10 ELSE NULL END)',
+ [id,accountId,p.alias,p.isChild,p.birth,p.avatar,p.theme,p.age,GUARDIAN_PILOT&&kind==='guardian','guardian-pilot-v1']);await client.query("INSERT INTO learner_preferences(learner_id,choice,support_consent_at,analysis_consent_at,consent_text_version) VALUES($1,$2,CASE WHEN $3 THEN now() ELSE NULL END,CASE WHEN $4 THEN now() ELSE NULL END,CASE WHEN $3 THEN 'v1' ELSE NULL END)",[id,p.choice,p.supportConsent,p.analysisConsent]);for(const x of p.conditions)await client.query('INSERT INTO learner_conditions(learner_id,condition_code,report_status) VALUES($1,$2,$3)',[id,x.code,x.status]);return {id,alias:p.alias,isChild:p.isChild,birthMonth:p.birth,ageYears:p.age,avatar:p.avatar,theme:p.theme};}
 async function session(client,accountId){const token=newToken();await client.query('INSERT INTO sessions(token_hash,account_id,expires_at) VALUES($1,$2,now()+interval \'7 days\')',[tokenHash(token),accountId]);return token;}
 async function readBody(req,maxBytes=65536){let data='',size=0;for await(const chunk of req){size+=chunk.length;if(size>maxBytes)throw inputError('Request too large.',413);data+=chunk;}try{const value=JSON.parse(data||'{}');if(!value||typeof value!=='object'||Array.isArray(value))throw Error('object expected');return value;}catch{throw inputError('Invalid JSON request.');}}
 async function identify(req){const auth=req.headers.authorization||'';if(!/^Bearer [A-Za-z0-9_-]{43}$/.test(auth))throw inputError('Please sign in first.',401);const token=auth.slice(7);const r=await pool.query("SELECT a.id,a.username,a.kind FROM sessions s JOIN accounts a ON a.id=s.account_id WHERE s.token_hash=$1 AND s.expires_at>now() AND a.disabled_at IS NULL",[tokenHash(token)]);if(!r.rowCount)throw inputError('Your session has expired. Please sign in again.',401);return {...r.rows[0],token};}
-async function owns(accountId,learnerId){if(!/^[0-9a-f-]{36}$/i.test(learnerId||''))throw inputError('Invalid learner.');const q=await pool.query('SELECT id,alias,is_child AS "isChild",birth_month AS "birthMonth",avatar,theme FROM learners WHERE id=$1 AND account_id=$2',[learnerId,accountId]);if(!q.rowCount)throw inputError('Learner not found.',404);return q.rows[0];}
+async function owns(accountId,learnerId){if(!/^[0-9a-f-]{36}$/i.test(learnerId||''))throw inputError('Invalid learner.');const q=await pool.query('SELECT id,alias,is_child AS "isChild",birth_month AS "birthMonth",age_years AS "ageYears",avatar,theme FROM learners WHERE id=$1 AND account_id=$2',[learnerId,accountId]);if(!q.rowCount)throw inputError('Learner not found.',404);return q.rows[0];}
 function publicAccount(a){return {id:a.id,username:a.username,kind:a.kind};}
 async function execute(req,res,path){if(!path.startsWith('/api/account/'))return false;
  const origin=req.headers.origin||'';
@@ -38,22 +44,25 @@ async function execute(req,res,path){if(!path.startsWith('/api/account/'))return
  const ip=String(req.headers['x-forwarded-for']||req.socket.remoteAddress||'').slice(0,80);
  if(!rate(ip)){send(res,429,{error:'Too many requests. Please try again later.'},headers);return true;}
  try{
-  if(path==='/api/account/status'&&req.method==='GET'){const table=await pool.query("SELECT to_regclass('public.accounts') AS accounts,to_regclass('public.learners') AS learners");const ready=Boolean(table.rows[0]?.accounts&&table.rows[0]?.learners&&process.env.ACCOUNT_REGISTRATION_ENABLED==='true');send(res,200,{available:ready,serviceReady:true,pilot:ready&&PILOT_MODE?'adult':null},headers);return true;}
+  if(path==='/api/account/status'&&req.method==='GET'){const table=await pool.query("SELECT to_regclass('public.accounts') AS accounts,to_regclass('public.learners') AS learners");const ready=Boolean(table.rows[0]?.accounts&&table.rows[0]?.learners&&process.env.ACCOUNT_REGISTRATION_ENABLED==='true');send(res,200,{available:ready,serviceReady:true,pilot:ready?(ADULT_PILOT?'adult':GUARDIAN_PILOT?'guardian':null):null},headers);return true;}
   if(path==='/api/account/register'&&req.method==='POST'){
    if(process.env.ACCOUNT_REGISTRATION_ENABLED!=='true')throw inputError('Registrations are not activated yet.',503);
    const body=await readBody(req),name=username(body.username),pw=password(body.password),kind=body.kind;
    if(!['adult','guardian'].includes(kind)||body.acceptedTerms!==true)throw inputError('Please choose an account type and accept the terms.');
-   if(PILOT_MODE){
-    if(kind!=='adult'||body.pilotConfirmed!==true)throw inputError('This limited trial is for adults aged 18 or over only.',403);
-    if(!body.learner||body.learner.isChild===true||body.learner.conditions?.length||body.learner.conditionChoice==='selected'||body.learner.supportConsent===true||body.learner.analysisConsent===true)throw inputError('This trial does not collect children’s information or neurodiversity details.',400);
-    const allowedHash=process.env.SPELLMASTER_PILOT_INVITE_SHA256;
+   if(ADULT_PILOT||GUARDIAN_PILOT){
     const code=typeof body.inviteCode==='string'?body.inviteCode.trim():'';
+    const allowedHash=GUARDIAN_PILOT?process.env.SPELLMASTER_GUARDIAN_INVITE_SHA256:process.env.SPELLMASTER_PILOT_INVITE_SHA256;
     if(!/^[a-f0-9]{64}$/.test(allowedHash||'')||!code||!SECURITY.safeCompareHex(SECURITY.safeHash(code),allowedHash))throw inputError('A valid invitation code is required.',403);
+    if(ADULT_PILOT&&(kind!=='adult'||body.pilotConfirmed!==true||choiceNeverNeeded(body.learner)))throw inputError('Only invited adults may register during this pilot.',403);
+    if(GUARDIAN_PILOT){
+      if(kind!=='guardian'||body.guardianConfirmed!==true||body.guardianConsent!==true)throw inputError('Only an invited parent or person with parental responsibility can register a child.',403);
+      if(!body.learner||choiceNeverNeeded(body.learner)||body.learner.birthMonth)throw inputError('This trial collects only a nickname, age in years and learning progress, not diagnoses or dates of birth.',400);
+    }
    }
    const profile=learnerInput(body.learner,kind);
    const client=await pool.connect();try{
     await client.query('BEGIN');
-    if(PILOT_MODE){const accounts=await client.query('SELECT count(*)::int AS count FROM accounts');if(accounts.rows[0].count>=25)throw inputError('This volunteer group is full. Please contact the organiser.',403);}
+    if(ADULT_PILOT||GUARDIAN_PILOT){const accounts=await client.query('SELECT count(*)::int AS count FROM accounts');if(accounts.rows[0].count>=40)throw inputError('This private testing group is full. Please contact the organiser.',403);}
     const id=uuid();
     await client.query('INSERT INTO accounts(id,username,password_hash,kind) VALUES($1,$2,$3,$4)',[id,name,hashPassword(pw),kind]);
     const learner=await createLearner(client,id,body.learner,kind);
@@ -126,6 +135,7 @@ async function execute(req,res,path){if(!path.startsWith('/api/account/'))return
   if(path==='/api/account/me'&&req.method==='GET'){const q=await pool.query('SELECT id,alias,is_child AS "isChild",birth_month AS "birthMonth",avatar,theme FROM learners WHERE account_id=$1 ORDER BY created_at',[a.id]);send(res,200,{account:publicAccount(a),learners:q.rows},headers);return true;}
   if(path==='/api/account/learners'&&req.method==='POST'){
    if(a.kind!=='guardian')throw inputError('Only guardian accounts can create additional child profiles.',403);
+   if(GUARDIAN_PILOT)throw inputError('Adding child profiles is disabled during the first supervised pilot. Contact the organiser for an additional invitation.',403);
    const b=await readBody(req);const client=await pool.connect();try{await client.query('BEGIN');const count=await client.query('SELECT count(*)::int AS n FROM learners WHERE account_id=$1',[a.id]);if(count.rows[0].n>=6)throw inputError('Maximum of six learner profiles per guardian account.');const learner=await createLearner(client,a.id,b,'guardian');await client.query('COMMIT');send(res,201,{learner},headers);}catch(e){await client.query('ROLLBACK');throw e;}finally{client.release();}return true;
   }
   const m=path.match(/^\/api\/account\/learners\/([0-9a-f-]{36})(?:\/(state|events|conditions|research))?$/i);
