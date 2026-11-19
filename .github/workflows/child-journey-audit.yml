@@ -5,6 +5,11 @@ on:
     paths:
       - year6.html
       - pilot-learning-focus.css
+      - spellmaster-entry.css
+      - session-encouragement.js
+      - session-goodbye.css
+      - starting-assessment.html
+      - spelling-sprint.html
       - scripts/simulate-child-journey.mjs
       - scripts/expose-ui-audit-screenshots.mjs
       - .github/workflows/child-journey-audit.yml
