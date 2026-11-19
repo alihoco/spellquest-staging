@@ -41,7 +41,7 @@ function present(){
  $('audio-notice').textContent='';$('count').textContent='Word '+(at+1)+' of ten';
  $('bar').style.width=(at*10)+'%';$('answer').value='';
  requestAnimationFrame(()=>{$('quiz').scrollIntoView({block:'start',behavior:'instant'});$('answer').focus({preventScroll:true})});
- readWord();
+ readWord(at===0);
 }
 function stopAudio(){
  ++turnId;window.SpellmasterReader?.stop();
@@ -49,11 +49,11 @@ function stopAudio(){
  if(currentAudioUrl){URL.revokeObjectURL(currentAudioUrl);currentAudioUrl=null}
 }
 window.SpellmasterLessonAudioStop=stopAudio;
-async function readWord(){
+async function readWord(firstPrompt=false){
  stopAudio();const id=turnId,word=current?.word;if(!word)return;
  $('audio-notice').textContent='Getting your word ready…';
  try{
-  const url='https://spellquest-voice-staging.onrender.com/api/voice?clip='+encodeURIComponent('catalogue-word-en-'+word+'-v1')+'&voice=marin';
+  const url=firstPrompt&&word==='said'?'/assets/audio/assessment-first-said.mp3':'https://spellquest-voice-staging.onrender.com/api/voice?clip='+encodeURIComponent('catalogue-word-en-'+word+'-v1')+'&voice=marin';
   const response=await fetch(url,{mode:'cors'});if(!response.ok)throw Error('Narrator unavailable');
   const blob=await response.blob();if(id!==turnId)return;
   currentAudioUrl=URL.createObjectURL(blob);
@@ -61,7 +61,7 @@ async function readWord(){
   audio.onended=()=>{if(id===turnId)$('audio-notice').textContent=''};
   audio.onerror=()=>{if(id===turnId)$('audio-notice').textContent='Tap Hear the word to try again.'};
   await audio.play();if(id===turnId)$('audio-notice').textContent='';
- }catch{if(id===turnId){$('audio-notice').textContent='Using your device voice for this word…';const ok=await window.SpellmasterReader?.speak(word);if(id===turnId)$('audio-notice').textContent=ok?'':'Please check your sound and tap Hear the word again.'}}
+ }catch{if(id===turnId){$('audio-notice').textContent='Using your device voice for this word…';const ok=await window.SpellmasterReader?.speak(firstPrompt?"Type what you hear. There’s no rush. The word is "+word+".":word);if(id===turnId)$('audio-notice').textContent=ok?'':'Please check your sound and tap Hear the word again.'}}
 }
 function next(skip=false){
  const guess=skip?'':$('answer').value.toLowerCase().trim().replace(/[^a-z']/g,'');
