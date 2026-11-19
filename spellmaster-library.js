@@ -24,11 +24,12 @@
  let lastSignature='',scheduled=false;
  function text(id,value){const el=side.querySelector('#'+id);if(el)el.textContent=value}
  function state(){
-  const profile=window.SpellmasterProfiles?.active(localStorage);
+  const storage=window.SpellmasterAccount?.token()?sessionStorage:localStorage;
+  const profile=window.SpellmasterProfiles?.active(storage);
   const currentStage=typeof stage==='string'?stage:'welcome';
   const count=typeof runCount==='number'?runCount:0;
   const outcomes=typeof runResults!=='undefined'&&Array.isArray(runResults)?runResults:[];
-  const bonus=profile&&window.SpellmasterBonus?window.SpellmasterBonus.read(localStorage,profile):null;
+  const bonus=profile&&window.SpellmasterBonus?window.SpellmasterBonus.read(storage,profile):null;
   const active=currentStage!=='welcome'&&currentStage!=='finished'&&count>0;
   return {profile,currentStage,count,outcomes,bonus,active};
  }
