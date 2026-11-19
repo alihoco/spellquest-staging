@@ -110,3 +110,16 @@
  body:not(.lesson-active) #app .sprint-feature{padding:17px 15px;margin:19px 0 12px}
  body:not(.lesson-active) #app .sprint-start{width:100%}
 }
+
+/* On small screens let the chapter begin immediately, rather than putting
+   welcome prose and character decoration ahead of the main action. */
+@media(max-width:600px){
+ body:not(.lesson-active):not(.needs-profile) .sm-character{order:2!important}
+ body:not(.lesson-active):not(.needs-profile) #app.panel{order:0!important}
+ body:not(.lesson-active):not(.needs-profile) #app .start-layout>section:first-child{display:flex;flex-direction:column}
+ body:not(.lesson-active):not(.needs-profile) #app .start-layout>section:first-child>.next-chapter{order:-2}
+ body:not(.lesson-active):not(.needs-profile) #app .start-layout>section:first-child>.start-kicker,
+ body:not(.lesson-active):not(.needs-profile) #app .start-layout>section:first-child>h2,
+ body:not(.lesson-active):not(.needs-profile) #app .start-layout>section:first-child>.start-desc{display:none!important}
+ body:not(.lesson-active):not(.needs-profile) #app .next-chapter{margin:2px 0 9px!important}
+}
