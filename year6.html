@@ -835,6 +835,7 @@ function claimPendingAvatarItem(){
 function renderLanding(){
  stop();stage='welcome';
  const people=LP.readProfiles(spellStorage),p=LP.active(spellStorage);
+ document.body.classList.toggle('needs-profile',!p);
  document.body.dataset.theme=p?currentTheme(p):'explorer';
  const progress=p?LP.summary(adaptiveLoad(),adaptiveToday()):null;
  const placement=p?window.SpellmasterCurriculum.readPlacement(spellStorage,p,LP.ageInYears(p.birth)):null;
