@@ -1,39 +1,80 @@
-<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Starting point | Spellmaster</title><style>body{margin:0;background:linear-gradient(140deg,#ece6ff,#e8f8ff);font:17px/1.6 'Trebuchet MS',system-ui,sans-serif;color:#302b53}main{max-width:720px;margin:32px auto;padding:20px}.card{background:white;border-radius:24px;padding:clamp(22px,5vw,42px);box-shadow:0 16px 36px #33277718}h1{font-size:clamp(30px,5vw,43px);line-height:1.2}button{background:#5e4bc9;color:white;border:0;border-radius:13px;padding:13px 18px;min-height:48px;font-size:16px;font-weight:800;cursor:pointer}button.secondary{color:#4d3bad;background:#eeebff}input{width:100%;box-sizing:border-box;border:2px solid #c1b9dc;border-radius:14px;font-size:24px;padding:14px}label{display:block;font-weight:bold;margin:22px 0 8px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}.hidden{display:none}.muted{color:#657088}.progress{height:10px;border-radius:9px;background:#e9e5fa;overflow:hidden}.progress span{display:block;height:100%;background:#6556cb;width:0}input:focus-visible,button:focus-visible{outline:4px solid #efc355;outline-offset:3px}</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="/spellmaster-interior.css?v=1"></head><body><main><header class="site-header"><a href="/" aria-label="Spellmaster home"><img class="brand-art" src="/assets/spellmaster/spellmaster-logo-ornate.webp" width="1120" height="373" alt="Spellmaster"></a><nav aria-label="Main navigation"><a href="/">Home</a><a href="/signup.html">Join</a><a href="/year6.html" class="current">Play</a></nav></header><a href="/year6.html">← Back to adventure</a><section class="page-hero"><span class="eyebrow">YOUR SPELLING JOURNEY</span><h1>Discover your starting point</h1><p>Ten gentle word challenges, with no scores and no comparisons.</p></section><div class="card"><div id="welcome"><h1>Your adventure starts here 🌱</h1><p>To begin, I'll ask you for ten spellings. Don't worry about getting them right or wrong. They simply help me understand where you are today, so that together we can help you become better tomorrow.</p><p>I'll say each word for you. You can listen as often as you like. There are no marks or scores to worry about.</p><button onclick="start()">▶ Let's begin</button></div><div id="quiz" class="hidden"><div class="progress"><span id="bar"></span></div><p id="count" class="muted"></p><h1>Listen, then spell</h1><p>Type what you hear. It's fine to have a go, even if you aren't sure.</p><button type="button" onclick="readWord()">🔊 Hear the word</button><p class="muted" id="audio-notice" role="status"></p><label for="answer">Your spelling</label><input id="answer" autocapitalize="off" spellcheck="false" autocomplete="off" onkeydown="if(event.key==='Enter')next()"><div class="actions"><button onclick="next()">Next word →</button><button class="secondary" onclick="next(true)">I'm not sure</button></div></div><div id="done" class="hidden"><h1>You've made a great start! ✨</h1><p>Thank you for trying those words. I'll use your attempts to help choose where to begin, and we'll adapt as you learn. There is no score to compare with anyone else.</p><p class="muted" id="save-status" role="status">Saving your personal starting point…</p><a href="/year6.html">Continue to my adventure →</a><p><a href="/volunteer-feedback.html">Share feedback about this assessment</a></p></div></div><footer class="site-footer">✦ Spellmaster — Better today than yesterday.</footer></main><script>
-const words=['said','come','night','because','enough','favourite','necessary','environment','rhythm','accommodate'];let at=0,results=[];
-const $=id=>document.getElementById(id);function panel(id){['welcome','quiz','done'].forEach(x=>$(x).classList.toggle('hidden',x!==id))}
-function say(s){if(!('speechSynthesis' in window))return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(s);u.lang='en-GB';u.rate=.82;const v=speechSynthesis.getVoices().find(v=>v.lang.toLowerCase().startsWith('en-gb'));if(v)u.voice=v;speechSynthesis.speak(u)}
-function start(){at=0;results=[];panel('quiz');present()}
-function present(){if($('audio-notice'))$('audio-notice').textContent='';$('count').textContent='Word '+(at+1)+' of ten';$('bar').style.width=(at*10)+'%';$('answer').value='';requestAnimationFrame(()=>$('answer').focus({preventScroll:true}));readWord()}
-let currentAudio=null;
-async function readWord(){
- window.SpellmasterReader?.stop();
- const word=words[at];
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Starting point | Spellmaster</title><style>body{margin:0;background:linear-gradient(140deg,#ece6ff,#e8f8ff);font:17px/1.6 'Trebuchet MS',system-ui,sans-serif;color:#302b53}main{max-width:720px;margin:32px auto;padding:20px}.card{background:white;border-radius:24px;padding:clamp(22px,5vw,42px);box-shadow:0 16px 36px #33277718}h1{font-size:clamp(30px,5vw,43px);line-height:1.2}button{background:#5e4bc9;color:white;border:0;border-radius:13px;padding:13px 18px;min-height:48px;font-size:16px;font-weight:800;cursor:pointer}button.secondary{color:#4d3bad;background:#eeebff}input{width:100%;box-sizing:border-box;border:2px solid #c1b9dc;border-radius:14px;font-size:24px;padding:14px}label{display:block;font-weight:bold;margin:22px 0 8px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}.hidden{display:none}.muted{color:#657088}.progress{height:10px;border-radius:9px;background:#e9e5fa;overflow:hidden}.progress span{display:block;height:100%;background:#6556cb;width:0}input:focus-visible,button:focus-visible{outline:4px solid #efc355;outline-offset:3px}</style><style>
+body.assessment-active .page-hero,body.assessment-active .assessment-back{display:none}
+body.assessment-active .site-header{padding:5px 0}
+body.assessment-active .site-header .brand-art{width:clamp(140px,30vw,190px)}
+body.assessment-active main{padding-top:0}
+body.assessment-active .card{padding:clamp(16px,3vw,26px)}
+#quiz h2{margin:12px 0 3px}#quiz p.short-help{margin:5px 0 8px}
+#quiz label{margin:12px 0 4px}#quiz input#answer{min-height:58px;font-size:25px}
+#quiz .assessment-hear{width:100%;max-width:390px}
+#quiz .assessment-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#quiz .assessment-actions button{min-width:0}
+@media(max-width:640px){.page-hero{margin:8px 0}#quiz button{min-height:52px}body.assessment-active main{padding:0 10px 18px}body.assessment-active .card{margin-top:3px}}
+</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="/spellmaster-interior.css?v=1"></head><body><main><header class="site-header"><a href="/" aria-label="Spellmaster home"><img class="brand-art" src="/assets/spellmaster/spellmaster-logo-ornate.webp" width="1120" height="373" alt="Spellmaster"></a><nav aria-label="Main navigation"><a href="/">Home</a><a href="/signup.html">Join</a><a href="/year6.html" class="current">Play</a></nav></header><a class="assessment-back" href="/year6.html">← Back to adventure</a><section class="page-hero assessment-hero"><span class="eyebrow">YOUR SPELLING JOURNEY</span><h1>Find your starting point</h1><p>Ten words. At your own pace.</p></section><div class="card"><div id="welcome"><h2>Your adventure starts here 🌱</h2><p>I'll say ten words. Try the spellings you know.</p><p>Not sure? That's fine. You can listen again.</p><button onclick="start()">▶ Let's begin</button></div><div id="quiz" class="hidden"><div class="progress"><span id="bar"></span></div><p id="count" class="muted"></p><h2>Listen, then spell</h2><p class="short-help">Type what you hear. There's no rush.</p><button type="button" class="assessment-hear" onclick="readWord()">🔊 Hear the word</button><p class="muted" id="audio-notice" role="status"></p><label for="answer">Your spelling</label><input id="answer" autocapitalize="off" spellcheck="false" autocomplete="off" onkeydown="if(event.key==='Enter')next()"><div class="actions assessment-actions"><button onclick="next()">Next word →</button><button class="secondary" onclick="next(true)">I'm not sure</button></div></div><div id="done" class="hidden"><h2>You've made a great start! ✨</h2><p>I'll help you learn from here. You can always come back to tricky words.</p><p class="muted" id="save-status" role="status">Saving your personal starting point…</p><a class="btn gold" href="/year6.html">Continue my adventure →</a><p><a href="/volunteer-feedback.html">Share feedback about this assessment</a></p></div></div><footer class="site-footer">✦ Spellmaster — Better today than yesterday.</footer></main><script src="/starting-point-policy.js?v=1"></script><script>
+const $=id=>document.getElementById(id),policy=window.SpellmasterStartingPoint;
+let at=0,results=[],current=null,currentAudio=null,currentAudioUrl=null,turnId=0;
+function panel(id){
+ ['welcome','quiz','done'].forEach(x=>$(x).classList.toggle('hidden',x!==id));
+ document.body.classList.toggle('assessment-active',id==='quiz');
+ window.scrollTo({top:0,behavior:'instant'});
+}
+function start(){at=0;results=[];current=policy.planned(results);panel('quiz');present();}
+function present(){
+ current=policy.planned(results);
+ if(!current)return finish();
+ $('audio-notice').textContent='';$('count').textContent='Word '+(at+1)+' of ten';
+ $('bar').style.width=(at*10)+'%';$('answer').value='';
+ requestAnimationFrame(()=>{$('quiz').scrollIntoView({block:'start',behavior:'instant'});$('answer').focus({preventScroll:true})});
+ readWord();
+}
+function stopAudio(){
+ ++turnId;window.SpellmasterReader?.stop();
  if(currentAudio){currentAudio.pause();currentAudio=null}
+ if(currentAudioUrl){URL.revokeObjectURL(currentAudioUrl);currentAudioUrl=null}
+}
+window.SpellmasterLessonAudioStop=stopAudio;
+async function readWord(){
+ stopAudio();const id=turnId,word=current?.word;if(!word)return;
+ $('audio-notice').textContent='Getting your word ready…';
  try{
   const url='https://spellquest-voice-staging.onrender.com/api/voice?clip='+encodeURIComponent('catalogue-word-en-'+word+'-v1')+'&voice=marin';
-  const response=await fetch(url,{mode:'cors'});
-  if(!response.ok)throw Error('Narration not available');
-  const blob=await response.blob();
-  const objectUrl=URL.createObjectURL(blob);
-  const audio=new Audio(objectUrl);
-  currentAudio=audio;
-  audio.onended=()=>URL.revokeObjectURL(objectUrl);
-  audio.onerror=()=>URL.revokeObjectURL(objectUrl);
-  await audio.play();
- }catch{const status=document.getElementById('audio-notice');if(status)status.textContent='Our friendly narrator is unavailable. Please try Hear the word again.'}
+  const response=await fetch(url,{mode:'cors'});if(!response.ok)throw Error('Narrator unavailable');
+  const blob=await response.blob();if(id!==turnId)return;
+  currentAudioUrl=URL.createObjectURL(blob);
+  const audio=new Audio(currentAudioUrl);currentAudio=audio;
+  audio.onended=()=>{if(id===turnId)$('audio-notice').textContent=''};
+  audio.onerror=()=>{if(id===turnId)$('audio-notice').textContent='Tap Hear the word to try again.'};
+  await audio.play();if(id===turnId)$('audio-notice').textContent='';
+ }catch{if(id===turnId)$('audio-notice').textContent='Could not play the word. Tap Hear the word to try again.'}
 }
-function next(skip=false){const guess=skip?'':$('answer').value.toLowerCase().trim().replace(/[^a-z]/g,'');results.push({word:words[at],attempt:guess,independent:guess===words[at]});at++;if(at===words.length){finish();return}present()}
-async function finish(){panel('done');const account=window.SpellmasterAccount;if(account?.token()&&account.selectedLearner()){try{
- await account.saveEvent('assessment',{version:1,responses:results,completedAt:new Date().toISOString()});
- const bands=['year1','year2','year3_4','year5_6'];
- const pass=(from,to)=>results.slice(from,to).filter(x=>x.independent).length;
- const suggested=pass(0,2)<1?bands[0]:pass(2,4)<1?bands[1]:pass(4,6)<1?bands[2]:pass(6,10)>=2?bands[3]:bands[2];
- const saved=await account.loadState();
- const state=saved.state||{};
- if(!state.placement?.currentBand||state.placement.source==='10_word_assessment_provisional'){
-  state.placement={version:1,baselineBand:suggested,currentBand:suggested,source:'10_word_assessment_provisional',observations:[],moves:[],updatedAt:new Date().toISOString()};
-  await account.request('/learners/'+account.selectedLearner()+'/state',{method:'PATCH',body:{state,expectedVersion:saved.version}});
+function next(skip=false){
+ const guess=skip?'':$('answer').value.toLowerCase().trim().replace(/[^a-z']/g,'');
+ if(!guess&&!skip){$('answer').focus();return}
+ stopAudio();
+ results.push({word:current.word,band:current.band,attempt:guess,independent:guess===current.word,skipped:skip});
+ at=results.length;if(at===10){finish();return}present();
+}
+async function finish(){
+ panel('done');const placement=policy.placement(results),account=window.SpellmasterAccount;
+ const label=$('save-status');label.textContent='Saving your starting point…';
+ if(account?.token()&&account.selectedLearner()){
+  try{
+   await account.saveEvent('assessment',{version:2,responses:results,completedAt:new Date().toISOString()});
+   const previous=await account.loadState();
+   const state={...(previous.state||{}),placement};
+   await account.request('/learners/'+account.selectedLearner()+'/state',{method:'PATCH',
+    body:{state,expectedVersion:previous.version}});
+   label.textContent='Saved to your private learner account. Your learning path will keep adapting.';
+  }catch(e){label.textContent='The account save did not finish. Please sign in and try again before continuing.'}
+  return;
  }
- document.getElementById('save-status').textContent='Your starting point has been saved securely. We have chosen a provisional practice level, which will keep adapting as you learn.';
- }catch(e){document.getElementById('save-status').textContent='Your account could not be fully updated. Please check your connection before continuing.';}return;}const api=window.SpellmasterProfiles;const active=api?.active(localStorage);const key=active?'spellmaster-starting-assessment-v1:'+active.id:'spellmaster-starting-assessment-v1:guest';localStorage.setItem(key,JSON.stringify({date:new Date().toISOString(),responses:results}));document.getElementById('save-status').textContent='This was a guest assessment. Your practice is saved only on this browser.';}
-</script><script src="/learner-profiles.js"></script><script src="/account-client.js?v=1"></script><script src="/spellmaster-reader.js?v=1"></script></body></html>
+ const api=window.SpellmasterProfiles,active=api?.active(localStorage);
+ const record={date:new Date().toISOString(),responses:results,placement};
+ const key='spellmaster-starting-assessment-v1:'+(active?.id||'guest');
+ localStorage.setItem(key,JSON.stringify(record));
+ if(active&&window.SpellmasterCurriculum)window.SpellmasterCurriculum.savePlacement(localStorage,active,placement);
+ label.textContent=active?'Your starting point is saved for this explorer on this browser.':
+  'Saved on this browser. Make one explorer profile to use your starting point.';
+}
+window.addEventListener('pagehide',stopAudio);
+</script><script src="/learner-profiles.js"></script><script src="/account-client.js?v=1"></script><script src="/adaptive-curriculum.js"></script><script src="/spellmaster-reader.js?v=1"></script></body></html>
