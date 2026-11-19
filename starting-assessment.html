@@ -10,7 +10,7 @@ body.assessment-active .card{padding:clamp(16px,3vw,26px)}
 #quiz .assessment-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 #quiz .assessment-actions button{min-width:0}
 @media(max-width:640px){.page-hero{margin:8px 0}#quiz button{min-height:52px}body.assessment-active main{padding:0 10px 18px}body.assessment-active .card{margin-top:3px}}
-</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="/spellmaster-interior.css?v=1"><link rel="stylesheet" href="/session-goodbye.css?v=1"></head><body><main><header class="site-header"><a href="/" aria-label="Spellmaster home"><img class="brand-art" src="/assets/spellmaster/spellmaster-logo-ornate.webp" width="1120" height="373" alt="Spellmaster"></a><nav aria-label="Main navigation"><a href="/">Home</a><a href="/signup.html">Join</a><a href="/year6.html" class="current">Play</a></nav></header><a class="assessment-back" href="/year6.html">← Back to adventure</a><section class="page-hero assessment-hero"><span class="eyebrow">YOUR SPELLING JOURNEY</span><h1>Find your starting point</h1><p>Ten words. At your own pace.</p></section><div class="card"><div id="welcome"><h2>Your adventure starts here 🌱</h2><p>I'll say ten words. Try the spellings you know.</p><p>Not sure? That's fine. You can listen again.</p><button onclick="start()">▶ Let's begin</button></div><div id="quiz" class="hidden"><div class="progress"><span id="bar"></span></div><p id="count" class="muted"></p><h2>Listen, then spell</h2><p class="short-help">Type what you hear. There's no rush.</p><button type="button" class="assessment-hear" onclick="readWord()">🔊 Hear the word</button><p class="muted" id="audio-notice" role="status"></p><label for="answer">Your spelling</label><input id="answer" autocapitalize="off" spellcheck="false" autocomplete="off" onkeydown="if(event.key==='Enter')next()"><div class="actions assessment-actions"><button onclick="next()">Next word →</button><button class="secondary" onclick="next(true)">I'm not sure</button></div></div><div id="done" class="hidden"><h2>Your starting point is ready! 🌱</h2><div id="assessment-session-close" class="session-goodbye"></div><p class="muted" id="save-status" role="status">Saving your personal starting point…</p><a class="btn gold" href="/year6.html">Continue my adventure →</a><p><a href="/volunteer-feedback.html">Share feedback about this assessment</a></p></div></div><footer class="site-footer">✦ Spellmaster — Better today than yesterday.</footer></main><script src="/starting-point-policy.js?v=1"></script><script src="/session-encouragement.js?v=1"></script><script>
+</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="/spellmaster-interior.css?v=1"><link rel="stylesheet" href="/session-goodbye.css?v=1"></head><body><main><header class="site-header"><a href="/" aria-label="Spellmaster home"><img class="brand-art" src="/assets/spellmaster/spellmaster-logo-ornate.webp" width="1120" height="373" alt="Spellmaster"></a><nav aria-label="Main navigation"><a href="/">Home</a><a href="/signup.html">Join</a><a href="/year6.html" class="current">Play</a></nav></header><a class="assessment-back" href="/year6.html">← Back to adventure</a><section class="page-hero assessment-hero"><span class="eyebrow">YOUR SPELLING JOURNEY</span><h1>Find your starting point</h1><p>Ten words. At your own pace.</p></section><div class="card"><div id="welcome"><h2>Your adventure starts here 🌱</h2><p>I'll say ten words. Try the spellings you know.</p><p>Not sure? That's fine. You can listen again.</p><button onclick="start()">▶ Start my ten words</button><button class="secondary" onclick="hearAssessmentInstructions()">🔊 Hear what to do</button><p id="assessment-welcome-status" class="muted" role="status"></p></div><div id="quiz" class="hidden"><div class="progress"><span id="bar"></span></div><p id="count" class="muted"></p><h2>Listen, then spell</h2><p class="short-help">Type what you hear. There's no rush.</p><button type="button" class="assessment-hear" onclick="readWord()">🔊 Hear the word</button><p class="muted" id="audio-notice" role="status"></p><label for="answer">Your spelling</label><input id="answer" autocapitalize="off" spellcheck="false" autocomplete="off" onkeydown="if(event.key==='Enter')next()"><div class="actions assessment-actions"><button onclick="next()">Next word →</button><button class="secondary" onclick="next(true)">I'm not sure</button></div></div><div id="done" class="hidden"><h2>Your starting point is ready! 🌱</h2><div id="assessment-session-close" class="session-goodbye"></div><p class="muted" id="save-status" role="status">Saving your personal starting point…</p><a class="btn gold" href="/year6.html">Continue my adventure →</a><p><a href="/volunteer-feedback.html">Share feedback about this assessment</a></p></div></div><footer class="site-footer">✦ Spellmaster — Better today than yesterday.</footer></main><script src="/starting-point-policy.js?v=1"></script><script src="/session-encouragement.js?v=1"></script><script>
 const $=id=>document.getElementById(id),policy=window.SpellmasterStartingPoint;
 let at=0,results=[],current=null,currentAudio=null,currentAudioUrl=null,turnId=0;
 function panel(id){
@@ -18,7 +18,21 @@ function panel(id){
  document.body.classList.toggle('assessment-active',id==='quiz');
  window.scrollTo({top:0,behavior:'instant'});
 }
-function start(){at=0;results=[];current=policy.planned(results);panel('quiz');present();}
+const ASSESSMENT_INTRO="Welcome to Spellmaster! We will try ten words to find your starting point. I will say each word aloud. Listen, then type how you think it is spelled. You can hear the word again as many times as you like. There is no rush, and it is okay not to know a word.";
+async function hearAssessmentInstructions(){
+ const status=$('assessment-welcome-status');
+ if(status)status.textContent='Speaking your instructions…';
+ const ok=await window.SpellmasterReader?.speak(ASSESSMENT_INTRO);
+ if(status)status.textContent=ok?'':'If you cannot hear me, check your device volume and press again.';
+}
+async function start(){
+ at=0;results=[];current=policy.planned(results);panel('quiz');
+ $('audio-notice').textContent='First, listen to your instructions…';
+ const ok=await window.SpellmasterReader?.speak(ASSESSMENT_INTRO);
+ if(!current||at!==0)return;
+ present();
+ if(!ok)$('audio-notice').textContent='Tap Hear the word if the audio did not play.';
+}
 function present(){
  current=policy.planned(results);
  if(!current)return finish();
@@ -45,7 +59,7 @@ async function readWord(){
   audio.onended=()=>{if(id===turnId)$('audio-notice').textContent=''};
   audio.onerror=()=>{if(id===turnId)$('audio-notice').textContent='Tap Hear the word to try again.'};
   await audio.play();if(id===turnId)$('audio-notice').textContent='';
- }catch{if(id===turnId)$('audio-notice').textContent='Could not play the word. Tap Hear the word to try again.'}
+ }catch{if(id===turnId){$('audio-notice').textContent='Using your device voice for this word…';const ok=await window.SpellmasterReader?.speak(word);if(id===turnId)$('audio-notice').textContent=ok?'':'Please check your sound and tap Hear the word again.'}}
 }
 function next(skip=false){
  const guess=skip?'':$('answer').value.toLowerCase().trim().replace(/[^a-z']/g,'');
