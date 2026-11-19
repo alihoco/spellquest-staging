@@ -39,14 +39,14 @@ test('Guest assessment attaches only to first learner profile, with no sibling m
  const second=LP.add(storage,{alias:'Second Explorer',ageYears:7});
  assert.equal(storage.getItem('spellmaster-starting-assessment-v1:'+second.id),null);
 });
- assert.ok(game.includes('onclick="retry()"'),'Retry control must remain available');
+test('Mobile learner experience prioritises the question and retry over controls',()=>{
  const css=read('pilot-learning-focus.css'),game=read('year6.html');
  assert.match(css,/body\.lesson-active main>\.hero\{display:none/);
  assert.match(css,/body\.lesson-active \.sm-path/);
  assert.match(css,/position:sticky/);
  assert.match(game,/quick-play/);
  assert.match(game,/SpellmasterLessonAudioStop=stop/);
- assert.match(game,/<button onclick=\\"retry\(\)\\">/);
+ assert.ok(game.includes('onclick="retry()"'),'Retry control must remain available');
  assert.match(game,/class="voice-options"/);
 });
 test('Narration and guardian setup are concise but accessible',()=>{
