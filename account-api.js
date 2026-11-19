@@ -53,6 +53,7 @@ async function execute(req,res,path){if(!path.startsWith('/api/account/'))return
    const profile=learnerInput(body.learner,kind);
    const client=await pool.connect();try{
     await client.query('BEGIN');
+    if(PILOT_MODE){const accounts=await client.query('SELECT count(*)::int AS count FROM accounts');if(accounts.rows[0].count>=25)throw inputError('This volunteer group is full. Please contact the organiser.',403);}
     const id=uuid();
     await client.query('INSERT INTO accounts(id,username,password_hash,kind) VALUES($1,$2,$3,$4)',[id,name,hashPassword(pw),kind]);
     const learner=await createLearner(client,id,body.learner,kind);
