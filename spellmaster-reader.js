@@ -27,6 +27,20 @@
   if(/Ready to discover,/i.test(text))text='Ready to discover?';
   return text;
  }
+ function sectionText(el){
+  const pieces=[readableText(el)];
+  if(el.matches('h1,h2,h3')){
+   let node=el.nextElementSibling,shown=0;
+   while(node&&shown<3){
+    if(node.matches('h1,h2,h3,section,div,form,button,details,nav,ul,ol'))break;
+    if(node.matches('p,.start-desc')&&!node.closest(prohibited)&&!node.matches('[role="alert"],[role="status"]')){
+     const text=plainText(node);if(text)pieces.push(text);shown++;
+    }
+    node=node.nextElementSibling;
+   }
+  }
+  return pieces.filter(Boolean).join('. ').slice(0,650);
+ }
  async function speak(text,button){
   if(typeof text!=='string'||!text.trim())return false;
   stop();
@@ -70,7 +84,7 @@
     event.preventDefault();event.stopPropagation();
     if(activeButton===button){stop();return}
     if(typeof root.SpellmasterLessonAudioStop==='function')root.SpellmasterLessonAudioStop();
-    speak(readableText(el),button);
+    speak(sectionText(el),button);
    });
    el.insertBefore(button,el.firstChild);
   });
