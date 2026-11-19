@@ -2,6 +2,7 @@
 const http=require('node:http');
 const crypto=require('node:crypto');
 const PORT=process.env.PORT||10000;
+const ACCOUNT_API=require('./account-api.js');
 const ORIGIN='https://spellquest-staging.onrender.com';
 const WORDS=['ship','because','necessary'];
 const CLIPS={
@@ -184,6 +185,8 @@ CLIPS['spellmaster-catalogue-help-v1']='Look at the correct spelling closely. No
 const cache=new Map(),limits=new Map();let daily={day:'',count:0};
 function send(res,code,obj,headers={}){res.writeHead(code,{'Content-Type':'application/json','Cache-Control':'no-store',...headers});res.end(JSON.stringify(obj))}
 http.createServer(async(req,res)=>{
+ const requestPath=new URL(req.url,'https://voice.local').pathname;
+ if(requestPath.startsWith('/api/account/')){await ACCOUNT_API.execute(req,res,requestPath);return;}
  const origin=req.headers.origin||'';const cors=origin===ORIGIN?{'Access-Control-Allow-Origin':ORIGIN,'Vary':'Origin'}:{};
  if(req.method==='OPTIONS'){res.writeHead(204,{...cors,'Access-Control-Allow-Methods':'GET, OPTIONS','Access-Control-Allow-Headers':'Content-Type'});return res.end()}
  const url=new URL(req.url,'https://voice.local');
