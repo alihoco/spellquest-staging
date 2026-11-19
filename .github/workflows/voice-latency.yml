@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - scripts/measure-voice.mjs
+      - server.js
       - .github/workflows/voice-latency.yml
   workflow_dispatch:
 jobs:
