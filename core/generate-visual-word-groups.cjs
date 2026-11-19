@@ -34,6 +34,46 @@ const MANUAL={
  written:'writ|ten',answer:'an|swer',
  listen:'lis|ten',people:'peo|ple'
 };
+
+// Word-by-word editorial candidates for common-exception and irregular spellings.
+// These are written-layout proposals only: no specialist has signed them off.
+const HIGH_PRIORITY_DRAFTS={
+ 'after':'af|ter','again':'a|gain','bare':'b|are','bear':'b|ear',
+ 'beard':'b|ear|d','behind':'be|hind','blew':'bl|ew','blue':'bl|ue',
+ 'both':'b|o|th','break':'br|ea|k','bright':'br|igh|t','by':'by',
+ 'child':'ch|ild','children':'chil|dren','christmas':'christ|mas',
+ 'class':'cl|ass','climb':'cl|imb','clothes':'clo|thes','cold':'c|old',
+ 'do':'do','door':'d|oor','even':'e|ven','every':'ev|ery',
+ 'everybody':'every|body','eye':'eye','fast':'f|ast','father':'fa|ther',
+ 'find':'f|ind','floor':'fl|oor','friend':'fr|ie|nd','full':'f|ull',
+ 'gnat':'gn|at','gnaw':'gn|aw','gold':'g|old','grass':'gr|ass',
+ 'great':'gr|ea|t','half':'ha|lf','hear':'h|ear','height':'h|eigh|t',
+ 'here':'h|ere','high':'h|igh','hold':'h|old','hour':'h|our',
+ 'house':'h|ouse','improve':'im|prove','kind':'k|ind',
+ 'knee':'kn|ee','knight':'kn|igh|t','knock':'kn|ock','know':'kn|ow',
+ 'last':'l|ast','light':'l|igh|t','lightning':'light|ning',
+ 'love':'l|ove','many':'man|y','mind':'m|ind','money':'mon|ey',
+ 'most':'m|ost','move':'m|ove','naughty':'naugh|ty','only':'on|ly',
+ 'parents':'par|ents','pass':'p|ass','past':'p|ast','path':'p|ath',
+ 'plant':'pl|ant','poor':'p|oor','pretty':'pret|ty',
+ 'prove':'pr|ove','pull':'p|ull','push':'p|ush','quiet':'qui|et',
+ 'quite':'qu|ite','right':'r|igh|t','says':'s|ay|s',
+ 'school':'sch|oo|l','she':'sh|e','some':'s|ome',
+ 'steak':'st|ea|k','sugar':'sug|ar','sure':'s|ure',
+ 'their':'th|eir','there':'th|ere','they':'th|ey','they\'re':'they|\'re',
+ 'thorough':'thor|ough','to':'to','today':'to|day','told':'t|old',
+ 'water':'wa|ter','were':'w|ere','where':'wh|ere',
+ 'whole':'wh|ole','wild':'w|ild','woman':'wom|an','women':'wom|en',
+ 'wood':'w|oo|d','word':'w|or|d','wore':'w|ore','work':'w|or|k',
+ 'world':'w|or|ld','worm':'w|or|m','worth':'w|or|th',
+ 'wrap':'wr|ap','write':'wr|ite','wrong':'wr|ong','wrote':'wr|ote',
+ 'year':'y|ear','your':'y|our','wheel':'wh|ee|l',
+ 'when':'wh|en','which':'wh|ich','while':'wh|ile',
+ 'once':'on|ce','one':'one','our':'our','would':'w|ould',
+ 'who':'who','two':'two','sun':'sun','was':'was',
+ 'because':'be|cause','people':'peo|ple'
+};
+
 const COMPOUNDS=new Set('bedroom blackberry football footballer playground downstairs upstairs everyone everybody everything someone something anybody nobody somewhere somewhere today tomorrow tonight afternoon lunchtime weekend classroom toothbrush sunshine rainbow snowman moonlight homework fireworks outside inside skateboard supermarket bookcase handbag handbag handstand teapot'.split(' '));
 const AFFIXES=['ment','ness','ful','less','ing','ed','ly','er','est','able','ish','ship','ward','wards'];
 const PREFIXES=['un','dis','mis','re','over','under','pre'];
@@ -100,11 +140,11 @@ function generate(catalogue){
  const lexicon=new Set(catalogue.words.map(x=>x.word));
  const entries=catalogue.words.map(item=>{
   const word=item.word;
-  const manual=MANUAL[word.toLowerCase()];
+  const manual=HIGH_PRIORITY_DRAFTS[word.toLowerCase()]||MANUAL[word.toLowerCase()];
   const morphological=manual?null:matchMorph(word,lexicon);
   const visual=manual?manual.split('|'):morphological?morphological.parts:visualUnits(word);
   if(visual.join('')!==word||visual.length>5||visual.some(x=>!x))throw Error('Grouping does not reconstruct '+word);
-  const basis=manual?'human_authored_editorial_draft':morphological?morphological.basis:visual.length===1?'whole_word_no_safe_boundary':'grapheme_aware_visual_candidate';
+  const basis=manual?'curated_model_editorial_draft':morphological?morphological.basis:visual.length===1?'whole_word_no_safe_boundary':'grapheme_aware_visual_candidate';
   return {id:item.id,word,band:item.curriculum_band,visual_units:visual,
    basis,review_status:'pending_specialist_review',phoneme_units:[],spoken_syllables:[],
    morphemes:[],sound_alignment_approved:false,linguistic_accuracy_approved:false,
