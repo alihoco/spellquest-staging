@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import {performance} from 'node:perf_hooks';
-import {execFileSync} from 'node:child_process';
+import {parseFile} from 'music-metadata';
 const root='https://spellquest-voice-staging.onrender.com';
 const out='voice-latency-audit';
 await fs.mkdir(out,{recursive:true});
@@ -20,7 +20,7 @@ for(const [name,path] of clips){
   const entry={name,status:response.status,firstResponseMs:receivedHeadersMs,downloadedMs,bytes:arr.byteLength,contentType:response.headers.get('content-type')};
   if(response.ok&&arr.byteLength>500){
    const file=out+'/'+name+'.mp3';await fs.writeFile(file,Buffer.from(arr));
-   try{entry.durationSeconds=Number(execFileSync('ffprobe',['-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',file],{encoding:'utf8'}).trim());}catch{entry.durationSeconds=null}
+   try{const metadata=await parseFile(file,{duration:true});entry.durationSeconds=Math.round((metadata.format.duration||0)*10)/10;entry.bitrate=metadata.format.bitrate;}catch{entry.durationSeconds=null}
   }
   result.clips.push(entry);
  }catch(e){result.clips.push({name,error:e.message})}finally{clearTimeout(time)}
