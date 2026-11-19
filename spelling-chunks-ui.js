@@ -95,13 +95,13 @@
      root.querySelector('.chunk-head p').textContent=result.custom?'Your own grouping is saved.':'The suggested grouping is saved.';
      editor.hidden=true;open.textContent='✦ Change my groups';
    };
-   const reset=document.createElement('button');reset.type='button';reset.className='alt';reset.textContent='Teacher’s suggestion';
+   const reset=document.createElement('button');reset.type='button';reset.className='alt';reset.textContent='Suggested written groups';
    reset.onclick=()=>{cuts=defaultCuts.slice();edited=true;log(storage,profile,'edited',word,opportunity);paint()};
    const close=document.createElement('button');close.type='button';close.className='alt';close.textContent='Not now';close.onclick=()=>{
      log(storage,profile,'skipped',word,opportunity);editor.hidden=true;
    };
    buttons.append(save,reset,close);editor.append(buttons);
-   const foot=document.createElement('p');foot.className='small muted';foot.textContent='These are visual memory groups, not spoken sounds. Spelling checks still happen with the whole word hidden.';editor.append(foot);
+   const foot=document.createElement('p');foot.className='small muted';foot.textContent='These are suggested written memory groups, not verified syllables or spoken sounds. Spelling checks still happen with the whole word hidden.';editor.append(foot);
   }
   open.onclick=()=>{
     editor.hidden=!editor.hidden;
