@@ -19,18 +19,18 @@
   const tried=items.length>0;
   let headline='See you next time! 🌱',spoken='You can come back and practise whenever you feel ready.';
   if(improved){
-   headline='Look at your progress! ✨';
-   spoken='You remembered a spelling today that was tricky before. That is a real step forward.';
+   headline='Look how far you have come! ✨';
+   spoken='You remembered a word today that was tricky before. You are making progress, one step at a time.';
   }else if(corrected){
    headline='You worked through it! ✨';
-   spoken='You kept trying and worked out a tricky spelling with help. We will practise it again another day.';
+   spoken='You kept going and worked through a tricky spelling. That is something to feel proud of.';
   }else if(tried){
    headline='Great work today! ✨';
-   spoken='Every word you try is a chance to learn. We will see what you remember when you come back.';
+   spoken='You gave those words a go, and every bit of practice helps your learning grow.';
   }
-  const footer='Better today than yesterday. One little step at a time.';
+  const footer='Better Today Than Yesterday. Every little step counts.';
   return {headline,spoken,footer,slogan:SLOGAN,hasMeasuredImprovement:improved,attemptedWords:items.length,
-   fullSpeech:'Great work today. '+spoken+' '+footer,
+   fullSpeech:'Great work today! '+spoken+' Remember, our goal is to be better today than yesterday, one little step at a time.',
    explanation:improved?'Compared with an earlier independent attempt, not with another learner.':'Your effort is celebrated without assuming your spelling has already improved.'};
  }
  return {SLOGAN,message};
