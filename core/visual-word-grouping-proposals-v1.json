@@ -93,7 +93,7 @@
         "mo",
         "date"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -247,7 +247,7 @@
         "af",
         "ter"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -263,10 +263,10 @@
       "word": "again",
       "band": "year2",
       "visual_units": [
-        "ag",
-        "ain"
+        "a",
+        "gain"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -360,7 +360,7 @@
         "al",
         "though"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -455,7 +455,7 @@
         "an",
         "swer"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -530,7 +530,7 @@
         "ap",
         "ple"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -816,7 +816,7 @@
         "a",
         "ck"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -836,7 +836,7 @@
         "a",
         "dge"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -871,10 +871,10 @@
       "word": "bare",
       "band": "year1",
       "visual_units": [
-        "ba",
-        "re"
+        "b",
+        "are"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -913,7 +913,7 @@
         "a",
         "th"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -950,7 +950,7 @@
         "b",
         "ear"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -966,10 +966,11 @@
       "word": "beard",
       "band": "year1",
       "visual_units": [
-        "bea",
-        "rd"
+        "b",
+        "ear",
+        "d"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -978,7 +979,7 @@
       "linguistic_accuracy_approved": false,
       "audio_segments_approved": false,
       "lesson_approved": false,
-      "review_priority": "medium"
+      "review_priority": "standard"
     },
     {
       "id": "en-beautiful",
@@ -989,7 +990,7 @@
         "ti",
         "ful"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -1008,7 +1009,7 @@
         "be",
         "cause"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -1027,7 +1028,7 @@
         "bed",
         "room"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -1080,10 +1081,10 @@
       "word": "behind",
       "band": "year2",
       "visual_units": [
-        "beh",
-        "ind"
+        "be",
+        "hind"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -1159,7 +1160,7 @@
         "black",
         "berry"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -1178,7 +1179,7 @@
         "bl",
         "ew"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -1216,7 +1217,7 @@
         "bl",
         "ue"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -1236,7 +1237,7 @@
         "oa",
         "t"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -1256,7 +1257,7 @@
         "oo",
         "k"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -1272,10 +1273,11 @@
       "word": "both",
       "band": "year2",
       "visual_units": [
-        "bo",
+        "b",
+        "o",
         "th"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -1294,7 +1296,7 @@
         "bot",
         "tle"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -1348,9 +1350,10 @@
       "band": "year2",
       "visual_units": [
         "br",
-        "eak"
+        "ea",
+        "k"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -1424,9 +1427,10 @@
       "band": "year1",
       "visual_units": [
         "br",
-        "ight"
+        "igh",
+        "t"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -1521,7 +1525,7 @@
         "busi",
         "ness"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -1577,7 +1581,7 @@
       "visual_units": [
         "by"
       ],
-      "basis": "whole_word_no_safe_boundary",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -1597,7 +1601,7 @@
         "en",
         "dar"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -1805,7 +1809,7 @@
         "c",
         "aught"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -1976,7 +1980,7 @@
         "ch",
         "ild"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -1995,7 +1999,7 @@
         "chil",
         "dren"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -2011,11 +2015,10 @@
       "word": "christmas",
       "band": "year2",
       "visual_units": [
-        "chr",
-        "ist",
+        "christ",
         "mas"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -2091,7 +2094,7 @@
         "cl",
         "ass"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -2110,7 +2113,7 @@
         "cl",
         "imb"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -2129,7 +2132,7 @@
         "clo",
         "thes"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -2221,10 +2224,10 @@
       "word": "cold",
       "band": "year2",
       "visual_units": [
-        "co",
-        "ld"
+        "c",
+        "old"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -2243,7 +2246,7 @@
         "co",
         "me"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -2324,7 +2327,7 @@
         "ti",
         "tion"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -2519,7 +2522,7 @@
         "c",
         "ould"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -2691,7 +2694,7 @@
         "in",
         "ite"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -2789,7 +2792,7 @@
         "tion",
         "ary"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -2809,7 +2812,7 @@
         "fer",
         "ent"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -2905,7 +2908,7 @@
       "visual_units": [
         "do"
       ],
-      "basis": "whole_word_no_safe_boundary",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -2962,7 +2965,7 @@
         "d",
         "oor"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -3151,7 +3154,7 @@
         "eigh",
         "t"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -3209,7 +3212,7 @@
         "bar",
         "rass"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -3266,7 +3269,7 @@
         "en",
         "ough"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -3285,7 +3288,7 @@
         "environ",
         "ment"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -3378,10 +3381,10 @@
       "word": "even",
       "band": "year2",
       "visual_units": [
-        "ev",
-        "en"
+        "e",
+        "ven"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -3400,7 +3403,7 @@
         "ev",
         "ery"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -3416,11 +3419,10 @@
       "word": "everybody",
       "band": "year2",
       "visual_units": [
-        "eve",
-        "ryb",
-        "ody"
+        "every",
+        "body"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -3596,7 +3598,7 @@
       "visual_units": [
         "eye"
       ],
-      "basis": "whole_word_no_safe_boundary",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -3635,7 +3637,7 @@
         "mil",
         "iar"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -3727,10 +3729,10 @@
       "word": "fast",
       "band": "year2",
       "visual_units": [
-        "fa",
-        "st"
+        "f",
+        "ast"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -3749,7 +3751,7 @@
         "fa",
         "ther"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -3769,7 +3771,7 @@
         "vour",
         "ite"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -3860,10 +3862,10 @@
       "word": "find",
       "band": "year2",
       "visual_units": [
-        "fi",
-        "nd"
+        "f",
+        "ind"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -3958,7 +3960,7 @@
         "fl",
         "oor"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -4052,7 +4054,7 @@
         "for",
         "eign"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -4165,9 +4167,10 @@
       "band": "year1",
       "visual_units": [
         "fr",
-        "iend"
+        "ie",
+        "nd"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -4240,10 +4243,10 @@
       "word": "full",
       "band": "year1",
       "visual_units": [
-        "fu",
-        "ll"
+        "f",
+        "ull"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -4338,7 +4341,7 @@
         "gn",
         "at"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -4357,7 +4360,7 @@
         "gn",
         "aw"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -4429,10 +4432,10 @@
       "word": "gold",
       "band": "year2",
       "visual_units": [
-        "go",
-        "ld"
+        "g",
+        "old"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -4470,7 +4473,7 @@
         "govern",
         "ment"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -4508,7 +4511,7 @@
         "gr",
         "ass"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -4525,9 +4528,10 @@
       "band": "year2",
       "visual_units": [
         "gr",
-        "eat"
+        "ea",
+        "t"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -4717,7 +4721,7 @@
         "ha",
         "lf"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -4736,7 +4740,7 @@
         "hap",
         "py"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -4848,7 +4852,7 @@
         "h",
         "ear"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -4903,9 +4907,10 @@
       "band": "year3_4",
       "visual_units": [
         "h",
-        "eight"
+        "eigh",
+        "t"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -4921,10 +4926,10 @@
       "word": "here",
       "band": "year1",
       "visual_units": [
-        "he",
-        "re"
+        "h",
+        "ere"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -4943,7 +4948,7 @@
         "h",
         "igh"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -5054,10 +5059,10 @@
       "word": "hold",
       "band": "year2",
       "visual_units": [
-        "ho",
-        "ld"
+        "h",
+        "old"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -5190,7 +5195,7 @@
         "h",
         "our"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -5206,10 +5211,10 @@
       "word": "house",
       "band": "year1",
       "visual_units": [
-        "hou",
-        "se"
+        "h",
+        "ouse"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -5359,7 +5364,7 @@
         "ag",
         "ine"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -5418,7 +5423,7 @@
         "por",
         "tant"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -5434,10 +5439,10 @@
       "word": "improve",
       "band": "year2",
       "visual_units": [
-        "imp",
-        "rove"
+        "im",
+        "prove"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -5591,7 +5596,7 @@
         "is",
         "land"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -5683,10 +5688,10 @@
       "word": "kind",
       "band": "year2",
       "visual_units": [
-        "ki",
-        "nd"
+        "k",
+        "ind"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -5742,7 +5747,7 @@
         "kn",
         "ee"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -5759,9 +5764,10 @@
       "band": "year2",
       "visual_units": [
         "kn",
-        "ight"
+        "igh",
+        "t"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -5780,7 +5786,7 @@
         "kn",
         "ock"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -5799,7 +5805,7 @@
         "kn",
         "ow"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -5818,7 +5824,7 @@
         "know",
         "ledge"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -5837,7 +5843,7 @@
         "lan",
         "guage"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -5853,10 +5859,10 @@
       "word": "last",
       "band": "year2",
       "visual_units": [
-        "la",
-        "st"
+        "l",
+        "ast"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -5967,9 +5973,10 @@
       "band": "year1",
       "visual_units": [
         "l",
-        "ight"
+        "igh",
+        "t"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -5985,11 +5992,10 @@
       "word": "lightning",
       "band": "year5_6",
       "visual_units": [
-        "ligh",
-        "tn",
-        "ing"
+        "light",
+        "ning"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -6027,7 +6033,7 @@
         "lit",
         "tle"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -6062,10 +6068,10 @@
       "word": "love",
       "band": "year1",
       "visual_units": [
-        "lo",
-        "ve"
+        "l",
+        "ove"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -6100,10 +6106,10 @@
       "word": "many",
       "band": "year2",
       "visual_units": [
-        "ma",
-        "ny"
+        "man",
+        "y"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -6237,7 +6243,7 @@
         "i",
         "cine"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -6329,10 +6335,10 @@
       "word": "mind",
       "band": "year2",
       "visual_units": [
-        "mi",
-        "nd"
+        "m",
+        "ind"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -6406,10 +6412,10 @@
       "word": "money",
       "band": "year2",
       "visual_units": [
-        "mo",
-        "ney"
+        "mon",
+        "ey"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -6463,10 +6469,10 @@
       "word": "most",
       "band": "year2",
       "visual_units": [
-        "mo",
-        "st"
+        "m",
+        "ost"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -6520,10 +6526,10 @@
       "word": "move",
       "band": "year2",
       "visual_units": [
-        "mo",
-        "ve"
+        "m",
+        "ove"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -6578,7 +6584,7 @@
         "mus",
         "cle"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -6672,7 +6678,7 @@
         "naugh",
         "ty"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -6712,7 +6718,7 @@
         "sa",
         "ry"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -6731,7 +6737,7 @@
         "neigh",
         "bour"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -6807,7 +6813,7 @@
         "igh",
         "t"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -7107,7 +7113,7 @@
         "on",
         "ce"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -7125,7 +7131,7 @@
       "visual_units": [
         "one"
       ],
-      "basis": "whole_word_no_safe_boundary",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -7144,7 +7150,7 @@
         "on",
         "ly"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -7165,7 +7171,7 @@
         "tun",
         "ity"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -7221,7 +7227,7 @@
       "visual_units": [
         "our"
       ],
-      "basis": "whole_word_no_safe_boundary",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -7314,7 +7320,7 @@
         "par",
         "ents"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -7408,10 +7414,10 @@
       "word": "pass",
       "band": "year2",
       "visual_units": [
-        "pa",
-        "ss"
+        "p",
+        "ass"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -7427,10 +7433,10 @@
       "word": "past",
       "band": "year2",
       "visual_units": [
-        "pa",
-        "st"
+        "p",
+        "ast"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -7446,10 +7452,10 @@
       "word": "path",
       "band": "year2",
       "visual_units": [
-        "pa",
-        "th"
+        "p",
+        "ath"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -7525,7 +7531,7 @@
         "peo",
         "ple"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -7601,7 +7607,7 @@
         "phys",
         "ical"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -7638,7 +7644,7 @@
         "pl",
         "ant"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -7791,7 +7797,7 @@
         "p",
         "oor"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -7961,10 +7967,10 @@
       "word": "pretty",
       "band": "year2",
       "visual_units": [
-        "pre",
-        "tty"
+        "pret",
+        "ty"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -7984,7 +7990,7 @@
         "i",
         "lege"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -8102,7 +8108,7 @@
         "pr",
         "ove"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -8118,10 +8124,10 @@
       "word": "pull",
       "band": "year1",
       "visual_units": [
-        "pu",
-        "ll"
+        "p",
+        "ull"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -8156,10 +8162,10 @@
       "word": "push",
       "band": "year1",
       "visual_units": [
-        "pu",
-        "sh"
+        "p",
+        "ush"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -8250,10 +8256,10 @@
       "word": "quiet",
       "band": "year2",
       "visual_units": [
-        "qu",
-        "iet"
+        "qui",
+        "et"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -8272,7 +8278,7 @@
         "qu",
         "ite"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -8465,7 +8471,7 @@
         "mem",
         "ber"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -8580,7 +8586,7 @@
         "rhyth",
         "m"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -8616,9 +8622,10 @@
       "band": "year1",
       "visual_units": [
         "r",
-        "ight"
+        "igh",
+        "t"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -8753,7 +8760,7 @@
         "ai",
         "d"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -8825,9 +8832,10 @@
       "band": "year1",
       "visual_units": [
         "s",
-        "ays"
+        "ay",
+        "s"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -8863,9 +8871,10 @@
       "band": "year1",
       "visual_units": [
         "sch",
-        "ool"
+        "oo",
+        "l"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -8922,7 +8931,7 @@
         "re",
         "tary"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -8998,7 +9007,7 @@
         "ar",
         "ate"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -9033,9 +9042,10 @@
       "word": "she",
       "band": "year1",
       "visual_units": [
-        "she"
+        "sh",
+        "e"
       ],
-      "basis": "whole_word_no_safe_boundary",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -9092,7 +9102,7 @@
         "sh",
         "ould"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -9169,7 +9179,7 @@
         "na",
         "ture"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -9336,10 +9346,10 @@
       "word": "some",
       "band": "year1",
       "visual_units": [
-        "so",
-        "me"
+        "s",
+        "ome"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -9507,9 +9517,10 @@
       "band": "year2",
       "visual_units": [
         "st",
-        "eak"
+        "ea",
+        "k"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -9547,7 +9558,7 @@
         "straigh",
         "t"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -9621,10 +9632,10 @@
       "word": "sugar",
       "band": "year2",
       "visual_units": [
-        "su",
-        "gar"
+        "sug",
+        "ar"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -9661,7 +9672,7 @@
       "visual_units": [
         "sun"
       ],
-      "basis": "whole_word_no_safe_boundary",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -9734,10 +9745,10 @@
       "word": "sure",
       "band": "year2",
       "visual_units": [
-        "su",
-        "re"
+        "s",
+        "ure"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -9794,7 +9805,7 @@
         "sys",
         "tem"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -9853,7 +9864,7 @@
         "a",
         "ture"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -9890,7 +9901,7 @@
         "th",
         "eir"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -9928,7 +9939,7 @@
         "th",
         "ere"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -9986,7 +9997,7 @@
         "th",
         "ey"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -10005,7 +10016,7 @@
         "they",
         "'re"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -10062,7 +10073,7 @@
         "thor",
         "ough"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -10100,7 +10111,7 @@
         "th",
         "ough"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -10119,7 +10130,7 @@
         "th",
         "ought"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -10157,7 +10168,7 @@
         "thr",
         "ough"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -10250,7 +10261,7 @@
       "visual_units": [
         "to"
       ],
-      "basis": "whole_word_no_safe_boundary",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -10269,7 +10280,7 @@
         "to",
         "day"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -10303,10 +10314,10 @@
       "word": "told",
       "band": "year2",
       "visual_units": [
-        "to",
-        "ld"
+        "t",
+        "old"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -10682,7 +10693,7 @@
       "visual_units": [
         "two"
       ],
-      "basis": "whole_word_no_safe_boundary",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -10854,7 +10865,7 @@
         "ta",
         "ble"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -10985,7 +10996,7 @@
       "visual_units": [
         "was"
       ],
-      "basis": "whole_word_no_safe_boundary",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11004,7 +11015,7 @@
         "wa",
         "ter"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11078,7 +11089,7 @@
         "weigh",
         "t"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11113,10 +11124,10 @@
       "word": "were",
       "band": "year1",
       "visual_units": [
-        "we",
-        "re"
+        "w",
+        "ere"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11133,9 +11144,10 @@
       "band": "year1",
       "visual_units": [
         "wh",
-        "eel"
+        "ee",
+        "l"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11144,7 +11156,7 @@
       "linguistic_accuracy_approved": false,
       "audio_segments_approved": false,
       "lesson_approved": false,
-      "review_priority": "medium"
+      "review_priority": "standard"
     },
     {
       "id": "en-when",
@@ -11154,7 +11166,7 @@
         "wh",
         "en"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11163,7 +11175,7 @@
       "linguistic_accuracy_approved": false,
       "audio_segments_approved": false,
       "lesson_approved": false,
-      "review_priority": "medium"
+      "review_priority": "standard"
     },
     {
       "id": "en-where",
@@ -11173,7 +11185,7 @@
         "wh",
         "ere"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11192,7 +11204,7 @@
         "wh",
         "ich"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11201,7 +11213,7 @@
       "linguistic_accuracy_approved": false,
       "audio_segments_approved": false,
       "lesson_approved": false,
-      "review_priority": "medium"
+      "review_priority": "standard"
     },
     {
       "id": "en-while",
@@ -11211,7 +11223,7 @@
         "wh",
         "ile"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11220,7 +11232,7 @@
       "linguistic_accuracy_approved": false,
       "audio_segments_approved": false,
       "lesson_approved": false,
-      "review_priority": "medium"
+      "review_priority": "standard"
     },
     {
       "id": "en-who",
@@ -11229,7 +11241,7 @@
       "visual_units": [
         "who"
       ],
-      "basis": "whole_word_no_safe_boundary",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11248,7 +11260,7 @@
         "wh",
         "ole"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11264,10 +11276,10 @@
       "word": "wild",
       "band": "year2",
       "visual_units": [
-        "wi",
-        "ld"
+        "w",
+        "ild"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11302,10 +11314,10 @@
       "word": "woman",
       "band": "year3_4",
       "visual_units": [
-        "wo",
-        "man"
+        "wom",
+        "an"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11314,17 +11326,17 @@
       "linguistic_accuracy_approved": false,
       "audio_segments_approved": false,
       "lesson_approved": false,
-      "review_priority": "medium"
+      "review_priority": "standard"
     },
     {
       "id": "en-women",
       "word": "women",
       "band": "year3_4",
       "visual_units": [
-        "wo",
-        "men"
+        "wom",
+        "en"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11333,7 +11345,7 @@
       "linguistic_accuracy_approved": false,
       "audio_segments_approved": false,
       "lesson_approved": false,
-      "review_priority": "medium"
+      "review_priority": "standard"
     },
     {
       "id": "en-won",
@@ -11359,9 +11371,10 @@
       "band": "year1",
       "visual_units": [
         "w",
-        "ood"
+        "oo",
+        "d"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11370,17 +11383,18 @@
       "linguistic_accuracy_approved": false,
       "audio_segments_approved": false,
       "lesson_approved": false,
-      "review_priority": "medium"
+      "review_priority": "standard"
     },
     {
       "id": "en-word",
       "word": "word",
       "band": "year2",
       "visual_units": [
-        "wo",
-        "rd"
+        "w",
+        "or",
+        "d"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11389,17 +11403,17 @@
       "linguistic_accuracy_approved": false,
       "audio_segments_approved": false,
       "lesson_approved": false,
-      "review_priority": "medium"
+      "review_priority": "standard"
     },
     {
       "id": "en-wore",
       "word": "wore",
       "band": "year1",
       "visual_units": [
-        "wo",
-        "re"
+        "w",
+        "ore"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11408,17 +11422,18 @@
       "linguistic_accuracy_approved": false,
       "audio_segments_approved": false,
       "lesson_approved": false,
-      "review_priority": "medium"
+      "review_priority": "standard"
     },
     {
       "id": "en-work",
       "word": "work",
       "band": "year2",
       "visual_units": [
-        "wo",
-        "rk"
+        "w",
+        "or",
+        "k"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11427,17 +11442,18 @@
       "linguistic_accuracy_approved": false,
       "audio_segments_approved": false,
       "lesson_approved": false,
-      "review_priority": "medium"
+      "review_priority": "standard"
     },
     {
       "id": "en-world",
       "word": "world",
       "band": "year2",
       "visual_units": [
-        "wo",
-        "rld"
+        "w",
+        "or",
+        "ld"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11446,17 +11462,18 @@
       "linguistic_accuracy_approved": false,
       "audio_segments_approved": false,
       "lesson_approved": false,
-      "review_priority": "medium"
+      "review_priority": "standard"
     },
     {
       "id": "en-worm",
       "word": "worm",
       "band": "year2",
       "visual_units": [
-        "wo",
-        "rm"
+        "w",
+        "or",
+        "m"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11465,17 +11482,18 @@
       "linguistic_accuracy_approved": false,
       "audio_segments_approved": false,
       "lesson_approved": false,
-      "review_priority": "medium"
+      "review_priority": "standard"
     },
     {
       "id": "en-worth",
       "word": "worth",
       "band": "year2",
       "visual_units": [
-        "wo",
-        "rth"
+        "w",
+        "or",
+        "th"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11484,7 +11502,7 @@
       "linguistic_accuracy_approved": false,
       "audio_segments_approved": false,
       "lesson_approved": false,
-      "review_priority": "medium"
+      "review_priority": "standard"
     },
     {
       "id": "en-would",
@@ -11494,7 +11512,7 @@
         "w",
         "ould"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11513,7 +11531,7 @@
         "wr",
         "ap"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11532,7 +11550,7 @@
         "wr",
         "ite"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11551,7 +11569,7 @@
         "writ",
         "ten"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11570,7 +11588,7 @@
         "wr",
         "ong"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11589,7 +11607,7 @@
         "wr",
         "ote"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11607,7 +11625,7 @@
       "visual_units": [
         "yacht"
       ],
-      "basis": "human_authored_editorial_draft",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11642,10 +11660,10 @@
       "word": "year",
       "band": "year1",
       "visual_units": [
-        "yea",
-        "r"
+        "y",
+        "ear"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
@@ -11654,7 +11672,7 @@
       "linguistic_accuracy_approved": false,
       "audio_segments_approved": false,
       "lesson_approved": false,
-      "review_priority": "medium"
+      "review_priority": "standard"
     },
     {
       "id": "en-you",
@@ -11679,10 +11697,10 @@
       "word": "your",
       "band": "year1",
       "visual_units": [
-        "you",
-        "r"
+        "y",
+        "our"
       ],
-      "basis": "grapheme_aware_visual_candidate",
+      "basis": "curated_model_editorial_draft",
       "review_status": "pending_specialist_review",
       "phoneme_units": [],
       "spoken_syllables": [],
