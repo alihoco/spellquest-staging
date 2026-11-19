@@ -96,8 +96,8 @@ const SOUND_SYLLABLES={
  temperature:['tem','pruh','chuh']
 };
 CLIPS['y6-v08-welcome']='Hello, and welcome to SpellQuest! We are going to practise ten spellings together. First, I will say each word, and you can try writing it. If a word is difficult, that is absolutely fine. I will help you hear it slowly, show you its spelling patterns, and give you another go. You can replay my voice whenever you like. Ready? Let us begin.';
-CLIPS['spellmaster-adaptive-welcome-v1']='Hello, and welcome to Spellmaster! We will explore some spellings together at your own pace. I will say a word, and you can try spelling it. If you already know it, we can move on. If it is tricky, I will help you understand its spelling and try again. We will also revisit older words to see what you remember. You can listen again or finish your adventure whenever you like. Ready? Let us begin.';
-CLIPS['y6-v08-prompt']='Here is your word. Listen carefully, then type your spelling.';
+CLIPS['spellmaster-adaptive-welcome-v1']='Hello! Let us discover some words together. Listen and try a spelling. If it is tricky, I will help you. Ready?';
+CLIPS['y6-v08-prompt']='Listen to your word. Then try spelling it.';
 CLIPS['y6-v08-wrong']='Good try. This is how we learn. First, listen to the whole word and say it with me. Then we will practise its spoken parts, and look at the tricky spelling.';
 CLIPS['y6-v08-sounds']='Now we will say the word in smaller spoken parts. Hear each sound, then say it back. There is time after each one.';
 CLIPS['y6-v08-spelling']='Now let us look at the way the word is written. The spelling parts do not always match the sounds perfectly. Here is a trick to remember the difficult letters.';
