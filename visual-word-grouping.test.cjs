@@ -48,3 +48,25 @@ test('The 615 proposed chunks are not automatically placed into live phonics les
  assert.ok(html.includes('pending')||html.includes('Pending specialist review'));
  assert.ok(html.includes('visual-word-grouping-proposals-v1.json'));
 });
+
+test('Only documented specialist approval records can replace a staging grouping',()=>{
+ const curriculum=require('./adaptive-curriculum.js');
+ const word=catalogue.words.find(x=>x.word==='people');
+ const noApproval=curriculum.prepare(catalogue,{},proposals).find(x=>x.word==='people');
+ assert.equal(noApproval.visualGroupingStatus,'staging_draft_or_whole_word');
+ assert.deepEqual(noApproval.spelling,['peo','ple']);
+ const reviewed={entries:[{id:word.id,spelling:word.word,status:'approved',reviewer_role:'qualified_literacy_specialist',reviewer_ref:'specialist-review-record-001',reviewed_at:'2026-11-19',visual_units:['pe','ople']}]};
+ const newResult=curriculum.prepare(catalogue,{},reviewed).find(x=>x.word==='people');
+ assert.equal(newResult.visualGroupingStatus,'specialist_reviewed');
+ assert.deepEqual(newResult.spelling,['pe','ople']);
+ const falseApproval=curriculum.prepare(catalogue,{}, {entries:[{...reviewed.entries[0],visual_units:['people','x']}]}).find(x=>x.word==='people');
+ assert.equal(falseApproval.visualGroupingStatus,'staging_draft_or_whole_word');
+});
+test('Full inventory distinguishes visually grouped and deliberately whole words',()=>{
+ const split=proposals.entries.filter(w=>w.visual_units.length>1).length;
+ const whole=proposals.entries.filter(w=>w.visual_units.length===1).length;
+ assert.equal(split,499);
+ assert.equal(whole,116);
+ assert.equal(split+whole,615);
+ assert.equal(proposals.entries.filter(w=>w.basis==='curated_model_editorial_draft').length,557);
+});
