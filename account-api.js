@@ -128,7 +128,7 @@ async function execute(req,res,path){if(!path.startsWith('/api/account/'))return
    if(a.kind!=='guardian')throw inputError('Only guardian accounts can create additional child profiles.',403);
    const b=await readBody(req);const client=await pool.connect();try{await client.query('BEGIN');const count=await client.query('SELECT count(*)::int AS n FROM learners WHERE account_id=$1',[a.id]);if(count.rows[0].n>=6)throw inputError('Maximum of six learner profiles per guardian account.');const learner=await createLearner(client,a.id,b,'guardian');await client.query('COMMIT');send(res,201,{learner},headers);}catch(e){await client.query('ROLLBACK');throw e;}finally{client.release();}return true;
   }
-  const m=path.match(/^\/api\/account\/learners\/([0-9a-f-]{36})(?:\/(state|events|conditions))?$/i);
+  const m=path.match(/^\/api\/account\/learners\/([0-9a-f-]{36})(?:\/(state|events|conditions|research))?$/i);
   if(!m)throw inputError('Endpoint not found.',404);const learner=await owns(a.id,m[1]),section=m[2];
   if(!section&&req.method==='DELETE'){
    if(a.kind!=='guardian')throw inputError('Guardian account required for child profile deletion.',403);
@@ -152,6 +152,19 @@ async function execute(req,res,path){if(!path.startsWith('/api/account/'))return
   }
   if(section==='events'&&req.method==='GET'){const q=await pool.query('SELECT id,event_type AS type,payload,created_at AS "createdAt" FROM learner_events WHERE learner_id=$1 ORDER BY created_at DESC LIMIT 200',[learner.id]);send(res,200,{events:q.rows},headers);return true;}
   if(section==='events'&&req.method==='POST'){const b=await readBody(req);if(!['assessment','spelling_attempt','review','award','sprint'].includes(b.type)||!b.payload||Array.isArray(b.payload)||typeof b.payload!=='object')throw inputError('Invalid learning event.');const json=JSON.stringify(b.payload);if(json.length>8000)throw inputError('Event is too large.');if(/diagnos|neurodivers|medical|condition/i.test(json))throw inputError('Sensitive information must not be included in learning events.');const id=uuid();await pool.query('INSERT INTO learner_events(id,learner_id,event_type,payload) VALUES($1,$2,$3,$4::jsonb)',[id,learner.id,b.type,json]);send(res,201,{id},headers);return true;}
+  if(section==='research'&&req.method==='GET'){
+   const q=await pool.query('SELECT grouping_research_consent_at IS NOT NULL AS "consented",grouping_research_consent_version AS version FROM learner_preferences WHERE learner_id=$1',[learner.id]);
+   send(res,200,{consented:q.rows[0]?.consented===true,version:q.rows[0]?.version||null},headers);return true;
+  }
+  if(section==='research'&&req.method==='PATCH'){
+   const body=await readBody(req);
+   if(typeof body.consent!=='boolean')throw inputError('An explicit yes or no is required.');
+   // Child research will need verified guardian permission, appropriate child assent,
+   // ethics review and a separately authorised recruitment protocol.
+   if(learner.isChild)throw inputError('Child research enrolment is not available.',403);
+   await pool.query("UPDATE learner_preferences SET grouping_research_consent_at=CASE WHEN $2 THEN now() ELSE NULL END,grouping_research_consent_version=CASE WHEN $2 THEN 'grouping-study-v1' ELSE NULL END,updated_at=now() WHERE learner_id=$1",[learner.id,body.consent]);
+   send(res,200,{consented:body.consent},headers);return true;
+  }
   if(section==='conditions'&&req.method==='GET'){const [p,q]=await Promise.all([pool.query('SELECT choice,support_consent_at IS NOT NULL AS "supportConsent",analysis_consent_at IS NOT NULL AS "analysisConsent" FROM learner_preferences WHERE learner_id=$1',[learner.id]),pool.query('SELECT condition_code AS code,report_status AS status FROM learner_conditions WHERE learner_id=$1',[learner.id])]);send(res,200,{choice:p.rows[0]?.choice||'not_supplied',supportConsent:p.rows[0]?.supportConsent||false,analysisConsent:p.rows[0]?.analysisConsent||false,conditions:q.rows},headers);return true;}
   if(section==='conditions'&&req.method==='PATCH'){const b=await readBody(req);const conditions=conditionInput(b.conditions,b.choice);if(b.choice==='selected'&&b.supportConsent!==true)throw inputError('Explicit consent is required for condition information.');if(b.analysisConsent===true&&b.supportConsent!==true)throw inputError('Research consent requires learning-support consent.');const c=await pool.connect();try{await c.query('BEGIN');await c.query("INSERT INTO learner_preferences(learner_id,choice,support_consent_at,analysis_consent_at,consent_text_version) VALUES($1,$2,CASE WHEN $3 THEN now() ELSE NULL END,CASE WHEN $4 THEN now() ELSE NULL END,CASE WHEN $3 THEN 'v1' ELSE NULL END) ON CONFLICT(learner_id) DO UPDATE SET choice=excluded.choice,support_consent_at=CASE WHEN $3 THEN COALESCE(learner_preferences.support_consent_at,now()) ELSE NULL END,analysis_consent_at=CASE WHEN $4 THEN COALESCE(learner_preferences.analysis_consent_at,now()) ELSE NULL END,consent_text_version=CASE WHEN $3 THEN 'v1' ELSE NULL END,updated_at=now()",[learner.id,b.choice,b.supportConsent===true,b.analysisConsent===true]);await c.query('DELETE FROM learner_conditions WHERE learner_id=$1',[learner.id]);for(const x of conditions)await c.query('INSERT INTO learner_conditions(learner_id,condition_code,report_status) VALUES($1,$2,$3)',[learner.id,x.code,x.status]);await c.query('COMMIT');}catch(e){await c.query('ROLLBACK');throw e;}finally{c.release();}send(res,200,{saved:true},headers);return true;}
   throw inputError('Method not allowed.',405);
