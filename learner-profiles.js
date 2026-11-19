@@ -8,15 +8,15 @@
  const validBirth=birth=>typeof birth==='string'&&/^(19|20)\d{2}-(0[1-9]|1[0-2])$/.test(birth)&&birth<=new Date().toISOString().slice(0,7);
  function ageInYears(month,now=new Date()){if(!validBirth(month))return NaN;const[y,m]=month.split('-').map(Number);return Math.max(0,Math.floor(((now.getFullYear()-y)*12+now.getMonth()+1-m)/12))}
  function themeForAge(years){return years<=7?'wonder':years<=11?'explorer':years<=16?'adventure':'focus'}
- function readProfiles(storage){const cloud=storage.getItem('spellmaster-cloud-active-v1');if(cloud){try{const p=JSON.parse(cloud);if(p&&/^lp-[a-z0-9]+$/.test(p.id)&&p.cloud===true&&typeof p.alias==='string')return [p];}catch{}}return safeRead(storage,KEY,[]).filter(p=>p&&typeof p.id==='string'&&validBirth(p.birth));}
+ function readProfiles(storage){const cloud=storage.getItem('spellmaster-cloud-active-v1');if(cloud){try{const p=JSON.parse(cloud);if(p&&/^lp-[a-z0-9]+$/.test(p.id)&&p.cloud===true&&typeof p.alias==='string')return [p];}catch{}}return safeRead(storage,KEY,[]).filter(p=>p&&typeof p.id==='string'&&(validBirth(p.birth)||Number.isInteger(p.ageYears)&&p.ageYears>=4&&p.ageYears<=17));}
  function active(storage){const all=readProfiles(storage);if(all[0]?.cloud)return all[0];const id=storage.getItem(ACTIVE);return all.find(p=>p.id===id)||null;}
- function add(storage,{alias,birth,theme='auto',schoolYear=null}={}){
+ function add(storage,{alias,birth,ageYears=null,theme='auto',schoolYear=null}={}){
   if(schoolYear!==null&&schoolYear!==''&&(!Number.isInteger(schoolYear)||schoolYear<1||schoolYear>6))throw Error('Choose a valid school year');
-  if(!validBirth(birth))throw Error('Select a valid birth month and year');
+  if(!validBirth(birth)&&(!Number.isInteger(ageYears)||ageYears<4||ageYears>17))throw Error('Select a learner age between 4 and 17');
   const name=cleanAlias(alias);if(name.length<2)throw Error('Choose a short nickname (at least two letters)');
   const all=readProfiles(storage);if(all.length>=6)throw Error('This test allows up to six profiles on one device');
   const id='lp-'+Array.from({length:3},()=>Math.random().toString(36).slice(2,10)).join('');
-  const p={id,alias:name,birth,theme:['auto','wonder','explorer','adventure','focus'].includes(theme)?theme:'auto',schoolYear:Number.isInteger(schoolYear)?schoolYear:null,created:new Date().toISOString()};
+  const p={id,alias:name,birth:validBirth(birth)?birth:null,ageYears:Number.isInteger(ageYears)?ageYears:null,theme:['auto','wonder','explorer','adventure','focus'].includes(theme)?theme:'auto',schoolYear:Number.isInteger(schoolYear)?schoolYear:null,created:new Date().toISOString()};
   all.push(p);storage.setItem(KEY,JSON.stringify(all));storage.setItem(ACTIVE,id);return p;
  }
  function choose(storage,id){if(!readProfiles(storage).some(p=>p.id===id))throw Error('Unknown local learner');storage.setItem(ACTIVE,id);return active(storage)}
