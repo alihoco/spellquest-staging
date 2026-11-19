@@ -25,6 +25,7 @@ async function main(){
     }
     const tables=await client.query("SELECT to_regclass('public.accounts') AS accounts,to_regclass('public.learners') AS learners,to_regclass('public.learner_events') AS events,to_regclass('public.recovery_codes') AS recovery");
     if(!tables.rows[0]?.accounts||!tables.rows[0]?.learners||!tables.rows[0]?.events||!tables.rows[0]?.recovery)throw Error('Schema bootstrap verification failed');
+    if(!registrationOpen){await require('./smoke-db.js')(client);process.stdout.write('Spellmaster learner ownership and rollback smoke test passed.\n');}
     process.stdout.write('Spellmaster account schema verified.\n');
   }catch(error){await client.query('ROLLBACK').catch(()=>{});throw error}
   finally{client.release();await pool.end();}
