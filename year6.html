@@ -875,7 +875,7 @@ function renderLanding(){
   content='<section class="entry-welcome entry-onboarding" aria-labelledby="entry-heading">'+
    '<img class="entry-character" src="/assets/spellmaster/explorer-painted.webp" alt="" aria-hidden="true">'+
    '<span class="entry-kicker">YOUR SPELLING ADVENTURE</span>'+
-   '<h2 id="entry-heading">Welcome to Spellmaster!</h2>'+
+   '<h2 id="entry-heading" data-no-auto-speaker>Welcome to Spellmaster!</h2>'+
    '<p>Let us find the right spelling adventure for you.</p>'+
    '<button type="button" class="entry-hear" onclick="hearWelcomeAgain()">🔊 Hear your welcome</button>'+
    '<form class="entry-first-form" onsubmit="event.preventDefault();createLocalProfile()">'+
@@ -893,7 +893,7 @@ function renderLanding(){
   content='<section class="entry-welcome entry-assessment" aria-labelledby="entry-heading">'+
    '<img class="entry-character" src="/assets/spellmaster/explorer-painted.webp" alt="" aria-hidden="true">'+
    '<span class="entry-kicker">HELLO, '+nickname.toUpperCase()+'</span>'+
-   '<h2 id="entry-heading">Let us discover your starting point!</h2>'+
+   '<h2 id="entry-heading" data-no-auto-speaker>Let us discover your starting point!</h2>'+
    '<p>I will say ten words. Give each one a try. There are no marks or rankings.</p>'+
    '<a class="play-now quick-play entry-primary" href="/starting-assessment.html">▶ Begin my ten words</a>'+
    '<button type="button" class="entry-hear" onclick="hearWelcomeAgain()">🔊 Hear your welcome</button>'+
@@ -910,7 +910,7 @@ function renderLanding(){
    '<p>'+(progress?.dueWords?'You have '+progress.dueWords+' word'+(progress.dueWords===1?'':'s')+' ready to revisit.':
     'Some new words and a few you have practised before.')+'</p>'+
    '<div class="chapter-actions"><button class="play-now quick-play entry-primary" onclick="begin()">▶ Continue my adventure</button>'+
-   '<button type="button" class="entry-hear chapter-listen" onclick="hearWelcomeAgain()">🔊 Hear welcome</button>'+
+   
    '</div></div></section>'+
    '<section class="sprint-feature" aria-label="Spelling Sprint">'+
    '<h3>⚡ Spelling Sprint</h3>'+
