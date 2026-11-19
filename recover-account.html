@@ -2,4 +2,4 @@
 const $=id=>document.getElementById(id);
 $('recover').onclick=async()=>{const b=$('recover');$('error').textContent='';if($('password').value!==$('confirm').value){$('error').textContent='Passwords do not match.';return;}b.disabled=true;try{const r=await SpellmasterAccount.request('/recover',{authenticated:false,method:'POST',body:{username:$('username').value,recoveryCode:$('recovery').value,newPassword:$('password').value}});$('recovery').value='';$('password').value='';$('confirm').value='';$('result-code').textContent=r.newRecoveryCode;$('result').classList.remove('hidden');$('result').scrollIntoView({behavior:'smooth'});}catch(e){$('error').textContent=e.message;}finally{b.disabled=false;}};
 $('copy').onclick=()=>navigator.clipboard?.writeText($('result-code').textContent);
-</script></body></html>
+</script><script src="/spellmaster-reader.js?v=1"></script></body></html>
