@@ -17,7 +17,7 @@ assert.ok(page.includes('catalogue-word-')&&page.includes('catalogue-next-'));
 assert.ok(page.includes('Spelling can move')||page.includes('spelling can move'), 'Starting band cannot be fixed');
 assert.ok(page.includes('new-school-year')&&page.includes('local-school-year'));
 assert.ok(page.includes('changeSchoolYear(this.value)'));
-assert.ok(page.includes('recordIndependent(localStorage,profile'), 'Independent spelling needs ongoing band assessment');
+assert.ok(page.includes('recordIndependent(spellStorage,profile'), 'Independent spelling needs ongoing band assessment');
 assert.ok(page.includes('runKind===\x27new\x27'), 'Only genuine new word baseline attempts update placement');
 assert.ok(page.includes('wordAudioClip(WORDS.find('), 'Bonus narration must use the full bank');
 assert.ok(page.includes('wordAudioClip(w)'), 'Review narrator must use the full bank');
