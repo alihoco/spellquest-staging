@@ -82,3 +82,20 @@ test('Ambiguous written clusters are flagged for review, never automatically tur
  assert.equal(proposals.entries.find(x=>x.word==='kitchen').visual_units.join('|'),'kitch|en');
  assert.equal(proposals.entries.find(x=>x.word==='shoulder').visual_units.join('|'),'shoul|der');
 });
+
+test('Compact learner suggestions match the full audited 615-word editorial dataset without claiming formal language approval',()=>{
+ const compact=require('./core/visual-word-groups-runtime-v1.json');
+ const curriculum=require('./adaptive-curriculum.js');
+ assert.equal(compact.entries.length,615);
+ assert.ok(JSON.stringify(compact).length<80000,'Visual download should remain compact');
+ const all=curriculum.prepare(catalogue,{}, {entries:[]},compact);
+ for(const word of all){
+  const full=proposals.entries.find(x=>x.id===word.id);
+  assert.deepEqual(word.spelling,full.visual_units,word.word);
+  assert.equal(word.visualGroupingStatus,'learner_editable_visual_suggestion');
+  assert.equal(word.audioApproved,false);
+ }
+ const corrupt={...compact,entries:[{id:'en-people',word:'people',visual_units:['peop','xx'],review_status:'pending_specialist_review'}]};
+ const people=curriculum.prepare(catalogue,{}, {entries:[]},corrupt).find(x=>x.word==='people');
+ assert.deepEqual(people.spelling,['peo','ple'],'Invalid suggestions must be rejected');
+});
