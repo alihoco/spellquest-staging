@@ -1,0 +1,32 @@
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Word grouping results | Spellmaster internal research</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="/spellmaster-interior.css?v=1"><style>.card{max-width:1020px}.warn{border-left:5px solid #a57653;background:#fff3d3;border-radius:12px;padding:16px}.statistics{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:14px}.stat{border:2px solid #ddc4a3;background:#fffaf1;border-radius:16px;padding:15px}.stat h3{font:700 20px Fredoka;margin:0 0 12px}.rate{font:700 34px Fredoka;color:#543986}.meta{color:#675a75;font-size:13px}.hidden{display:none}input{width:100%}h2{margin-top:25px}</style></head><body><main><header class="site-header"><a href="/"><img class="brand-art" src="/assets/spellmaster/spellmaster-logo-ornate.webp" alt="Spellmaster"></a><nav><a href="/">Home</a><a href="/curriculum-grouping-review.html">Word review</a></nav></header><section class="page-hero"><span class="eyebrow">INTERNAL RESEARCH TOOL</span><h1>Do word groups help us remember?</h1><p>Private, aggregate-only analysis. No live learner records are downloaded by this page.</p></section><section class="card"><div class="warn"><strong>Observational evidence is not causal proof.</strong> Learners who change their word groups might differ in prior knowledge, motivation or practice time. There is no clinical or teaching-effectiveness claim here. Results must meet consent and minimum reporting group sizes.</div><h2>Open an approved aggregate report</h2><p>Use the protected reporting script after research governance approval, then open its aggregate JSON output here. Do not upload raw learner records. Files are processed in your browser and are not sent to a server.</p><label for="report">Aggregate JSON file</label><input id="report" type="file" accept=".json,application/json"><p id="status" role="status" class="muted">No approved research report loaded. Nothing to compare yet.</p><div id="results" class="hidden"><h2>Spelling remembered independently</h2><p class="muted" id="summary"></p><label for="window">Choose a retention check</label><select id="window"><option value="next_day">1-day check (days 1–3)</option><option value="seven_day" selected>7-day check (days 5–10)</option><option value="twenty_eight_day">28-day check (days 24–35)</option></select><div class="statistics" id="cards"></div><p class="muted" id="caveat"></p></div><p><a href="https://github.com/alihoco/spellquest-staging/blob/main/research/GROUPING_OUTCOMES_MEASUREMENT_PROTOCOL_V1.md">Measurement definitions and limitations</a></p></section><footer class="site-footer">Spellmaster internal study workbench · No learner comparison or rankings</footer></main><script>
+const $=id=>document.getElementById(id);let data=null;
+const names={suggested:'Suggested groups',adjusted:'Learner-adjusted groups',whole_word:'Whole word'};
+function render(){
+ const span=$('window').value,cols=data?.cohorts?.[span];if(!cols)return;
+ $('cards').replaceChildren();
+ for(const key of ['suggested','adjusted','whole_word']){
+  const val=cols[key]||{};
+  const card=document.createElement('article');card.className='stat';
+  const h=document.createElement('h3');h.textContent=names[key];
+  const rate=document.createElement('p');rate.className='rate';rate.textContent=val.suppressed||!Number.isFinite(val.successRate)?'Not enough data':(val.successRate*100).toFixed(1)+'%';
+  const meta=document.createElement('p');meta.className='meta';meta.textContent=val.suppressed?'Reporting suppressed: fewer than 10 distinct learners.':val.correct+' of '+val.wordOpportunities+' first independent spelling attempts correct · '+val.uniqueLearners+' learners';
+  card.append(h,rate,meta);
+  if(!val.suppressed&&Array.isArray(val.wilson95)){const ci=document.createElement('p');ci.className='meta';ci.textContent='95% interval: '+(val.wilson95[0]*100).toFixed(1)+'–'+(val.wilson95[1]*100).toFixed(1)+'%';card.append(ci)}
+  $('cards').append(card);
+ }
+ $('summary').textContent=data.eligibleLearnerWordWindows+' eligible learner–word check-in windows. Adult, separately consenting accounts only. Data are not randomised.';
+ $('caveat').textContent=data.warning||'These are observational group differences, not causal evidence.';
+}
+$('window').onchange=render;
+$('report').onchange=async()=>{
+ $('results').classList.add('hidden');data=null;
+ const file=$('report').files[0];if(!file)return;
+ if(file.size>250000){$('status').textContent='This file is too large for an aggregate report. Do not upload raw data.';return;}
+ try{
+  const candidate=JSON.parse(await file.text());
+  if(candidate.reportVersion!=='grouping-observation-aggregate-v1'||candidate.studyDesign!=='observational_noncausal'||candidate.minimumLearners<10||
+     !candidate.cohorts?.seven_day?.suggested){throw Error('Not an approved-format aggregate report.')}
+  data=candidate;$('results').classList.remove('hidden');$('status').textContent='Aggregate-only report loaded locally.';render();
+ }catch(e){$('status').textContent=e.message;}
+};
+</script></body></html>
