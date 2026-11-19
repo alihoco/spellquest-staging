@@ -5,13 +5,13 @@
  'use strict';
  const API='https://spellquest-voice-staging.onrender.com/api/read-aloud';
  let player=null,controller=null,requestNo=0,activeButton=null;
- const compactSelector='h1,h2,h3,p,.start-desc,.note,.chapter-kicker,.chapter-title';
+ const compactSelector='h1,h2,h3,p,.start-desc,.chapter-title';
  const prohibited='.profile-form,.tester-profile-tools,.active-learner,.condition-status,.condition-row,.voice,.privacy-note,#neuro,#signup-complete,#login,#members,#condition-form,.profile-choice,.account-row,[data-no-read],input,textarea,select';
  const speaker='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>';
  function stop(){
   requestNo++;
   if(controller){controller.abort();controller=null}
-  if(player){player.pause();player.removeAttribute('src');player.load();player=null}
+  if(player){player.pause();player=null}
   if(activeButton){activeButton.removeAttribute('aria-pressed');activeButton.classList.remove('speaking');activeButton=null}
  }
  function plainText(element){
@@ -23,7 +23,7 @@
   if(element.matches('#save-status,[role="status"],[role="alert"]'))return '';
   if(element.closest(prohibited))return '';
   let text=plainText(element);
-  if(!text||text.length<22||text.length>650)return '';
+  if(!text||text.length<12||text.length>650)return '';
   if(/Ready to discover,/i.test(text))text='Ready to discover?';
   return text;
  }
@@ -80,8 +80,8 @@
   document.head.append(style);
   const status=document.createElement('span');status.id='read-aloud-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');document.body.append(status);
   addIcons(document.querySelector('main'));
-  const app=document.getElementById('app');
-  if(app){let scheduled=false;new MutationObserver(()=>{if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;addIcons(app)})}).observe(app,{childList:true,subtree:true})}
+  const main=document.querySelector('main');
+  if(main){let scheduled=false;new MutationObserver(()=>{if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;addIcons(main)})}).observe(main,{childList:true,subtree:true})}
  }
  root.SpellmasterReader={speak,stop,addIcons};
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
