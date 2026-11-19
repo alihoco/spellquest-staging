@@ -50,8 +50,8 @@
   const saved=previous&&previous.spelling===word&&validCuts(word,previous.cuts)?previous:null;
   const initial=saved?saved.cuts.slice():defaultCuts.slice();
   const root=document.createElement('section');root.className='chunk-workshop';
-  root.innerHTML='<div class="chunk-head"><div><strong>Make your own word groups</strong><p class="small muted">Keep these groups or make a pattern that helps you remember.</p></div>'+
-   '<button class="alt tiny-action chunk-open" type="button">✦ Try splitting</button></div><div class="chunk-editor" hidden></div>';
+  root.innerHTML='<div class="chunk-head"><div><strong>Choose your letter groups</strong><p class="small muted">These coloured groups can help you remember the spelling. Want to split the letters differently?</p></div>'+
+   '<button class="alt tiny-action chunk-open" type="button">✦ Change the groups</button></div><div class="chunk-editor" hidden></div>';
   host.append(root);
   log(storage,profile,'offered',word,opportunity);
   // The actual spelling groups have been shown in the supported lesson.
@@ -59,14 +59,14 @@
   const editor=root.querySelector('.chunk-editor'),open=root.querySelector('.chunk-open');
   if(typeof onSpeakInstruction==='function'){
    const listen=document.createElement('button');listen.type='button';listen.className='alt tiny-action';
-   listen.textContent='🔊 How to split';listen.setAttribute('aria-label','Hear how to make your own word groups');
+   listen.textContent='🔊 Hear how this works';listen.setAttribute('aria-label','Hear how to make your own word groups');
    listen.addEventListener('click',onSpeakInstruction);root.querySelector('.chunk-head').append(listen);
   }
   const status=document.createElement('p');status.className='small muted chunk-notice';status.setAttribute('role','status');root.append(status);
   let cuts=initial.slice(),edited=false;
   function paint(){
    editor.replaceChildren();
-   const hint=document.createElement('p');hint.className='small muted';hint.textContent='Tap between letters to add or remove dividers. You can also drag a divider to a new gap.';editor.append(hint);
+   const hint=document.createElement('p');hint.className='small muted';hint.textContent='Tap a dot between two letters to make a group. Tap a line to join them again. Move the splits until they help you remember.';editor.append(hint);
    const line=document.createElement('div');line.className='chunk-letters';
    for(let i=0;i<word.length;i++){
     const l=document.createElement('span');l.className='chunk-letter';l.textContent=word[i];line.append(l);
@@ -91,7 +91,7 @@
    groups(word,cuts).forEach(g=>{const span=document.createElement('span');span.textContent=g;preview.append(span)});
    editor.append(preview);
    const buttons=document.createElement('div');buttons.className='actions';
-   const save=document.createElement('button');save.type='button';save.textContent='Use my groups';save.onclick=()=>{
+   const save=document.createElement('button');save.type='button';save.textContent='Save my groups';save.onclick=()=>{
      const result=choice(storage,profile,word,defaultCuts,cuts,opportunity);
      if(onNotice)onNotice(result.custom?'Your groups are saved for next time.':'You kept the suggested groups.');
      if(typeof onGroupingSaved==='function')onGroupingSaved({word,opportunity,cuts:result.cuts,custom:result.custom,defaultCuts:defaultCuts.slice()});
