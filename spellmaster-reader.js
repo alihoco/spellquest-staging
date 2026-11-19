@@ -4,12 +4,13 @@
 (function(root){
  'use strict';
  const API='https://spellquest-voice-staging.onrender.com/api/read-aloud';
- let player=null,controller=null,requestNo=0,activeButton=null;
+ let player=null,controller=null,requestNo=0,activeButton=null,voiceFallback=null;
  const compactSelector='h1,h2,h3,[data-read-aloud]';
  const prohibited='.profile-form,.tester-profile-tools,.active-learner,.condition-status,.condition-row,.voice,.privacy-note,#neuro,#signup-complete,#login,#members,#condition-form,.profile-choice,.account-row,[data-no-read],input,textarea,select';
  const speaker='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>';
  function stop(){
   requestNo++;
+  if(root.speechSynthesis){root.speechSynthesis.cancel();voiceFallback=null}
   if(controller){controller.abort();controller=null}
   if(player){player.pause();player=null}
   if(activeButton){activeButton.removeAttribute('aria-pressed');activeButton.classList.remove('speaking');activeButton=null}
@@ -41,10 +42,24 @@
   }
   return pieces.filter(Boolean).join('. ').slice(0,650);
  }
+ function browserFallback(text,n){
+  if(!root.speechSynthesis||!root.SpeechSynthesisUtterance)return Promise.resolve(false);
+  return new Promise(resolve=>{
+   const utterance=new SpeechSynthesisUtterance(text);
+   utterance.lang='en-GB';utterance.rate=.9;utterance.pitch=1;
+   const voices=root.speechSynthesis.getVoices();
+   utterance.voice=voices.find(v=>v.lang.toLowerCase()==='en-gb')||voices.find(v=>v.lang.toLowerCase().startsWith('en'))||null;
+   voiceFallback=utterance;
+   utterance.onend=()=>{if(n===requestNo)voiceFallback=null;resolve(n===requestNo)};
+   utterance.onerror=()=>{if(n===requestNo)voiceFallback=null;resolve(false)};
+   root.speechSynthesis.speak(utterance);
+  });
+ }
  async function speak(text,button){
   if(typeof text!=='string'||!text.trim())return false;
   stop();
   const n=requestNo,voice=sessionStorage.getItem('spellquest-ai-voice')||'marin';
+  text=text.replace(/[<>\\x00-\\x1f]/g,' ').replace(/\\s+/g,' ').trim().slice(0,650);
   if(button){activeButton=button;button.setAttribute('aria-pressed','true');button.classList.add('speaking')}
   try{
    controller=new AbortController();
@@ -58,13 +73,15 @@
    await audio.play();
    return true;
   }catch(error){
-   if(n===requestNo){
-    stop();
-    const message='The friendly narrator is unavailable right now. Please try again.';
-    const status=document.getElementById('read-aloud-status');
-    if(status)status.textContent=message;
-   }
-   return false;
+   if(n!==requestNo)return false;
+   // Fall back to an installed British browser voice if the cloud narrator
+   // is rate-limited or temporarily unavailable. Never leave the child in silence.
+   const status=document.getElementById('read-aloud-status');
+   if(status)status.textContent='Using your device voice while the narrator is unavailable.';
+   const ok=await browserFallback(text,n);
+   if(n===requestNo&&activeButton){activeButton.removeAttribute('aria-pressed');activeButton.classList.remove('speaking');activeButton=null}
+   if(!ok&&status&&n===requestNo)status.textContent='Speech could not start. Check device volume and try again.';
+   return ok;
   }
  }
  function addIcons(container){
