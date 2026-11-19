@@ -192,7 +192,7 @@ function canRead(ip){
  if(readLimits.size>2500)readLimits.clear();
  const date=new Date().toISOString().slice(0,10);
  if(readDaily.day!==date)readDaily={day:date,count:0};
- return current.n<=18&&readDaily.count<450;
+ return current.n<=45&&readDaily.count<1500;
 }
 function readTextBody(req){
  return new Promise((resolve,reject)=>{
@@ -218,8 +218,8 @@ http.createServer(async(req,res)=>{
   if(!canRead(ip))return send(res,429,{error:'Narration usage limit reached'},cors);
   let input;
   try{input=await readTextBody(req)}catch{return send(res,400,{error:'Invalid narration request'},cors)}
-  const text=typeof input?.text==='string'?input.text.replace(/\\s+/g,' ').trim():'';
-  if(text.length<2||text.length>650||/[<>\\x00-\\x08]/.test(text))return send(res,400,{error:'Invalid narration text'},cors);
+  const text=typeof input?.text==='string'?input.text.replace(/\s+/g,' ').trim():'';
+  if(text.length<2||text.length>650||/[<>\x00-\x08]/.test(text))return send(res,400,{error:'Invalid narration text'},cors);
   const voice=['marin','cedar'].includes(input.voice)?input.voice:'marin';
   const key=crypto.createHash('sha256').update(voice+'|'+text).digest('hex');
   if(readCache.has(key)){
