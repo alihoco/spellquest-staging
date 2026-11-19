@@ -77,3 +77,10 @@ Never store audio or raw child misspellings simply to measure divider preference
 ## Next research readiness gate
 
 Complete UK child privacy/DPIA, secure profiles, consent/assent and ethics/legal review; obtain phonics/orthographic specialist signoff; pre-register outcome/analysis definitions and assignment plan; run supervised accessibility testing on desktop, tablet and mobile; then assess causal effectiveness. Only after robust independent replication should findings be shared as potential general teaching guidance.
+
+
+## Implementation update — 19 November 2026
+
+This earlier study design now has **routine observational instrumentation** in the staging game, not a completed randomised study. `grouping-measurement.js` records actual visual-grouping presentation and saved selection (suggested, adjusted or whole word) and links it to later independent spelling. `core/grouping-outcome-analysis.cjs` can produce consent-filtered, suppressed aggregate observations for 1-, 7- and 28-day windows when eligible records exist. A separate adult opt-in is available in account privacy settings; child research enrolment remains disabled. Saved choices request immediate cloud synchronisation. See [GROUPING_OUTCOMES_MEASUREMENT_PROTOCOL_V1.md](GROUPING_OUTCOMES_MEASUREMENT_PROTOCOL_V1.md).
+
+The 615 provisional visual groups are now loaded as **editable written-memory suggestions only**, never approved sound or morphology annotation. There are **no research outcomes yet**, and neither routine observation nor optional research consent constitute an ethics-approved controlled experiment. The existing adaptive review scheduler does not guarantee visits at every measurement window; a formal controlled study requires a deliberate, matched retrieval schedule and a reviewed protocol.
