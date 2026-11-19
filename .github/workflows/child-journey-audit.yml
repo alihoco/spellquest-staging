@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - scripts/simulate-child-journey.mjs
+      - scripts/expose-ui-audit-screenshots.mjs
       - .github/workflows/child-journey-audit.yml
 jobs:
   browser-audit:
