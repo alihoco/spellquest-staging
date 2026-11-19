@@ -19,4 +19,4 @@ $('change-password').onclick=async()=>{if($('new-password').value!==$('new-passw
 $('delete-learner-button').onclick=async()=>{if(!confirm('Permanently delete this learner and their learning progress?'))return;const id=$('delete-learner').value;try{await A.request('/learners/'+id,{method:'DELETE',body:{confirm:$('delete-learner-name').value,password:$('learner-password').value}});if(A.selectedLearner()===id)sessionStorage.removeItem('spellmaster-learner-v1');location.reload();}catch(e){$('delete-learner-status').textContent=e.message}};
 $('delete-account').onclick=async()=>{if(!confirm('Permanently delete the entire Spellmaster account and all its learner profiles?'))return;try{await A.request('/delete',{method:'POST',body:{confirm:$('account-confirm').value,password:$('account-password').value}});A.signOut();location.assign('/my-account.html');}catch(e){$('delete-account-status').textContent=e.message}};
 refresh();
-</script></body></html>
+</script><script src="/spellmaster-reader.js?v=1"></script></body></html>
