@@ -62,6 +62,18 @@ try{
   await page.getByRole('button',{name:/Create tester profile/}).click();
   await page.waitForTimeout(600);
   await capture(page,'05-adventure-age-nine-home-mobile');
+  data.game.chapterOrder=await page.evaluate(()=>{
+    const chapter=document.querySelector('#app .next-chapter');
+    const sprint=document.querySelector('#app .sprint-feature');
+    const assessment=document.querySelector('#app .assessment-entry');
+    return {chapterBeforeSprint:!!(chapter&&sprint&&(chapter.compareDocumentPosition(sprint)&Node.DOCUMENT_POSITION_FOLLOWING)),
+      sprintBeforeAssessment:!!(sprint&&assessment&&(sprint.compareDocumentPosition(assessment)&Node.DOCUMENT_POSITION_FOLLOWING)),
+      startInsideChapter:!!chapter?.querySelector('button.quick-play'),
+      sprintExplanation:(sprint?.innerText||'').trim().slice(0,450)};
+  });
+  if(!data.game.chapterOrder.chapterBeforeSprint||!data.game.chapterOrder.sprintBeforeAssessment||
+     !data.game.chapterOrder.startInsideChapter)throw Error('Guided chapter, Start spelling and Sprint ordering is wrong');
+
   data.game.quickStartTop=await page.locator('#app button.quick-play').evaluate(el=>Math.round(el.getBoundingClientRect().top)).catch(()=>null);
   data.game.transferredGuestBaseline=await page.evaluate(()=>{const p=SpellmasterProfiles.active(localStorage);const r=localStorage.getItem('spellmaster-starting-assessment-v1:'+p?.id);return r?JSON.parse(r).transferredFromGuest===true:false});
   const start=page.getByRole('button',{name:/Start|Begin|Continue|Play|Adventure/}).filter({visible:true});
@@ -113,6 +125,16 @@ try{
  await desktop.route('https://spellquest-voice-staging.onrender.com/api/voice*',route=>route.abort('failed'));
  await desktop.goto(origin+'/starting-assessment.html',{waitUntil:'domcontentloaded'});
  await capture(desktop,'08-assessment-welcome-desktop');
+
+ await desktop.goto(origin+'/year6.html',{waitUntil:'domcontentloaded'});
+ await desktop.waitForTimeout(800);
+ await desktop.locator('#new-alias').fill('Desktop Explorer');
+ await desktop.locator('#new-age').selectOption('9');
+ await desktop.getByRole('button',{name:/Create tester profile/}).click();
+ await desktop.waitForTimeout(350);
+ await capture(desktop,'08b-guided-chapter-desktop');
+ data.game.desktopStartInsideChapter=await desktop.locator('#app .next-chapter button.quick-play').isVisible();
+ if(!data.game.desktopStartInsideChapter)throw Error('Desktop chapter start button is not visible');
  await desktop.goto(origin+'/family-signup.html',{waitUntil:'domcontentloaded'});
  await desktop.waitForTimeout(600);
  await capture(desktop,'09-family-signup-desktop');
