@@ -13,7 +13,7 @@ assert.match(server,/CLIPS\['spellmaster-next-'\+word\+'-v1'\]/);
 assert.match(server,/spellmaster-right-short-v1/);
 assert.match(server,/spellmaster-learned-short-v1/);
 assert.match(html,/async function instructionAudio\(\)/);
-assert.match(html,/runCount>1\\?\\[nextAudioClip\\(WORDS\\[idx\\]\\)\\]/);
+assert.ok(html.includes('runCount>1?[nextAudioClip(WORDS[idx])]'), 'Use curriculum-aware next word narration');
 assert.match(html,/replayCurrentWord\(\)/);
 assert.match(html,/The word could not be heard/);
 assert.match(html,/if\(t===ticket&&stage==='success'\)next\(\)/);
