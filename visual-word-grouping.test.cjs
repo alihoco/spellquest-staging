@@ -70,3 +70,15 @@ test('Full inventory distinguishes visually grouped and deliberately whole words
  assert.equal(split+whole,615);
  assert.equal(proposals.entries.filter(w=>w.basis==='curated_model_editorial_draft').length,557);
 });
+
+test('Ambiguous written clusters are flagged for review, never automatically turned into sounds',()=>{
+ const flagged=proposals.entries.filter(x=>(x.boundary_review_flags||[]).length>0);
+ assert.equal(flagged.length,11);
+ for(const item of proposals.entries){
+  assert.ok(Array.isArray(item.boundary_review_flags));
+  assert.ok(item.boundary_review_flags.every(n=>Number.isInteger(n)&&n>0&&n<item.word.length));
+  assert.equal(item.sound_alignment_approved,false);
+ }
+ assert.equal(proposals.entries.find(x=>x.word==='kitchen').visual_units.join('|'),'kitch|en');
+ assert.equal(proposals.entries.find(x=>x.word==='shoulder').visual_units.join('|'),'shoul|der');
+});
