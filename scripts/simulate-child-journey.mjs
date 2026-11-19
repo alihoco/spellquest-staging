@@ -59,27 +59,26 @@ try{
  if(await name.count()){
   await name.fill('Star Explorer');
   await page.locator('#new-age').selectOption('9');
-  await page.getByRole('button',{name:/Create tester profile/}).click();
+  await page.getByRole('button',{name:/Start my adventure/}).click();
   await page.waitForTimeout(600);
   await capture(page,'05-adventure-age-nine-home-mobile');
   data.game.chapterOrder=await page.evaluate(()=>{
     const chapter=document.querySelector('#app .next-chapter');
     const sprint=document.querySelector('#app .sprint-feature');
-    const assessment=document.querySelector('#app .assessment-entry');
+    const primary=chapter?.querySelector('button.quick-play');
+    const extras=document.querySelector('.sm-side');
     return {chapterBeforeSprint:!!(chapter&&sprint&&(chapter.compareDocumentPosition(sprint)&Node.DOCUMENT_POSITION_FOLLOWING)),
-      sprintBeforeAssessment:!!(sprint&&assessment&&(sprint.compareDocumentPosition(assessment)&Node.DOCUMENT_POSITION_FOLLOWING)),
-      startInsideChapter:!!chapter?.querySelector('button.quick-play'),
-      sprintExplanation:(sprint?.innerText||'').trim().slice(0,450)};
+      startInsideChapter:!!primary,oldProgressHidden:!!extras&&getComputedStyle(extras).display==='none',
+      primaryText:primary?.innerText, sprintExplanation:(sprint?.innerText||'').trim().slice(0,450)};
   });
-  if(!data.game.chapterOrder.chapterBeforeSprint||!data.game.chapterOrder.sprintBeforeAssessment||
-     !data.game.chapterOrder.startInsideChapter)throw Error('Guided chapter, Start spelling and Sprint ordering is wrong');
-
+  if(!data.game.chapterOrder.chapterBeforeSprint||!data.game.chapterOrder.startInsideChapter||
+     !data.game.chapterOrder.oldProgressHidden)throw Error('Simple returning dashboard or chapter start is wrong');
   data.game.quickStartTop=await page.locator('#app button.quick-play').evaluate(el=>Math.round(el.getBoundingClientRect().top)).catch(()=>null);
   data.game.transferredGuestBaseline=await page.evaluate(()=>{const p=SpellmasterProfiles.active(localStorage);const r=localStorage.getItem('spellmaster-starting-assessment-v1:'+p?.id);return r?JSON.parse(r).transferredFromGuest===true:false});
   const start=page.getByRole('button',{name:/Start|Begin|Continue|Play|Adventure/}).filter({visible:true});
   data.game.startButtonTexts=await start.allTextContents();
   let clicked=false;
-  for(const text of ['Start my adventure','Start adventure','Begin adventure','Play my adventure','Start spelling']){
+  for(const text of ['Continue my adventure','Start spelling','Start adventure','Begin adventure','Play my adventure']){
    const match=page.getByRole('button',{name:text,exact:false});
    if(await match.count()&&await match.first().isVisible()){await match.first().click();clicked=true;break}
   }
@@ -120,6 +119,14 @@ try{
    }
   }
  }
+ const firstTimer=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
+ await firstTimer.goto(origin+'/year6.html',{waitUntil:'domcontentloaded'});
+ await firstTimer.locator('#new-alias').fill('First Time Explorer');
+ await firstTimer.locator('#new-age').selectOption('9');
+ await firstTimer.getByRole('button',{name:/Start my adventure/}).click();
+ await firstTimer.waitForURL('**/starting-assessment.html',{timeout:6000});
+ data.game.newLearnerRoutedToAssessment=true;
+ await firstTimer.close();
  const desktop=await browser.newPage({viewport:{width:1280,height:800},deviceScaleFactor:1});
  track(desktop);
  await desktop.route('https://spellquest-voice-staging.onrender.com/api/voice*',route=>route.abort('failed'));
@@ -128,9 +135,16 @@ try{
 
  await desktop.goto(origin+'/year6.html',{waitUntil:'domcontentloaded'});
  await desktop.waitForTimeout(800);
+ await desktop.evaluate(()=>{
+   localStorage.setItem('spellmaster-starting-assessment-v1:guest',JSON.stringify({
+    date:new Date().toISOString(),
+    responses:Array.from({length:10},(_,i)=>({word:'sample'+i,band:'year1',independent:false})),
+    placement:{version:2,currentBand:'year2',baselineBand:'year2',source:'adaptive_10_word_assessment_provisional'}
+   }));
+ });
  await desktop.locator('#new-alias').fill('Desktop Explorer');
  await desktop.locator('#new-age').selectOption('9');
- await desktop.getByRole('button',{name:/Create tester profile/}).click();
+ await desktop.getByRole('button',{name:/Start my adventure/}).click();
  await desktop.waitForTimeout(350);
  await capture(desktop,'08b-guided-chapter-desktop');
  data.game.desktopStartInsideChapter=await desktop.locator('#app .next-chapter button.quick-play').isVisible();
