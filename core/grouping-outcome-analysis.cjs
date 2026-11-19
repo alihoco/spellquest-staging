@@ -25,6 +25,11 @@ function summarise(records,{minimumLearners=10}={}){
   if(row?.adultResearchConsent!==true){exclusions.no_consent++;continue;}
   if(row?.isChild){exclusions.child++;continue;}
   const g=row?.payload?.grouping;
+  const consentDate=row.adultResearchConsentAt?Date.parse(row.adultResearchConsentAt):null;
+  const exposureDate=g?.groupingExposedAt?Date.parse(g.groupingExposedAt):null;
+  if(consentDate!==null&&(!Number.isFinite(consentDate)||!Number.isFinite(exposureDate)||exposureDate<consentDate)){
+   exclusions.no_consent++;continue;
+  }
   if(!g||g.schema!=='grouping-observation-v1'||g.isObservational!==true||g.eligibleForDelayedComparison!==true||
       g.independent!==true||g.phase!=='scheduled_review'){exclusions.not_independent_delayed++;continue;}
   if(!STRATEGIES.includes(g.strategy)||g.crossOpportunityStrategyChange===true||!g.groupingOpportunity){exclusions.missing_or_changed_exposure++;continue;}
