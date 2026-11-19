@@ -138,7 +138,7 @@ button.play-now:active{transform:translateY(4px);box-shadow:0 6px 0 #2b2675}
 <section class="hero"><span class="eyebrow">YOUR OWN SPELLING ADVENTURE</span><h1>Discover words. Build confidence.</h1><p>Little challenges, a patient voice, and a teacher that remembers what helps you learn.</p></section>
 <section class="panel" id="app"></section>
 <div class="footer">Spellmaster practice · Your own progress, at your own pace. <a href="/my-account.html">My secure account</a> · <a href="/volunteer-feedback.html">Send volunteer feedback</a></div></main>
-<script src="/spelling-feedback.js"></script><script src="/spelling-written-feedback.js?v=1"></script>
+<script src="/spelling-growth.js"></script><script src="/spelling-feedback.js"></script><script src="/spelling-written-feedback.js?v=1"></script>
 <script src="/learner-profiles.js"></script><script src="/spellmaster-entry.js?v=1"></script><script src="/account-client.js?v=1"></script><script src="/cloud-learning.js?v=1"></script>
 <script src="/bonus-round.js"></script>
 <script src="/celebration-feedback.js"></script>
@@ -575,6 +575,19 @@ function adaptiveSave(word,ok,fromReview,afterHelp,errorCategory=null){
  if(profile)spellStorage.setItem(window.SpellmasterProfiles.historyKey(profile),JSON.stringify(all));
  return checkpoint;
 }
+function personalGrowthChart(){
+ const profile=window.SpellmasterProfiles.active(spellStorage);
+ if(!profile)return '';
+ const history=adaptiveLoad();
+ const assessment=JSON.parse(spellStorage.getItem('spellmaster-starting-assessment-v1:'+profile.id)||'null');
+ const starting=currentPlacement()?.assessmentGrowth||assessment?.placement?.assessmentGrowth||
+  SpellmasterGrowth.assessmentHistory({},assessment?.responses,assessment?.date?.slice(0,10));
+ const combined={...history};
+ for(const [word,entry] of Object.entries(starting)){
+  combined[word]={events:[...entry.events,...(history[word]?.events||[])]};
+ }
+ return SpellmasterGrowth.chart(combined);
+}
 function currentPlacement(){
  const p=window.SpellmasterProfiles?.active(spellStorage);
  return p?window.SpellmasterCurriculum.readPlacement(spellStorage,p,window.SpellmasterProfiles.ageInYears(p.birth)):null;
@@ -833,7 +846,7 @@ finish=function(){
  const ending=window.SpellmasterSessionClosing.message({attempts:runResults,history:adaptiveLoad(),today:adaptiveToday()});
  const remembered=runResults.filter(x=>x.initial).length;
  app.innerHTML='<span class="eyebrow">YOUR JOURNEY TODAY</span>'+
- sessionClosingBlock(ending)+
+ sessionClosingBlock(ending)+personalGrowthChart()+
  '<p class="session-summary">You explored '+new Set(runResults.map(x=>x.word)).size+
  ' word'+(new Set(runResults.map(x=>x.word)).size===1?'':'s')+' today. Tricky words will return when you are ready to practise again.</p>'+
  '<details class="session-words"><summary>See the words you practised</summary>'+
@@ -973,6 +986,7 @@ function renderLanding(){
    '<p>Have your own spelling list? Practise those words instead.</p>'+
    '<a class="sprint-start" href="/spelling-sprint.html">Practise my words →</a>'+
    '</section>'+
+   personalGrowthChart()+
    '<details class="entry-progress"><summary>✦ My progress and rewards</summary>'+
    '<div class="entry-progress-details"><p>Words explored: '+(progress?.wordsSeen||0)+
    ' · Ready to revisit: '+(progress?.dueWords||0)+'</p>'+
