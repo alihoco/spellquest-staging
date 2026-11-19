@@ -170,6 +170,35 @@ body.lesson-active .brand-promise-sparkle{font-size:13px}
  #app .session-closing h3{font-size:23px!important}
 }
 
+/* Give the promise a clear place in the learner's entry experience.
+   Keep it compact during teaching so the activity remains the focus. */
+body.entry-home .brand-promise{
+ width:min(100%,700px);max-width:calc(100% - 12px);
+ padding:15px 22px 14px;margin:2px auto 18px;
+ border:2px solid #ffe3a1;border-radius:20px;
+ background:linear-gradient(110deg,#432565,#623b85 55%,#3e245d);
+ box-shadow:0 4px 0 #20152d,0 9px 22px #0e092e55;
+}
+.brand-promise-content{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0}
+body.entry-home .brand-promise strong{
+ font-size:clamp(21px,3vw,30px)!important;
+ line-height:1.2;letter-spacing:0;
+}
+.brand-promise-subtitle{
+ display:block;color:#fdf1df;font:600 clamp(13px,1.5vw,16px)/1.4 var(--font-body);
+}
+body.lesson-active .brand-promise-content{gap:0}
+body.lesson-active .brand-promise-subtitle{display:none}
+body.session-finished .brand-promise{padding:6px 16px;margin-bottom:9px}
+body.session-finished .brand-promise-subtitle{display:none}
+#app .session-closing-slogan{padding-top:11px;border-top:1px solid #d5b7e6}
+@media(max-width:640px){
+ body.entry-home .brand-promise{gap:9px;padding:13px 11px;margin-bottom:13px}
+ body.entry-home .brand-promise strong{font-size:clamp(19px,5.2vw,24px)!important}
+ body.entry-home .brand-promise-sparkle{font-size:13px}
+ .brand-promise-subtitle{font-size:13px}
+}
+
 /* The goodbye should feel like the close of a journey, not a report card. */
 body.session-finished main>.hero,
 body.session-finished .sm-path,
