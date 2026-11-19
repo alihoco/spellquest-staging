@@ -5,7 +5,7 @@
    It must never drive isolated-chunk pronunciation or sound-level correction.
  */
 const MANUAL={
- people:'peo|ple',necessary:'ne|ces|sa|ry',embarrass:'em|bar|rass',
+ necessary:'ne|ces|sa|ry',embarrass:'em|bar|rass',
  accommodate:'ac|com|mo|date',government:'govern|ment',
  environment:'environ|ment',foreign:'for|eign',familiar:'fa|mil|iar',
  privilege:'priv|i|lege',rhythm:'rhyth|m',temperature:'tem|per|a|ture',
@@ -29,6 +29,9 @@ const MANUAL={
  physical:'phys|ical',system:'sys|tem',
  ship:'sh|i|p',night:'n|igh|t',book:'b|oo|k',boat:'b|oa|t',
  apple:'ap|ple',little:'lit|tle',bottle:'bot|tle',
+ back:'b|a|ck',badge:'b|a|dge',bath:'b|a|th',
+ happy:'hap|py',blackberry:'black|berry',bedroom:'bed|room',
+ written:'writ|ten',answer:'an|swer',
  listen:'lis|ten',people:'peo|ple'
 };
 const COMPOUNDS=new Set('bedroom blackberry football footballer playground downstairs upstairs everyone everybody everything someone something anybody nobody somewhere somewhere today tomorrow tonight afternoon lunchtime weekend classroom toothbrush sunshine rainbow snowman moonlight homework fireworks outside inside skateboard supermarket bookcase handbag handbag handstand teapot'.split(' '));
