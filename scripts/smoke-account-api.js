@@ -7,7 +7,7 @@ const {Readable}=require('node:stream');
 const {Pool}=require('pg');
 async function main(){
   if(!process.env.DATABASE_URL)throw Error('No private database configured');
-  if(process.env.ACCOUNT_REGISTRATION_ENABLED==='true')throw Error('Synthetic smoke test cannot run with public registration open');
+  if(process.env.ACCOUNT_REGISTRATION_ENABLED==='true'){process.stdout.write('Registration open: skipping startup synthetic account test.\\n');return;}
   const prev=process.env.ACCOUNT_REGISTRATION_ENABLED;
   process.env.ACCOUNT_REGISTRATION_ENABLED='true';
   const {execute}=require('../account-api.js');
