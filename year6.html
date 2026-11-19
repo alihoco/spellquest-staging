@@ -130,11 +130,12 @@ button.play-now:active{transform:translateY(4px);box-shadow:0 6px 0 #2b2675}
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/spellmaster-library.css?v=6">
 <link rel="stylesheet" href="/spellmaster-top-bars.css?v=1">
+<link rel="stylesheet" href="/pilot-learning-focus.css?v=1">
 </head>
 <body><main><header><a class="logo" href="/" aria-label="Spellmaster home"><img class="brand-art" src="/assets/spellmaster/spellmaster-logo-ornate.webp" width="1120" height="373" alt="Spellmaster" loading="eager" decoding="async"></a><span class="muted small">Better today than yesterday</span></header>
 <section class="hero"><span class="eyebrow">YOUR OWN SPELLING ADVENTURE</span><h1>Discover words. Build confidence.</h1><p>Little challenges, a patient voice, and a teacher that remembers what helps you learn.</p></section>
 <section class="panel" id="app"></section>
-<div class="footer">Staging curriculum adventure · 615-word England inventory · Existing teaching pilot progress is currently browser-local. <a href="/my-account.html">My secure account</a> · <a href="/volunteer-feedback.html">Send volunteer feedback</a></div></main>
+<div class="footer">Spellmaster practice · Your own progress, at your own pace. <a href="/my-account.html">My secure account</a> · <a href="/volunteer-feedback.html">Send volunteer feedback</a></div></main>
 <script src="/spelling-feedback.js"></script><script src="/spelling-written-feedback.js?v=1"></script>
 <script src="/learner-profiles.js"></script><script src="/account-client.js?v=1"></script><script src="/cloud-learning.js?v=1"></script>
 <script src="/bonus-round.js"></script>
@@ -204,7 +205,7 @@ const makeUrl=clip=>{
  }
  return cached.get(key);
 };
-function warm(clips){/* Deliberately disabled concurrent TTS prefetch: welcome audio takes priority. */}
+function warm(clips){for(const clip of clips.slice(0,2))makeUrl(clip).catch(()=>{});}
 function setStatus(msg){const el=$('audio-status');if(el)el.textContent=msg}
 function stop(){
  ticket++;
@@ -212,6 +213,7 @@ function stop(){
  if(activeResolve){activeResolve(false);activeResolve=null}
  activePlaying=false;
 }
+window.SpellmasterLessonAudioStop=stop;
 async function speak(clip,t=ticket){
  if(t!==ticket)return false;
  window.SpellmasterReader?.stop();
@@ -235,7 +237,17 @@ async function talk(clips,t=ticket){
  for(const clip of clips){if(t!==ticket)return false;if(!(await speak(clip,t)))return false}
  return true;
 }
-function soundVoice(){return '<div class="voice"><div class="voice-row"><label for="voice">Narrator</label><select id="voice" onchange="chooseVoice(this.value)"><option value="marin">Marin · warm</option><option value="cedar">Cedar · calm</option></select><label for="pace">Practice pace</label><select id="pace" onchange="choosePace(this.value)"><option value="relaxed">Relaxed</option><option value="extra">Extra thinking time</option></select><button class="alt" onclick="toggleAudio()" id="audio-toggle">'+(narration?'🔊 Sound on':'🔇 Sound off')+'</button></div><span class="status" id="audio-status" role="status"></span></div>'}
+function soundVoice(){
+ return '<details class="voice-options"><summary>⚙ Voice and pace options</summary>'+
+ '<div class="voice"><div class="voice-row"><label for="voice">Narrator</label>'+
+ '<select id="voice" onchange="chooseVoice(this.value)"><option value="marin">Marin · warm</option>'+
+ '<option value="cedar">Cedar · calm</option></select>'+
+ '<label for="pace">Practice pace</label><select id="pace" onchange="choosePace(this.value)">'+
+ '<option value="relaxed">Relaxed</option><option value="extra">Extra thinking time</option></select>'+
+ '<button class="alt" onclick="toggleAudio()" id="audio-toggle">'+
+ (narration?'🔊 Sound on':'🔇 Sound off')+'</button></div></div></details>'+
+ '<span class="status" id="audio-status" role="status" aria-live="polite"></span>'
+}
 function voiceSet(){if($('voice'))$('voice').value=voice;if($('pace'))$('pace').value=pace}
 function chooseVoice(v){stop();voice=v;sessionStorage.setItem('spellquest-ai-voice',v);cached.clear();if(narration)replay()}
 function choosePace(v){pace=v;spellStorage.setItem('spellquest-sound-pace',v)}
@@ -271,8 +283,8 @@ function begin(){idx=0;first=0;results=[];narration=true;spellStorage.setItem('s
 function question(auto=false){
  stop();stage='question';const w=WORDS[idx];
  app.innerHTML='<span class="eyebrow">SPELLING CHALLENGE '+runCount+'</span>'+progress()+
- '<h2>Listen, then spell</h2><p>Listen to the word. Type the spelling when you are ready. You can hear it as often as you need.</p>'+
- '<div class="actions"><button class="alt" data-word-replay="true" onclick="replayCurrentWord()">🔊 Hear word again</button><button class="alt" onclick="instructionAudio()">🔊 Replay instructions</button></div>'+
+ '<h2>Listen, then spell</h2><p>Hear the word. Spell it when you are ready.</p>'+
+ '<div class="actions"><button class="alt" data-word-replay="true" onclick="replayCurrentWord()">🔊 Hear word again</button></div>'+
  '<label for="answer">Your spelling</label><input id="answer" aria-label="Type the spelling of the spoken word" autocapitalize="off" autocomplete="off" spellcheck="false" onkeydown="if(event.key===\'Enter\')check(false)">'+soundVoice()+
  '<div class="actions"><button onclick="check(false)">Check my spelling →</button>'+
  '<button class="alt" onclick="finish()">Finish for today</button></div>';
@@ -404,8 +416,8 @@ function mountPersonalGrouping(target){
 function review(){
  stop();stage='review';const w=WORDS[idx];
  app.innerHTML='<span class="eyebrow">LET’S LEARN THIS WORD</span>'+progress()+
- '<h2>Listen, then look at the spelling</h2>'+
- '<p>We will hear the whole word and look at one tricky part. No made-up sound spellings.</p>'+
+ '<h2>Let's look at the spelling</h2>'+
+ '<p>Look at the letters. You can make your own groups.</p>'+
  '<div id="review-content"><p class="now">🔊 The teacher will guide you.</p></div>'+
  soundVoice()+
  '<div class="actions"><button class="alt" onclick="reviewAudio()">🔊 Hear this lesson again</button>'+
@@ -437,7 +449,7 @@ function shortReview(){
  stop();stage='short-review';const w=WORDS[idx];
  // Brief focused revision after a SECOND unsuccessful attempt.
  app.innerHTML='<span class="eyebrow">ONE QUICK REMINDER</span>'+progress()+
- '<h2>Let’s focus on one detail</h2>'+
+ '<h2>One little detail</h2>'+
  '<div class="word-group-row"><div class="spelling-row">'+visualTeachingGroups(w).map(x=>'<span>'+x+'</span>').join('')+'</div>'+ 
  '<button type="button" class="alt word-group-change" onclick="openWordGrouping()">✦ Make my own groups</button></div>'+
  '<p>'+errorFeedbackForCurrent().text+'</p><button class="alt tiny-action" onclick="replayWordHint()">🔊 Hear this hint</button>'+
@@ -455,7 +467,7 @@ async function shortReviewAudio(){
 function retry(){
  stop();stage='retry';
  app.innerHTML='<span class="eyebrow">LET’S TRY THIS WORD AGAIN</span>'+progress()+
- '<h2>Now it’s your turn</h2><p>Listen to the word, then spell it.</p>'+
+ '<h2>Your turn again</h2><p>Listen, then try.</p>'+
  '<div class="actions"><button class="alt" onclick="replayCurrentWord()">🔊 Hear word again</button></div>'+
  '<label for="answer">Your spelling</label><input id="answer" autocapitalize="off" autocomplete="off" spellcheck="false" onkeydown="if(event.key===\'Enter\')check(true)">'+soundVoice()+
  '<div class="actions"><button onclick="check(true)">Check my spelling →</button><button class="alt" onclick="review()">Hear the lesson again</button></div>';
@@ -877,7 +889,7 @@ function renderLanding(){
  '<label for="new-school-year">School year (optional)</label>'+
  '<select id="new-school-year"><option value="">Not supplied</option>'+
  [1,2,3,4,5,6].map(y=>'<option value="'+y+'">Year '+y+'</option>').join('')+'</select>'+
- '<p class="privacy-note">School year only decides where we begin. Your spelling can move us up or down.</p>'+
+ '<p class="privacy-note">School year is optional. Your spelling practice decides your learning path.</p>'+
  '<button class="alt" onclick="createLocalProfile()">+ Create tester profile</button>'+
  '<div class="status" id="profile-error" role="status"></div></div>':'')+
  (p?'<button class="alt tiny-action" style="margin:5px 12px 9px" onclick="deleteLocalProfile()">Delete current test profile</button>':'')+
@@ -888,12 +900,12 @@ function renderLanding(){
  '</select>'+
  '<label for="local-school-year">Starting school year (optional)</label>'+
  '<select id="local-school-year" onchange="changeSchoolYear(this.value)">'+
- '<option value=""'+(!p.schoolYear?' selected':'')+'>Suggest from age</option>'+
+ '<option value=""'+(!p.schoolYear?' selected':'')+'>Not supplied</option>'+
  [1,2,3,4,5,6].map(y=>'<option value="'+y+'"'+(p.schoolYear===y?' selected':'')+'>Year '+y+'</option>').join('')+
- '</select><p class="privacy-note">This is just a starting estimate. Independent spelling can move the level up or down.</p></div>':'')+
- (p?.cloud?'<p class="privacy-note">Your learning history is linked to your signed-in account. <a href="/my-account.html">Manage learners</a>.</p>':'<p class="privacy-note" style="margin-top:15px">Testing only: profiles and birth month/year stay in this browser, not a server. Anyone using this device can access them. Use nicknames, not real names. Clearing browser data removes your progress.</p>')+
+ '</select><p class="privacy-note">School year never determines spelling ability. Your practice decides.</p></div>':'')+
+ (p?.cloud?'<p class="privacy-note">Your learning history is linked to your signed-in account. <a href="/my-account.html">Manage learners</a>.</p>':'<p class="privacy-note" style="margin-top:15px">Guest practice stays in this browser. Use a nickname and age only. Anyone sharing this device may see guest progress.</p>')+
  '</aside></div>'+
- '<div class="site-note">The staging player now uses the 615-word England spelling inventory, with an age/year-based starting point and continued assessment. New words have provisional whole-word audio and visual spelling only; expert-reviewed phonics, meanings and homophone contexts still need sign-off. <a href=\"/curriculum-library.html\">Browse the word bank</a>. '+(p?.cloud?'Your learning history is saved to your private account.':'Guest progress remains browser-local.')+'</div>';
+ '<div class="site-note">Your age changes how Spellmaster looks, never how we judge spelling. Listen to the words, practise and discover which spellings help you grow. <a href=\"/curriculum-library.html\">Browse the word bank</a>. '+(p?.cloud?'Your learning history is saved to your private account.':'Guest progress remains browser-local.')+'</div>';
 }
 const playWithProfile=begin;
 begin=async function(){
@@ -914,6 +926,18 @@ begin=async function(){
  stage='welcome';playWithProfile();
 };
 welcome=renderLanding;
+let previousPresentationStage=null;
+const playStages=new Set(['question','retry','review','short-review','success','bonus-intro','bonus-question','bonus-feedback','curriculum-loading']);
+const renderPresentation=()=>{
+ const playing=playStages.has(stage);
+ document.body.classList.toggle('lesson-active',playing);
+ if(stage!==previousPresentationStage){
+  previousPresentationStage=stage;
+  if(playing)requestAnimationFrame(()=>window.scrollTo({top:0,behavior:'instant'}));
+ }
+};
+new MutationObserver(renderPresentation).observe(app,{childList:true,subtree:false});
+renderPresentation();
 if(window.SpellmasterAccount?.token()){
  window.SpellmasterCloud.initialize().then(ok=>{
   if(!ok){app.innerHTML='<h2>Unable to load your secure learner profile</h2><p>Your existing progress is protected. Please sign in again or retry.</p><div class="actions"><a href="/my-account.html">My account</a><button onclick="location.reload()">Retry</button></div>';return;}
