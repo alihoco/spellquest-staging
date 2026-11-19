@@ -525,7 +525,7 @@ function finish(){
  '<div class="actions"><button onclick="welcome()">Back to my adventure</button></div>';
  speakSessionClosing(window.SpellmasterSessionClosing.message({attempts:results.map(r=>({word:r.word,initial:r.initial,learned:r.learned})),history:{}}));
 }
-window.addEventListener('pagehide',stop);
+window.addEventListener('pagehide',()=>{document.getElementById('starting-welcome')?.pause();stop()});
 welcome();
 </script><script>
 // Spellmaster adaptive intake: appends to the experimental staging lesson.
@@ -884,7 +884,19 @@ function claimPendingAvatarItem(){
  '<div class="actions"><button class="alt" onclick="renderLanding()">Back to adventure</button></div></div>';
  showAvatarRewardChoice(p,due[0]);
 }
+function playStartingWelcome(){
+ const audio=document.getElementById('starting-welcome');
+ if(!audio)return;
+ const button=app.querySelector('.entry-assessment .entry-hear');
+ audio.currentTime=0;
+ audio.play().then(()=>{
+  button.textContent='🔊 Hear your welcome again';
+ }).catch(error=>{
+  if(audio.isConnected&&error.name!=='AbortError')button.textContent='🔊 Tap to hear your welcome';
+ });
+}
 function renderLanding(){
+ document.getElementById('starting-welcome')?.pause();
  stop();stage='welcome';
  const people=LP.readProfiles(spellStorage),p=LP.active(spellStorage);
  document.body.classList.add('entry-home');
@@ -939,7 +951,8 @@ function renderLanding(){
    '<h2 id="entry-heading" data-no-auto-speaker>Let us discover your starting point!</h2>'+
    '<p>I will say ten words. Give each one a try. There are no marks or rankings.</p>'+
    '<a class="play-now quick-play entry-primary" href="/starting-assessment.html">▶ Begin my ten words</a>'+
-   '<button type="button" class="entry-hear" onclick="hearWelcomeAgain()">🔊 Hear your welcome</button>'+
+   '<button type="button" class="entry-hear" onclick="playStartingWelcome()">🔊 Hear your welcome</button>'+
+   '<audio id="starting-welcome" preload="auto" src="/assets/audio/starting-point-welcome.mp3"></audio>'+
    '</section>'+settings;
  }else{
   content='<section class="entry-welcome entry-return" aria-labelledby="entry-heading">'+
@@ -968,6 +981,7 @@ function renderLanding(){
    '</section>'+settings;
  }
  app.innerHTML='<div class="entry-screen">'+content+'</div>';
+ if(narration&&state==='assessment')playStartingWelcome();
 }
 const playWithProfile=begin;
 begin=async function(){
