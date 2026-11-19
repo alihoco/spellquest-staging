@@ -848,22 +848,26 @@ function renderLanding(){
  (p&&p.id===x.id?'Current explorer ✓':'Switch')+'</small></button>').join('');
  const themeOptions=['auto','wonder','explorer','adventure','focus'];
  app.innerHTML='<div class="start-layout"><section>'+
- (p?'<button class="play-now quick-play" onclick="begin()">▶ Start spelling</button>':'')+
  '<span class="start-kicker">Welcome to your next adventure</span>'+
  '<h2 style="font-size:clamp(28px,4vw,39px);line-height:1.15;margin:12px 0">'+
  (p?'Ready to discover, '+htmlSafe(p.alias)+'?':'Every great speller starts somewhere.')+'</h2>'+
- '<p class="start-desc">Hear a word, give it a go, and get helpful clues when you need them. Take a break whenever you want.</p>'+
- '<div class="actions"><a class="alt" style="display:inline-block;padding:13px 18px;border-radius:14px;text-decoration:none;font-weight:800;background:#eae7ff;color:#43368a" href="/spelling-sprint.html">⚡ Spelling Sprint — practise your own words</a><a class="alt" style="display:inline-block;padding:13px 18px;border-radius:14px;text-decoration:none;font-weight:800;background:#eae7ff;color:#43368a" href="/starting-assessment.html">🌱 My 10-word starting point</a></div>'+ 
+ '<p class="start-desc">Listen to words, try their spellings and get a little help whenever you need it.</p>'+
  '<div class="next-chapter" aria-label="Your next chapter"><span class="chapter-icon" aria-hidden="true">✦</span>'+
- '<div><span class="chapter-kicker">YOUR NEXT CHAPTER</span>'+
+ '<div class="chapter-content"><span class="chapter-kicker">YOUR NEXT CHAPTER</span>'+
  '<h3>'+(p&&progress&&progress.dueWords?'Words to remember':'A word adventure awaits')+'</h3>'+
  '<p>'+(p&&progress&&progress.dueWords?'You have '+progress.dueWords+' word'+(progress.dueWords===1?'':'s')+' ready to revisit.':
  p&&progress&&progress.wordsSeen?'You have explored '+progress.wordsSeen+' word'+(progress.wordsSeen===1?'':'s')+'. Keep discovering!':
- 'Listen, practise and collect words as you go.')+'</p></div></div>'+
- (p?'<div style="margin-top:20px"><button class="play-now" onclick="begin()"><span class="play-icon">▶</span> Play now</button>'+
- '<button class="alt tiny-action" style="margin:14px 0 0 10px" onclick="hearWelcomeAgain()">🔊 Hear welcome again</button>'+
- '<p class="small" style="margin-top:15px">✦ Practise at your own pace, including words you have seen before.</p></div>':
- '<p class="note">Create a local tester profile to start. This is not yet a secure account.</p>')+
+ 'Hear a word, practise its spelling and come back to remember it later.')+'</p>'+
+ (p?'<div class="chapter-actions"><button class="play-now quick-play" onclick="begin()"><span class="play-icon">▶</span> Start spelling</button>'+
+ '<button class="alt chapter-listen" onclick="hearWelcomeAgain()">🔊 Hear welcome</button></div>':
+ '<p class="chapter-setup-hint">Choose your explorer nickname and age to unlock this adventure.</p>')+
+ '</div></div>'+
+ '<div class="sprint-feature"><span class="chapter-kicker">PRACTISE WORDS YOU CHOOSE</span>'+
+ '<h3>⚡ Spelling Sprint</h3>'+
+ '<p>Got spellings from school, homework or your own list? Add your words, listen to each one, and practise at your own pace. Your adventure words stay here when you come back.</p>'+
+ '<a class="sprint-start" href="/spelling-sprint.html">Try Spelling Sprint →</a></div>'+
+ '<div class="assessment-entry"><a href="/starting-assessment.html">🌱 Take my 10-word starting assessment</a>'+
+ '<p class="small muted">Not sure where to begin? These short questions help us find a starting point based on your spellings, not your age.</p></div>'+
  (progress?'<div class="statline"><div class="stat"><strong>'+progress.wordsSeen+'</strong><small>Words explored</small></div>'+
  '<div class="stat"><strong>'+progress.initialCorrect+'</strong><small>Known first try</small></div>'+
  '<div class="stat"><strong>'+progress.dueWords+'</strong><small>Ready to revisit</small></div></div>'+
