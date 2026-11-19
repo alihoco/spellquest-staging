@@ -15,8 +15,11 @@
 | Words with an unspecialised default “whole word” disposition | **58** |
 | High-priority specialist review queue | **157** |
 | Specialist-approved word-grouping records | **0** |
+| Model-curated candidates with potential multi-letter-cluster crossing needing extra scrutiny | **11** |
 
 The choice not to divide a short or unusually spelt word is a deliberate **correctness safeguard**, not missing work. A short word can have one spoken syllable, several phonemes and graphemes, and an unusual spelling; the UI can highlight the specific grapheme rather than invent a chunk boundary.
+
+An additional orthographic-cluster audit flags 11 written boundary locations for specialist inspection (such as the variable value of letter pairs in *quiet*, *language* and *experience*). These are **not eleven confirmed errors**: a pair of letters can represent one sound in one word but two sounds in another. The draft for *kitchen* was adjusted to keep the written *tch* together. The temporary heuristic does not certify phonology.
 
 The 615 rows include stable DfE word IDs, curriculum bands, current draft visual parts, provenance/feature tags, review priority, explicit model/editorial origin and separate empty specialist approval fields. All groups have been programmatically checked to rebuild the exact correct spelling. That protects spelling identity, **not** linguistic validity.
 
