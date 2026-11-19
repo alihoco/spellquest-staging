@@ -4,6 +4,7 @@
  */
 const crypto=require('node:crypto');
 const {Pool}=require('pg');
+const SECURITY=require('./account-security.js');
 const pool=process.env.DATABASE_URL?new Pool({connectionString:process.env.DATABASE_URL,ssl:process.env.DATABASE_SSL==='disable'?false:{rejectUnauthorized:true},max:5}):null;
 const VALID_CONDITIONS=new Set(['dyslexia','adhd','autism','dcd','dyscalculia','dld','tourette','other']);
 const VALID_AVATARS=new Set(['fox','owl','dragon','star']);
@@ -47,17 +48,71 @@ async function execute(req,res,path){if(!path.startsWith('/api/account/'))return
     const id=uuid();
     await client.query('INSERT INTO accounts(id,username,password_hash,kind) VALUES($1,$2,$3,$4)',[id,name,hashPassword(pw),kind]);
     const learner=await createLearner(client,id,body.learner,kind);
+    const recoveryCode=SECURITY.recoveryCode();
+    await client.query('INSERT INTO recovery_codes(account_id,code_hash) VALUES($1,$2)',[id,SECURITY.safeHash(recoveryCode)]);
     const token=await session(client,id);await client.query('COMMIT');
-    send(res,201,{account:{id,username:name,kind},learner,token},headers);
+    send(res,201,{account:{id,username:name,kind},learner,token,recoveryCode},headers);
    }catch(e){await client.query('ROLLBACK');if(e.code==='23505')throw inputError('That username is already in use.',409);throw e;}finally{client.release();}
    return true;
   }
   if(path==='/api/account/login'&&req.method==='POST'){
    const b=await readBody(req);const name=username(b.username);if(typeof b.password!=='string'||b.password.length>256)throw inputError('Invalid sign-in details.',401);
+   if(!SECURITY.allowAttempt('login:'+ip+':'+name,6))throw inputError('Too many sign-in attempts. Try again later.',429);
    const found=await pool.query('SELECT id,username,kind,password_hash FROM accounts WHERE username=$1 AND disabled_at IS NULL',[name]);const valid=found.rowCount&&verifyPassword(b.password,found.rows[0].password_hash);if(!valid)throw inputError('Invalid username or password.',401);
    const token=await session(pool,found.rows[0].id);send(res,200,{account:publicAccount(found.rows[0]),token},headers);return true;
   }
+  if(path==='/api/account/recover'&&req.method==='POST'){
+   const body=await readBody(req);const name=username(body.username);
+   if(!SECURITY.allowAttempt('recover:'+ip+':'+name,4))throw inputError('Too many recovery attempts. Try again later.',429);
+   const code=SECURITY.normaliseCode(body.recoveryCode),newPassword=password(body.newPassword);
+   if(!code)throw inputError('Invalid recovery code.',400);
+   const c=await pool.connect();
+   try{
+    await c.query('BEGIN');
+    const q=await c.query('SELECT a.id,r.code_hash FROM accounts a JOIN recovery_codes r ON r.account_id=a.id WHERE a.username=$1 AND a.disabled_at IS NULL FOR UPDATE OF r',[name]);
+    if(!q.rowCount||!SECURITY.safeCompareHex(SECURITY.safeHash(code),q.rows[0].code_hash))throw inputError('Invalid username or recovery code.',401);
+    const newCode=SECURITY.recoveryCode();
+    await c.query('UPDATE accounts SET password_hash=$2 WHERE id=$1',[q.rows[0].id,hashPassword(newPassword)]);
+    await c.query('DELETE FROM sessions WHERE account_id=$1',[q.rows[0].id]);
+    await c.query('UPDATE recovery_codes SET code_hash=$2,created_at=now(),redeemed_at=NULL WHERE account_id=$1',[q.rows[0].id,SECURITY.safeHash(newCode)]);
+    await c.query('INSERT INTO account_security_audit(id,account_id,action) VALUES($1,$2,$3)',[uuid(),q.rows[0].id,'password_recovered']);
+    await c.query('COMMIT');send(res,200,{recovered:true,newRecoveryCode:newCode},headers);
+   }catch(e){await c.query('ROLLBACK');throw e;}finally{c.release();}
+   return true;
+  }
   const a=await identify(req);
+  if(path==='/api/account/password'&&req.method==='POST'){
+   const body=await readBody(req),newPassword=password(body.newPassword);
+   if(!SECURITY.allowAttempt('change:'+a.id,6))throw inputError('Too many attempts. Try again later.',429);
+   const found=await pool.query('SELECT password_hash FROM accounts WHERE id=$1',[a.id]);
+   if(!found.rowCount||typeof body.currentPassword!=='string'||!verifyPassword(body.currentPassword,found.rows[0].password_hash))throw inputError('Current password is incorrect.',401);
+   const c=await pool.connect();try{
+    await c.query('BEGIN');
+    await c.query('UPDATE accounts SET password_hash=$2 WHERE id=$1',[a.id,hashPassword(newPassword)]);
+    await c.query('DELETE FROM sessions WHERE account_id=$1',[a.id]);
+    await c.query('INSERT INTO account_security_audit(id,account_id,action) VALUES($1,$2,$3)',[uuid(),a.id,'password_changed']);
+    await c.query('COMMIT');send(res,200,{changed:true,signedOut:true},headers);
+   }catch(e){await c.query('ROLLBACK');throw e;}finally{c.release();}return true;
+  }
+  if(path==='/api/account/export'&&req.method==='GET'){
+   const [learners,conditions,preferences,events,states]=await Promise.all([
+    pool.query('SELECT id,alias,is_child,birth_month,avatar,theme,created_at FROM learners WHERE account_id=$1',[a.id]),
+    pool.query('SELECT c.learner_id,c.condition_code,c.report_status FROM learner_conditions c JOIN learners l ON l.id=c.learner_id WHERE l.account_id=$1',[a.id]),
+    pool.query('SELECT p.* FROM learner_preferences p JOIN learners l ON l.id=p.learner_id WHERE l.account_id=$1',[a.id]),
+    pool.query('SELECT e.learner_id,e.event_type,e.payload,e.created_at FROM learner_events e JOIN learners l ON l.id=e.learner_id WHERE l.account_id=$1 ORDER BY e.created_at',[a.id]),
+    pool.query('SELECT s.learner_id,s.state,s.version,s.updated_at FROM learner_state s JOIN learners l ON l.id=s.learner_id WHERE l.account_id=$1',[a.id])
+   ]);
+   send(res,200,{exportVersion:1,exportedAt:new Date().toISOString(),account:publicAccount(a),learners:learners.rows,conditions:conditions.rows,preferences:preferences.rows,events:events.rows,states:states.rows},headers);return true;
+  }
+  if(path==='/api/account/delete'&&req.method==='POST'){
+   const body=await readBody(req);
+   if(body.confirm!==('DELETE '+a.username))throw inputError('Please enter the exact account deletion confirmation.',400);
+   if(!SECURITY.allowAttempt('delete:'+a.id,5))throw inputError('Too many attempts.',429);
+   const q=await pool.query('SELECT password_hash FROM accounts WHERE id=$1',[a.id]);
+   if(!q.rowCount||typeof body.password!=='string'||!verifyPassword(body.password,q.rows[0].password_hash))throw inputError('Password is incorrect.',401);
+   await pool.query('DELETE FROM accounts WHERE id=$1',[a.id]);
+   send(res,200,{deleted:true},headers);return true;
+  }
   if(path==='/api/account/logout'&&req.method==='POST'){await pool.query('DELETE FROM sessions WHERE token_hash=$1',[tokenHash(a.token)]);send(res,200,{ok:true},headers);return true;}
   if(path==='/api/account/me'&&req.method==='GET'){const q=await pool.query('SELECT id,alias,is_child AS "isChild",birth_month AS "birthMonth",avatar,theme FROM learners WHERE account_id=$1 ORDER BY created_at',[a.id]);send(res,200,{account:publicAccount(a),learners:q.rows},headers);return true;}
   if(path==='/api/account/learners'&&req.method==='POST'){
@@ -66,6 +121,14 @@ async function execute(req,res,path){if(!path.startsWith('/api/account/'))return
   }
   const m=path.match(/^\/api\/account\/learners\/([0-9a-f-]{36})(?:\/(state|events|conditions))?$/i);
   if(!m)throw inputError('Endpoint not found.',404);const learner=await owns(a.id,m[1]),section=m[2];
+  if(!section&&req.method==='DELETE'){
+   if(a.kind!=='guardian')throw inputError('Guardian account required for child profile deletion.',403);
+   const b=await readBody(req);if(b.confirm!==learner.alias)throw inputError('Confirm the exact learner nickname.',400);
+   const q=await pool.query('SELECT password_hash FROM accounts WHERE id=$1',[a.id]);
+   if(!verifyPassword(b.password,q.rows[0].password_hash))throw inputError('Password is incorrect.',401);
+   await pool.query('DELETE FROM learners WHERE id=$1 AND account_id=$2',[learner.id,a.id]);
+   send(res,200,{deleted:true},headers);return true;
+  }
   if(!section&&req.method==='GET'){send(res,200,{learner},headers);return true;}
   if(section==='state'&&req.method==='GET'){const q=await pool.query('SELECT state,version,updated_at FROM learner_state WHERE learner_id=$1',[learner.id]);send(res,200,{state:q.rows[0]?.state||{},version:Number(q.rows[0]?.version||0),updatedAt:q.rows[0]?.updated_at||null},headers);return true;}
   if(section==='state'&&req.method==='PATCH'){
@@ -87,4 +150,4 @@ async function execute(req,res,path){if(!path.startsWith('/api/account/'))return
 }
 const counters=new Map();
 function rate(ip){const now=Date.now(),r=counters.get(ip)||{at:now,n:0};if(now-r.at>60000){r.at=now;r.n=0;}r.n++;counters.set(ip,r);if(counters.size>10000)counters.clear();return r.n<=30;}
-module.exports={execute,configured:Boolean(pool)};
+module.exports={execute,configured:Boolean(pool),__test:{username,password,conditionInput,learnerInput,hashPassword,verifyPassword}};
