@@ -52,6 +52,7 @@ CREATE INDEX IF NOT EXISTS learner_events_by_learner ON learner_events(learner_i
 CREATE TABLE IF NOT EXISTS learner_state (
  learner_id uuid PRIMARY KEY REFERENCES learners(id) ON DELETE CASCADE,
  state jsonb NOT NULL DEFAULT '{}'::jsonb,
+ version bigint NOT NULL DEFAULT 0,
  updated_at timestamptz NOT NULL DEFAULT now(),
  CHECK (jsonb_typeof(state) = 'object')
 );
