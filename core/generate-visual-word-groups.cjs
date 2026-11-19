@@ -115,7 +115,7 @@ const FURTHER_EDITORIAL_DRAFTS={
 'instead':'in|stead','interest':'in|ter|est',
 'interfere':'in|ter|fere','interrupt':'in|ter|rupt',
 'join':'j|oi|n','july':'ju|ly','june':'june',
-'kent':'kent','kitchen':'kit|chen',
+'kent':'kent','kitchen':'kitch|en',
 'learn':'l|ear|n','leisure':'lei|sure','length':'leng|th',
 'library':'li|brar|y','like':'like','live':'live',
 'made':'made','marvellous':'mar|vel|lous',
