@@ -546,7 +546,10 @@ check=function(retry){
   if(ok){results[idx].learned=true;runResults[runResults.length-1].learned=true;adaptiveSave(word,true,false,true)}
   else adaptiveSave(word,false,runReview,true,lastErrorFeedback?.id);
  }
- if(window.SpellmasterCloud?.status().ready)window.SpellmasterCloud.save();
+ if(window.SpellmasterCloud?.status().ready){
+  window.SpellmasterCloud.save();
+  window.SpellmasterAccount.saveEvent('spelling_attempt',{word,correct:ok,review:!!runReview,afterHelp:!!retry,band:WORDS[idx]?.band||null,at:new Date().toISOString()}).catch(()=>{});
+ }
  if(ok){runSeen.add(word);success(retry)}else if(retry){shortReview()}else{review()}
 };
 function startBonusRound(plan){
