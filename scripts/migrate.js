@@ -21,6 +21,7 @@ async function main(){
       await client.query('BEGIN');
       await client.query(fs.readFileSync(path.join(__dirname,'../database/001_accounts.sql'),'utf8'));
       await client.query(fs.readFileSync(path.join(__dirname,'../database/002_security.sql'),'utf8'));
+      await client.query(fs.readFileSync(path.join(__dirname,'../database/003_grouping_research.sql'),'utf8'));
       await client.query('COMMIT');
     }
     const tables=await client.query("SELECT to_regclass('public.accounts') AS accounts,to_regclass('public.learners') AS learners,to_regclass('public.learner_events') AS events,to_regclass('public.recovery_codes') AS recovery");
