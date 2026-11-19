@@ -17,6 +17,6 @@ assert.ok(html.includes('runCount>1?[nextAudioClip(WORDS[idx])]'), 'Use curricul
 assert.match(html,/replayCurrentWord\(\)/);
 assert.match(html,/The word could not be heard/);
 assert.match(html,/if\(t===ticket&&stage==='success'\)next\(\)/);
-assert.match(html,/if\(elapsed<8\)\{adaptiveStartWord\(\);return\}/);
+assert.ok(html.includes('if(elapsed<8||elapsed-lastBreakPromptAt<8){adaptiveStartWord();return}'), 'Gentle rest reminders must not interrupt normal flow');
 assert.doesNotMatch(html,/voiceSet\(\);if\(narration\)talk\(\['y6-v08-next'\]\)/);
 console.log('Correct-answer auto-advance and single-clip next-word voice regression checks passed');
