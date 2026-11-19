@@ -500,13 +500,12 @@ function finish(){
  stop();stage='finished';const learned=results.filter(r=>r.learned).length;
  let history=[];try{history=JSON.parse(spellStorage.getItem('spellquest-y6-practice')||'[]')}catch(e){}
  history.push({date:new Date().toISOString().slice(0,10),first,learned,results});spellStorage.setItem('spellquest-y6-practice',JSON.stringify(history.slice(-20)));
- app.innerHTML='<span class="eyebrow">YOUR JOURNEY TODAY</span><h2>Look how far you’ve come! 🌟</h2>'+
- '<div class="good"><strong>'+first+'</strong> words remembered immediately; <strong>'+learned+'</strong> spelled during practice.</div>'+
- '<p>Your progress is what matters. We can try again another day to see what you remember.</p>'+
- results.map(r=>'<div class="result"><strong>'+r.word+'</strong> — '+(r.initial?'Remembered straight away':r.learned?'Learned with help':'Ready to revisit')+'</div>').join('')+
+ app.innerHTML='<span class="eyebrow">YOUR JOURNEY TODAY</span>'+
  sessionClosingBlock(window.SpellmasterSessionClosing.message({attempts:results.map(r=>({word:r.word,initial:r.initial,learned:r.learned})),history:{}}))+
- soundVoice()+'<div class="actions"><button onclick="welcome()">Start again</button><button class="alt" onclick="location.href=\'/\'">Back to Spellmaster</button></div>';
- voiceSet();speakSessionClosing(window.SpellmasterSessionClosing.message({attempts:results.map(r=>({word:r.word,initial:r.initial,learned:r.learned})),history:{}}));
+ '<details class="session-words"><summary>See the words you practised</summary>'+
+ results.map(r=>'<div class="result"><strong>'+r.word+'</strong> — '+(r.initial?'Remembered straight away':r.learned?'Worked out with help':'Ready to revisit')+'</div>').join('')+'</details>'+
+ '<div class="actions"><button onclick="welcome()">Back to my adventure</button></div>';
+ speakSessionClosing(window.SpellmasterSessionClosing.message({attempts:results.map(r=>({word:r.word,initial:r.initial,learned:r.learned})),history:{}}));
 }
 window.addEventListener('pagehide',stop);
 welcome();
@@ -810,16 +809,15 @@ finish=function(){
  stop();stage='finished';
  const ending=window.SpellmasterSessionClosing.message({attempts:runResults,history:adaptiveLoad(),today:adaptiveToday()});
  const remembered=runResults.filter(x=>x.initial).length;
- app.innerHTML='<span class="eyebrow">YOUR JOURNEY</span><h2>Look how far you have come! 🌟</h2>'+
- '<div class="good">You completed <strong>'+runCount+'</strong> word challenges across <strong>'+new Set(runResults.map(x=>x.word)).size+'</strong> different words. <strong>'+remembered+
- '</strong> were correct on the first try.</div>'+
- '<p>Words you knew are saved for later review. Tricky words will return with a fresh opportunity to learn.</p>'+
- runResults.map(x=>'<div class="result"><strong>'+x.word+'</strong> — '+
- (x.initial?'Spelled independently':x.learned?'Worked out with help':'Ready to practise again')+'</div>').join('')+
+ app.innerHTML='<span class="eyebrow">YOUR JOURNEY TODAY</span>'+
  sessionClosingBlock(ending)+
- soundVoice()+'<div class="actions"><button onclick="welcome()">Back to my adventure</button>'+
- '<button class="alt" onclick="location.href=\'/\'">Home</button></div>';
- voiceSet();speakSessionClosing(ending);
+ '<p class="session-summary">You explored '+new Set(runResults.map(x=>x.word)).size+
+ ' word'+(new Set(runResults.map(x=>x.word)).size===1?'':'s')+' today. Tricky words will return when you are ready to practise again.</p>'+
+ '<details class="session-words"><summary>See the words you practised</summary>'+
+ runResults.map(x=>'<div class="result"><strong>'+x.word+'</strong> — '+
+ (x.initial?'Spelled independently':x.learned?'Worked out with help':'Ready to practise again')+'</div>').join('')+'</details>'+
+ '<div class="actions"><button onclick="welcome()">Back to my adventure</button></div>';
+ speakSessionClosing(ending);
 };
 </script><script>
 // Local test-only profile launcher. Does not authenticate or upload learning data.
@@ -968,10 +966,11 @@ begin=async function(){
 };
 welcome=renderLanding;
 let previousPresentationStage=null;
-const playStages=new Set(['question','retry','review','short-review','success','bonus-intro','bonus-question','bonus-feedback','curriculum-loading']);
+const playStages=new Set(['question','retry','review','short-review','success','bonus-intro','bonus-question','bonus-feedback','curriculum-loading','finished']);
 const renderPresentation=()=>{
  const playing=playStages.has(stage);
  document.body.classList.toggle('lesson-active',playing);
+ document.body.classList.toggle('session-finished',stage==='finished');
  document.body.classList.toggle('entry-home',stage==='welcome');
  if(stage!==previousPresentationStage){
   previousPresentationStage=stage;
