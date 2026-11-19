@@ -39,9 +39,9 @@ const localMap=new Map();
 const storage={getItem:k=>localMap.has(k)?localMap.get(k):null,setItem:(k,v)=>localMap.set(k,String(v)),removeItem:k=>localMap.delete(k)};
 const child=profileApi.add(storage,{alias:'Test Learner',birth:'2018-09',schoolYear:3});
 assert.equal(child.schoolYear,3);
-assert.equal(api.starter(child,8),'year3_4');
+assert.equal(api.starter(child,8),'year2','School year and age cannot infer spelling attainment');
 assert.equal(profileApi.updateSchoolYear(storage,child.id,6).schoolYear,6);
-assert.equal(api.readPlacement(storage,profileApi.active(storage),8).currentBand,'year5_6');
+assert.equal(api.readPlacement(storage,profileApi.active(storage),8).currentBand,'year2');
 storage.setItem(profileApi.historyKey(child),JSON.stringify({accident:{events:[{correct:true,afterHelp:false}],next:'2026-11-20'}}));
 assert.equal(profileApi.summary(JSON.parse(storage.getItem(profileApi.historyKey(child))),'2026-11-18').wordsSeen,1,
  'Profile progress must include imported curriculum words');
@@ -49,4 +49,4 @@ api.savePlacement(storage,child,api.seedPreference(child,8));
 assert.ok(storage.getItem(api.placementKey(child)));
 profileApi.forget(storage,child.id);
 assert.equal(storage.getItem(api.placementKey(child)),null,'Deleting tester profile removes its placement');
-console.log('615-word audio allowlist, UI wiring, year-based onboarding, learner progress and local deletion validated');
+console.log('615-word audio allowlist, UI wiring, age-neutral ability placement, learner progress and local deletion validated');
