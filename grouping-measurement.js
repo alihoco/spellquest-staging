@@ -28,7 +28,13 @@
   return exposures[exposures.length-1]||null;
  }
  function annotateAttempt({word,history,correct,afterHelp,kind,review,at=new Date().toISOString()}){
-  const prior=read(history,word);
+  const exposures=(Array.isArray(history?.events)?history.events:[])
+    .filter(x=>x.action==='grouping_exposed'&&x.word===word&&x.at&&x.strategy);
+  const prior=exposures[exposures.length-1]||null;
+  const opportunities=new Map();
+  for(const item of exposures)opportunities.set(item.opportunity,item.strategy);
+  const distinctOpportunities=[...opportunities.values()];
+  const crossOpportunityStrategyChange=distinctOpportunities.some((value,i)=>i>0&&value!==distinctOpportunities[i-1]);
   const ms=prior?Date.parse(at)-Date.parse(prior.at):NaN;
   const days=Number.isFinite(ms)&&ms>=0?ms/86400000:null;
   const independent=afterHelp===false;
@@ -38,6 +44,7 @@
    phase:afterHelp?'assisted_retry':kind==='due'?'scheduled_review':kind==='practice'?'same_session_practice':'new_word',
    independent,correct:!!correct,review:!!review,
    eligibleForDelayedComparison:independent&&kind==='due'&&days!==null&&days>=1,
+   crossOpportunityStrategyChange,groupingOpportunities:opportunities.size,
    isObservational:true,groupingVersion:VERSION};
  }
  return {VERSION,valid,positions,treatment,exposure,read,annotateAttempt};
