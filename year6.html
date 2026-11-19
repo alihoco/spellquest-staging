@@ -171,9 +171,13 @@ async function ensureCurriculumLoaded(){
   .then(async r=>{if(!r.ok)throw Error('The curriculum library could not be loaded');return r.json()})
   .then(async raw=>{
    // Missing or invalid approval files never turn provisional proposals into lessons.
-   const reviewed=await fetch('/core/approved-visual-word-groups-v1.json',{cache:'no-store'})
-     .then(r=>r.ok?r.json():{entries:[]}).catch(()=>({entries:[]}));
-   const converted=window.SpellmasterCurriculum.prepare(raw,PILOT_BY_WORD,reviewed);
+   const [reviewed,visualSuggestions]=await Promise.all([
+     fetch('/core/approved-visual-word-groups-v1.json',{cache:'no-store'})
+      .then(r=>r.ok?r.json():{entries:[]}).catch(()=>({entries:[]})),
+     fetch('/core/visual-word-grouping-proposals-v1.json',{cache:'no-store'})
+      .then(r=>r.ok?r.json():{entries:[]}).catch(()=>({entries:[]}))
+   ]);
+   const converted=window.SpellmasterCurriculum.prepare(raw,PILOT_BY_WORD,reviewed,visualSuggestions);
    WORDS=converted;
    curriculumLoaded=true;curriculumLoadFailure='';
    return WORDS;
