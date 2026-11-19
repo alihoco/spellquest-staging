@@ -6,10 +6,10 @@
  const safeRead=(storage,key,fallback)=>{try{return JSON.parse(storage.getItem(key)||'null')||fallback}catch{return fallback}};
  const cleanAlias=alias=>String(alias||'').trim().slice(0,18).replace(/[<>\x00-\x1f]/g,'');
  const validBirth=birth=>typeof birth==='string'&&/^(19|20)\d{2}-(0[1-9]|1[0-2])$/.test(birth)&&birth<=new Date().toISOString().slice(0,7);
- function ageInYears(month,now=new Date()){const[y,m]=month.split('-').map(Number);return Math.max(0,Math.floor(((now.getFullYear()-y)*12+now.getMonth()+1-m)/12))}
+ function ageInYears(month,now=new Date()){if(!validBirth(month))return NaN;const[y,m]=month.split('-').map(Number);return Math.max(0,Math.floor(((now.getFullYear()-y)*12+now.getMonth()+1-m)/12))}
  function themeForAge(years){return years<=7?'wonder':years<=11?'explorer':years<=16?'adventure':'focus'}
- function readProfiles(storage){return safeRead(storage,KEY,[]).filter(p=>p&&typeof p.id==='string'&&validBirth(p.birth));}
- function active(storage){const id=storage.getItem(ACTIVE);return readProfiles(storage).find(p=>p.id===id)||null;}
+ function readProfiles(storage){const cloud=storage.getItem('spellmaster-cloud-active-v1');if(cloud){try{const p=JSON.parse(cloud);if(p&&/^lp-[a-z0-9]+$/.test(p.id)&&p.cloud===true&&typeof p.alias==='string')return [p];}catch{}}return safeRead(storage,KEY,[]).filter(p=>p&&typeof p.id==='string'&&validBirth(p.birth));}
+ function active(storage){const all=readProfiles(storage);if(all[0]?.cloud)return all[0];const id=storage.getItem(ACTIVE);return all.find(p=>p.id===id)||null;}
  function add(storage,{alias,birth,theme='auto',schoolYear=null}={}){
   if(schoolYear!==null&&schoolYear!==''&&(!Number.isInteger(schoolYear)||schoolYear<1||schoolYear>6))throw Error('Choose a valid school year');
   if(!validBirth(birth))throw Error('Select a valid birth month and year');
