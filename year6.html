@@ -789,7 +789,8 @@ finish=function(){
 // Local test-only profile launcher. Does not authenticate or upload learning data.
 const LP=window.SpellmasterProfiles;
 function htmlSafe(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function currentTheme(p){return p.theme==='auto'?(p.birth?LP.themeForAge(LP.ageInYears(p.birth)):'explorer'):p.theme}
+function currentTheme(p){return p.theme==='auto'?
+ LP.themeForAge(Number.isInteger(p.ageYears)?p.ageYears:p.birth?LP.ageInYears(p.birth):10):p.theme}
 function createLocalProfile(){
  const alias=$('new-alias')?.value||'',birth=$('new-birth')?.value||'';
  const yearValue=$('new-school-year')?.value||'';
