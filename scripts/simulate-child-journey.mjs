@@ -91,6 +91,15 @@ try{
     await capture(page,'07-supported-review-mobile');
     data.game.chunkCount=await page.locator('.spelling-row span').count();
     data.game.changeGroupingButtons=await page.getByRole('button',{name:/Make my own groups|Change my groups|Try splitting/}).count();
+    data.game.primaryReviewAction=await page.locator('#app > .actions').last().locator('button').first().innerText();
+    if(!/Hide.*try spelling/i.test(data.game.primaryReviewAction))throw Error('Primary review action should hide the answer and retry');
+    await page.getByRole('button',{name:/Hide it and try spelling/}).click();
+    await page.waitForSelector('#answer',{timeout:5000});
+    data.game.retryInputPresent=true;
+    await page.locator('#answer').fill(await page.evaluate(()=>WORDS[idx].word));
+    await page.getByRole('button',{name:/Check my spelling/}).click();
+    data.game.retryAccepted=true;
+    await page.waitForTimeout(750);
    }else{
     data.game.initialState=(await page.locator('#app').innerText()).slice(0,1100);
     await capture(page,'06-game-possible-audio-or-setup-blocker');
@@ -113,6 +122,9 @@ try{
  await page.locator('#family-next').click();
  await capture(page,'11-family-adult-step-mobile');
  data.game.familyStep2Visible=await page.locator('#family-step2').isVisible();
+ if(data.game.wordInputPosition&&data.game.wordInputPosition.top>650)throw Error('Mobile spelling input still appears too far below the fold');
+ if(!data.game.transferredGuestBaseline)throw Error('Guest diagnostic did not transfer to the new local profile');
+ if(!data.game.familyStep2Visible)throw Error('Adult family signup step is not available');
  data.narration={browserRequestsMocked:true,notAudioQualityVerified:true};
 }catch(e){errors.push('JOURNEY FAILURE: '+e.stack?.slice(0,1800))}
 finally{await browser.close()}
