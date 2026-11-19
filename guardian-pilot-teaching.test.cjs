@@ -1,0 +1,52 @@
+'use strict';
+const test=require('node:test');
+const assert=require('node:assert/strict');
+const feedback=require('./spelling-written-feedback.js');
+const retention=require('./retention-checkpoints.js');
+test('Targeted spelling guidance is letter-accurate for common errors',()=>{
+ const missing=feedback.analyse('people','peple');
+ assert.equal(missing.kind,'missing_letter');
+ assert.equal(missing.differences[0].expected,'o');
+ const explanation=feedback.lesson('people','peple',['peo','ple']);
+ assert.match(explanation.text,/letter O/);
+ assert.ok(!explanation.text.includes('phoneme'));
+ const changed=feedback.lesson('necessary','neccessary',['ne','ces','sa','ry']);
+ assert.match(changed.text,/extra letter|few letters/i);
+ assert.equal(changed.groups.join(''),'necessary');
+});
+test('Retention check-ins keep 1, 7 and 28 day dates, never label missed checks as errors',()=>{
+ const record=retention.initialise({events:[]},'2026-11-01');
+ assert.equal(retention.nextDue(record,'2026-11-01'),'2026-11-02');
+ const one=retention.observe(record,'2026-11-02',true,{independent:true});
+ assert.equal(one.checkpoint.id,'day1');
+ assert.equal(one.checkpoint.withinWindow,true);
+ assert.equal(retention.nextDue(record,'2026-11-02'),'2026-11-08');
+ const seven=retention.observe(record,'2026-11-08',false,{independent:true});
+ assert.equal(seven.checkpoint.id,'day7');
+ assert.equal(retention.nextDue(record,'2026-11-08'),'2026-11-29');
+ const assisted=retention.observe(record,'2026-11-29',true,{independent:false,assisted:true});
+ assert.equal(assisted.checkpoint,null);
+ const twentyEight=retention.observe(record,'2026-11-29',true,{independent:true});
+ assert.equal(twentyEight.checkpoint.id,'day28');
+ assert.equal(retention.nextDue(record,'2026-11-29'),null);
+});
+test('Absent check-ins are missing observations, not wrong spellings',()=>{
+ const entry=retention.initialise({events:[]},'2026-11-01');
+ const last=retention.observe(entry,'2026-11-30',true,{independent:true});
+ assert.equal(last.checkpoint.id,'day28');
+ assert.equal(entry.retentionPlan.checkpoints.day1.result.status,'missed');
+ assert.equal(entry.retentionPlan.checkpoints.day7.result.status,'missed');
+ assert.equal(entry.retentionPlan.checkpoints.day1.result.correct,undefined);
+});
+test('Guardian pilot accepts age only and rejects diagnoses and precise birth dates',()=>{
+ const previous=process.env.SPELLMASTER_PILOT_MODE;
+ process.env.SPELLMASTER_PILOT_MODE='guardian';
+ delete require.cache[require.resolve('./account-api.js')];
+ const api=require('./account-api.js').__test;
+ const learner=api.learnerInput({alias:'Explorer One',ageYears:9,avatar:'owl',conditionChoice:'not_supplied'},'guardian');
+ assert.equal(learner.age,9);assert.equal(learner.birth,null);assert.equal(learner.isChild,true);
+ assert.throws(()=>api.learnerInput({alias:'Test',ageYears:9,birthMonth:'2017-06'},'guardian'),/without a date/);
+ assert.throws(()=>api.learnerInput({alias:'Test',ageYears:7,conditionChoice:'selected',conditions:[{code:'dyslexia',status:'suspected'}],supportConsent:true},'guardian'),/diagnosis/);
+ assert.throws(()=>api.learnerInput({alias:'Test'},'guardian'),/age in years/);
+ if(previous===undefined)delete process.env.SPELLMASTER_PILOT_MODE;else process.env.SPELLMASTER_PILOT_MODE=previous;
+});
