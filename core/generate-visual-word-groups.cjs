@@ -302,7 +302,7 @@ function generate(catalogue){
   const visual=manual?manual.split('|'):morphological?morphological.parts:visualUnits(word);
   if(visual.join('')!==word||visual.length>5||visual.some(x=>!x))throw Error('Grouping does not reconstruct '+word);
   const basis=manual?'curated_model_editorial_draft':morphological?morphological.basis:visual.length===1?'whole_word_no_safe_boundary':'grapheme_aware_visual_candidate';
-  return {id:item.id,word,band:item.curriculum_band,visual_units:visual,
+  return {id:item.id,word,band:item.curriculum_band,feature_tags:(item.teaching_groups||[]).map(x=>x.id),visual_units:visual,
    basis,review_status:'pending_specialist_review',phoneme_units:[],spoken_syllables:[],
    morphemes:[],sound_alignment_approved:false,linguistic_accuracy_approved:false,
    audio_segments_approved:false,lesson_approved:false,
