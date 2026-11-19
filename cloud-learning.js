@@ -14,7 +14,7 @@
    const cloud=me.learners.find(p=>p.id===A.selectedLearner());
    if(!cloud)throw Error('Your learner profile was not found.');
    const id='lp-'+cloud.id.replace(/-/g,'').toLowerCase();
-   profile={id,cloud:true,cloudId:cloud.id,alias:cloud.alias,birth:cloud.birthMonth||null,avatar:cloud.avatar,theme:cloud.theme||'auto',schoolYear:null};
+   profile={id,cloud:true,cloudId:cloud.id,alias:cloud.alias,birth:cloud.birthMonth||null,ageYears:Number.isInteger(cloud.ageYears)?cloud.ageYears:null,avatar:cloud.avatar,theme:cloud.theme||'auto',schoolYear:null};
    const state=await A.loadState(cloud.id);revision=state.version||0;
    storage().setItem('spellmaster-cloud-active-v1',JSON.stringify(profile));
    const data=state.state||{};
