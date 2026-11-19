@@ -59,7 +59,7 @@
   if(typeof text!=='string'||!text.trim())return false;
   stop();
   const n=requestNo,voice=sessionStorage.getItem('spellquest-ai-voice')||'marin';
-  text=text.replace(/[<>\\x00-\\x1f]/g,' ').replace(/\\s+/g,' ').trim().slice(0,650);
+  text=text.replace(/[<>\x00-\x1f]/g,' ').replace(/\s+/g,' ').trim().slice(0,650);
   if(button){activeButton=button;button.setAttribute('aria-pressed','true');button.classList.add('speaking')}
   try{
    controller=new AbortController();
