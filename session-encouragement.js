@@ -20,17 +20,17 @@
   let headline='See you next time! 🌱',spoken='You can come back and practise whenever you feel ready.';
   if(improved){
    headline='Look at your progress! ✨';
-   spoken='Great work! Today you remembered a spelling that was tricky before. That is a real step forward.';
+   spoken='You remembered a spelling today that was tricky before. That is a real step forward.';
   }else if(corrected){
    headline='You worked through it! ✨';
-   spoken='Great work! You kept trying and worked out a tricky spelling with help. We will practise it again another day.';
+   spoken='You kept trying and worked out a tricky spelling with help. We will practise it again another day.';
   }else if(tried){
    headline='Great work today! ✨';
-   spoken='Great work! Every word you try is a chance to learn. We will see what you remember when you come back.';
+   spoken='Every word you try is a chance to learn. We will see what you remember when you come back.';
   }
   const footer='Better today than yesterday. One little step at a time.';
   return {headline,spoken,footer,slogan:SLOGAN,hasMeasuredImprovement:improved,attemptedWords:items.length,
-   fullSpeech:spoken+' '+footer,
+   fullSpeech:'Great work today. '+spoken+' '+footer,
    explanation:improved?'Compared with an earlier independent attempt, not with another learner.':'Your effort is celebrated without assuming your spelling has already improved.'};
  }
  return {SLOGAN,message};
