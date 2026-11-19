@@ -41,8 +41,8 @@ function lesson(word,attempt,visualGroups){
   if(x.kind==='extra_letter')specific='There was an extra letter in your attempt. ';
  }
  if(!specific)specific='A few letters need another look. ';
- const text=specific+'Here is the complete spelling: '+safeWord+'. '+(parts.length>1?'You can study these written groups: '+written+'. ':'')+'Hide it when you are ready and try the whole word again.';
- const spoken=specific+'Here is the correct spelling: '+safeWord+'. Look at the written letters carefully, then hide them and try again.';
+ const text=specific+'Look at the written groups. Then hide the word and try again.';
+ const spoken=specific+'Look at how the word is written. When you are ready, hide it and try again.';
  return {kind:a.kind,text,spoken,expectedWord:safeWord,groups:parts.slice(),helpLevel:'supported_written_comparison',safeLinguisticClaims:true};
 }
 return {analyse,lesson};
