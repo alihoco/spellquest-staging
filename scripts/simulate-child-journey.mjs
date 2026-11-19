@@ -49,11 +49,17 @@ try{
  await page.waitForSelector('#done:not(.hidden)',{timeout:8000});
  data.assessment.push({step:'complete',text:await page.locator('#done').innerText()});
  await capture(page,'03-assessment-result-mobile');
+ data.assessment.push({closingText:await page.locator('#assessment-session-close').innerText(),
+   replayAvailable:await page.getByRole('button',{name:/Hear your goodbye/}).isVisible()});
+ if(!/Better today than yesterday/i.test(await page.locator('#assessment-session-close').innerText()))throw Error('Assessment closing missing motto');
  const guestAssessment=await page.evaluate(()=>localStorage.getItem('spellmaster-starting-assessment-v1:guest'));
  data.assessment.push({guestSavedToBrowser:!!guestAssessment,answerCount:JSON.parse(guestAssessment||'{}').responses?.length||0});
  await page.goto(origin+'/year6.html',{waitUntil:'domcontentloaded',timeout:45000});
  await page.waitForTimeout(1500);
  await capture(page,'04-adventure-entry-mobile');
+ data.game.brandPromiseVisible=await page.locator('.brand-promise').isVisible();
+ data.game.brandPromiseText=await page.locator('.brand-promise').innerText();
+ if(!data.game.brandPromiseVisible||!/Better today[\s\S]*than yesterday/i.test(data.game.brandPromiseText))throw Error('Brand promise not visible on entry screen');
  data.game.guestProfileTop=await page.locator('#new-alias').evaluate(el=>Math.round(el.getBoundingClientRect().top)).catch(()=>null);
  const name=page.locator('#new-alias');
  if(await name.count()){
@@ -113,6 +119,13 @@ try{
     await page.getByRole('button',{name:/Check my spelling/}).click();
     data.game.retryAccepted=true;
     await page.waitForTimeout(750);
+    await page.getByRole('button',{name:/Finish for today/}).first().click({timeout:9000});
+    await page.waitForSelector('.session-closing',{timeout:6000});
+    data.game.closingText=await page.locator('.session-closing').innerText();
+    data.game.closingReplay=await page.getByRole('button',{name:/Hear your goodbye/}).isVisible();
+    await capture(page,'07b-end-of-session-mobile');
+    if(!/Better today than yesterday/i.test(data.game.closingText)||!data.game.closingReplay)
+      throw Error('Spelling practice must end with the motto and a replayable goodbye');
    }else{
     data.game.initialState=(await page.locator('#app').innerText()).slice(0,1100);
     await capture(page,'06-game-possible-audio-or-setup-blocker');
@@ -127,6 +140,21 @@ try{
  await firstTimer.waitForURL('**/starting-assessment.html',{timeout:6000});
  data.game.newLearnerRoutedToAssessment=true;
  await firstTimer.close();
+ const sprint=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
+ await sprint.route('https://spellquest-voice-staging.onrender.com/api/read-aloud*',route=>route.abort('failed'));
+ await sprint.goto(origin+'/spelling-sprint.html',{waitUntil:'domcontentloaded'});
+ await sprint.locator('#newword').fill('apple');
+ await sprint.getByRole('button',{name:/Add word/}).click();
+ await sprint.getByRole('button',{name:/Practise these words/}).click();
+ await sprint.locator('#answer').fill('apple');
+ await sprint.getByRole('button',{name:/Check my spelling/}).click();
+ await sprint.getByRole('button',{name:/Next word/}).click();
+ await sprint.waitForSelector('#finished:not(.hidden)');
+ data.game.sprintClosingText=await sprint.locator('#sprint-session-close').innerText();
+ await capture(sprint,'07c-sprint-goodbye-mobile');
+ if(!/Better today than yesterday/i.test(data.game.sprintClosingText))
+   throw Error('Spelling Sprint must end with personal growth message');
+ await sprint.close();
  const desktop=await browser.newPage({viewport:{width:1280,height:800},deviceScaleFactor:1});
  track(desktop);
  await desktop.route('https://spellquest-voice-staging.onrender.com/api/voice*',route=>route.abort('failed'));
