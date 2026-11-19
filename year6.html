@@ -136,13 +136,14 @@ button.play-now:active{transform:translateY(4px);box-shadow:0 6px 0 #2b2675}
 <section class="panel" id="app"></section>
 <div class="footer">Staging curriculum adventure · 615-word England inventory · Existing teaching pilot progress is currently browser-local. <a href="/my-account.html">My secure account</a></div></main>
 <script src="/spelling-feedback.js"></script>
-<script src="/learner-profiles.js"></script>
+<script src="/learner-profiles.js"></script><script src="/account-client.js?v=1"></script><script src="/cloud-learning.js?v=1"></script>
 <script src="/bonus-round.js"></script>
 <script src="/celebration-feedback.js"></script>
 <script src="/mixed-word-selection.js"></script>
 <script src="/adaptive-curriculum.js"></script>
 <script src="/spelling-chunks-ui.js"></script>
 <script>
+const spellStorage=window.SpellmasterAccount?.token()?sessionStorage:localStorage;
 let WORDS=[
  {word:'necessary',spelling:['ne','ces','sa','ry'],sounds:['ness','uh','ser','ee']},
  {word:'embarrass',spelling:['em','bar','rass'],sounds:['im','bar','uhs']},
@@ -181,8 +182,8 @@ async function ensureCurriculumLoaded(){
 const app=document.getElementById('app'),$=id=>document.getElementById(id);
 const ENDPOINT='https://spellquest-voice-staging.onrender.com/api/voice';
 let voice=sessionStorage.getItem('spellquest-ai-voice')||'marin';
-let narration=localStorage.getItem('spellquest-audio-first')!=='off';
-let pace=localStorage.getItem('spellquest-sound-pace')||'relaxed';
+let narration=spellStorage.getItem('spellquest-audio-first')!=='off';
+let pace=spellStorage.getItem('spellquest-sound-pace')||'relaxed';
 let stage='welcome',idx=0,first=0,results=[],ticket=0,activePlayer=null,activePlaying=false,activeResolve=null;
 const cached=new Map();
 const makeUrl=clip=>{
@@ -229,8 +230,8 @@ async function talk(clips,t=ticket){
 function soundVoice(){return '<div class="voice"><div class="voice-row"><label for="voice">Narrator</label><select id="voice" onchange="chooseVoice(this.value)"><option value="marin">Marin · warm</option><option value="cedar">Cedar · calm</option></select><label for="pace">Practice pace</label><select id="pace" onchange="choosePace(this.value)"><option value="relaxed">Relaxed</option><option value="extra">Extra thinking time</option></select><button class="alt" onclick="toggleAudio()" id="audio-toggle">'+(narration?'🔊 Sound on':'🔇 Sound off')+'</button></div><span class="status" id="audio-status" role="status"></span></div>'}
 function voiceSet(){if($('voice'))$('voice').value=voice;if($('pace'))$('pace').value=pace}
 function chooseVoice(v){stop();voice=v;sessionStorage.setItem('spellquest-ai-voice',v);cached.clear();if(narration)replay()}
-function choosePace(v){pace=v;localStorage.setItem('spellquest-sound-pace',v)}
-function toggleAudio(){narration=!narration;localStorage.setItem('spellquest-audio-first',narration?'on':'off');stop();if($('audio-toggle'))$('audio-toggle').textContent=narration?'🔊 Sound on':'🔇 Sound off';if(narration)replay()}
+function choosePace(v){pace=v;spellStorage.setItem('spellquest-sound-pace',v)}
+function toggleAudio(){narration=!narration;spellStorage.setItem('spellquest-audio-first',narration?'on':'off');stop();if($('audio-toggle'))$('audio-toggle').textContent=narration?'🔊 Sound on':'🔇 Sound off';if(narration)replay()}
 function replay(){
  if(stage==='welcome')return introAudio();
  if(stage==='question')return instructionAudio();
@@ -258,7 +259,7 @@ async function introAudio(){
  const ok=await talk(['spellmaster-adaptive-welcome-v1'],t);
  if(ok&&t===ticket&&stage==='welcome')question(true);
 }
-function begin(){idx=0;first=0;results=[];narration=true;localStorage.setItem('spellquest-audio-first','on');introAudio()}
+function begin(){idx=0;first=0;results=[];narration=true;spellStorage.setItem('spellquest-audio-first','on');introAudio()}
 function question(auto=false){
  stop();stage='question';const w=WORDS[idx];
  app.innerHTML='<span class="eyebrow">SPELLING CHALLENGE '+runCount+'</span>'+progress()+
@@ -317,12 +318,12 @@ async function successAudio(){
 // present pseudo-phonetic spellings as written words. Accurate specialist-reviewed
 // phoneme/grapheme alignment is still pending.
 function visualTeachingGroups(w){
- const p=window.SpellmasterProfiles?.active(localStorage),api=window.SpellmasterChunkUI;
+ const p=window.SpellmasterProfiles?.active(spellStorage),api=window.SpellmasterChunkUI;
  if(!p||!api)return w.spelling;
- const saved=api.read(localStorage,p).preferences[w.word];
+ const saved=api.read(spellStorage,p).preferences[w.word];
  if(!saved||saved.spelling!==w.word||!saved.custom||!api.validCuts(w.word,saved.cuts))return w.spelling;
  const opportunity=runStart+':'+runCount+':'+w.word;
- if(saved.lastSavedOpportunity!==opportunity)api.log(localStorage,p,'custom_reused',w.word,opportunity);
+ if(saved.lastSavedOpportunity!==opportunity)api.log(spellStorage,p,'custom_reused',w.word,opportunity);
  return api.groups(w.word,saved.cuts);
 }
 function repaintTeachingGroups(groups){
@@ -333,16 +334,16 @@ function replayWordHint(){
  stop();const t=ticket;return speak(errorFeedbackForCurrent().clip,t);
 }
 function splitterIntroKey(){
- const p=window.SpellmasterProfiles?.active(localStorage);
+ const p=window.SpellmasterProfiles?.active(spellStorage);
  return p?'spellmaster-splitter-introduction-v1:'+p.id:null;
 }
 function speakSplitterInstructions(){
  stop();const t=ticket;return speak('spellmaster-chunk-option-v1',t);
 }
 async function introduceSplitterOnce(t){
- const key=splitterIntroKey();if(!key||localStorage.getItem(key)==='heard'||t!==ticket||!narration)return;
+ const key=splitterIntroKey();if(!key||spellStorage.getItem(key)==='heard'||t!==ticket||!narration)return;
  const ok=await speak('spellmaster-chunk-option-v1',t);
- if(ok&&t===ticket)localStorage.setItem(key,'heard');
+ if(ok&&t===ticket)spellStorage.setItem(key,'heard');
 }
 function openWordGrouping(){
  const control=app.querySelector('.chunk-workshop .chunk-open');
@@ -356,12 +357,12 @@ function openWordGrouping(){
  if(status)status.textContent='The word grouping tool will appear with the spelling.';
 }
 function mountPersonalGrouping(target){
- const profile=window.SpellmasterProfiles?.active(localStorage);
+ const profile=window.SpellmasterProfiles?.active(spellStorage);
  const host=document.querySelector(target);
  const w=WORDS[idx];if(!profile||!host||!w||!window.SpellmasterChunkUI)return;
  const key=runStart+':'+runCount+':'+w.word;
  return window.SpellmasterChunkUI.mount({host,word:w.word,teacherChunks:w.spelling,profile,
-  storage:localStorage,opportunity:key,onSpeakInstruction:speakSplitterInstructions,onNotice:message=>{const t=host.querySelector('.chunk-notice');
+  storage:spellStorage,opportunity:key,onSpeakInstruction:speakSplitterInstructions,onNotice:message=>{const t=host.querySelector('.chunk-notice');
     if(t)t.textContent=message;
     repaintTeachingGroups(visualTeachingGroups(w));}});
 }
@@ -426,8 +427,8 @@ async function retryAudio(){stop();const prompt=results[idx]?.attempts>1?[]:['sp
 function next(){idx++;if(idx===WORDS.length)finish();else question(true)}
 function finish(){
  stop();stage='finished';const learned=results.filter(r=>r.learned).length;
- let history=[];try{history=JSON.parse(localStorage.getItem('spellquest-y6-practice')||'[]')}catch(e){}
- history.push({date:new Date().toISOString().slice(0,10),first,learned,results});localStorage.setItem('spellquest-y6-practice',JSON.stringify(history.slice(-20)));
+ let history=[];try{history=JSON.parse(spellStorage.getItem('spellquest-y6-practice')||'[]')}catch(e){}
+ history.push({date:new Date().toISOString().slice(0,10),first,learned,results});spellStorage.setItem('spellquest-y6-practice',JSON.stringify(history.slice(-20)));
  app.innerHTML='<span class="eyebrow">YOUR JOURNEY TODAY</span><h2>Look how far you’ve come! 🌟</h2>'+
  '<div class="good"><strong>'+first+'</strong> words remembered immediately; <strong>'+learned+'</strong> spelled during practice.</div>'+
  '<p>Your progress is what matters. We can try again another day to see what you remember.</p>'+
@@ -453,7 +454,7 @@ function errorFeedbackForCurrent(){
 }
 function adaptiveToday(){const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}
 function adaptiveDatePlus(date,n){const d=new Date(date+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)}
-function adaptiveLoad(){try{const profile=window.SpellmasterProfiles?.active(localStorage);if(!profile)return {};return JSON.parse(localStorage.getItem(window.SpellmasterProfiles.historyKey(profile))||'{}')}catch(e){return {}}}
+function adaptiveLoad(){try{const profile=window.SpellmasterProfiles?.active(spellStorage);if(!profile)return {};return JSON.parse(spellStorage.getItem(window.SpellmasterProfiles.historyKey(profile))||'{}')}catch(e){return {}}}
 function adaptiveSave(word,ok,fromReview,afterHelp,errorCategory=null){
  const all=adaptiveLoad(),entry=all[word]||{events:[],retained:0};
  if(fromReview&&ok&&!afterHelp)entry.retained++;
@@ -464,11 +465,11 @@ function adaptiveSave(word,ok,fromReview,afterHelp,errorCategory=null){
  if(!(runKind==='practice'&&ok&&typeof entry.next==='string'))
   entry.next=adaptiveDatePlus(adaptiveToday(),ok?(entry.retained>=2?14:entry.retained?3:1):1);
  entry.vault=ok?(entry.retained?'protected':'collected'):'recovery_quest';
- all[word]=entry;const profile=window.SpellmasterProfiles?.active(localStorage);if(profile)localStorage.setItem(window.SpellmasterProfiles.historyKey(profile),JSON.stringify(all));
+ all[word]=entry;const profile=window.SpellmasterProfiles?.active(spellStorage);if(profile)spellStorage.setItem(window.SpellmasterProfiles.historyKey(profile),JSON.stringify(all));
 }
 function currentPlacement(){
- const p=window.SpellmasterProfiles?.active(localStorage);
- return p?window.SpellmasterCurriculum.readPlacement(localStorage,p,window.SpellmasterProfiles.ageInYears(p.birth)):null;
+ const p=window.SpellmasterProfiles?.active(spellStorage);
+ return p?window.SpellmasterCurriculum.readPlacement(spellStorage,p,window.SpellmasterProfiles.ageInYears(p.birth)):null;
 }
 function adaptiveSelect(){
  const pool=curriculumLoaded?window.SpellmasterCurriculum.pool(WORDS,adaptiveLoad(),currentPlacement()):WORDS;
@@ -489,7 +490,7 @@ function adaptiveStartWord(){
  if(heading)heading.textContent=({due:'MEMORY QUEST',practice:'WORD PRACTICE',new:'NEW WORD'}[runKind]||'WORD CHALLENGE')+' · CHALLENGE '+runCount;
 }
 function introKey(){
- const p=window.SpellmasterProfiles?.active(localStorage);
+ const p=window.SpellmasterProfiles?.active(spellStorage);
  return p?'spellmaster-welcome-heard-v1:'+p.id:null;
 }
 function hearWelcomeAgain(){
@@ -502,13 +503,13 @@ begin=function(){
  praiseState=window.SpellmasterPraise.makeState(Math.floor(Math.random()*10));currentPraise=null;
  bonusReviewedThrough=0;bonusRound=null;bonusPosition=0;bonusAnswers=[];bonusRoundId=null;
  idx=0;first=0;results=[];narration=true;
- localStorage.setItem('spellquest-audio-first','on');
+ spellStorage.setItem('spellquest-audio-first','on');
  const key=introKey();
  const existingHistory=adaptiveLoad();
  const hasPlayedBefore=Object.values(existingHistory).some(entry=>Array.isArray(entry?.events)&&entry.events.length>0);
  // Existing local testers already played before this flag was introduced.
- if(key&&(localStorage.getItem(key)==='heard'||hasPlayedBefore)){
-  if(hasPlayedBefore)localStorage.setItem(key,'heard');
+ if(key&&(spellStorage.getItem(key)==='heard'||hasPlayedBefore)){
+  if(hasPlayedBefore)spellStorage.setItem(key,'heard');
   adaptiveStartWord();return;
  }
  introAudio();
@@ -518,7 +519,7 @@ introAudio=async function(){
  const ok=await talk(['spellmaster-adaptive-welcome-v1'],t);
  if(t!==ticket||stage!=='welcome')return;
  const key=introKey();
- if(ok&&key)localStorage.setItem(key,'heard');
+ if(ok&&key)spellStorage.setItem(key,'heard');
  // An unavailable welcome clip must not prevent a word challenge.
  adaptiveStartWord();
 };
@@ -535,8 +536,8 @@ check=function(retry){
   if(ok){first++;runFirst++}
   adaptiveSave(word,ok,runReview,false,ok?null:lastErrorFeedback?.id);
   if(curriculumLoaded&&(runKind==='new'||runKind==='due')){
-   const profile=window.SpellmasterProfiles?.active(localStorage);
-   if(profile)window.SpellmasterCurriculum.recordIndependent(localStorage,profile,
+   const profile=window.SpellmasterProfiles?.active(spellStorage);
+   if(profile)window.SpellmasterCurriculum.recordIndependent(spellStorage,profile,
     window.SpellmasterProfiles.ageInYears(profile.birth),WORDS[idx],ok);
   }
  }else{
@@ -545,6 +546,7 @@ check=function(retry){
   if(ok){results[idx].learned=true;runResults[runResults.length-1].learned=true;adaptiveSave(word,true,false,true)}
   else adaptiveSave(word,false,runReview,true,lastErrorFeedback?.id);
  }
+ if(window.SpellmasterCloud?.status().ready)window.SpellmasterCloud.save();
  if(ok){runSeen.add(word);success(retry)}else if(retry){shortReview()}else{review()}
 };
 function startBonusRound(plan){
@@ -580,13 +582,13 @@ async function playBonusWord(){
  await talk([intro,wordAudioClip(WORDS.find(w=>w.word===bonusRound.words[bonusPosition]))],t);
 }
 function recordBonusRecall(word,correct){
- const profile=LP.active(localStorage);if(!profile)return;
+ const profile=LP.active(spellStorage);if(!profile)return;
  const entries=adaptiveLoad(),item=entries[word];if(!item)return;
  item.events.push({date:adaptiveToday(),correct,independent:true,bonus:true,phase:'same_session_recall',
   review:false,afterHelp:true,error_category:correct?null:'bonus_recall_miss'});
  if(!correct){item.next=adaptiveDatePlus(adaptiveToday(),1);item.vault='recovery_quest'}
  entries[word]=item;
- localStorage.setItem(LP.historyKey(profile),JSON.stringify(entries));
+ spellStorage.setItem(LP.historyKey(profile),JSON.stringify(entries));
 }
 function checkBonusWord(){
  if(stage!=='bonus-question'||!bonusRound)return;
@@ -623,7 +625,7 @@ function advanceBonusWord(){bonusPosition++;if(bonusPosition>=bonusRound.words.l
 function finishBonusRound(){
  stop();stage='bonus-result';if(!bonusRound)return;
  const outcome=window.SpellmasterBonus.grade(bonusRound.words,bonusAnswers);
- const profile=LP.active(localStorage),reward=profile?window.SpellmasterBonus.award(localStorage,profile,bonusRoundId,outcome):null;
+ const profile=LP.active(spellStorage),reward=profile?window.SpellmasterBonus.award(spellStorage,profile,bonusRoundId,outcome):null;
  const rewardText=outcome.perfect?'All '+outcome.total+' spellings remembered!':'You remembered '+outcome.correct+' of '+outcome.total+' spellings.';
  app.innerHTML='<div class="bonus-card '+(outcome.perfect?'bonus-perfect':'')+'">'+
  '<span class="bonus-trophy" aria-hidden="true">'+(outcome.perfect?'🏆':'✨')+'</span>'+
@@ -649,7 +651,7 @@ function showAvatarRewardChoice(profile,roundId){
  '<p>Pick one reward. You can change how your avatar looks later when the dressing room is built.</p>'+
  '<div class="avatar-choice-grid"></div><p class="small muted" role="status" id="avatar-choice-message"></p>';
  const grid=area.querySelector('.avatar-choice-grid');
- const items=window.SpellmasterBonus.availableChoices(localStorage,profile);
+ const items=window.SpellmasterBonus.availableChoices(spellStorage,profile);
  if(!items.length){area.innerHTML='<p>All current avatar items collected! More rewards will be added.</p>';
    const continuation=app.querySelector('.actions');if(continuation)continuation.before(area);else app.append(area);return;}
  for(const item of items){
@@ -659,7 +661,7 @@ function showAvatarRewardChoice(profile,roundId){
    b.append(icon,label);
    b.addEventListener('click',()=>{
      try{
-       const result=window.SpellmasterBonus.chooseAvatarReward(localStorage,profile,roundId,item.id);
+       const result=window.SpellmasterBonus.chooseAvatarReward(spellStorage,profile,roundId,item.id);
        if(result.alreadyClaimed)return;
        area.innerHTML='<div class="bonus-hat"><strong>'+item.icon+' '+item.name+' is yours!</strong>'+
        '<p>This item is now in your avatar collection. No coins were spent.</p></div>';
@@ -715,28 +717,28 @@ finish=function(){
 // Local test-only profile launcher. Does not authenticate or upload learning data.
 const LP=window.SpellmasterProfiles;
 function htmlSafe(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function currentTheme(p){return p.theme==='auto'?LP.themeForAge(LP.ageInYears(p.birth)):p.theme}
+function currentTheme(p){return p.theme==='auto'?(p.birth?LP.themeForAge(LP.ageInYears(p.birth)):'explorer'):p.theme}
 function createLocalProfile(){
  const alias=$('new-alias')?.value||'',birth=$('new-birth')?.value||'';
  const yearValue=$('new-school-year')?.value||'';
- try{LP.add(localStorage,{alias,birth,schoolYear:yearValue?Number(yearValue):null});renderLanding()}
+ try{LP.add(spellStorage,{alias,birth,schoolYear:yearValue?Number(yearValue):null});renderLanding()}
  catch(e){const el=$('profile-error');if(el)el.textContent=e.message}
 }
-function chooseLocalProfile(id){try{LP.choose(localStorage,id);renderLanding()}catch(e){const el=$('profile-error');if(el)el.textContent=e.message}}
-function setLocalTheme(value){const p=LP.active(localStorage);if(!p)return;LP.updateTheme(localStorage,p.id,value);renderLanding()}
+function chooseLocalProfile(id){try{LP.choose(spellStorage,id);renderLanding()}catch(e){const el=$('profile-error');if(el)el.textContent=e.message}}
+function setLocalTheme(value){const p=LP.active(spellStorage);if(!p)return;LP.updateTheme(spellStorage,p.id,value);renderLanding()}
 function changeSchoolYear(value){
- const p=LP.active(localStorage);if(!p)return;
- const changed=LP.updateSchoolYear(localStorage,p.id,value?Number(value):null);
- window.SpellmasterCurriculum.resetStartingPoint(localStorage,changed,LP.ageInYears(changed.birth));
+ const p=LP.active(spellStorage);if(!p)return;
+ const changed=LP.updateSchoolYear(spellStorage,p.id,value?Number(value):null);
+ window.SpellmasterCurriculum.resetStartingPoint(spellStorage,changed,LP.ageInYears(changed.birth));
  renderLanding();
 }
 function deleteLocalProfile(){
- const p=LP.active(localStorage);if(!p)return;
+ const p=LP.active(spellStorage);if(!p)return;
  if(!confirm('Delete this tester profile and its locally saved spelling history from this device?'))return;
- LP.forget(localStorage,p.id);renderLanding();
+ LP.forget(spellStorage,p.id);renderLanding();
 }
 function claimPendingAvatarItem(){
- const p=LP.active(localStorage),due=p?window.SpellmasterBonus.pendingRewards(localStorage,p):[];
+ const p=LP.active(spellStorage),due=p?window.SpellmasterBonus.pendingRewards(spellStorage,p):[];
  if(!p||!due.length)return;
  stop();stage='avatar-reward';
  app.innerHTML='<div class="bonus-card"><h2>Your earned avatar reward</h2>'+
@@ -746,14 +748,14 @@ function claimPendingAvatarItem(){
 }
 function renderLanding(){
  stop();stage='welcome';
- const people=LP.readProfiles(localStorage),p=LP.active(localStorage);
+ const people=LP.readProfiles(spellStorage),p=LP.active(spellStorage);
  document.body.dataset.theme=p?currentTheme(p):'explorer';
  const progress=p?LP.summary(adaptiveLoad(),adaptiveToday()):null;
- const placement=p?window.SpellmasterCurriculum.readPlacement(localStorage,p,LP.ageInYears(p.birth)):null;
+ const placement=p?window.SpellmasterCurriculum.readPlacement(spellStorage,p,LP.ageInYears(p.birth)):null;
  const bandLabels={year1:'Year 1',year2:'Year 2',year3_4:'Years 3–4',year5_6:'Years 5–6'};
- const bonuses=p&&window.SpellmasterBonus?window.SpellmasterBonus.read(localStorage,p):null;
- const unclaimed=p&&window.SpellmasterBonus?window.SpellmasterBonus.pendingRewards(localStorage,p):[];
- const splitter=p&&window.SpellmasterChunkUI?window.SpellmasterChunkUI.summary(window.SpellmasterChunkUI.read(localStorage,p)):null;
+ const bonuses=p&&window.SpellmasterBonus?window.SpellmasterBonus.read(spellStorage,p):null;
+ const unclaimed=p&&window.SpellmasterBonus?window.SpellmasterBonus.pendingRewards(spellStorage,p):[];
+ const splitter=p&&window.SpellmasterChunkUI?window.SpellmasterChunkUI.summary(window.SpellmasterChunkUI.read(spellStorage,p)):null;
  const cards=people.map(x=>'<button class="profile-choice '+(p&&p.id===x.id?'selected':'')+
  '" onclick="chooseLocalProfile(\''+x.id+'\')"><span>✦ '+htmlSafe(x.alias)+'</span><small>'+
  (p&&p.id===x.id?'Current explorer ✓':'Switch')+'</small></button>').join('');
@@ -792,7 +794,7 @@ function renderLanding(){
  '<p>One explorer at a time. Your learning journey belongs to you.</p>'+
  (p?'<div class="active-learner" aria-label="Current explorer"><span class="active-learner-icon" aria-hidden="true">✦</span>'+
  '<div><strong>'+htmlSafe(p.alias)+'</strong><small>Current explorer · Personal progress</small></div></div>':'')+
- '<details class="tester-profile-tools"'+(p?'':' open')+'><summary>⚙ Tester profile tools</summary>'+
+ '<details class="tester-profile-tools"'+(p?.cloud?' hidden':p?'':' open')+'><summary>⚙ Tester profile tools</summary>'+
  '<p class="privacy-note">Only for local staging tests. In the finished game, switching learners requires authorised sign-in.</p>'+cards+
  (people.length<6?'<div class="profile-form"><label for="new-alias">Explorer nickname</label>'+
  '<input id="new-alias" maxlength="18" placeholder="e.g. Star Explorer" autocomplete="off" spellcheck="false">'+
@@ -806,7 +808,7 @@ function renderLanding(){
  '<div class="status" id="profile-error" role="status"></div></div>':'')+
  (p?'<button class="alt tiny-action" style="margin:5px 12px 9px" onclick="deleteLocalProfile()">Delete current test profile</button>':'')+
  '</details>'+
- (p?'<div style="padding-top:13px"><label for="local-theme">Choose how the game looks</label>'+
+ (p&&!p.cloud?'<div style="padding-top:13px"><label for="local-theme">Choose how the game looks</label>'+
  '<select id="local-theme" onchange="setLocalTheme(this.value)">'+themeOptions.map(x=>'<option value="'+x+'"'+
  (p.theme===x?' selected':'')+'>'+({auto:'Adjust with age',wonder:'Wonder',explorer:'Explorer',adventure:'Adventure',focus:'Simple & calm'}[x])+'</option>').join('')+
  '</select>'+
@@ -815,17 +817,17 @@ function renderLanding(){
  '<option value=""'+(!p.schoolYear?' selected':'')+'>Suggest from age</option>'+
  [1,2,3,4,5,6].map(y=>'<option value="'+y+'"'+(p.schoolYear===y?' selected':'')+'>Year '+y+'</option>').join('')+
  '</select><p class="privacy-note">This is just a starting estimate. Independent spelling can move the level up or down.</p></div>':'')+
- '<p class="privacy-note" style="margin-top:15px">Testing only: profiles and birth month/year stay in this browser, not a server. Anyone using this device can access them. Use nicknames, not real names. Clearing browser data removes your progress.</p>'+
+ (p?.cloud?'<p class="privacy-note">Your learning history is linked to your signed-in account. <a href="/my-account.html">Manage learners</a>.</p>':'<p class="privacy-note" style="margin-top:15px">Testing only: profiles and birth month/year stay in this browser, not a server. Anyone using this device can access them. Use nicknames, not real names. Clearing browser data removes your progress.</p>')+
  '</aside></div>'+
- '<div class="site-note">The staging player now uses the 615-word England spelling inventory, with an age/year-based starting point and continued assessment. New words have provisional whole-word audio and visual spelling only; expert-reviewed phonics, meanings and homophone contexts still need sign-off. <a href=\"/curriculum-library.html\">Browse the word bank</a>. Progress remains browser-local.</div>';
+ '<div class="site-note">The staging player now uses the 615-word England spelling inventory, with an age/year-based starting point and continued assessment. New words have provisional whole-word audio and visual spelling only; expert-reviewed phonics, meanings and homophone contexts still need sign-off. <a href=\"/curriculum-library.html\">Browse the word bank</a>. '+(p?.cloud?'Your learning history is saved to your private account.':'Guest progress remains browser-local.')+'</div>';
 }
 const playWithProfile=begin;
 begin=async function(){
- if(!LP.active(localStorage)){renderLanding();return}
+ if(!LP.active(spellStorage)){renderLanding();return}
  stop();stage='curriculum-loading';
  app.innerHTML='<span class="eyebrow">YOUR SPELLING ADVENTURE</span><h2>Preparing your words</h2>'+
  '<p>Loading the England curriculum word bank and your personal starting point…</p>'+
- '<div class="note" role="status">This uses only your local test profile. Nothing has been submitted to a school account.</div>';
+ '<div class="note" role="status">'+(LP.active(spellStorage)?.cloud?'Your learning history is connected to your secure learner account.':'This is a local test profile; progress stays in this browser.')+'</div>';
  try{await ensureCurriculumLoaded()}
  catch(error){
   stage='curriculum-error';
@@ -838,6 +840,11 @@ begin=async function(){
  stage='welcome';playWithProfile();
 };
 welcome=renderLanding;
-renderLanding();
+if(window.SpellmasterAccount?.token()){
+ window.SpellmasterCloud.initialize().then(ok=>{
+  if(!ok){app.innerHTML='<h2>Unable to load your secure learner profile</h2><p>Your existing progress is protected. Please sign in again or retry.</p><div class="actions"><a href="/my-account.html">My account</a><button onclick="location.reload()">Retry</button></div>';return;}
+  renderLanding();
+ });
+}else renderLanding();
 </script><script src="/spellmaster-library.js?v=5"></script>
 <script src="/accessibility-tools.js?v=1"></script></body></html>
