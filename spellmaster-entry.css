@@ -225,3 +225,35 @@ body.session-finished #app>.actions button:first-child{min-height:49px!important
  body.session-finished #app>.actions{position:static!important;padding:2px!important;border:0!important;box-shadow:none!important;background:transparent!important}
  body.session-finished #app>.actions button{width:100%!important;flex:1 1 auto!important}
 }
+
+/* Playtest: make the next action unmistakable after reviewing a spelling. */
+#app .retry-after-review{
+ display:block;width:min(100%,490px);min-height:60px;
+ margin:13px auto 16px!important;padding:13px 20px;
+ border:2px solid #bd8d35;border-radius:16px;
+ background:linear-gradient(#ffe391,#f3b947);color:#422d58;
+ box-shadow:0 5px 0 #94692f;font:800 clamp(17px,2.5vw,21px)/1.25 var(--font-display);
+}
+#app .retry-after-review:focus-visible{outline:4px solid #563ca4;outline-offset:4px}
+#app .chunk-workshop .chunk-head p{max-width:470px}
+#app .coin-transfer{
+ position:relative;display:flex;align-items:center;justify-content:space-between;
+ gap:10px;max-width:370px;margin:14px auto 19px;padding:10px 20px;
+ border-radius:18px;background:#fff8e6;border:1px solid #e3c68c;
+ font:700 16px var(--font-display);
+}
+#app .coin-transfer .coin-pot{display:flex;flex-direction:column;align-items:center;gap:2px}
+#app .coin-transfer .coin-pot .coin-pot-icon{font-size:34px}
+#app .coin-transfer .coin-flight{position:absolute;left:20%;top:25px;font-size:25px;pointer-events:none}
+#app .coin-transfer .coin-flight:nth-of-type(2){animation-delay:.32s}
+#app .coin-transfer .coin-flight:nth-of-type(3){animation-delay:.64s}
+@media(prefers-reduced-motion:no-preference){
+ #app .coin-transfer .coin-flight{animation:spellmaster-coin-flight 1.1s ease-in forwards}
+ @keyframes spellmaster-coin-flight{
+  0%{transform:translate(0,0) scale(.7);opacity:0}
+  18%{opacity:1}70%{opacity:1}
+  100%{transform:translate(190px,-2px) scale(.65);opacity:0}
+ }
+}
+@media(prefers-reduced-motion:reduce){#app .coin-transfer .coin-flight{display:none}}
+@media(max-width:420px){#app .coin-transfer{max-width:290px}#app .coin-transfer .coin-flight{font-size:20px}@keyframes spellmaster-coin-flight{to{transform:translate(135px,0);opacity:0}}}
