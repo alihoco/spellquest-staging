@@ -10,6 +10,11 @@ const PILOT=['necessary','embarrass','accommodate','government','foreign','famil
  * across different spelling structures rather than only the shortest words.
  * Not a validated diagnostic instrument or fixed testing list.
  */
+// Educator-review pending: visual spelling-group hints only, NOT phoneme claims.
+// These cuts make unusual written structures easier to inspect without inventing sounds.
+const REVIEWABLE_VISUAL_GROUPS={
+ people:['peo','ple']
+};
 const PLACEMENT_PROBES={
  year1:['said','come','today','ask','where','love'],
  year2:['could','people','water','beautiful','again','after'],
@@ -40,7 +45,7 @@ function prepare(catalogue,approvedPilot={}){
   return {id:w.id,word:w.word,band:w.curriculum_band,
    curriculumRole:w.curriculum_role,teachingStatus:w.teaching_approval,
    teachingGroups:(w.teaching_groups||[]).map(g=>g.id),
-   spelling:pilot?.spelling?.join('')===w.word?pilot.spelling.slice():[w.word],
+   spelling:pilot?.spelling?.join('')===w.word?pilot.spelling.slice():(REVIEWABLE_VISUAL_GROUPS[w.word]||[w.word]),
    audioApproved:false,wholeWordDraft:true};
  });
  if(words.length!==615)throw Error('Unexpected curriculum word-count; review updated source before using');
