@@ -132,7 +132,7 @@ button.play-now:active{transform:translateY(4px);box-shadow:0 6px 0 #2b2675}
 <link rel="stylesheet" href="/spellmaster-top-bars.css?v=1">
 <link rel="stylesheet" href="/pilot-learning-focus.css?v=1">
 <link rel="stylesheet" href="/spellmaster-entry.css?v=2">
-</head>
+<link rel="stylesheet" href="/crystal-cave.css"></head>
 <body><main><header><a class="logo" href="/" aria-label="Spellmaster home"><img class="brand-art" src="/assets/spellmaster/spellmaster-logo-ornate.webp" width="1120" height="373" alt="Spellmaster" loading="eager" decoding="async"></a><span class="header-promise-mark" aria-hidden="true">✦</span></header>
 <div class="brand-promise" role="note" aria-label="Our promise: Better today than yesterday. Every little step counts."><span class="brand-promise-sparkle" aria-hidden="true">✦</span><div class="brand-promise-content"><strong>Better Today <em>Than Yesterday</em></strong><span class="brand-promise-subtitle">Every little step counts. This is your journey.</span></div><span class="brand-promise-sparkle" aria-hidden="true">✦</span></div>
 <section class="hero"><span class="eyebrow">YOUR OWN SPELLING ADVENTURE</span><h1>Discover words. Build confidence.</h1><p>Little challenges, a patient voice, and a teacher that remembers what helps you learn.</p></section>
@@ -211,10 +211,14 @@ const makeUrl=clip=>{
 function warm(clips){for(const clip of clips.slice(0,2))makeUrl(clip).catch(()=>{});}
 function setStatus(msg){const el=$('audio-status');if(el)el.textContent=msg}
 function clipFallbackText(clip){
- if(clip.startsWith('catalogue-word-en-'))return clip.slice('catalogue-word-en-'.length).replace(/-v\\d+$/,'');
+ const current=WORDS[idx];
+ if(current&&clip===nextAudioClip(current))return 'Here is your next word. '+current.word+'.';
+ if(current&&clip===wordAudioClip(current))return current.word;
+ if(currentPraise?.clip===clip)return currentPraise.text;
  const word=clip.match(/^y6-(necessary|embarrass|accommodate|government|foreign|familiar|environment|privilege|rhythm|temperature)$/);
  if(word)return word[1];
  const phrases={
+ 'y6-v08-prompt':'Listen to your word. Then try spelling it.',
  'spellmaster-adaptive-welcome-v1':'Welcome to Spellmaster! Listen to the word, and then try spelling it. If it is tricky, I will help you.',
  'spellmaster-bonus-right-v1':'Great job! You got that right.',
  'spellmaster-bonus-miss-v1':'Good try! We can practise that again.',
@@ -300,8 +304,11 @@ function replay(){
  if(stage==='finished')return speak('y6-v08-complete');
 }
 function progress(){
- const n=Math.min(5,Math.max(0,((Math.max(runCount,1)-1)%5)+1));
- return '<div class="progress" role="progressbar" aria-label="Current five-word chapter" aria-valuemin="0" aria-valuemax="5" aria-valuenow="'+n+'"><div style="width:'+(n/5*100)+'%"></div></div>';
+ const lit=runResults.slice(caveStart).filter(result=>result.learned).length;
+ const lamps=[0,1,2].map(i=>'<span class="cave-lantern '+(i<lit?'lit':'')+'" style="--spot:'+(27+i*28)+'%"></span>').join('');
+ return '<div class="cave-scene '+(stage==='success'?'cave-step':'')+'" aria-hidden="true">'+lamps+
+  '<img class="cave-explorer" src="/assets/spellmaster/explorer-painted.webp" alt="" style="--position:'+(4+lit*24)+'%"></div>'+
+  '<small>Crystal Cave · '+lit+' of 3 lanterns lit</small>';
 }
 function welcome(){
  stop();stage='welcome';
@@ -532,6 +539,7 @@ welcome();
 // The formal curriculum and sound teaching gates remain separate.
 const ADAPTIVE_KEY='spellmaster-staging-intake-v1';
 let runCount=0,runStart=0,runFirst=0,runNew=0,runSeen=new Set(),runResults=[],runReview=false;
+let caveStart=0;
 let runKind="new",lastBreakPromptAt=0;
 let bonusReviewedThrough=0,bonusRound=null,bonusPosition=0,bonusAnswers=[],bonusRoundId=null;
 let lastErrorFeedback=null,lastWrittenFeedback=null;
@@ -606,7 +614,7 @@ function hearWelcomeAgain(){
  return talk(['spellmaster-adaptive-welcome-v1'],t);
 }
 begin=function(){
- runCount=0;runStart=Date.now();runFirst=0;runNew=0;runSeen=new Set();runResults=[];runReview=false;
+ caveStart=0;runCount=0;runStart=Date.now();runFirst=0;runNew=0;runSeen=new Set();runResults=[];runReview=false;
  runKind='new';lastBreakPromptAt=0;
  praiseState=window.SpellmasterPraise.makeState(Math.floor(Math.random()*10));currentPraise=null;
  bonusReviewedThrough=0;bonusRound=null;bonusPosition=0;bonusAnswers=[];bonusRoundId=null;
@@ -812,6 +820,22 @@ function nextAfterBonus(){
 }
 next=function(){
  stop();
+ if(runResults.length-caveStart===3){
+  stage='cave-rest';
+  app.innerHTML=progress()+'<h2>You explored three words!</h2>'+
+   '<div class="actions"><button onclick="finish()">Finish for today</button>'+
+   '<button class="alt" onclick="continueCave()">Keep exploring →</button></div>';
+  if(narration)window.SpellmasterReader?.speak('You explored three words. Finish for today, or keep exploring.');
+  return;
+ }
+ continueAdventure();
+};
+function continueCave(){
+ caveStart=runResults.length;
+ window.SpellmasterReader?.stop();
+ continueAdventure();
+}
+function continueAdventure(){
  const plan=window.SpellmasterBonus?.chooseRound(runResults,bonusReviewedThrough);
  if(plan){bonusReviewedThrough=runResults.length;startBonusRound(plan);return}
  const selection=adaptiveSelect();
@@ -949,9 +973,8 @@ function renderLanding(){
    '<p>Ready for your next adventure?</p></div></div>'+
    '<section class="next-chapter" aria-label="Your next chapter"><div class="chapter-content">'+
    '<span class="chapter-kicker">YOUR NEXT CHAPTER</span>'+
-   '<h3>'+(progress?.dueWords?'Words to remember':'Let us discover five words')+'</h3>'+
-   '<p>'+(progress?.dueWords?'You have '+progress.dueWords+' word'+(progress.dueWords===1?'':'s')+' ready to revisit.':
-    'Some new words and a few you have practised before.')+'</p>'+
+   '<h3>Explore the Crystal Cave</h3>'+
+   '<p>Practise three words and light the lanterns along the path.</p>'+
    '<div class="chapter-actions"><button class="play-now quick-play entry-primary" onclick="begin()">▶ Continue my adventure</button>'+
    
    '</div></div></section>'+
@@ -989,7 +1012,7 @@ begin=async function(){
 };
 welcome=renderLanding;
 let previousPresentationStage=null;
-const playStages=new Set(['question','retry','review','short-review','success','bonus-intro','bonus-question','bonus-feedback','curriculum-loading','finished']);
+const playStages=new Set(['cave-rest','question','retry','review','short-review','success','bonus-intro','bonus-question','bonus-feedback','curriculum-loading','finished']);
 const renderPresentation=()=>{
  const playing=playStages.has(stage);
  document.body.classList.toggle('lesson-active',playing);

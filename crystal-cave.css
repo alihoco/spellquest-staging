@@ -1,0 +1,11 @@
+.cave-scene{position:relative;isolation:isolate;overflow:hidden;height:clamp(80px,13vw,125px);border-radius:16px;background:radial-gradient(ellipse at 65% 90%,#56958f,transparent 56%),linear-gradient(120deg,#1a2042,#314d62 60%,#241c46);margin:9px 0}
+.cave-scene::before,.cave-scene::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,#387891,#8ce6dc 24%,#6766aa 43%,#31596e 76%,#8fe5de);clip-path:polygon(0 100%,0 48%,3% 28%,6% 77%,8% 62%,13% 96%,80% 96%,84% 58%,86% 73%,88% 30%,91% 18%,94% 76%,97% 39%,100% 56%,100% 100%)}
+.cave-scene::after{background:#1a293e;clip-path:polygon(0 91%,22% 86%,64% 89%,84% 84%,100% 91%,100% 100%,0 100%)}
+.cave-lantern{position:absolute;bottom:15%;left:var(--spot);width:16px;height:22px;border:3px solid #b7c5c7;border-radius:5px;background:#344755}
+.cave-lantern::before{content:"";position:absolute;left:2px;top:-10px;width:7px;height:8px;border:2px solid #bfccce;border-radius:50%}
+.cave-lantern.lit{background:#ffe797;border-color:#efbb69;box-shadow:0 0 16px 5px #ffd16b99}
+.cave-explorer{position:absolute;bottom:7%;left:var(--position);height:82%;width:58px;object-fit:contain;object-position:bottom}
+.cave-step .cave-explorer{animation:cave-walk .65s ease-out both}
+@keyframes cave-walk{from{transform:translateX(-55%) translateY(-2px)}to{transform:none}}
+@media(prefers-reduced-motion:reduce){.cave-step .cave-explorer{animation:none}}
+body[data-theme="focus"] .cave-scene{display:none}
