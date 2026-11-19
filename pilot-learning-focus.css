@@ -55,3 +55,22 @@
  body.lesson-active .sm-side{opacity:.86}
  body.lesson-active #app .voice-options summary{cursor:pointer}
 }
+
+/* Landing is still an adventure, but its first action must be easy to find. */
+#app .quick-play{display:none}
+@media(max-width:600px){
+ body:not(.lesson-active) #app .quick-play{display:flex!important;width:100%;min-height:62px!important;justify-content:center;margin:0 0 15px;font-size:20px!important}
+ body:not(.lesson-active) #app .play-now:not(.quick-play){display:none!important}
+ body:not(.lesson-active) .sm-path{padding:6px 9px!important;margin:5px 0!important}
+ body:not(.lesson-active) .sm-character .sm-avatar-card{min-height:70px!important}
+ body:not(.lesson-active) .sm-avatar-illustration{width:57px!important;height:57px!important}
+ body:not(.lesson-active) .hero{margin:5px 0!important;padding:9px 13px!important}
+ body:not(.lesson-active) .hero p{display:none!important}
+ body.needs-profile main>.hero,body.needs-profile .sm-path,body.needs-profile .sm-character{display:none!important}
+ body.needs-profile #app .start-layout{display:flex!important;flex-direction:column}
+ body.needs-profile #app .start-layout>.profile-panel{order:-1;width:100%}
+ body.needs-profile #app .start-layout>section:first-child{order:1}
+ body.needs-profile #app .start-layout>section:first-child .next-chapter,
+ body.needs-profile #app .start-layout>section:first-child .start-desc,
+ body.needs-profile #app .start-layout>section:first-child .actions{display:none!important}
+}
