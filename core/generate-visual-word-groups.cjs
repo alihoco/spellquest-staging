@@ -39,6 +39,11 @@ const MANUAL={
 // These are written-layout proposals only: no specialist has signed them off.
 
 const FURTHER_EDITORIAL_DRAFTS={
+'eighth':'eigh|th','february':'feb|ru|ary',
+'careful':'care|ful','enjoyment':'enjoy|ment','equipment':'equip|ment',
+'hopeless':'hope|less','immediately':'immediate|ly','playful':'play|ful',
+'shoulder':'shoul|der','sincerely':'sincere|ly','actually':'actual|ly',
+'unfair':'un|fair','unhappy':'un|happy',
 'about':'a|bout','accident':'ac|ci|dent','accidentally':'ac|ci|dent|al|ly',
 'accompany':'ac|com|pa|ny','according':'accord|ing','achieve':'a|chieve',
 'actual':'ac|tu|al','address':'ad|dress','afraid':'a|fraid',
