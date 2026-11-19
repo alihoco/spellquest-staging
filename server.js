@@ -183,14 +183,63 @@ for(const entry of CURRICULUM.words){
 CLIPS['spellmaster-catalogue-help-v1']='Look at the correct spelling closely. Notice the order of the letters. You can make your own visual groups, then hide the word and try it again.';
 
 const cache=new Map(),limits=new Map();let daily={day:'',count:0};
+const readCache=new Map(),readLimits=new Map();let readDaily={day:'',count:0};
+const READ_NARRATOR_GUIDANCE='Speak in the same warm, gentle, natural neutral British English voice as the Spellmaster spelling lesson narrator. Calm, encouraging, clear, never robotic or exaggerated. Read the provided words naturally and faithfully.';
+function canRead(ip){
+ const now=Date.now(),current=readLimits.get(ip)||{start:now,n:0};
+ if(now-current.start>60000){current.start=now;current.n=0}
+ current.n++;readLimits.set(ip,current);
+ if(readLimits.size>2500)readLimits.clear();
+ const date=new Date().toISOString().slice(0,10);
+ if(readDaily.day!==date)readDaily={day:date,count:0};
+ return current.n<=18&&readDaily.count<450;
+}
+function readTextBody(req){
+ return new Promise((resolve,reject)=>{
+  const chunks=[];let length=0;
+  req.on('data',b=>{length+=b.length;if(length>2048){reject(new Error('Too long'));req.destroy();return;}chunks.push(b)});
+  req.on('end',()=>{try{resolve(JSON.parse(Buffer.concat(chunks).toString('utf8')))}catch{reject(new Error('Invalid JSON'))}});
+  req.on('error',reject);
+ });
+}
+
 function send(res,code,obj,headers={}){res.writeHead(code,{'Content-Type':'application/json','Cache-Control':'no-store',...headers});res.end(JSON.stringify(obj))}
 http.createServer(async(req,res)=>{
  const requestPath=new URL(req.url,'https://voice.local').pathname;
  if(requestPath.startsWith('/api/account/')){await ACCOUNT_API.execute(req,res,requestPath);return;}
  const origin=req.headers.origin||'';const cors=origin===ORIGIN?{'Access-Control-Allow-Origin':ORIGIN,'Vary':'Origin'}:{};
- if(req.method==='OPTIONS'){res.writeHead(204,{...cors,'Access-Control-Allow-Methods':'GET, OPTIONS','Access-Control-Allow-Headers':'Content-Type'});return res.end()}
+ if(req.method==='OPTIONS'){res.writeHead(204,{...cors,'Access-Control-Allow-Methods':'GET, POST, OPTIONS','Access-Control-Allow-Headers':'Content-Type'});return res.end()}
  const url=new URL(req.url,'https://voice.local');
  if(url.pathname==='/health')return send(res,200,{ok:true,configured:!!process.env.OPENAI_API_KEY},cors);
+ if(url.pathname==='/api/read-aloud'&&req.method==='POST'){
+  if(origin!==ORIGIN)return send(res,403,{error:'Origin not allowed'},cors);
+  if(!process.env.OPENAI_API_KEY)return send(res,503,{error:'Narrator unavailable'},cors);
+  const ip=(req.headers['x-forwarded-for']||req.socket.remoteAddress||'').toString().split(',')[0].trim();
+  if(!canRead(ip))return send(res,429,{error:'Narration usage limit reached'},cors);
+  let input;
+  try{input=await readTextBody(req)}catch{return send(res,400,{error:'Invalid narration request'},cors)}
+  const text=typeof input?.text==='string'?input.text.replace(/\\s+/g,' ').trim():'';
+  if(text.length<2||text.length>650||/[<>\\x00-\\x08]/.test(text))return send(res,400,{error:'Invalid narration text'},cors);
+  const voice=['marin','cedar'].includes(input.voice)?input.voice:'marin';
+  const key=crypto.createHash('sha256').update(voice+'|'+text).digest('hex');
+  if(readCache.has(key)){
+   res.writeHead(200,{'Content-Type':'audio/mpeg','Cache-Control':'private,max-age=3600',...cors});
+   return res.end(readCache.get(key));
+  }
+  readDaily.count++;
+  try{
+   const body={model:'gpt-4o-mini-tts',voice,input:text,response_format:'mp3',instructions:READ_NARRATOR_GUIDANCE};
+   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),35000);
+   let upstream;
+   try{upstream=await fetch('https://api.openai.com/v1/audio/speech',{method:'POST',headers:{Authorization:'Bearer '+process.env.OPENAI_API_KEY,'Content-Type':'application/json'},body:JSON.stringify(body),signal:controller.signal})}finally{clearTimeout(timer)}
+   if(!upstream.ok)return send(res,502,{error:'Narrator temporarily unavailable'},cors);
+   const buffer=Buffer.from(await upstream.arrayBuffer());
+   if(buffer.length>2e6)return send(res,502,{error:'Voice response too large'},cors);
+   if(readCache.size>=120)readCache.delete(readCache.keys().next().value);
+   readCache.set(key,buffer);
+   res.writeHead(200,{'Content-Type':'audio/mpeg','Cache-Control':'private,max-age=3600',...cors});return res.end(buffer);
+  }catch{return send(res,502,{error:'Narrator temporarily unavailable'},cors)}
+ }
  if(url.pathname!=='/api/voice'||req.method!=='GET')return send(res,404,{error:'Not found'},cors);
  if(origin!==ORIGIN)return send(res,403,{error:'Origin not allowed'},cors);
  const clip=url.searchParams.get('clip'),voice=url.searchParams.get('voice')||'marin';
