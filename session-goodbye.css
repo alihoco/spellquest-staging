@@ -1,0 +1,13 @@
+/* A calm, consistent end-of-session message for assessment and Spelling Sprint. */
+.session-goodbye{
+ background:linear-gradient(145deg,#f6e9ff,#fff5d9);
+ border:2px solid #cdaee9;border-radius:21px;
+ padding:clamp(18px,3.5vw,30px);margin:18px 0 22px;text-align:center;
+ color:#493166;box-shadow:0 7px 19px #40287520;
+}
+.session-goodbye:before{content:"✦ ✨ ✦";display:block;font-size:22px;color:#d9a448;letter-spacing:8px;margin-bottom:5px}
+.session-goodbye h3{font:700 clamp(23px,3vw,31px)/1.18 'Fredoka','Trebuchet MS',sans-serif;color:#49306c;margin:6px 0 12px}
+.session-goodbye p{font-size:17px;line-height:1.5;margin:10px auto;max-width:580px}
+.session-goodbye-slogan{display:block;font:700 clamp(17px,2.3vw,23px)/1.25 'Fredoka','Trebuchet MS',sans-serif;color:#6842a0;margin:13px auto}
+.session-goodbye button{margin:8px auto 0;min-height:44px;display:inline-flex}
+@media(max-width:640px){.session-goodbye{padding:18px 13px;margin:12px 0}.session-goodbye h3{font-size:24px}}
