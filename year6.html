@@ -589,11 +589,12 @@ check=function(retry){
   lastErrorFeedback=WORDS[idx]?.id&&!PILOT_BY_WORD[word]?null:window.SpellmasterFeedback.diagnose(word,guess);
   lastWrittenFeedback=window.SpellmasterWrittenFeedback?.lesson(word,guess,visualTeachingGroups(WORDS[idx]))||null;
  }else lastWrittenFeedback=null;
+ let checkpointResult=null;
  if(!retry){
   results[idx]={word,initial:ok,learned:ok,attempts:1};
   runResults.push({word,initial:ok,learned:ok,review:runReview,kind:runKind});
   if(ok){first++;runFirst++}
-  const retentionObservation=adaptiveSave(word,ok,runReview,false,ok?null:lastErrorFeedback?.id);
+  checkpointResult=adaptiveSave(word,ok,runReview,false,ok?null:lastErrorFeedback?.id);
   if(curriculumLoaded&&(runKind==='new'||runKind==='due')){
    const profile=window.SpellmasterProfiles?.active(spellStorage);
    if(profile)window.SpellmasterCurriculum.recordIndependent(spellStorage,profile,
@@ -615,7 +616,8 @@ check=function(retry){
   }):null;
   window.SpellmasterAccount.saveEvent('spelling_attempt',{word,correct:ok,review:!!runReview,afterHelp:!!retry,
    band:WORDS[idx]?.band||null,at:new Date().toISOString(),grouping,
-   retentionCheckpoint:!retry&&runReview?window.SpellmasterCheckpoints?.due(adaptiveLoad()[word],adaptiveToday())?.id||null:null}).catch(()=>{});
+   retentionCheckpoint:checkpointResult?.id||null,checkpointOnTime:checkpointResult?.withinWindow??null,
+   checkpointDaysElapsed:checkpointResult?.daysElapsed??null}).catch(()=>{});
  }
  if(ok){runSeen.add(word);success(retry)}else if(retry){shortReview()}else{review()}
 };
