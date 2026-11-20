@@ -32,6 +32,11 @@
    try{await onSave(value);dialog.close()}catch{dialog.querySelector('[role=status]').textContent='Your explorer could not be saved. Please try again.'}
    finally{controls.forEach(b=>b.disabled=false)}
   };
+  if(!onSave){
+   dialog.querySelector('#explorer-title').textContent='Preview my explorer';
+   dialog.querySelector('.save-explorer').hidden=true;
+   dialog.querySelector('[role=status]').textContent='Finish your ten starting words to save your explorer.';
+  }
   render();dialog.showModal();
  }
  root.ExplorerCreator={valid,sprite,open};

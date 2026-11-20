@@ -922,8 +922,18 @@ function playStartingWelcome(){
   if(audio.isConnected&&error.name!=='AbortError')button.textContent='🔊 Tap to hear your welcome';
  });
 }
+let openExplorerOnArrival=location.hash==='#my-explorer';
 function editExplorer(){
- const profile=LP.active(spellStorage),key=SpellmasterBonus.key(profile);
+ const profile=LP.active(spellStorage);
+ if(!profile || SpellmasterEntry.state(profile,spellStorage,adaptiveLoad())!=='returning'){
+  const guestDone=!profile&&JSON.parse(spellStorage.getItem('spellmaster-starting-assessment-v1:guest')||'null')?.responses?.length===10;
+  if(guestDone){
+   const key='spellmaster-guest-explorer';
+   ExplorerCreator.open(JSON.parse(spellStorage.getItem(key)||'{}').explorerStyle,value=>spellStorage.setItem(key,JSON.stringify({explorerStyle:value})));
+  }else ExplorerCreator.open(0,null);
+  return;
+ }
+ const key=SpellmasterBonus.key(profile);
  ExplorerCreator.open(SpellmasterBonus.read(spellStorage,profile).explorerStyle,async value=>{
   const data=JSON.parse(spellStorage.getItem(key)||'{}');
   spellStorage.setItem(key,JSON.stringify({...data,explorerStyle:value}));
@@ -1009,7 +1019,6 @@ function renderLanding(){
    '<p>Have your own spelling list? Practise those words instead.</p>'+
    '<a class="sprint-start" href="/spelling-sprint.html">Practise my words →</a>'+
    '</section>'+
-   '<button type="button" onclick="editExplorer()">My explorer</button>'+
    personalGrowthChart()+
    '<details class="entry-progress"><summary>✦ My progress and rewards</summary>'+
    '<div class="entry-progress-details"><p>Words explored: '+(progress?.wordsSeen||0)+
@@ -1019,6 +1028,10 @@ function renderLanding(){
    '</section>'+settings;
  }
  app.innerHTML='<div class="entry-screen">'+content+'</div>';
+ const link=document.createElement('button');
+ link.type='button';link.textContent='My explorer';link.onclick=editExplorer;
+ app.querySelector('.entry-welcome').insertAdjacentElement('afterbegin',link);
+ if(openExplorerOnArrival){openExplorerOnArrival=false;editExplorer()}
  const portrait=app.querySelector('.entry-mini-character');
  if(portrait&&p){
   const style=SpellmasterBonus.read(spellStorage,p).explorerStyle;
@@ -1026,7 +1039,7 @@ function renderLanding(){
    const avatar=ExplorerCreator.sprite(style);avatar.style.height='96px';portrait.replaceWith(avatar);
   }
  }
- if(narration&&state==='assessment')playStartingWelcome();
+ if(narration&&state==='assessment'&&!document.querySelector('.explorer-studio[open]'))playStartingWelcome();
 }
 const playWithProfile=begin;
 begin=async function(){
