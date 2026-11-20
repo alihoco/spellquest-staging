@@ -13,10 +13,10 @@
   const dialog=document.createElement('dialog');
   dialog.className='explorer-studio';
   dialog.setAttribute('aria-labelledby','explorer-title');
-  dialog.innerHTML='<h2 id="explorer-title">Create my explorer</h2><div class="explorer-stage"></div><fieldset><legend>Choose your explorer</legend></fieldset><fieldset><legend>Jacket colour</legend></fieldset><p role="status"></p><button type="button" class="save-explorer">Save my explorer</button> <button type="button" class="close-explorer">Close</button>';
+  dialog.innerHTML='<h2 id="explorer-title">Create my explorer</h2><div class="explorer-stage"></div><fieldset><legend>Choose Boy or Girl</legend></fieldset><fieldset><legend>Jacket colour</legend></fieldset><p role="status"></p><button type="button" class="save-explorer">Save my explorer</button> <button type="button" class="close-explorer">Close</button>';
   document.body.append(dialog);
   const preview=dialog.querySelector('.explorer-stage'),groups=dialog.querySelectorAll('fieldset');
-  const sets=[['Dark curls','Auburn ponytail'],['Lagoon','Violet','Ember']];
+  const sets=[['Boy','Girl'],['Lagoon','Violet','Ember']];
   function render(){
    const avatar=sprite(value);avatar.classList.add('walking');preview.replaceChildren(avatar);
    groups.forEach((group,g)=>Array.from(group.querySelectorAll('button')).forEach((button,i)=>button.setAttribute('aria-pressed',String(i===(g===0?Math.floor(value/3):value%3)))));
