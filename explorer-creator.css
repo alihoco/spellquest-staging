@@ -24,3 +24,4 @@
 
 .personal-explorer .explorer-body{position:absolute;inset:0;background:url('/assets/spellmaster/explorer-walk.webp') 0 var(--pose-row)/400% 600% no-repeat;background-position-x:inherit}
 .personal-explorer.wearing-hat :is(.explorer-body,.explorer-hair){clip-path:polygon(0 0,38% 0,33% 12%,83% 12%,83% 0,100% 0,100% 100%,0 100%)}
+.personal-explorer.wearing-dress .explorer-body{background-image:url('/assets/spellmaster/explorer-dress-walk.webp')}

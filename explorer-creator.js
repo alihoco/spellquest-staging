@@ -5,6 +5,7 @@
  function sprite(value,equipped=[],colours={}){
   const el=document.createElement('span');
   el.className='personal-explorer';
+  if(equipped.includes(layers[5]))el.classList.add('wearing-dress');
   if(equipped.includes(layers[0]))el.classList.add('wearing-hat');
   el.setAttribute('aria-hidden','true');
   el.style.setProperty('--pose-row',value*20+'%');
