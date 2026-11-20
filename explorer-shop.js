@@ -4,14 +4,15 @@
   const api=root.SpellmasterBonus;
   const dialog=document.createElement('dialog');dialog.className='explorer-studio explorer-shop';
   dialog.setAttribute('aria-label','Explorer shop');
-  dialog.innerHTML='<h2>Explorer shop</h2><p class="shop-balance"></p><div class="explorer-stage"></div><div class="shop-items"></div><fieldset class="shop-colours"><legend>Item colour</legend></fieldset><button class="shop-action"></button> <button class="shop-close">Close</button><p role="status"></p>';
+  dialog.innerHTML='<header class="shop-head"><h2>Explorer shop</h2><p class="shop-balance"></p><button class="shop-close">Close</button></header><div class="shop-layout"><section class="shop-fitting"><div class="explorer-stage"></div><h3 class="shop-selection"></h3></section><div class="shop-stock"><div class="shop-items"></div><fieldset class="shop-colours"><legend>Item colour</legend></fieldset><button class="shop-action"></button><p role="status"></p></div></div>';
   document.body.append(dialog);
   const get=s=>dialog.querySelector(s);
-  let selected=api.AVATAR_ITEMS[0],busy=false,trying=false,draft=null;
+  let selected=api.AVATAR_ITEMS[0],busy=false,trying=true,draft=null;
   function read(){return profile?api.read(storage,profile):{coins:0,inventory:[],equipped:[]}}
   function paint(){
    const state=read(),worn=state.equipped||[],owned=state.inventory.includes(selected.id);
    const saved=state.colours?.[selected.id]||'original',colour=draft??saved;
+   get('.shop-selection').textContent=selected.name;
    const swatches=get('.shop-colours');
    swatches.querySelectorAll('button').forEach(b=>b.remove());
    for(const name of api.COLOURS){
@@ -25,7 +26,9 @@
    get('.shop-balance').textContent=profile?'Your balance · '+state.coins+' coins':'Preview the items. Earn coins in spelling bonus rounds.';
    get('.shop-items').replaceChildren();
    for(const item of api.AVATAR_ITEMS){
-    const b=document.createElement('button');b.textContent=item.icon+' '+item.name;
+    const b=document.createElement('button');b.textContent=item.name;
+    const art=document.createElement('span');art.className='shop-sample';art.setAttribute('aria-hidden','true');
+    art.style.backgroundPositionX=(api.AVATAR_ITEMS.indexOf(item)*100/6)+'%';b.prepend(art);
     const price=document.createElement('small');price.textContent=worn.includes(item.id)?'Wearing':state.inventory.includes(item.id)?'Owned':item.price+' coins';b.append(price);
     b.setAttribute('aria-pressed',String(item===selected));b.onclick=()=>{selected=item;draft=null;trying=true;get('[role=status]').textContent='';paint();get('.shop-items [aria-pressed=true]').focus()};get('.shop-items').append(b);
    }
