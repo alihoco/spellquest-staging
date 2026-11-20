@@ -946,7 +946,7 @@ function editExplorer(){
   spellStorage.setItem(key,JSON.stringify({...data,explorerStyle:value}));
   if(profile.cloud&&!await SpellmasterCloud.save())throw Error('Save failed');
   renderLanding();
- },SpellmasterBonus.read(spellStorage,profile).equipped);
+ },SpellmasterBonus.read(spellStorage,profile).equipped,SpellmasterBonus.read(spellStorage,profile).colours);
 }
 function renderLanding(){
  document.getElementById('starting-welcome')?.pause();
@@ -1046,7 +1046,7 @@ function renderLanding(){
  if(portrait&&p){
   const style=SpellmasterBonus.read(spellStorage,p).explorerStyle;
   if(ExplorerCreator.valid(style)){
-   const avatar=ExplorerCreator.sprite(style,SpellmasterBonus.read(spellStorage,p).equipped);avatar.style.height='96px';portrait.replaceWith(avatar);
+   const avatar=ExplorerCreator.sprite(style,SpellmasterBonus.read(spellStorage,p).equipped,SpellmasterBonus.read(spellStorage,p).colours);avatar.style.height='96px';portrait.replaceWith(avatar);
   }
  }
  if(narration&&state==='assessment'&&!document.querySelector('.explorer-studio[open]'))playStartingWelcome();
@@ -1093,9 +1093,9 @@ const renderPresentation=()=>{
   const profile=LP.active(spellStorage);
   const wardrobe=profile&&SpellmasterBonus.read(spellStorage,profile);
   const style=wardrobe?.explorerStyle;
-  const appearance=JSON.stringify([style,wardrobe?.equipped]);
+  const appearance=JSON.stringify([style,wardrobe?.equipped,wardrobe?.colours]);
   if(ExplorerCreator.valid(style)){
-   if(floor.dataset.style!==appearance)floor.lastElementChild.replaceWith(ExplorerCreator.sprite(style,wardrobe.equipped));
+   if(floor.dataset.style!==appearance)floor.lastElementChild.replaceWith(ExplorerCreator.sprite(style,wardrobe.equipped,wardrobe.colours));
    floor.dataset.style=appearance;
   }else if(floor.dataset.style){
    const original=document.createElement('img');original.src='/assets/spellmaster/explorer-painted.webp';original.alt='';

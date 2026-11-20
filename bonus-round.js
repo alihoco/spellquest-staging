@@ -3,6 +3,7 @@
  */
 (function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;if(root)root.SpellmasterBonus=api;})(typeof globalThis!=='undefined'?globalThis:null,function(){
 'use strict';
+const COLOURS=['original','teal','rose','gold','blue'];
 const KEY='spellmaster-bonus-v1:';
 const AVATAR_ITEMS=Object.freeze([
  {id:'star-explorer-hat',name:'Star Explorer Hat',icon:'🎩',price:12,slot:'hat'},
@@ -38,6 +39,7 @@ function grade(words,answers){
 }
 function key(profile){if(!profile||!/^lp-[a-z0-9]+$/.test(profile.id))throw Error('Local learner profile required');return KEY+profile.id;}
 function read(storage,profile){try{const o=JSON.parse(storage.getItem(key(profile))||'{}');return {...(Number.isInteger(o.explorerStyle)&&o.explorerStyle>=0&&o.explorerStyle<6?{explorerStyle:o.explorerStyle}:{}),coins:Number.isSafeInteger(o.coins)&&o.coins>=0?o.coins:0,
+  colours:Object.fromEntries(AVATAR_ITEMS.filter(i=>COLOURS.includes(o.colours?.[i.id])).map(i=>[i.id,o.colours[i.id]])),
   equipped:AVATAR_ITEMS.filter(i=>o.equipped?.includes?.(i.id)&&(o.inventory||o.hats||[]).includes(i.id)).map(i=>i.id),bonusPoints:Number.isSafeInteger(o.bonusPoints)&&o.bonusPoints>=0?o.bonusPoints:0,
   hats:Array.isArray(o.hats)?o.hats:[],inventory:Array.isArray(o.inventory)?o.inventory:Array.isArray(o.hats)?o.hats:[],
   rounds:Array.isArray(o.rounds)?o.rounds:[]}}catch{return {coins:0,bonusPoints:0,hats:[],inventory:[],rounds:[]}}}
@@ -58,9 +60,10 @@ function outfit(equipped,item){
  const conflicts=item.slot==='dress'?['dress','coat','trousers']:['coat','trousers'].includes(item.slot)?[item.slot,'dress']:[item.slot];
  return [...(equipped||[]).filter(id=>!AVATAR_ITEMS.some(i=>i.id===id&&conflicts.includes(i.slot))),item.id];
 }
-function shopChange(storage,profile,id,action){
+function shopChange(storage,profile,id,action,colour){
  const item=AVATAR_ITEMS.find(i=>i.id===id);
  if(!item)throw Error('Unknown item');
+ if(colour!==undefined&&!COLOURS.includes(colour))throw Error('Unknown colour');
  const state=read(storage,profile);
  if(action==='buy'&&!state.inventory.includes(id)){
   if(state.coins<item.price)throw Error('You need more coins for this item.');
@@ -68,6 +71,7 @@ function shopChange(storage,profile,id,action){
   if(item.slot==='hat'&&!state.hats.includes(id))state.hats.push(id);
  }
  if(!['buy','wear','remove'].includes(action)||!state.inventory.includes(id))throw Error('Choose an owned item.');
+ if(colour!==undefined&&action!=='remove')state.colours={...state.colours,[id]:colour};
  state.equipped=action==='remove'?(state.equipped||[]).filter(x=>x!==id):outfit(state.equipped,item);
  if(!Number.isInteger(state.explorerStyle))state.explorerStyle=0;
  storage.setItem(key(profile),JSON.stringify(state));return state;
@@ -95,5 +99,5 @@ function chooseAvatarReward(storage,profile,roundId,itemId){
 function pendingRewards(storage,profile){
  return read(storage,profile).rounds.filter(x=>x.perfect&&x.avatarChoice==='pending').map(x=>x.id);
 }
-return {shopChange,outfit,target,chooseRound,grade,read,award,availableChoices,chooseAvatarReward,pendingRewards,AVATAR_ITEMS,key};
+return {COLOURS,shopChange,outfit,target,chooseRound,grade,read,award,availableChoices,chooseAvatarReward,pendingRewards,AVATAR_ITEMS,key};
 });

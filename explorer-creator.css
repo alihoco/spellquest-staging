@@ -14,3 +14,5 @@
 .shop-items{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:6px;margin:12px 0}
 .shop-items button{background:#fffaf0;color:#412e51;border:1px solid #bda571;min-height:54px}
 .shop-items small{display:block}.explorer-shop .shop-action{background:#523577;color:#fff}
+.shop-colours button::before{content:"";display:inline-block;vertical-align:middle;margin-right:5px;width:.85em;height:.85em;border:1px solid #493d54;border-radius:50%;background:var(--tint,linear-gradient(45deg,#9f7953,#77509a,#2899a7))}
+[data-tint=teal]{--tint:#229d96}[data-tint=rose]{--tint:#d25780}[data-tint=gold]{--tint:#db9c28}[data-tint=blue]{--tint:#488ad2}
