@@ -1,0 +1,10 @@
+.personal-explorer{display:inline-block;height:100%;aspect-ratio:160/208;background:url('/assets/spellmaster/explorer-walk.webp') 0 var(--pose-row)/400% 600% no-repeat}
+.personal-explorer.walking{animation:explorer-walk .64s steps(1) infinite}
+@keyframes explorer-walk{0%{background-position-x:0}25%{background-position-x:33.333%}50%{background-position-x:66.667%}75%{background-position-x:100%}}
+.cave-floor .personal-explorer{position:absolute;bottom:0;transform:translateX(-50%);transition:left .8s ease}
+.explorer-studio{width:min(92vw,440px);max-height:92vh;overflow:auto;border:2px solid #b19762;border-radius:20px;background:#fff6e3;color:#36264e;padding:20px;font:inherit}
+.explorer-studio::backdrop{background:#130f28b8}
+.explorer-stage{height:clamp(125px,26vh,215px);text-align:center;border-radius:14px;background:#263845 url('/assets/spellmaster/crystal-cavern.webp') center/cover}
+.explorer-studio fieldset{margin:12px 0;border:0;padding:0}.explorer-studio legend{font-weight:bold;margin-bottom:5px}.explorer-studio button{margin:3px;padding:8px 12px;border-radius:10px;min-height:42px;cursor:pointer}.explorer-studio button[aria-pressed=true]{outline:3px solid #80601c;outline-offset:1px}
+@media(prefers-reduced-motion:reduce){.personal-explorer.walking{animation:none}.cave-floor .personal-explorer{transition:none}}
+.cave-floor .personal-explorer.walking{animation-duration:.4s;animation-iteration-count:2}

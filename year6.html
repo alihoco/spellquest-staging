@@ -141,7 +141,7 @@ body.teaching-cave .cave-floor{display:block;position:absolute;inset:auto 3% 4px
 .cave-floor i::before{content:"";position:absolute;bottom:100%;left:1px;width:7px;height:7px;border:2px solid #bb976e;border-radius:50%}
 .cave-floor i.lit{background:#ffe49c;box-shadow:0 0 16px 5px #ffb640}
 @media(prefers-reduced-motion:reduce){.cave-floor img{transition:none}}
-</style></head>
+</style><link rel="stylesheet" href="/explorer-creator.css"><script src="/explorer-creator.js"></script></head>
 <body><main><header><a class="logo" href="/" aria-label="Spellmaster home"><img class="brand-art" src="/assets/spellmaster/spellmaster-logo-ornate.webp" width="1120" height="373" alt="Spellmaster" loading="eager" decoding="async"></a><span class="header-promise-mark" aria-hidden="true">✦</span></header>
 <div class="brand-promise" role="note" aria-label="Our promise: Better today than yesterday. Every little step counts."><span class="brand-promise-sparkle" aria-hidden="true">✦</span><div class="brand-promise-content"><strong>Better Today <em>Than Yesterday</em></strong><span class="brand-promise-subtitle">Every little step counts. This is your journey.</span></div><span class="brand-promise-sparkle" aria-hidden="true">✦</span></div>
 <section class="hero"><span class="eyebrow">YOUR OWN SPELLING ADVENTURE</span><h1>Discover words. Build confidence.</h1><p>Little challenges, a patient voice, and a teacher that remembers what helps you learn.</p></section>
@@ -875,6 +875,11 @@ function createLocalProfile(){
  try{
   if(window.SpellmasterAccount?.token())throw Error('The parent or guardian must manage this account.');
   const person=LP.add(spellStorage,{alias,birth:'',ageYears});
+  const guest=JSON.parse(spellStorage.getItem('spellmaster-guest-explorer')||'{}');
+  if(ExplorerCreator.valid(guest.explorerStyle)){
+   spellStorage.setItem('spellmaster-bonus-v1:'+person.id,JSON.stringify({explorerStyle:guest.explorerStyle}));
+   spellStorage.removeItem('spellmaster-guest-explorer');
+  }
   const status=window.SpellmasterEntry?.state(person,spellStorage,{})||'assessment';
   if(status==='assessment'){
    window.location.assign('/starting-assessment.html');
@@ -915,6 +920,15 @@ function playStartingWelcome(){
   button.textContent='🔊 Hear your welcome again';
  }).catch(error=>{
   if(audio.isConnected&&error.name!=='AbortError')button.textContent='🔊 Tap to hear your welcome';
+ });
+}
+function editExplorer(){
+ const profile=LP.active(spellStorage),key=SpellmasterBonus.key(profile);
+ ExplorerCreator.open(SpellmasterBonus.read(spellStorage,profile).explorerStyle,async value=>{
+  const data=JSON.parse(spellStorage.getItem(key)||'{}');
+  spellStorage.setItem(key,JSON.stringify({...data,explorerStyle:value}));
+  if(profile.cloud&&!await SpellmasterCloud.save())throw Error('Save failed');
+  renderLanding();
  });
 }
 function renderLanding(){
@@ -995,6 +1009,7 @@ function renderLanding(){
    '<p>Have your own spelling list? Practise those words instead.</p>'+
    '<a class="sprint-start" href="/spelling-sprint.html">Practise my words →</a>'+
    '</section>'+
+   '<button type="button" onclick="editExplorer()">My explorer</button>'+
    personalGrowthChart()+
    '<details class="entry-progress"><summary>✦ My progress and rewards</summary>'+
    '<div class="entry-progress-details"><p>Words explored: '+(progress?.wordsSeen||0)+
@@ -1004,6 +1019,13 @@ function renderLanding(){
    '</section>'+settings;
  }
  app.innerHTML='<div class="entry-screen">'+content+'</div>';
+ const portrait=app.querySelector('.entry-mini-character');
+ if(portrait&&p){
+  const style=SpellmasterBonus.read(spellStorage,p).explorerStyle;
+  if(ExplorerCreator.valid(style)){
+   const avatar=ExplorerCreator.sprite(style);avatar.style.height='96px';portrait.replaceWith(avatar);
+  }
+ }
  if(narration&&state==='assessment')playStartingWelcome();
 }
 const playWithProfile=begin;
@@ -1045,7 +1067,18 @@ const renderPresentation=()=>{
   const completed=runResults.filter(result=>result.learned).length;
   const lit=completed===0?0:stage==='success'?(completed-1)%3+1:completed%3;
   floor.querySelectorAll('i').forEach((lamp,i)=>lamp.classList.toggle('lit',i<lit));
-  floor.querySelector('img').style.left=[9,30,57,85][lit]+'%';
+  const profile=LP.active(spellStorage);
+  const style=profile&&SpellmasterBonus.read(spellStorage,profile).explorerStyle;
+  if(ExplorerCreator.valid(style)){
+   if(floor.dataset.style!==String(style))floor.lastElementChild.replaceWith(ExplorerCreator.sprite(style));
+   floor.dataset.style=style;
+  }else if(floor.dataset.style){
+   const original=document.createElement('img');original.src='/assets/spellmaster/explorer-painted.webp';original.alt='';
+   floor.lastElementChild.replaceWith(original);delete floor.dataset.style;
+  }
+  const actor=floor.lastElementChild;
+  actor.classList.toggle('walking',stage==='success');
+  actor.style.left=[9,30,57,85][lit]+'%';
  }
  if(stage!==previousPresentationStage){
   previousPresentationStage=stage;

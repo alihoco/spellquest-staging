@@ -37,7 +37,7 @@ function grade(words,answers){
   coins:correct===words.length?25:correct*2,bonusPoints:correct===words.length?100:correct*10,avatarItemChoiceEarned:correct===words.length};
 }
 function key(profile){if(!profile||!/^lp-[a-z0-9]+$/.test(profile.id))throw Error('Local learner profile required');return KEY+profile.id;}
-function read(storage,profile){try{const o=JSON.parse(storage.getItem(key(profile))||'{}');return {coins:Number.isSafeInteger(o.coins)&&o.coins>=0?o.coins:0,
+function read(storage,profile){try{const o=JSON.parse(storage.getItem(key(profile))||'{}');return {...(Number.isInteger(o.explorerStyle)&&o.explorerStyle>=0&&o.explorerStyle<6?{explorerStyle:o.explorerStyle}:{}),coins:Number.isSafeInteger(o.coins)&&o.coins>=0?o.coins:0,
   bonusPoints:Number.isSafeInteger(o.bonusPoints)&&o.bonusPoints>=0?o.bonusPoints:0,
   hats:Array.isArray(o.hats)?o.hats:[],inventory:Array.isArray(o.inventory)?o.inventory:Array.isArray(o.hats)?o.hats:[],
   rounds:Array.isArray(o.rounds)?o.rounds:[]}}catch{return {coins:0,bonusPoints:0,hats:[],inventory:[],rounds:[]}}}
