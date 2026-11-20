@@ -104,7 +104,7 @@ function unlockCreator(profile,cloud){
      await account.request('/learners/'+account.selectedLearner()+'/state',{method:'PATCH',body:{state,expectedVersion:record.version}});
     }else store.setItem(key,JSON.stringify({...JSON.parse(store.getItem(key)||'{}'),explorerStyle:value}));
     button.textContent='Change my explorer';
-   });
+   },previous.equipped);
   }catch{$('save-status').textContent='Please try opening your explorer again.'}
  };
 }

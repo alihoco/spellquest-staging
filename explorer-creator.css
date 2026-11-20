@@ -8,3 +8,9 @@
 .explorer-studio fieldset{margin:12px 0;border:0;padding:0}.explorer-studio legend{font-weight:bold;margin-bottom:5px}.explorer-studio button{margin:3px;padding:8px 12px;border-radius:10px;min-height:42px;cursor:pointer}.explorer-studio button[aria-pressed=true]{outline:3px solid #80601c;outline-offset:1px}
 @media(prefers-reduced-motion:reduce){.personal-explorer.walking{animation:none}.cave-floor .personal-explorer{transition:none}}
 .cave-floor .personal-explorer.walking{animation-duration:.4s;animation-iteration-count:2}
+.personal-explorer{position:relative}
+.personal-explorer .explorer-gear{position:absolute;inset:0;pointer-events:none;background-image:url('/assets/spellmaster/explorer-gear.webp');background-size:400% 1400%;background-position-x:inherit;background-repeat:no-repeat}
+.explorer-shop{width:min(94vw,560px)}
+.shop-items{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:6px;margin:12px 0}
+.shop-items button{background:#fffaf0;color:#412e51;border:1px solid #bda571;min-height:54px}
+.shop-items small{display:block}.explorer-shop .shop-action{background:#523577;color:#fff}

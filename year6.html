@@ -141,7 +141,7 @@ body.teaching-cave .cave-floor{display:block;position:absolute;inset:auto 3% 4px
 .cave-floor i::before{content:"";position:absolute;bottom:100%;left:1px;width:7px;height:7px;border:2px solid #bb976e;border-radius:50%}
 .cave-floor i.lit{background:#ffe49c;box-shadow:0 0 16px 5px #ffb640}
 @media(prefers-reduced-motion:reduce){.cave-floor img{transition:none}}
-</style><link rel="stylesheet" href="/explorer-creator.css"><script src="/explorer-creator.js"></script></head>
+</style><link rel="stylesheet" href="/explorer-creator.css"><script src="/explorer-shop.js"></script><script src="/explorer-creator.js"></script></head>
 <body><main><header><a class="logo" href="/" aria-label="Spellmaster home"><img class="brand-art" src="/assets/spellmaster/spellmaster-logo-ornate.webp" width="1120" height="373" alt="Spellmaster" loading="eager" decoding="async"></a><span class="header-promise-mark" aria-hidden="true">✦</span></header>
 <div class="brand-promise" role="note" aria-label="Our promise: Better today than yesterday. Every little step counts."><span class="brand-promise-sparkle" aria-hidden="true">✦</span><div class="brand-promise-content"><strong>Better Today <em>Than Yesterday</em></strong><span class="brand-promise-subtitle">Every little step counts. This is your journey.</span></div><span class="brand-promise-sparkle" aria-hidden="true">✦</span></div>
 <section class="hero"><span class="eyebrow">YOUR OWN SPELLING ADVENTURE</span><h1>Discover words. Build confidence.</h1><p>Little challenges, a patient voice, and a teacher that remembers what helps you learn.</p></section>
@@ -786,7 +786,8 @@ function finishBonusRound(){
  '<p class="small muted">Coins and chosen avatar items stay with this browser’s learner profile. Later review checks lasting memory.</p>'+
  (reward?'<p class="small">Your coin total: '+reward.coins+' · Bonus points: '+reward.bonusPoints+'</p>':'')+
  soundVoice()+'<div class="actions" style="justify-content:center"><button onclick="nextAfterBonus()">Continue adventure</button>'+
- '<button class="alt" onclick="finish()">Finish for today</button></div></div>';
+ '<button class="alt" onclick="openExplorerShop()">Explorer shop</button><button class="alt" onclick="finish()">Finish for today</button></div></div>';
+ if(profile?.cloud)SpellmasterCloud.save();
  voiceSet();
  if(outcome.perfect&&profile&&reward){
    const claimRow=reward.rounds.find(x=>x.id===bonusRoundId);
@@ -798,7 +799,7 @@ function finishBonusRound(){
 function showAvatarRewardChoice(profile,roundId){
  const area=document.createElement('div');area.className='bonus-card';
  area.id='avatar-reward-choice';area.innerHTML='<h3>Choose your superstar avatar item</h3>'+
- '<p>Pick one reward. You can change how your avatar looks later when the dressing room is built.</p>'+
+ '<p>Pick one reward. Your explorer will wear it in the cave.</p>'+
  '<div class="avatar-choice-grid"></div><p class="small muted" role="status" id="avatar-choice-message"></p>';
  const grid=area.querySelector('.avatar-choice-grid');
  const items=window.SpellmasterBonus.availableChoices(spellStorage,profile);
@@ -813,8 +814,9 @@ function showAvatarRewardChoice(profile,roundId){
      try{
        const result=window.SpellmasterBonus.chooseAvatarReward(spellStorage,profile,roundId,item.id);
        if(result.alreadyClaimed)return;
+       if(profile.cloud)SpellmasterCloud.save();
        area.innerHTML='<div class="bonus-hat"><strong>'+item.icon+' '+item.name+' is yours!</strong>'+
-       '<p>This item is now in your avatar collection. No coins were spent.</p></div>';
+       '<p>Your explorer is wearing it. No coins were spent.</p></div>';
      }catch(err){const status=area.querySelector('#avatar-choice-message');if(status)status.textContent='Please choose a different item.';}
    });
    grid.append(b);
@@ -922,7 +924,12 @@ function playStartingWelcome(){
   if(audio.isConnected&&error.name!=='AbortError')button.textContent='🔊 Tap to hear your welcome';
  });
 }
+let openShopOnArrival=location.hash==='#explorer-shop';
 let openExplorerOnArrival=location.hash==='#my-explorer';
+function openExplorerShop(){
+ const profile=LP.active(spellStorage);
+ ExplorerShop.open(profile,spellStorage,()=>{if(stage==='welcome')renderLanding()});
+}
 function editExplorer(){
  const profile=LP.active(spellStorage);
  if(!profile || SpellmasterEntry.state(profile,spellStorage,adaptiveLoad())!=='returning'){
@@ -939,7 +946,7 @@ function editExplorer(){
   spellStorage.setItem(key,JSON.stringify({...data,explorerStyle:value}));
   if(profile.cloud&&!await SpellmasterCloud.save())throw Error('Save failed');
   renderLanding();
- });
+ },SpellmasterBonus.read(spellStorage,profile).equipped);
 }
 function renderLanding(){
  document.getElementById('starting-welcome')?.pause();
@@ -1031,12 +1038,15 @@ function renderLanding(){
  const link=document.createElement('button');
  link.type='button';link.textContent='My explorer';link.onclick=editExplorer;
  app.querySelector('.entry-welcome').insertAdjacentElement('afterbegin',link);
+ const shop=document.createElement('button');shop.type='button';shop.textContent='Explorer shop';shop.onclick=openExplorerShop;
+ link.after(shop);
+ if(openShopOnArrival){openShopOnArrival=false;openExplorerShop()}
  if(openExplorerOnArrival){openExplorerOnArrival=false;editExplorer()}
  const portrait=app.querySelector('.entry-mini-character');
  if(portrait&&p){
   const style=SpellmasterBonus.read(spellStorage,p).explorerStyle;
   if(ExplorerCreator.valid(style)){
-   const avatar=ExplorerCreator.sprite(style);avatar.style.height='96px';portrait.replaceWith(avatar);
+   const avatar=ExplorerCreator.sprite(style,SpellmasterBonus.read(spellStorage,p).equipped);avatar.style.height='96px';portrait.replaceWith(avatar);
   }
  }
  if(narration&&state==='assessment'&&!document.querySelector('.explorer-studio[open]'))playStartingWelcome();
@@ -1081,10 +1091,12 @@ const renderPresentation=()=>{
   const lit=completed===0?0:stage==='success'?(completed-1)%3+1:completed%3;
   floor.querySelectorAll('i').forEach((lamp,i)=>lamp.classList.toggle('lit',i<lit));
   const profile=LP.active(spellStorage);
-  const style=profile&&SpellmasterBonus.read(spellStorage,profile).explorerStyle;
+  const wardrobe=profile&&SpellmasterBonus.read(spellStorage,profile);
+  const style=wardrobe?.explorerStyle;
+  const appearance=JSON.stringify([style,wardrobe?.equipped]);
   if(ExplorerCreator.valid(style)){
-   if(floor.dataset.style!==String(style))floor.lastElementChild.replaceWith(ExplorerCreator.sprite(style));
-   floor.dataset.style=style;
+   if(floor.dataset.style!==appearance)floor.lastElementChild.replaceWith(ExplorerCreator.sprite(style,wardrobe.equipped));
+   floor.dataset.style=appearance;
   }else if(floor.dataset.style){
    const original=document.createElement('img');original.src='/assets/spellmaster/explorer-painted.webp';original.alt='';
    floor.lastElementChild.replaceWith(original);delete floor.dataset.style;

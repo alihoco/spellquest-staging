@@ -5,13 +5,13 @@
 'use strict';
 const KEY='spellmaster-bonus-v1:';
 const AVATAR_ITEMS=Object.freeze([
- {id:'star-explorer-hat',name:'Star Explorer Hat',icon:'🎩',slot:'hat'},
- {id:'comet-trainers',name:'Comet Trainers',icon:'👟',slot:'shoes'},
- {id:'discovery-glasses',name:'Discovery Glasses',icon:'👓',slot:'glasses'},
- {id:'adventure-coat',name:'Adventure Coat',icon:'🧥',slot:'coat'},
- {id:'trail-trousers',name:'Trail Trousers',icon:'👖',slot:'trousers'},
- {id:'starlight-dress',name:'Starlight Dress',icon:'👗',slot:'dress'},
- {id:'rainbow-hair',name:'Rainbow Hair',icon:'🌈',slot:'hair'}
+ {id:'star-explorer-hat',name:'Star Explorer Hat',icon:'🎩',price:12,slot:'hat'},
+ {id:'comet-trainers',name:'Comet Trainers',icon:'👟',price:8,slot:'shoes'},
+ {id:'discovery-glasses',name:'Discovery Glasses',icon:'👓',price:6,slot:'glasses'},
+ {id:'adventure-coat',name:'Adventure Coat',icon:'🧥',price:18,slot:'coat'},
+ {id:'trail-trousers',name:'Trail Trousers',icon:'👖',price:10,slot:'trousers'},
+ {id:'starlight-dress',name:'Starlight Dress',icon:'👗',price:20,slot:'dress'},
+ {id:'rainbow-hair',name:'Rainbow Hair',icon:'🌈',price:15,slot:'hair'}
 ]);
 function target(recent=[]){
  const items=recent.slice(-10);
@@ -38,7 +38,7 @@ function grade(words,answers){
 }
 function key(profile){if(!profile||!/^lp-[a-z0-9]+$/.test(profile.id))throw Error('Local learner profile required');return KEY+profile.id;}
 function read(storage,profile){try{const o=JSON.parse(storage.getItem(key(profile))||'{}');return {...(Number.isInteger(o.explorerStyle)&&o.explorerStyle>=0&&o.explorerStyle<6?{explorerStyle:o.explorerStyle}:{}),coins:Number.isSafeInteger(o.coins)&&o.coins>=0?o.coins:0,
-  bonusPoints:Number.isSafeInteger(o.bonusPoints)&&o.bonusPoints>=0?o.bonusPoints:0,
+  equipped:AVATAR_ITEMS.filter(i=>o.equipped?.includes?.(i.id)&&(o.inventory||o.hats||[]).includes(i.id)).map(i=>i.id),bonusPoints:Number.isSafeInteger(o.bonusPoints)&&o.bonusPoints>=0?o.bonusPoints:0,
   hats:Array.isArray(o.hats)?o.hats:[],inventory:Array.isArray(o.inventory)?o.inventory:Array.isArray(o.hats)?o.hats:[],
   rounds:Array.isArray(o.rounds)?o.rounds:[]}}catch{return {coins:0,bonusPoints:0,hats:[],inventory:[],rounds:[]}}}
 function award(storage,profile,roundId,graded){
@@ -54,6 +54,24 @@ function award(storage,profile,roundId,graded){
  data.rounds=data.rounds.slice(-200);
  storage.setItem(key(profile),JSON.stringify(data));return {alreadyAwarded:false,...data};
 }
+function outfit(equipped,item){
+ const conflicts=item.slot==='dress'?['dress','coat','trousers']:['coat','trousers'].includes(item.slot)?[item.slot,'dress']:[item.slot];
+ return [...(equipped||[]).filter(id=>!AVATAR_ITEMS.some(i=>i.id===id&&conflicts.includes(i.slot))),item.id];
+}
+function shopChange(storage,profile,id,action){
+ const item=AVATAR_ITEMS.find(i=>i.id===id);
+ if(!item)throw Error('Unknown item');
+ const state=read(storage,profile);
+ if(action==='buy'&&!state.inventory.includes(id)){
+  if(state.coins<item.price)throw Error('You need more coins for this item.');
+  state.coins-=item.price;state.inventory.push(id);
+  if(item.slot==='hat'&&!state.hats.includes(id))state.hats.push(id);
+ }
+ if(!['buy','wear','remove'].includes(action)||!state.inventory.includes(id))throw Error('Choose an owned item.');
+ state.equipped=action==='remove'?(state.equipped||[]).filter(x=>x!==id):outfit(state.equipped,item);
+ if(!Number.isInteger(state.explorerStyle))state.explorerStyle=0;
+ storage.setItem(key(profile),JSON.stringify(state));return state;
+}
 function availableChoices(storage,profile){
  const state=read(storage,profile);
  return AVATAR_ITEMS.filter(item=>!state.inventory.includes(item.id));
@@ -68,6 +86,8 @@ function chooseAvatarReward(storage,profile,roundId,itemId){
  if(state.inventory.includes(itemId))throw Error('Item already owned: choose another reward');
  round.avatarChoice='claimed';round.avatarItemId=itemId;
  state.inventory.push(itemId);
+ state.equipped=outfit(state.equipped,item);
+ if(!Number.isInteger(state.explorerStyle))state.explorerStyle=0;
  if(item.slot==='hat'&&!state.hats.includes(itemId))state.hats.push(itemId);
  storage.setItem(key(profile),JSON.stringify(state));
  return {alreadyClaimed:false,selected:itemId,...state};
@@ -75,5 +95,5 @@ function chooseAvatarReward(storage,profile,roundId,itemId){
 function pendingRewards(storage,profile){
  return read(storage,profile).rounds.filter(x=>x.perfect&&x.avatarChoice==='pending').map(x=>x.id);
 }
-return {target,chooseRound,grade,read,award,availableChoices,chooseAvatarReward,pendingRewards,AVATAR_ITEMS,key};
+return {shopChange,outfit,target,chooseRound,grade,read,award,availableChoices,chooseAvatarReward,pendingRewards,AVATAR_ITEMS,key};
 });
