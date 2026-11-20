@@ -1,4 +1,4 @@
-.personal-explorer{display:inline-block;height:100%;aspect-ratio:160/208;background:url('/assets/spellmaster/explorer-walk.webp') 0 var(--pose-row)/400% 600% no-repeat}
+.personal-explorer{display:inline-block;height:100%;aspect-ratio:160/208;background-position-x:0}
 .personal-explorer.walking{animation:explorer-walk .64s steps(1) infinite}
 @keyframes explorer-walk{0%{background-position-x:0}25%{background-position-x:33.333%}50%{background-position-x:66.667%}75%{background-position-x:100%}}
 .cave-floor .personal-explorer{position:absolute;bottom:0;transform:translateX(-50%);transition:left .8s ease}
@@ -21,3 +21,6 @@
 .shop-layout{display:grid;grid-template-columns:minmax(220px,.8fr) 1.4fr;gap:22px;padding:20px}.shop-fitting{align-self:start;background:#382940;border:3px double #caa467;border-radius:14px;overflow:hidden;color:#fff1ce;text-align:center}.shop-fitting .explorer-stage{height:clamp(215px,40vh,340px);border-radius:0;background:linear-gradient(0deg,#31203940,transparent 52%),url('/assets/spellmaster/library-cinematic.webp') center/cover;padding-top:18px;box-sizing:border-box}.shop-selection{font:bold 21px Georgia,serif;margin:14px 6px;color:inherit}
 .shop-stock{min-width:0}.shop-items{margin:0;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.shop-items button{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:3px;margin:0;padding:5px 4px 8px;background:radial-gradient(ellipse at 50% 30%,#fffcf1,#f2dfb8);font-weight:700;line-height:1.15}.shop-items small{font-weight:500}.shop-sample{display:block;width:min(100%,100px);aspect-ratio:144/112;background:url('/assets/spellmaster/wardrobe-samples.webp') 0 50%/700% 100% no-repeat}.shop-colours button,.shop-action{border:1px solid #ae9769}.shop-colours button{background:#fffaf0;color:#34243f}.shop-action{font-weight:bold}.shop-stock [role=status]{margin:6px 0}
 @media(max-width:640px){.shop-layout{display:block;padding:12px}.shop-fitting{display:flex;align-items:center;margin-bottom:12px}.shop-fitting .explorer-stage{width:48%;height:122px;padding-top:4px}.shop-selection{flex:1;font-size:18px}.shop-head{padding:8px;gap:6px}.shop-head p{font-size:13px}.shop-sample{max-width:70px}}
+
+.personal-explorer .explorer-body{position:absolute;inset:0;background:url('/assets/spellmaster/explorer-walk.webp') 0 var(--pose-row)/400% 600% no-repeat;background-position-x:inherit}
+.personal-explorer.wearing-hat :is(.explorer-body,.explorer-hair){clip-path:polygon(0 0,38% 0,33% 12%,83% 12%,83% 0,100% 0,100% 100%,0 100%)}

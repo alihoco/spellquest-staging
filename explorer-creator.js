@@ -5,11 +5,14 @@
  function sprite(value,equipped=[],colours={}){
   const el=document.createElement('span');
   el.className='personal-explorer';
+  if(equipped.includes(layers[0]))el.classList.add('wearing-hat');
   el.setAttribute('aria-hidden','true');
   el.style.setProperty('--pose-row',value*20+'%');
+  const body=document.createElement('span');body.className='explorer-body';el.append(body);
   for(const index of [4,3,5,1,6,2,0]){
    if(!equipped.includes(layers[index]))continue;
    const layer=document.createElement('span');layer.className='explorer-gear';
+   if(index===6)layer.classList.add('explorer-hair');
    const colour=colours?.[layers[index]];
    if(['teal','rose','gold','blue'].includes(colour))layer.style.backgroundImage="url('/assets/spellmaster/explorer-gear-"+colour+".webp')";
    layer.style.backgroundPositionY=((index*2+Math.floor(value/3))*100/13)+'%';el.append(layer);
