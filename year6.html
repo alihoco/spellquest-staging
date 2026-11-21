@@ -1048,11 +1048,12 @@ function renderLanding(){
    '</section>'+settings;
  }
  app.innerHTML='<div class="entry-screen">'+content+'</div>';
- const link=document.createElement('button');
- link.type='button';link.textContent='My explorer';link.onclick=editExplorer;
- app.querySelector('.entry-welcome').insertAdjacentElement('afterbegin',link);
- const shop=document.createElement('button');shop.type='button';shop.textContent='Explorer shop';shop.onclick=openExplorerShop;
- link.after(shop);
+ const explorerActions=document.createElement('div');
+ explorerActions.className='entry-explorer-actions';
+ explorerActions.innerHTML='<button type="button" onclick="editExplorer()">My explorer</button><button type="button" onclick="openExplorerShop()">Explorer shop</button>';
+ const greeting=app.querySelector('.entry-greeting');
+ if(greeting)greeting.after(explorerActions);
+ else app.querySelector('.entry-welcome').append(explorerActions);
  if(openShopOnArrival){openShopOnArrival=false;openExplorerShop()}
  if(openExplorerOnArrival){openExplorerOnArrival=false;editExplorer()}
  const portrait=app.querySelector('.entry-mini-character');

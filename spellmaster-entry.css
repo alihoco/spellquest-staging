@@ -257,3 +257,13 @@ body.session-finished #app>.actions button:first-child{min-height:49px!important
 }
 @media(prefers-reduced-motion:reduce){#app .coin-transfer .coin-flight{display:none}}
 @media(max-width:420px){#app .coin-transfer{max-width:290px}#app .coin-transfer .coin-flight{font-size:20px}@keyframes spellmaster-coin-flight{to{transform:translate(135px,0);opacity:0}}}
+
+body.entry-home #app .entry-explorer-actions{
+ display:flex;flex-wrap:wrap;justify-content:center;gap:8px 12px;margin:10px auto 18px
+}
+body.entry-home #app .entry-explorer-actions button{
+ min-height:44px;margin:0;padding:7px 16px;background:#fffaf0!important;color:#513769!important;
+ border:1px solid #cbb998;border-radius:12px;box-shadow:none!important;font-weight:700
+}
+body.entry-home #app .entry-explorer-actions button:hover{background:#f6eddc!important;border-color:#88679d}
+body.entry-home #app .entry-explorer-actions button:focus-visible{outline:3px solid #765397;outline-offset:2px}
