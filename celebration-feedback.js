@@ -10,7 +10,7 @@
    'Great job. You remembered it.',
    'Well done. You knew that one.',
    'Good remembering. That was correct.',
-   'You got it. Nice spelling.',
+   'Yes! You got it.',
    'That came straight from memory. Well done.',
    'Good work. You spelled it independently.',
    'Yes, that is the right spelling.',
@@ -23,9 +23,9 @@
    'You got it this time. Well done.',
    'Nice persistence. You spelled it correctly.',
    'That is the spelling. Good work.',
-   'You remembered the tricky part. Great.',
+   'Yes! You remembered the tricky part.',
    'Well done. Your new attempt is correct.',
-   'Awesome work. You figured that one out.',
+   'Awesome work! You figured that one out.',
    'Good thinking. You got the spelling right.',
    'Look at that. You worked it out.'
   ]

@@ -230,7 +230,7 @@ const makeUrl=clip=>{
  if(clip==='catalogue-next-en-water-v1')return Promise.resolve('/assets/audio/next-water-en-gb.mp3?v=clear4');
  const key=voice+':'+clip;
  if(!cached.has(key)){
-  const prom=fetch(ENDPOINT+'?accent=clear4&clip='+encodeURIComponent(clip)+'&voice='+encodeURIComponent(voice),{signal:AbortSignal.timeout(18000)})
+  const prom=fetch(ENDPOINT+'?accent=feedback5&clip='+encodeURIComponent(clip)+'&voice='+encodeURIComponent(voice),{signal:AbortSignal.timeout(18000)})
    .then(r=>{if(!r.ok)throw new Error('Voice error '+r.status);return r.blob()})
    .then(blob=>URL.createObjectURL(blob))
    .catch(e=>{cached.delete(key);throw e});
@@ -247,6 +247,7 @@ function clipFallbackText(clip){
  const word=clip.match(/^y6-(necessary|embarrass|accommodate|government|foreign|familiar|environment|privilege|rhythm|temperature)$/);
  if(word)return word[1];
  const phrases={
+ 'spellmaster-gentle-miss-v1':'Ooh, not quite. Let’s look at it together.',
  'spellmaster-adaptive-welcome-v1':'Welcome to Spellmaster! Listen to the word, and then try spelling it. If it is tricky, I will help you.',
  'spellmaster-bonus-right-v1':'Great job! You got that right.',
  'spellmaster-bonus-miss-v1':'Good try! We can practise that again.',
@@ -510,17 +511,18 @@ function mountPersonalGrouping(target){
 function review(){
  stop();stage='review';const w=WORDS[idx];
  app.innerHTML='<span class="eyebrow">LET’S LEARN THIS WORD</span>'+progress()+
- '<h2>Not quite right yet — let us work it out 🌱</h2>'+
+ '<h2>Ooh, not quite. Let’s look at it together 🌱</h2>'+
  '<p>Good try! Look closely at the tricky part. You can make your own letter groups too.</p>'+
  '<div id="review-content"><p class="now">🔊 The teacher will guide you.</p></div>'+
  soundVoice()+
  '<div class="actions"><button class="alt" onclick="reviewAudio()">🔊 Hear the lesson again</button>'+
  '<button class="alt" onclick="next()">Save for later</button></div>';
- voiceSet();if(narration)reviewAudio();
+ voiceSet();if(narration)reviewAudio(true);
 }
-async function reviewAudio(){
+async function reviewAudio(announceMiss=false){
  stop();stage='review';const t=ticket,w=WORDS[idx],host=$('review-content');if(!host)return;
  host.innerHTML='<div class="note"><strong>'+w.word+'</strong><p>'+errorFeedbackForCurrent().text+'</p></div>';
+ if(announceMiss){await speak('spellmaster-gentle-miss-v1',t);if(t!==ticket)return}
  let ok=await speak(wordAudioClip(w),t);
  if(t!==ticket)return;
  if(!ok)setStatus('The word narration was unavailable. You can still review the correct spelling below and replay the lesson.');
@@ -550,10 +552,11 @@ function shortReview(){
  soundVoice()+
  '<div class="actions"><button onclick="retry()">🙈 Ready? Let me spell it!</button>'+
  '<button class="alt" onclick="next()">Come back to this later</button></div>';
- voiceSet();mountPersonalGrouping('#app');if(narration)shortReviewAudio();
+ voiceSet();mountPersonalGrouping('#app');if(narration)shortReviewAudio(true);
 }
-async function shortReviewAudio(){
+async function shortReviewAudio(announceMiss=false){
  stop();const t=ticket;const feedback=errorFeedbackForCurrent();
+ if(announceMiss){await speak('spellmaster-gentle-miss-v1',t);if(t!==ticket)return}
  const ok=await speakTeachingHint(feedback,t);
  if(t===ticket&&stage==='short-review')await introduceSplitterOnce(t);
 }
@@ -800,7 +803,7 @@ function checkBonusWord(){
  const correct=answer===word;if(correct)bonusCoinOrigin=spellingCoinOrigin(input);bonusAnswers.push(answer);recordBonusRecall(word,correct);
  const correctCount=bonusAnswers.filter((a,i)=>a===bonusRound.words[i]).length;
  const runningPerfect=correct&&correctCount===bonusAnswers.length;
- const bonusPraise=correct?(runningPerfect&&correctCount===3?'Wow! All three right so far!':runningPerfect&&correctCount===2?'Wow! Two out of two!':'Great job! You got that right!'):'Good try! We can practise that word again.';
+ const bonusPraise=correct?(runningPerfect&&correctCount===3?'Wow! All three right so far!':runningPerfect&&correctCount===2?'Wow! Two out of two!':'Great job! You got that right!'):'Ooh, not quite. We can practise that word again.';
  stop();stage='bonus-feedback';
  app.innerHTML='<div class="bonus-card"><span class="bonus-trophy" aria-hidden="true">'+(correct?'✦':'🧩')+'</span>'+
  '<h2>'+bonusPraise+'</h2>'+
