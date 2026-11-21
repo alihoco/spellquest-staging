@@ -225,6 +225,8 @@ let pace=spellStorage.getItem('spellquest-sound-pace')||'relaxed';
 let stage='welcome',idx=0,first=0,results=[],ticket=0,activePlayer=null,activePlaying=false,activeResolve=null;
 const cached=new Map();
 const makeUrl=clip=>{
+ if(clip==='catalogue-word-en-water-v1')return Promise.resolve('/assets/audio/water-en-gb.mp3?v=southern3');
+ if(clip==='catalogue-next-en-water-v1')return Promise.resolve('/assets/audio/next-water-en-gb.mp3?v=southern3');
  const key=voice+':'+clip;
  if(!cached.has(key)){
   const prom=fetch(ENDPOINT+'?accent=southern3&clip='+encodeURIComponent(clip)+'&voice='+encodeURIComponent(voice))
