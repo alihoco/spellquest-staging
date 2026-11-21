@@ -225,11 +225,9 @@ let pace=spellStorage.getItem('spellquest-sound-pace')||'relaxed';
 let stage='welcome',idx=0,first=0,results=[],ticket=0,activePlayer=null,activePlaying=false,activeResolve=null;
 const cached=new Map();
 const makeUrl=clip=>{
- if(clip==='catalogue-word-en-water-v1')return Promise.resolve('/assets/audio/water-en-gb.mp3?v=southern3');
- if(clip==='catalogue-next-en-water-v1')return Promise.resolve('/assets/audio/next-water-en-gb.mp3?v=southern3');
  const key=voice+':'+clip;
  if(!cached.has(key)){
-  const prom=fetch(ENDPOINT+'?accent=southern3&clip='+encodeURIComponent(clip)+'&voice='+encodeURIComponent(voice))
+  const prom=fetch(ENDPOINT+'?accent=clear4&clip='+encodeURIComponent(clip)+'&voice='+encodeURIComponent(voice))
    .then(r=>{if(!r.ok)throw new Error('Voice error '+r.status);return r.blob()})
    .then(blob=>URL.createObjectURL(blob))
    .catch(e=>{cached.delete(key);throw e});
@@ -240,7 +238,9 @@ const makeUrl=clip=>{
 function warm(clips){for(const clip of clips.slice(0,2))makeUrl(clip).catch(()=>{});}
 function setStatus(msg){const el=$('audio-status');if(el)el.textContent=msg}
 function clipFallbackText(clip){
- if(clip.startsWith('catalogue-word-en-'))return clip.slice('catalogue-word-en-'.length).replace(/-v\\d+$/,'');
+ const nextWord=clip.match(/^(?:catalogue-next-en-|spellmaster-next-)([a-z'-]+)-v[0-9]+$/);
+ if(nextWord)return 'Your next word is '+nextWord[1]+'.';
+ if(clip.startsWith('catalogue-word-en-'))return clip.slice('catalogue-word-en-'.length).replace(/-v\d+$/,'');
  const word=clip.match(/^y6-(necessary|embarrass|accommodate|government|foreign|familiar|environment|privilege|rhythm|temperature)$/);
  if(word)return word[1];
  const phrases={
@@ -255,7 +255,7 @@ function clipFallbackText(clip){
  return phrases[clip]||'Keep practising. You can try again whenever you feel ready.';
 }
 function stop(){
- ticket++;
+ ticket++;window.SpellmasterReader?.stop();
  if(activePlayer){activePlayer.pause();activePlayer.onended=null;activePlayer.onerror=null;activePlayer=null}
  if(activeResolve){activeResolve(false);activeResolve=null}
  activePlaying=false;
@@ -430,10 +430,17 @@ function repaintTeachingGroups(groups){
  const row=app.querySelector('.spelling-row');if(!row)return;
  row.replaceChildren();for(const g of groups){const span=document.createElement('span');span.textContent=g;row.append(span)}
 }
+async function speakTeachingHint(feedback,t){
+ const text=feedback.spoken||feedback.text;
+ if(window.SpellmasterReader&&text){
+  const heard=await window.SpellmasterReader.speak(text);
+  if(heard||t!==ticket)return heard;
+ }
+ return speak(feedback.clip,t);
+}
 function replayWordHint(){
  stop();const feedback=errorFeedbackForCurrent();
- if(feedback.letterLevelOnly&&window.SpellmasterReader)return window.SpellmasterReader.speak(feedback.spoken);
- return speak(feedback.clip,ticket);
+ return speakTeachingHint(feedback,ticket);
 }
 function splitterIntroKey(){
  const p=window.SpellmasterProfiles?.active(spellStorage);
@@ -519,8 +526,7 @@ async function reviewAudio(){
  const feedback=errorFeedbackForCurrent();
  const tip=host.querySelector('.tip');if(tip)tip.innerHTML='<strong>Notice this part</strong><p>'+feedback.text+'</p><button class="alt tiny-action" onclick="replayWordHint()">🔊 Hear this hint</button>';
  mountPersonalGrouping('#review-content');
- ok=feedback.letterLevelOnly&&window.SpellmasterReader?
-   await window.SpellmasterReader.speak(feedback.spoken):await speak(feedback.clip,t);
+ ok=await speakTeachingHint(feedback,t);
  if(t===ticket&&stage==='review'){
   if(ok)setStatus('Ready to try spelling again.');
   await introduceSplitterOnce(t);
@@ -541,8 +547,7 @@ function shortReview(){
 }
 async function shortReviewAudio(){
  stop();const t=ticket;const feedback=errorFeedbackForCurrent();
- const ok=feedback.letterLevelOnly&&window.SpellmasterReader?
-  await window.SpellmasterReader.speak(feedback.spoken):await speak(feedback.clip,t);
+ const ok=await speakTeachingHint(feedback,t);
  if(t===ticket&&stage==='short-review')await introduceSplitterOnce(t);
 }
 function retry(){
@@ -1038,7 +1043,7 @@ function renderLanding(){
    '<p>I will say ten words. Give each one a try. There are no marks or rankings.</p>'+
    '<a class="play-now quick-play entry-primary" href="/starting-assessment.html">▶ Begin my ten words</a>'+
    '<button type="button" class="entry-hear" onclick="playStartingWelcome()">🔊 Hear your welcome</button>'+
-   '<audio id="starting-welcome" preload="auto" src="/assets/audio/starting-point-welcome.mp3?v=southern3"></audio>'+
+   '<audio id="starting-welcome" preload="auto" src="/assets/audio/starting-point-welcome.mp3?v=clear4"></audio>'+
    '</section>'+settings;
  }else{
   content='<section class="entry-welcome entry-return" aria-labelledby="entry-heading">'+
