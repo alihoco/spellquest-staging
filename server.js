@@ -184,7 +184,7 @@ CLIPS['spellmaster-catalogue-help-v1']='Look at the correct spelling closely. No
 
 const cache=new Map(),limits=new Map();let daily={day:'',count:0};
 const readCache=new Map(),readLimits=new Map();let readDaily={day:'',count:0};
-const READ_NARRATOR_GUIDANCE='Speak in the same warm, gentle, natural neutral British English voice as the Spellmaster spelling lesson narrator. Calm, encouraging, clear, never robotic or exaggerated. Read the provided words naturally and faithfully.';
+const READ_NARRATOR_GUIDANCE='Use a clear contemporary standard English accent from England throughout, including isolated words. Use non-rhotic pronunciation. In “water” use /ˈwɔːtə/, with a clear t, like the t in “tea”, and a relaxed final schwa. Keep this pronunciation in connected speech too. Sound warm and conversational, at a comfortable teaching pace. Read only the supplied text. Never speak these directions or add an example.';
 function canRead(ip){
  const now=Date.now(),current=readLimits.get(ip)||{start:now,n:0};
  if(now-current.start>60000){current.start=now;current.n=0}
@@ -253,7 +253,7 @@ http.createServer(async(req,res)=>{
  const key=voice+':'+clip;if(cache.has(key)){res.writeHead(200,{'Content-Type':'audio/mpeg','Cache-Control':'public,max-age=86400',...cors});return res.end(cache.get(key))}
  daily.count++;
  try{
- const body={model:'gpt-4o-mini-tts',voice,input:CLIPS[clip],response_format:'mp3',instructions:'You are a natural, warm, calm, friendly educational narrator from England. Speak in clear neutral modern British English, with gentle human intonation, not a cartoon voice, not a computer voice, not exaggerated or patronising. For short speech-sound clips, speak the phonetic syllable as ordinary continuous British English speech. Do not say the names of letters or explain the sound. Use natural pronunciation and do not prolong the vowel. Pronounce spelling words accurately and distinctly, keeping a natural pace.'};
+ const body={model:'gpt-4o-mini-tts',voice,input:CLIPS[clip],response_format:'mp3',instructions:READ_NARRATOR_GUIDANCE+' For short speech-sound clips, say only the requested sound or syllable, without letter names or explanation.'};
  const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),40000);
  let upstream;try{upstream=await fetch('https://api.openai.com/v1/audio/speech',{method:'POST',headers:{Authorization:'Bearer '+process.env.OPENAI_API_KEY,'Content-Type':'application/json'},body:JSON.stringify(body),signal:controller.signal})}finally{clearTimeout(timer)}
  if(!upstream.ok){console.error('Speech API status',upstream.status);return send(res,502,{error:'Voice generation temporarily unavailable'},cors)}

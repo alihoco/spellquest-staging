@@ -213,7 +213,7 @@ const cached=new Map();
 const makeUrl=clip=>{
  const key=voice+':'+clip;
  if(!cached.has(key)){
-  const prom=fetch(ENDPOINT+'?clip='+encodeURIComponent(clip)+'&voice='+encodeURIComponent(voice))
+  const prom=fetch(ENDPOINT+'?accent=england2&clip='+encodeURIComponent(clip)+'&voice='+encodeURIComponent(voice))
    .then(r=>{if(!r.ok)throw new Error('Voice error '+r.status);return r.blob()})
    .then(blob=>URL.createObjectURL(blob))
    .catch(e=>{cached.delete(key);throw e});

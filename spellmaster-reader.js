@@ -50,7 +50,7 @@
    const utterance=new SpeechSynthesisUtterance(text);
    utterance.lang='en-GB';utterance.rate=.9;utterance.pitch=1;
    const voices=root.speechSynthesis.getVoices();
-   utterance.voice=voices.find(v=>v.lang.toLowerCase()==='en-gb')||voices.find(v=>v.lang.toLowerCase().startsWith('en'))||null;
+   utterance.voice=voices.find(v=>/^en[-_]GB$/i.test(v.lang))||null;
    voiceFallback=utterance;
    utterance.onend=()=>{if(n===requestNo)voiceFallback=null;resolve(n===requestNo)};
    utterance.onerror=()=>{if(n===requestNo)voiceFallback=null;resolve(false)};
