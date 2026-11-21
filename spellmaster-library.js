@@ -91,9 +91,9 @@
 })();
 
 // The wallet is credited by the lesson. This effect only illustrates that deposit.
-window.SpellmasterCoinFlight=function(amount){
+window.SpellmasterCoinFlight=function(amount,origin){
  const receipt=document.querySelector('#app .reward-receipt');
- if(!receipt||!amount)return;
+ if(!receipt||!amount||!origin)return;
  let bag=document.querySelector('#sm-rewards .purse-art');
  if(!bag)return;
  const rect=bag.getBoundingClientRect();
@@ -106,8 +106,8 @@ window.SpellmasterCoinFlight=function(amount){
   receipt.before(row);row.append(receipt,pocket);
  }
  if(matchMedia('(prefers-reduced-motion:reduce)').matches||document.body.dataset.theme==='focus'||!bag.animate)return;
- const start=receipt.getBoundingClientRect(),end=bag.getBoundingClientRect();
- const x=start.left+start.width*.45,y=start.top+start.height*.45;
+ const end=bag.getBoundingClientRect();
+ const {x,y}=origin;
  const dx=end.left+end.width*.5-x,dy=end.top+end.height*.32-y;
  const count=Math.min(5,amount);
  for(let i=0;i<count;i++){

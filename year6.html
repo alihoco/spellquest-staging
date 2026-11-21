@@ -362,7 +362,19 @@ function check(retry){
  if(yes)success(retry);else review();
 }
 let praiseState=window.SpellmasterPraise.makeState(Math.floor(Math.random()*10)),currentPraise=null;
-function success(improved){
+function spellingCoinOrigin(input){
+ const box=input.getBoundingClientRect(),style=getComputedStyle(input);
+ const left=box.left+input.clientLeft+parseFloat(style.paddingLeft);
+ const width=input.clientWidth-parseFloat(style.paddingLeft)-parseFloat(style.paddingRight);
+ const brush=document.createElement('canvas').getContext('2d');
+ brush.font=style.fontWeight+' '+style.fontSize+' '+style.fontFamily;
+ const ink=brush.measureText(input.value).width;
+ let offset=ink/2-input.scrollLeft;
+ if(style.textAlign==='center')offset+=(width-ink)/2;
+ else if(style.textAlign==='right'||style.textAlign==='end')offset+=width-ink;
+ return {x:left+Math.max(0,Math.min(width,offset)),y:box.top+box.height/2};
+}
+function success(improved,origin){
  stop();stage='success';
  currentPraise=window.SpellmasterPraise.next(praiseState,improved?'after_help':'first');
  app.innerHTML='<span class="eyebrow">SPELLING CHALLENGE '+runCount+'</span>'+progress()+
@@ -372,7 +384,7 @@ function success(improved){
  '<p class="small muted">Moving to your next challenge…</p>'+
  soundVoice()+'<div class="actions"><button class="alt" onclick="next()">Continue now</button>'+
  '<button class="alt" onclick="finish()">Finish for today</button></div>';
- voiceSet();if(results[idx]?.earnedCoins)requestAnimationFrame(()=>{if(stage==='success')window.SpellmasterCoinFlight?.(results[idx].earnedCoins)});successAudio();
+ voiceSet();if(results[idx]?.earnedCoins)requestAnimationFrame(()=>{if(stage==='success')window.SpellmasterCoinFlight?.(results[idx].earnedCoins,origin)});successAudio();
 }
 async function successAudio(){
  stop();const t=ticket;
@@ -543,7 +555,7 @@ welcome();
 const ADAPTIVE_KEY='spellmaster-staging-intake-v1';
 let runCount=0,runStart=0,runFirst=0,runNew=0,runSeen=new Set(),runResults=[],runReview=false;
 let runKind="new",lastBreakPromptAt=0;
-let bonusReviewedThrough=0,bonusRound=null,bonusPosition=0,bonusAnswers=[],bonusRoundId=null;
+let bonusReviewedThrough=0,bonusRound=null,bonusPosition=0,bonusAnswers=[],bonusRoundId=null,bonusCoinOrigin=null;
 let lastErrorFeedback=null,lastWrittenFeedback=null;
 function errorFeedbackForCurrent(){
  const w=WORDS[idx];
@@ -706,10 +718,10 @@ check=function(retry){
    retentionCheckpoint:checkpointResult?.id||null,checkpointOnTime:checkpointResult?.withinWindow??null,
    checkpointDaysElapsed:checkpointResult?.daysElapsed??null}).catch(()=>{});
  }
- if(ok){runSeen.add(word);success(retry)}else if(retry){shortReview()}else{review()}
+ if(ok){runSeen.add(word);success(retry,spellingCoinOrigin(input))}else if(retry){shortReview()}else{review()}
 };
 function startBonusRound(plan){
- stop();bonusRound=plan;bonusPosition=0;bonusAnswers=[];
+ stop();bonusCoinOrigin=null;bonusRound=plan;bonusPosition=0;bonusAnswers=[];
  bonusRoundId='round-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);
  stage='bonus-intro';
  app.innerHTML='<div class="bonus-card"><span class="bonus-trophy" aria-hidden="true">🏆</span>'+
@@ -753,7 +765,7 @@ function checkBonusWord(){
  if(stage!=='bonus-question'||!bonusRound)return;
  const input=$('bonus-answer');if(!input||!input.value.trim())return;
  const word=bonusRound.words[bonusPosition],answer=input.value.toLowerCase().replace(/[^a-z]/g,'');
- const correct=answer===word;bonusAnswers.push(answer);recordBonusRecall(word,correct);
+ const correct=answer===word;if(correct)bonusCoinOrigin=spellingCoinOrigin(input);bonusAnswers.push(answer);recordBonusRecall(word,correct);
  const correctCount=bonusAnswers.filter((a,i)=>a===bonusRound.words[i]).length;
  const runningPerfect=correct&&correctCount===bonusAnswers.length;
  const bonusPraise=correct?(runningPerfect&&correctCount===3?'Wow! All three right so far!':runningPerfect&&correctCount===2?'Wow! Two out of two!':'Great job! You got that right!'):'Good try! We can practise that word again.';
@@ -798,7 +810,7 @@ function finishBonusRound(){
  '<p>✦ '+outcome.bonusPoints+' bonus points</p>'+
  '<div class="actions"><button onclick="openExplorerShop()">Visit Explorer Shop</button><button class="alt" onclick="nextAfterBonus()">Continue adventure</button>'+
  '<button class="alt" onclick="finish()">Finish for today</button></div></section>';
- if(reward&&!reward.alreadyAwarded&&outcome.coins)requestAnimationFrame(()=>{if(stage==='bonus-result')window.SpellmasterCoinFlight?.(outcome.coins)});
+ if(reward&&!reward.alreadyAwarded&&outcome.coins)requestAnimationFrame(()=>{if(stage==='bonus-result')window.SpellmasterCoinFlight?.(outcome.coins,bonusCoinOrigin)});
  const scene=app.querySelector('.reward-scene');
  if(ExplorerCreator.valid(reward?.explorerStyle))scene.append(ExplorerCreator.sprite(reward.explorerStyle,reward.equipped,reward.colours));
  else{const guide=new Image();guide.src='/assets/spellmaster/explorer-painted.webp';guide.alt='';scene.append(guide)}
