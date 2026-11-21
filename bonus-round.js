@@ -12,7 +12,28 @@ const AVATAR_ITEMS=Object.freeze([
  {id:'adventure-coat',name:'Adventure Coat',icon:'🧥',price:18,slot:'coat'},
  {id:'trail-trousers',name:'Trail Trousers',icon:'👖',price:10,slot:'trousers'},
  {id:'starlight-dress',name:'Starlight Dress',icon:'👗',price:20,slot:'dress'},
- {id:'rainbow-hair',name:'Rainbow Hair',icon:'🌈',price:15,slot:'hair'}
+ {id:'rainbow-hair',name:'Rainbow Hair',icon:'🌈',price:15,slot:'hair'},
+ {"id":"loose-waves","name":"Loose Waves","slot":"hair","price":0,"art":0},
+ {"id":"twin-braids","name":"Twin Braids","slot":"hair","price":6,"art":1},
+ {"id":"trail-cap","name":"Trail Cap","slot":"hat","price":0,"art":2},
+ {"id":"bobble-beanie","name":"Bobble Beanie","slot":"hat","price":7,"art":3},
+ {"id":"meadow-sunhat","name":"Meadow Sunhat","slot":"hat","price":12,"art":4},
+ {"id":"moon-wizard-hat","name":"Moon Wizard Hat","slot":"hat","price":28,"art":5},
+ {"id":"feather-ranger-hat","name":"Feather Ranger Hat","slot":"hat","price":20,"art":6},
+ {"id":"river-bucket-hat","name":"River Bucket Hat","slot":"hat","price":9,"art":7},
+ {"id":"harbour-stripe-tee","name":"Harbour Stripe Tee","slot":"coat","price":0,"art":8},
+ {"id":"star-print-tee","name":"Star Print Tee","slot":"coat","price":8,"art":9},
+ {"id":"cable-knit-jumper","name":"Cable Knit Jumper","slot":"coat","price":12,"art":10},
+ {"id":"mountain-jumper","name":"Mountain Jumper","slot":"coat","price":16,"art":11},
+ {"id":"hiking-shorts","name":"Hiking Shorts","slot":"trousers","price":0,"art":12},
+ {"id":"highland-check-trousers","name":"Highland Check Trousers","slot":"trousers","price":14,"art":13},
+ {"id":"daisy-dress","name":"Daisy Dress","slot":"dress","price":0,"art":14},
+ {"id":"woodland-dress","name":"Woodland Dress","slot":"dress","price":18,"art":15},
+ {"id":"canvas-high-tops","name":"Canvas High-tops","slot":"shoes","price":9,"art":16},
+ {"id":"trail-walking-stick","name":"Trail Walking Stick","slot":"hand","price":0,"art":17},
+ {"id":"crystal-staff","name":"Crystal Staff","slot":"hand","price":32,"art":18},
+ {"id":"field-satchel","name":"Field Satchel","slot":"bag","price":12,"art":19},
+ {"id":"treasure-pouch","name":"Treasure Pouch","slot":"bag","price":16,"art":20}
 ]);
 function target(recent=[]){
  const items=recent.slice(-10);
@@ -78,11 +99,11 @@ function shopChange(storage,profile,id,action,colour){
 }
 function availableChoices(storage,profile){
  const state=read(storage,profile);
- return AVATAR_ITEMS.filter(item=>!state.inventory.includes(item.id));
+ return AVATAR_ITEMS.filter(item=>item.price>0&&!state.inventory.includes(item.id));
 }
 function chooseAvatarReward(storage,profile,roundId,itemId){
  const item=AVATAR_ITEMS.find(x=>x.id===itemId);
- if(!item)throw Error('Unknown avatar reward');
+ if(!item||!item.price)throw Error('Choose a coin item for your reward');
  const state=read(storage,profile);
  const round=state.rounds.find(x=>x.id===roundId);
  if(!round||!round.perfect)throw Error('Bonus choice not earned');

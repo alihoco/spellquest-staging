@@ -48,3 +48,11 @@ body.lesson-active .sm-side{opacity:1}
 .pocket-deposit{display:inline-flex;vertical-align:middle;margin-left:6px}.pocket-deposit .purse-art{width:44px;height:44px}
 .flying-spell-coin{pointer-events:none;position:fixed;z-index:1000;display:grid;place-items:center;width:24px;height:24px;color:#885407;border:2px solid #a17523;border-radius:50%;font:900 16px/1 Georgia;background:radial-gradient(circle at 32% 24%,#fff3ae,#efb337 62%,#bc7817);box-shadow:inset 0 0 0 2px #ffdc76,0 2px 4px #55301055}
 .pocket-deposit-row{display:flex;align-items:center;justify-content:space-between;gap:8px}.pocket-deposit{flex:none}
+.new-shop-sample{background-image:url('/assets/spellmaster/wardrobe-new-icons.webp');background-size:400% 600%}
+.explorer-gear[data-fabric=teal]{filter:sepia(1) saturate(2.8) hue-rotate(115deg)}
+.explorer-gear[data-fabric=rose]{filter:sepia(1) saturate(3) hue-rotate(285deg)}
+.explorer-gear[data-fabric=gold]{filter:sepia(1) saturate(2)}
+.explorer-gear[data-fabric=blue]{filter:sepia(1) saturate(3) hue-rotate(165deg)}
+.shop-filter{display:flex;align-items:center;gap:8px;font-weight:bold;margin-bottom:8px}
+.shop-filter select{flex:1;min-width:0;padding:8px;color:#402a50;background:#fff9eb;border:1px solid #b79d76;border-radius:8px}
+.shop-items{max-height:clamp(200px,38vh,420px);overflow-y:auto;padding:4px}
