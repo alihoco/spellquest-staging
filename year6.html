@@ -133,15 +133,18 @@ button.play-now:active{transform:translateY(4px);box-shadow:0 6px 0 #2b2675}
 <link rel="stylesheet" href="/pilot-learning-focus.css?v=1">
 <link rel="stylesheet" href="/spellmaster-entry.css?v=2">
 <style>
-body.teaching-cave .sm-layout{position:relative;isolation:isolate;padding:clamp(12px,3vw,38px) clamp(10px,2vw,28px) 130px!important;background:#163449 var(--journey-scene,url('/assets/spellmaster/crystal-cavern.webp')) center bottom/cover no-repeat;border:2px solid #bd9d69;border-radius:22px}
+body.teaching-cave .sm-layout{position:relative;isolation:isolate;padding:clamp(12px,3vw,38px) clamp(10px,2vw,28px)!important;background:#163449 var(--journey-scene,url('/assets/spellmaster/crystal-cavern.webp')) center bottom/cover no-repeat;border:2px solid #bd9d69;border-radius:22px}
+body.lesson-active.teaching-cave main .sm-path{display:block!important;position:relative;overflow:hidden;padding:0!important;height:112px;min-height:0!important;background:#233441 var(--journey-scene) center 78%/cover!important}
+body.teaching-cave .sm-path>:not(.cave-floor),body.teaching-cave .sm-path::before,body.teaching-cave .sm-path::after{display:none!important}
 .cave-floor{display:none}
-body.teaching-cave .cave-floor{display:block;position:absolute;inset:auto 3% 4px;height:115px;pointer-events:none}
-.cave-floor img{position:absolute;bottom:0;height:100%;transform:translateX(-50%);transition:left .8s ease}
-.journey-place{position:absolute;bottom:90px;right:4%;color:white;background:#302440;padding:4px 10px;border-radius:9px;font-size:.85rem}
-.cave-floor i{position:absolute;bottom:10px;width:16px;height:24px;background:#36424c;border:3px solid #bb976e;border-radius:6px}
-.cave-floor i::before{content:"";position:absolute;bottom:100%;left:1px;width:7px;height:7px;border:2px solid #bb976e;border-radius:50%}
-.cave-floor i.lit{background:#ffe49c;box-shadow:0 0 16px 5px #ffb640}
-@media(prefers-reduced-motion:reduce){.cave-floor img{transition:none}}
+body.teaching-cave .cave-floor{display:block;position:absolute;inset:0 5%;pointer-events:none}
+.cave-floor::before{content:"";position:absolute;left:0;right:0;bottom:11px;height:4px;background:#463348;border:1px solid #f5ce83;border-radius:8px}
+.cave-floor>img,.cave-floor>.personal-explorer{position:absolute;bottom:19px;height:75px;transform:translateX(-50%);transition:left .8s ease}
+.journey-place{position:absolute;top:4px;left:0;color:#fff4d5;background:#302440ed;padding:2px 8px;border-radius:8px;font-size:.75rem;z-index:2}
+.cave-floor i{position:absolute;bottom:4px;width:18px;height:18px;transform:translateX(-50%);border:2px solid #dbc18f;border-radius:50%;background:#37334a;color:#fff;text-align:center;font:700 12px/15px sans-serif}
+.cave-floor i.lit{background:#ffe49c;color:#513606;box-shadow:0 0 12px 3px #ffb640}
+@media(prefers-reduced-motion:reduce){.cave-floor>img,.cave-floor>.personal-explorer{transition:none}}
+
 </style><link rel="stylesheet" href="/explorer-creator.css"><script src="/explorer-shop.js"></script><script src="/explorer-creator.js"></script></head>
 <body><main><header><a class="logo" href="/" aria-label="Spellmaster home"><img class="brand-art" src="/assets/spellmaster/spellmaster-logo-ornate.webp" width="1120" height="373" alt="Spellmaster" loading="eager" decoding="async"></a><span class="header-promise-mark" aria-hidden="true">✦</span></header>
 <div class="brand-promise" role="note" aria-label="Our promise: Better today than yesterday. Every little step counts."><span class="brand-promise-sparkle" aria-hidden="true">✦</span><div class="brand-promise-content"><strong>Better Today <em>Than Yesterday</em></strong><span class="brand-promise-subtitle">Every little step counts. This is your journey.</span></div><span class="brand-promise-sparkle" aria-hidden="true">✦</span></div>
@@ -1096,22 +1099,24 @@ const renderPresentation=()=>{
  const cave=Boolean(layout)&&['question','retry','review','short-review','success'].includes(stage)&&document.body.dataset.theme!=='focus';
  document.body.classList.toggle('teaching-cave',cave);
  if(cave){
-  let floor=layout.querySelector('.cave-floor');
+  const path=document.querySelector('.sm-path');
+  let floor=path.querySelector('.cave-floor');
   if(!floor){
    floor=document.createElement('div');floor.className='cave-floor';floor.setAttribute('aria-hidden','true');
-   floor.innerHTML='<i style="left:33%"></i><i style="left:60%"></i><i style="left:88%"></i><img src="/assets/spellmaster/explorer-painted.webp" alt="">';
-   layout.append(floor);
+   floor.innerHTML=Array.from({length:10},(_,i)=>'<i aria-hidden="true" style="left:'+((i+1)*9.5)+'%">'+(i+1)+'</i>').join('')+'<img src="/assets/spellmaster/explorer-painted.webp" alt="">';
+   path.append(floor);
   }
   const turns=Object.values(adaptiveLoad()).reduce((total,entry)=>total+(entry.events||[]).filter(e=>e.mode==='independent_keyboard'&&!e.afterHelp&&!e.bonus).length,0);
   const step=Math.max(0,turns-(stage==='question'?0:1));
   const places=[['Crystal Cavern','crystal-cavern.webp'],['Lantern Forest','journey-0.webp'],['Desert Ruins','journey-1.webp'],['Enchanted Library','library-cinematic.webp']];
   const chapter=Math.floor(step/10),[place,art]=places[chapter%places.length];
   layout.style.setProperty('--journey-scene','url("/assets/spellmaster/'+art+'")');
+  path.style.setProperty('--journey-scene',layout.style.getPropertyValue('--journey-scene'));
   let sign=floor.querySelector('.journey-place');
   if(!sign){sign=document.createElement('span');sign.className='journey-place';floor.prepend(sign);floor.removeAttribute('aria-hidden')}
   sign.textContent='Chapter '+(chapter+1)+' · '+place+' · '+(step%10+1)+'/10';
-  const lit=Math.floor((step%10)/3);
-  floor.querySelectorAll('i').forEach((lamp,i)=>lamp.classList.toggle('lit',i<lit));
+  const lit=step%10+(stage==='success'?1:0);
+  floor.querySelectorAll('i').forEach((lamp,i)=>{lamp.classList.toggle('lit',i<lit);lamp.textContent=i<lit?'★':i+1});
   const profile=LP.active(spellStorage);
   const wardrobe=profile&&SpellmasterBonus.read(spellStorage,profile);
   const style=wardrobe?.explorerStyle;
@@ -1125,7 +1130,7 @@ const renderPresentation=()=>{
   }
   const actor=floor.lastElementChild;
   actor.classList.toggle('walking',stage==='success');
-  actor.style.left=(9+(step%10)*8.4)+'%';
+  actor.style.left=(lit*9.5)+'%';
  }
  if(stage!==previousPresentationStage){
   previousPresentationStage=stage;
