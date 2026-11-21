@@ -225,12 +225,12 @@ let pace=spellStorage.getItem('spellquest-sound-pace')||'relaxed';
 let stage='welcome',idx=0,first=0,results=[],ticket=0,activePlayer=null,activePlaying=false,activeResolve=null;
 const cached=new Map();
 const makeUrl=clip=>{
- if(clip==='catalogue-word-en-different-v1')return Promise.resolve('/assets/audio/different-en-gb.mp3?v=clear4');
- if(clip==='catalogue-word-en-water-v1')return Promise.resolve('/assets/audio/water-en-gb.mp3?v=clear4');
- if(clip==='catalogue-next-en-water-v1')return Promise.resolve('/assets/audio/next-water-en-gb.mp3?v=clear4');
+ if(clip==='catalogue-word-en-different-v1')return Promise.resolve('/assets/audio/different-en-gb.mp3?v=friendly6');
+ if(clip==='catalogue-word-en-water-v1')return Promise.resolve('/assets/audio/water-en-gb.mp3?v=friendly6');
+ if(clip==='catalogue-next-en-water-v1')return Promise.resolve('/assets/audio/next-water-en-gb.mp3?v=friendly6');
  const key=voice+':'+clip;
  if(!cached.has(key)){
-  const prom=fetch(ENDPOINT+'?accent=feedback5&clip='+encodeURIComponent(clip)+'&voice='+encodeURIComponent(voice),{signal:AbortSignal.timeout(18000)})
+  const prom=fetch(ENDPOINT+'?accent=friendly6&clip='+encodeURIComponent(clip)+'&voice='+encodeURIComponent(voice),{signal:AbortSignal.timeout(18000)})
    .then(r=>{if(!r.ok)throw new Error('Voice error '+r.status);return r.blob()})
    .then(blob=>URL.createObjectURL(blob))
    .catch(e=>{cached.delete(key);throw e});
@@ -315,7 +315,7 @@ async function talk(clips,t=ticket){
 function soundVoice(){
  return '<details class="voice-options"><summary>⚙ Voice and pace options</summary>'+
  '<div class="voice"><div class="voice-row"><label for="voice">Narrator</label>'+
- '<select id="voice" onchange="chooseVoice(this.value)"><option value="marin">Marin · warm</option>'+
+ '<select id="voice" onchange="chooseVoice(this.value)"><option value="marin">Coral · gentle</option>'+
  '<option value="cedar">Cedar · calm</option></select>'+
  '<label for="pace">Practice pace</label><select id="pace" onchange="choosePace(this.value)">'+
  '<option value="relaxed">Relaxed</option><option value="extra">Extra thinking time</option></select>'+
@@ -1053,7 +1053,7 @@ function renderLanding(){
    '<p>I will say ten words. Give each one a try. There are no marks or rankings.</p>'+
    '<a class="play-now quick-play entry-primary" href="/starting-assessment.html">▶ Begin my ten words</a>'+
    '<button type="button" class="entry-hear" onclick="playStartingWelcome()">🔊 Hear your welcome</button>'+
-   '<audio id="starting-welcome" preload="auto" src="/assets/audio/starting-point-welcome.mp3?v=clear4"></audio>'+
+   '<audio id="starting-welcome" preload="auto" src="/assets/audio/starting-point-welcome.mp3?v=friendly6"></audio>'+
    '</section>'+settings;
  }else{
   content='<section class="entry-welcome entry-return" aria-labelledby="entry-heading">'+
