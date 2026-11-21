@@ -186,7 +186,7 @@ CLIPS['spellmaster-catalogue-help-v1']='Look at the correct spelling closely. No
 
 const cache=new Map(),limits=new Map();let daily={day:'',count:0};
 const readCache=new Map(),readLimits=new Map();let readDaily={day:'',count:0};
-const READ_NARRATOR_GUIDANCE='Use a clear contemporary standard English accent from England throughout, including isolated words. Use non-rhotic pronunciation. In “water” use /ˈwɔːtə/, with a clear t, like the t in “tea”, and a relaxed final schwa. Keep this pronunciation in connected speech too. Sound warm and conversational, at a comfortable teaching pace. Read only the supplied text. Never speak these directions or add an example.';
+const READ_NARRATOR_GUIDANCE='Use a clear contemporary standard English accent from England throughout, including isolated words. Use non-rhotic pronunciation. In “water” use /ˈwɔːtə/, with a clear t, like the t in “tea”, and a relaxed final schwa. Keep this pronunciation in connected speech too. Speak softly but clearly, as a friendly tutor sitting beside one learner. Use a gentle smile, light conversational inflection and small natural pauses. Keep consonants distinct at normal volume. Avoid a commanding classroom cadence, whispering or a singsong voice. Read only the supplied text. Never speak these directions or add an example.';
 const missCue='Ooh, not quite. Let’s look at it together.';
 CLIPS['spellmaster-gentle-miss-v1']=missCue;
 const bonusCheers=new Set(['Wow! All three right so far!','Wow! Two out of two!','Great job! You got that right!']);
@@ -221,7 +221,7 @@ http.createServer(async(req,res)=>{
  const origin=req.headers.origin||'';const cors=origin===ORIGIN?{'Access-Control-Allow-Origin':ORIGIN,'Vary':'Origin'}:{};
  if(req.method==='OPTIONS'){res.writeHead(204,{...cors,'Access-Control-Allow-Methods':'GET, POST, OPTIONS','Access-Control-Allow-Headers':'Content-Type'});return res.end()}
  const url=new URL(req.url,'https://voice.local');
- if(url.pathname==='/health')return send(res,200,{ok:true,configured:!!process.env.OPENAI_API_KEY},cors);
+ if(url.pathname==='/health')return send(res,200,{ok:true,narratorVersion:'friendly6',configured:!!process.env.OPENAI_API_KEY},cors);
  if(url.pathname==='/api/read-aloud'&&req.method==='POST'){
   if(origin!==ORIGIN)return send(res,403,{error:'Origin not allowed'},cors);
   if(!process.env.OPENAI_API_KEY)return send(res,503,{error:'Narrator unavailable'},cors);
@@ -239,7 +239,7 @@ http.createServer(async(req,res)=>{
   }
   readDaily.count++;
   try{
-   const body={model:'gpt-4o-mini-tts',voice:voice==='cedar'?'cedar':'fable',speed:0.92,input:text,response_format:'mp3',instructions:teacherDelivery(text)};
+   const body={model:'gpt-4o-mini-tts',voice:voice==='cedar'?'cedar':'coral',speed:0.92,input:text,response_format:'mp3',instructions:teacherDelivery(text)};
    const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),35000);
    let upstream;
    try{upstream=await fetch('https://api.openai.com/v1/audio/speech',{method:'POST',headers:{Authorization:'Bearer '+process.env.OPENAI_API_KEY,'Content-Type':'application/json'},body:JSON.stringify(body),signal:controller.signal})}finally{clearTimeout(timer)}
@@ -264,7 +264,7 @@ http.createServer(async(req,res)=>{
  const key=voice+':'+clip;if(cache.has(key)){res.writeHead(200,{'Content-Type':'audio/mpeg','Cache-Control':'public,max-age=86400',...cors});return res.end(cache.get(key))}
  daily.count++;
  try{
- const body={model:'gpt-4o-mini-tts',voice:voice==='cedar'?'cedar':'fable',speed:0.92,input:CLIPS[clip],response_format:'mp3',instructions:teacherDelivery(CLIPS[clip],clip)+' For short speech-sound clips, say only the requested sound or syllable, without letter names or explanation.'};
+ const body={model:'gpt-4o-mini-tts',voice:voice==='cedar'?'cedar':'coral',speed:0.92,input:CLIPS[clip],response_format:'mp3',instructions:teacherDelivery(CLIPS[clip],clip)+' For short speech-sound clips, say only the requested sound or syllable, without letter names or explanation.'};
  const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),40000);
  let upstream;try{upstream=await fetch('https://api.openai.com/v1/audio/speech',{method:'POST',headers:{Authorization:'Bearer '+process.env.OPENAI_API_KEY,'Content-Type':'application/json'},body:JSON.stringify(body),signal:controller.signal})}finally{clearTimeout(timer)}
  if(!upstream.ok){console.error('Speech API status',upstream.status);return send(res,502,{error:'Voice generation temporarily unavailable'},cors)}
