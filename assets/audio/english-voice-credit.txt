@@ -1,0 +1,7 @@
+Southern English Female voice, distributed by rhasspy/piper-voices:
+https://huggingface.co/rhasspy/piper-voices/tree/main/en/en_GB/southern_english_female/low
+Based on the Southern English Female speech dataset (OpenSLR 83):
+https://www.openslr.org/83/
+Licensed under Creative Commons Attribution-ShareAlike 4.0 International:
+https://creativecommons.org/licenses/by-sa/4.0/
+Spellmaster synthesised new teacher recordings with this model.

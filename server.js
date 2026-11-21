@@ -185,6 +185,24 @@ CLIPS['spellmaster-catalogue-help-v1']='Look at the correct spelling closely. No
 const cache=new Map(),limits=new Map();let daily={day:'',count:0};
 const readCache=new Map(),readLimits=new Map();let readDaily={day:'',count:0};
 const READ_NARRATOR_GUIDANCE='Use a clear contemporary standard English accent from England throughout, including isolated words. Use non-rhotic pronunciation. In “water” use /ˈwɔːtə/, with a clear t, like the t in “tea”, and a relaxed final schwa. Keep this pronunciation in connected speech too. Sound warm and conversational, at a comfortable teaching pace. Read only the supplied text. Never speak these directions or add an example.';
+const {spawn}=require('node:child_process');
+const englishTeacher=require('node:fs').existsSync('.teacher/teacher.onnx');
+let speaking=Promise.resolve(),queued=0;
+function englishAudio(text){
+ if(queued>=8)return Promise.reject(new Error('Teacher busy'));
+ queued++;
+ const job=speaking.then(()=>new Promise((resolve,reject)=>{
+  const worker=spawn('.teacher/runtime/bin/python',['scripts/english-teacher.py','.teacher/teacher.onnx'],{timeout:35000});
+  const audio=[];
+  worker.stdout.on('data',chunk=>audio.push(chunk));
+  worker.stderr.resume();
+  worker.stdin.on('error',reject);worker.on('error',reject);
+  worker.on('close',code=>code===0?resolve(Buffer.concat(audio)):reject(new Error('Teacher unavailable')));
+  worker.stdin.end(text);
+ }));
+ speaking=job.catch(()=>{}).finally(()=>{queued--});
+ return job;
+}
 function canRead(ip){
  const now=Date.now(),current=readLimits.get(ip)||{start:now,n:0};
  if(now-current.start>60000){current.start=now;current.n=0}
@@ -213,7 +231,7 @@ http.createServer(async(req,res)=>{
  if(url.pathname==='/health')return send(res,200,{ok:true,configured:!!process.env.OPENAI_API_KEY},cors);
  if(url.pathname==='/api/read-aloud'&&req.method==='POST'){
   if(origin!==ORIGIN)return send(res,403,{error:'Origin not allowed'},cors);
-  if(!process.env.OPENAI_API_KEY)return send(res,503,{error:'Narrator unavailable'},cors);
+  if(!englishTeacher&&!process.env.OPENAI_API_KEY)return send(res,503,{error:'Narrator unavailable'},cors);
   const ip=(req.headers['x-forwarded-for']||req.socket.remoteAddress||'').toString().split(',')[0].trim();
   if(!canRead(ip))return send(res,429,{error:'Narration usage limit reached'},cors);
   let input;
@@ -222,6 +240,7 @@ http.createServer(async(req,res)=>{
   if(text.length<2||text.length>650||/[<>\x00-\x08]/.test(text))return send(res,400,{error:'Invalid narration text'},cors);
   const voice=['marin','cedar'].includes(input.voice)?input.voice:'marin';
   const key=crypto.createHash('sha256').update(voice+'|'+text).digest('hex');
+  if(englishTeacher){try{const audio=readCache.get(key)||await englishAudio(text);if(readCache.size>=24)readCache.delete(readCache.keys().next().value);readCache.set(key,audio);res.writeHead(200,{'Content-Type':'audio/wav','Cache-Control':'no-store',...cors});return res.end(audio)}catch{return send(res,503,{error:'Teacher busy'},cors)}}
   if(readCache.has(key)){
    res.writeHead(200,{'Content-Type':'audio/mpeg','Cache-Control':'private,max-age=3600',...cors});
    return res.end(readCache.get(key));
@@ -244,13 +263,15 @@ http.createServer(async(req,res)=>{
  if(origin!==ORIGIN)return send(res,403,{error:'Origin not allowed'},cors);
  const clip=url.searchParams.get('clip'),voice=url.searchParams.get('voice')||'marin';
  if(!Object.hasOwn(CLIPS,clip)||!['marin','cedar'].includes(voice))return send(res,400,{error:'Invalid clip'},cors);
- if(!process.env.OPENAI_API_KEY)return send(res,503,{error:'Voice service needs an API key'},cors);
+ if(!englishTeacher&&!process.env.OPENAI_API_KEY)return send(res,503,{error:'Voice service needs an API key'},cors);
  const ip=(req.headers['x-forwarded-for']||req.socket.remoteAddress||'').toString().split(',')[0].trim();
  const now=Date.now(),r=limits.get(ip)||{start:now,count:0};
  if(now-r.start>60000){r.start=now;r.count=0}r.count++;limits.set(ip,r);
  const today=new Date().toISOString().slice(0,10);if(daily.day!==today)daily={day:today,count:0};
  if(r.count>80||daily.count>=250)return send(res,429,{error:'Voice demo usage limit reached'},cors);
- const key=voice+':'+clip;if(cache.has(key)){res.writeHead(200,{'Content-Type':'audio/mpeg','Cache-Control':'public,max-age=86400',...cors});return res.end(cache.get(key))}
+ const key=voice+':'+clip;
+ if(englishTeacher){try{const audio=cache.get(key)||await englishAudio(CLIPS[clip]);if(cache.size>=80)cache.delete(cache.keys().next().value);cache.set(key,audio);res.writeHead(200,{'Content-Type':'audio/wav','Cache-Control':'public,max-age=86400',...cors});return res.end(audio)}catch{return send(res,503,{error:'Teacher busy'},cors)}}
+ if(cache.has(key)){res.writeHead(200,{'Content-Type':'audio/mpeg','Cache-Control':'public,max-age=86400',...cors});return res.end(cache.get(key))}
  daily.count++;
  try{
  const body={model:'gpt-4o-mini-tts',voice,input:CLIPS[clip],response_format:'mp3',instructions:READ_NARRATOR_GUIDANCE+' For short speech-sound clips, say only the requested sound or syllable, without letter names or explanation.'};

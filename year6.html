@@ -145,6 +145,20 @@ body.teaching-cave .cave-floor{display:block;position:absolute;inset:0 5%;pointe
 .cave-floor i.lit{background:#ffe49c;color:#513606;box-shadow:0 0 12px 3px #ffb640}
 @media(prefers-reduced-motion:reduce){.cave-floor>img,.cave-floor>.personal-explorer{transition:none}}
 
+
+body.lesson-active[data-scene]{background:linear-gradient(#12152645,#17142455),var(--journey-scene) center/cover fixed no-repeat,#243144!important;min-height:100dvh}
+body.lesson-active main>.hero,body.lesson-active .brand-promise{display:none!important}
+body.lesson-active main{padding-block:6px 10px!important}
+body.lesson-active main>header{min-height:0!important;padding:0 5px!important;margin:0!important}
+body.lesson-active main>header .brand-art{width:clamp(105px,12vw,152px)!important;height:auto!important}
+body.lesson-active.teaching-cave main .sm-path{margin:4px 0 12px!important;height:88px}
+body.teaching-cave .cave-floor>img,body.teaching-cave .cave-floor>.personal-explorer{height:58px}
+body.lesson-active.teaching-cave main .sm-layout{padding:0!important;border:0!important;background:transparent!important;box-shadow:none}
+body.lesson-active #app.panel{min-height:0!important;padding:clamp(14px,2vw,26px)!important;margin-top:0!important}
+body.lesson-active #app.panel:before{display:none!important}
+body.lesson-active .sm-side details .sm-side-body{padding-block:6px}
+@media(max-height:800px){body.lesson-active .sm-character-hint{display:none}body.lesson-active main .sm-side .wardrobe-portrait{height:64px}body.lesson-active #app .status:empty{min-height:0;margin:0}body.lesson-active #app .actions{margin-block:9px!important}}
+@media(max-width:600px),(max-height:550px){body.lesson-active main>header{display:none!important}body.lesson-active.teaching-cave main .sm-path{height:69px;margin-bottom:8px!important}body.teaching-cave .cave-floor>img,body.teaching-cave .cave-floor>.personal-explorer{height:41px}}
 </style><link rel="stylesheet" href="/explorer-creator.css"><script src="/explorer-shop.js"></script><script src="/explorer-creator.js"></script></head>
 <body><main><header><a class="logo" href="/" aria-label="Spellmaster home"><img class="brand-art" src="/assets/spellmaster/spellmaster-logo-ornate.webp" width="1120" height="373" alt="Spellmaster" loading="eager" decoding="async"></a><span class="header-promise-mark" aria-hidden="true">✦</span></header>
 <div class="brand-promise" role="note" aria-label="Our promise: Better today than yesterday. Every little step counts."><span class="brand-promise-sparkle" aria-hidden="true">✦</span><div class="brand-promise-content"><strong>Better Today <em>Than Yesterday</em></strong><span class="brand-promise-subtitle">Every little step counts. This is your journey.</span></div><span class="brand-promise-sparkle" aria-hidden="true">✦</span></div>
@@ -213,7 +227,7 @@ const cached=new Map();
 const makeUrl=clip=>{
  const key=voice+':'+clip;
  if(!cached.has(key)){
-  const prom=fetch(ENDPOINT+'?accent=england2&clip='+encodeURIComponent(clip)+'&voice='+encodeURIComponent(voice))
+  const prom=fetch(ENDPOINT+'?accent=southern3&clip='+encodeURIComponent(clip)+'&voice='+encodeURIComponent(voice))
    .then(r=>{if(!r.ok)throw new Error('Voice error '+r.status);return r.blob()})
    .then(blob=>URL.createObjectURL(blob))
    .catch(e=>{cached.delete(key);throw e});
@@ -1022,7 +1036,7 @@ function renderLanding(){
    '<p>I will say ten words. Give each one a try. There are no marks or rankings.</p>'+
    '<a class="play-now quick-play entry-primary" href="/starting-assessment.html">▶ Begin my ten words</a>'+
    '<button type="button" class="entry-hear" onclick="playStartingWelcome()">🔊 Hear your welcome</button>'+
-   '<audio id="starting-welcome" preload="auto" src="/assets/audio/starting-point-welcome.mp3?v=gb2"></audio>'+
+   '<audio id="starting-welcome" preload="auto" src="/assets/audio/starting-point-welcome.mp3?v=southern3"></audio>'+
    '</section>'+settings;
  }else{
   content='<section class="entry-welcome entry-return" aria-labelledby="entry-heading">'+
@@ -1110,8 +1124,9 @@ const renderPresentation=()=>{
   const step=Math.max(0,turns-(stage==='question'?0:1));
   const places=[['Crystal Cavern','crystal-cavern.webp'],['Lantern Forest','journey-0.webp'],['Desert Ruins','journey-1.webp'],['Enchanted Library','library-cinematic.webp']];
   const chapter=Math.floor(step/10),[place,art]=places[chapter%places.length];
-  layout.style.setProperty('--journey-scene','url("/assets/spellmaster/'+art+'")');
-  path.style.setProperty('--journey-scene',layout.style.getPropertyValue('--journey-scene'));
+  document.body.dataset.scene=place;
+  document.body.style.setProperty('--journey-scene','url("/assets/spellmaster/'+art+'")');
+
   let sign=floor.querySelector('.journey-place');
   if(!sign){sign=document.createElement('span');sign.className='journey-place';floor.prepend(sign);floor.removeAttribute('aria-hidden')}
   sign.textContent='Chapter '+(chapter+1)+' · '+place+' · '+(step%10+1)+'/10';
