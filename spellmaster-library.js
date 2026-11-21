@@ -14,8 +14,11 @@
  '<div class="sm-character-hint"><strong>✦ Better today than yesterday</strong><p>Look for the little steps forward. Your explorer will celebrate what you learn.</p></div>';
  const side=document.createElement('aside');side.className='sm-side';side.setAttribute('aria-label','Adventure and rewards');
  side.innerHTML='<details class="sm-side-box" id="sm-adventure"><summary>🗺️ Your Adventure</summary><div class="sm-side-body"><ul id="sm-journey-list"></ul><div class="sm-mini-meter"><span id="sm-journey-meter"></span></div><small id="sm-journey-caption">Your personal journey</small></div></details>'+
- '<details class="sm-side-box" id="sm-rewards"><summary>🏆 Your Rewards</summary><div class="sm-side-body"><div class="sm-reward-row"><span class="sm-reward-icon">🪙</span><div><div class="sm-count" id="sm-coin-count">0</div><small>Coins from bonus rounds</small></div></div><div class="sm-reward-row"><span class="sm-reward-icon">✦</span><div><div class="sm-count" id="sm-point-count">0</div><small>Bonus points</small></div></div><div class="sm-reward-row"><span class="sm-reward-icon">✨</span><div><div class="sm-count" id="sm-item-count">0</div><small>Avatar items earned</small></div></div><small>Coins and cosmetics are separate from lasting spelling mastery.</small></div></details>'+
- '<details class="sm-side-box" id="sm-profile"><summary>🎒 Your Explorer</summary><div class="sm-side-body"><div class="sm-reward-row"><span class="sm-reward-icon">📖</span><div><strong id="sm-profile-name">Explorer</strong><small id="sm-profile-style">Your chosen style</small></div></div><small>Choose how the adventure looks from your local tester profile. A secure wardrobe will be added later.</small></div></details>';
+ '<details class="sm-side-box" id="sm-rewards"><summary>🏆 Your Rewards</summary><div class="sm-side-body"><div class="sm-reward-row"><span class="sm-reward-icon">🪙</span><div><div class="sm-count" id="sm-coin-count">0</div><small>Your Explorer Shop coins</small></div></div><div class="sm-reward-row"><span class="sm-reward-icon">✦</span><div><div class="sm-count" id="sm-point-count">0</div><small>Bonus points</small></div></div><div class="sm-reward-row"><span class="sm-reward-icon">✨</span><div><div class="sm-count" id="sm-item-count">0</div><small>Avatar items earned</small></div></div><small>Coins and cosmetics are separate from lasting spelling mastery.</small></div></details>'+
+ '<details class="sm-side-box" id="sm-profile"><summary>🎒 Your Explorer</summary><div class="sm-side-body"><div class="sm-reward-row"><span class="sm-reward-icon">📖</span><div><strong id="sm-profile-name">Explorer</strong><small id="sm-profile-style">Your chosen style</small></div></div><small>Choose how the adventure looks from your local tester profile. Visit the Explorer Shop to change your outfit.</small></div></details>';
+ const defaultPortrait=character.querySelector('.sm-avatar-illustration');
+ const portraitFrame=document.createElement('div');portraitFrame.className=defaultPortrait.className;
+ defaultPortrait.replaceWith(portraitFrame);defaultPortrait.removeAttribute('class');portraitFrame.append(defaultPortrait);
  layout.append(character,app,side);
  const isMobile=window.matchMedia('(max-width:780px)').matches;
  for(const detail of side.querySelectorAll('details'))detail.open=!isMobile;
@@ -39,9 +42,13 @@
   const firstVisible=v.active?Math.max(1,v.count-2):1;
   const lastVisible=firstVisible+4;
   const signature=JSON.stringify([v.profile?.id||'none',v.profile?.alias||'',v.profile?.theme||'',v.currentStage,v.count,done,
-    v.bonus?.coins||0,v.bonus?.bonusPoints||0,v.bonus?.inventory?.length||0]);
+    v.bonus?.coins||0,v.bonus?.bonusPoints||0,v.bonus?.inventory?.length||0,v.bonus?.explorerStyle,v.bonus?.equipped,v.bonus?.colours]);
   if(signature===lastSignature)return;
   lastSignature=signature;
+  const holder=character.querySelector('.sm-avatar-illustration');
+  if(window.ExplorerCreator?.valid(v.bonus?.explorerStyle)){
+   holder.replaceChildren(ExplorerCreator.sprite(v.bonus.explorerStyle,v.bonus.equipped,v.bonus.colours));
+  }else holder.replaceChildren(defaultPortrait.cloneNode());
   nodeTrack.replaceChildren();list.replaceChildren();
   for(let i=firstVisible;i<=lastVisible;i++){
    const complete=v.active&&i<v.count;
@@ -77,6 +84,7 @@
  }
  function schedule(){if(scheduled)return;scheduled=true;requestAnimationFrame(render)}
  const observer=new MutationObserver(schedule);observer.observe(app,{childList:true,subtree:true,characterData:true});
+ window.addEventListener('explorer-changed',schedule);
  window.addEventListener('resize',schedule,{passive:true});
  schedule();
 })();

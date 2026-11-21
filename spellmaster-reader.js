@@ -8,7 +8,9 @@
  const compactSelector='h1,h2,h3,[data-read-aloud]';
  const prohibited='.profile-form,.tester-profile-tools,.active-learner,.condition-status,.condition-row,.voice,.privacy-note,#neuro,#signup-complete,#login,#members,#condition-form,.profile-choice,.account-row,[data-no-read],input,textarea,select';
  const speaker='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>';
+ let releasePlayback=null;
  function stop(){
+  if(releasePlayback){releasePlayback(false);releasePlayback=null}
   requestNo++;
   if(root.speechSynthesis){root.speechSynthesis.cancel();voiceFallback=null}
   if(controller){controller.abort();controller=null}
@@ -68,10 +70,16 @@
    const audioBlob=await r.blob();
    if(n!==requestNo)return false;
    const url=URL.createObjectURL(audioBlob),audio=new Audio(url);player=audio;
-   audio.onended=()=>{URL.revokeObjectURL(url);if(player===audio)stop()};
-   audio.onerror=()=>{URL.revokeObjectURL(url);if(player===audio)stop()};
-   await audio.play();
-   return true;
+   const completed=new Promise(resolve=>{
+    releasePlayback=ok=>{audio.onended=null;audio.onerror=null;URL.revokeObjectURL(url);resolve(ok)};
+    audio.onended=()=>{if(player===audio){releasePlayback(true);releasePlayback=null;stop()}};
+    audio.onerror=()=>{if(player===audio)stop()};
+   });
+   try{await audio.play()}catch(error){
+    if(player===audio){releasePlayback(false);releasePlayback=null;player=null}
+    throw error;
+   }
+   return await completed;
   }catch(error){
    if(n!==requestNo)return false;
    // Fall back to an installed British browser voice if the cloud narrator

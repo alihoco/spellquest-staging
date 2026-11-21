@@ -368,6 +368,7 @@ function success(improved){
  app.innerHTML='<span class="eyebrow">SPELLING CHALLENGE '+runCount+'</span>'+progress()+
  '<h2>'+(improved?'You worked it out 🌱':'That spelling came from you ✓')+'</h2>'+
  '<div class="good" role="status">'+currentPraise.text+'</div>'+
+ (results[idx]?.rewardText?'<p class="reward-receipt">'+results[idx].rewardText+'</p>':'')+
  '<p class="small muted">Moving to your next challenge…</p>'+
  soundVoice()+'<div class="actions"><button class="alt" onclick="next()">Continue now</button>'+
  '<button class="alt" onclick="finish()">Finish for today</button></div>';
@@ -657,7 +658,9 @@ check=function(retry){
  const input=$('answer');if(!input)return;
  const guess=input.value.toLowerCase().replace(/[^a-z']/g,'');
  if(!guess){input.focus();return}
+ if(!['question','retry'].includes(stage))return;
  const word=WORDS[idx].word,ok=guess===word;
+ const misses=(adaptiveLoad()[word]?.events||[]).slice(-5).filter(event=>event.correct===false).length;
  if(!ok){
   lastErrorFeedback=WORDS[idx]?.id&&!PILOT_BY_WORD[word]?null:window.SpellmasterFeedback.diagnose(word,guess);
   lastWrittenFeedback=window.SpellmasterWrittenFeedback?.lesson(word,guess,visualTeachingGroups(WORDS[idx]))||null;
@@ -678,6 +681,16 @@ check=function(retry){
   runResults[runResults.length-1].attempts=results[idx].attempts;
   if(ok){results[idx].learned=true;runResults[runResults.length-1].learned=true;adaptiveSave(word,true,false,true)}
   else adaptiveSave(word,false,runReview,true,lastErrorFeedback?.id);
+ }
+ if(ok){
+  const profile=LP.active(spellStorage);
+  if(profile){
+   const wallet=SpellmasterBonus.read(spellStorage,profile);
+   const coins=1+Math.min(2,misses);
+   wallet.coins+=coins;
+   spellStorage.setItem(SpellmasterBonus.key(profile),JSON.stringify(wallet));
+   results[idx].rewardText='+'+coins+(coins===1?' coin':' coins for sticking with this word')+' · Your balance: '+wallet.coins;
+  }
  }
  if(window.SpellmasterCloud?.status().ready){
   window.SpellmasterCloud.save();
@@ -742,7 +755,7 @@ function checkBonusWord(){
  const correct=answer===word;bonusAnswers.push(answer);recordBonusRecall(word,correct);
  const correctCount=bonusAnswers.filter((a,i)=>a===bonusRound.words[i]).length;
  const runningPerfect=correct&&correctCount===bonusAnswers.length;
- const bonusPraise=correct?(runningPerfect&&correctCount>=3?'Wow! All three right so far!':runningPerfect&&correctCount===2?'Wow! Two out of two!':'Great job! You got that right!'):'Good try! We can practise that word again.';
+ const bonusPraise=correct?(runningPerfect&&correctCount===3?'Wow! All three right so far!':runningPerfect&&correctCount===2?'Wow! Two out of two!':'Great job! You got that right!'):'Good try! We can practise that word again.';
  stop();stage='bonus-feedback';
  app.innerHTML='<div class="bonus-card"><span class="bonus-trophy" aria-hidden="true">'+(correct?'✦':'🧩')+'</span>'+
  '<h2>'+bonusPraise+'</h2>'+
@@ -751,7 +764,7 @@ function checkBonusWord(){
  (bonusPosition+1===bonusRound.words.length?'Preparing your bonus results…':'Your next bonus word is coming…')+'</p>'+
  soundVoice()+'<div class="actions" style="justify-content:center"><button class="alt" onclick="advanceBonusWord()" aria-label="Continue bonus round now">'+
  (bonusPosition+1===bonusRound.words.length?'Show results now':'Continue now')+'</button>'+
- '<button class="alt" onclick="skipBonusRound()">Finish bonus round later</button></div></div>';
+ (bonusPosition+1<bonusRound.words.length?'<button class="alt" onclick="skipBonusRound()">Leave bonus round</button>':'')+'</div></div>';
  voiceSet();if(narration)announceBonusFeedbackThenAdvance(correct,bonusPraise);
  else advanceBonusAfterPause();
 }
@@ -769,63 +782,49 @@ async function advanceBonusAfterPause(){
  if(!(await pause(1100,t)))return;
  if(t===ticket&&stage==='bonus-feedback'&&bonusPosition===position)advanceBonusWord();
 }
-function advanceBonusWord(){bonusPosition++;if(bonusPosition>=bonusRound.words.length)finishBonusRound();else startBonusQuestion()}
+function advanceBonusWord(){if(stage!=='bonus-feedback'||!bonusRound)return;window.SpellmasterReader?.stop();bonusPosition++;if(bonusPosition>=bonusRound.words.length)finishBonusRound();else startBonusQuestion()}
 function finishBonusRound(){
  stop();stage='bonus-result';if(!bonusRound)return;
  const outcome=window.SpellmasterBonus.grade(bonusRound.words,bonusAnswers);
  const profile=LP.active(spellStorage),reward=profile?window.SpellmasterBonus.award(spellStorage,profile,bonusRoundId,outcome):null;
  const rewardText=outcome.perfect?'All '+outcome.total+' spellings remembered!':'You remembered '+outcome.correct+' of '+outcome.total+' spellings.';
- app.innerHTML='<div class="bonus-card '+(outcome.perfect?'bonus-perfect':'')+'">'+
- '<span class="bonus-trophy" aria-hidden="true">'+(outcome.perfect?'🏆':'✨')+'</span>'+
- '<span class="eyebrow">BONUS ROUND COMPLETE</span><h2 class="bonus-title">'+(outcome.perfect?'Superstar bonus!':'Adventure progress!')+'</h2>'+
- '<p>'+rewardText+'</p>'+
- '<div class="coin-transfer" aria-label="Coins move into your collection"><span class="coin-pot"><span class="coin-pot-icon">🏺</span><span>Won coins</span></span><span class="coin-flight" aria-hidden="true">🪙</span><span class="coin-flight" aria-hidden="true">🪙</span><span class="coin-flight" aria-hidden="true">🪙</span><span class="coin-pot"><span class="coin-pot-icon">💰</span><span>Your collection</span></span></div>'+
- '<div class="bonus-currency">🪙 +'+outcome.coins+' bonus coins</div>'+ 
- '<div class="bonus-currency">✦ +'+outcome.bonusPoints+' bonus points</div>'+
- (outcome.perfect?'<div class="bonus-hat"><strong>✨ Choose an avatar reward!</strong><p class="small">You earned one free cosmetic item of your choice. It is not a long-term mastery badge.</p></div>':'<p>Every word has another chance to be remembered later.</p>')+
- '<p class="small muted">Coins and chosen avatar items stay with this browser’s learner profile. Later review checks lasting memory.</p>'+
- (reward?'<p class="small">Your coin total: '+reward.coins+' · Bonus points: '+reward.bonusPoints+'</p>':'')+
- soundVoice()+'<div class="actions" style="justify-content:center"><button onclick="nextAfterBonus()">Continue adventure</button>'+
- '<button class="alt" onclick="openExplorerShop()">Explorer shop</button><button class="alt" onclick="finish()">Finish for today</button></div></div>';
+ const heading=outcome.correct===0?'You finished the challenge!':rewardText;
+ const extra=outcome.perfect?outcome.coins-outcome.correct*2:0;
+ const message=outcome.correct?'Great remembering!':'Every try helps us choose what to practise next.';
+ app.innerHTML='<section class="bonus-card reward-room"><div class="reward-scene" aria-hidden="true"></div><h2>'+heading+'</h2><p>'+message+'</p>'+
+ (reward?'<div class="reward-receipt">+'+outcome.coins+' coins · Your balance: '+reward.coins+'</div>':'')+
+ (extra?'<p>Includes '+extra+' extra coins for remembering every word.</p>':'')+
+ '<p>✦ '+outcome.bonusPoints+' bonus points</p>'+
+ '<div class="actions"><button onclick="openExplorerShop()">Visit Explorer Shop</button><button class="alt" onclick="nextAfterBonus()">Continue adventure</button>'+
+ '<button class="alt" onclick="finish()">Finish for today</button></div></section>';
+ const scene=app.querySelector('.reward-scene');
+ if(ExplorerCreator.valid(reward?.explorerStyle))scene.append(ExplorerCreator.sprite(reward.explorerStyle,reward.equipped,reward.colours));
+ else{const guide=new Image();guide.src='/assets/spellmaster/explorer-painted.webp';guide.alt='';scene.append(guide)}
  if(profile?.cloud)SpellmasterCloud.save();
  voiceSet();
  if(outcome.perfect&&profile&&reward){
    const claimRow=reward.rounds.find(x=>x.id===bonusRoundId);
    if(claimRow?.avatarChoice==='pending')showAvatarRewardChoice(profile,bonusRoundId);
  }
- if(narration)speak(outcome.perfect?'spellmaster-bonus-perfect-choice-v2':'spellmaster-bonus-complete-v1');
+ if(narration)window.SpellmasterReader?.speak(heading+' '+message+(reward?' You earned '+outcome.coins+' coins.':'')+(outcome.perfect&&profile?' Choose a free item for your explorer.':''));
  bonusRound=null;
 }
 function showAvatarRewardChoice(profile,roundId){
- const area=document.createElement('div');area.className='bonus-card';
- area.id='avatar-reward-choice';area.innerHTML='<h3>Choose your superstar avatar item</h3>'+
- '<p>Pick one reward. Your explorer will wear it in the cave.</p>'+
- '<div class="avatar-choice-grid"></div><p class="small muted" role="status" id="avatar-choice-message"></p>';
- const grid=area.querySelector('.avatar-choice-grid');
- const items=window.SpellmasterBonus.availableChoices(spellStorage,profile);
- if(!items.length){area.innerHTML='<p>All current avatar items collected! More rewards will be added.</p>';
-   const continuation=app.querySelector('.actions');if(continuation)continuation.before(area);else app.append(area);return;}
- for(const item of items){
-   const b=document.createElement('button');b.type='button';b.className='avatar-choice-item';
-   const icon=document.createElement('span');icon.className='item-icon';icon.textContent=item.icon;
-   const label=document.createElement('span');label.className='item-title';label.textContent=item.name;
-   b.append(icon,label);
-   b.addEventListener('click',()=>{
-     try{
-       const result=window.SpellmasterBonus.chooseAvatarReward(spellStorage,profile,roundId,item.id);
-       if(result.alreadyClaimed)return;
-       if(profile.cloud)SpellmasterCloud.save();
-       area.innerHTML='<div class="bonus-hat"><strong>'+item.icon+' '+item.name+' is yours!</strong>'+
-       '<p>Your explorer is wearing it. No coins were spent.</p></div>';
-     }catch(err){const status=area.querySelector('#avatar-choice-message');if(status)status.textContent='Please choose a different item.';}
-   });
-   grid.append(b);
- }
- const continuation=app.querySelector('.actions');
- if(continuation)continuation.before(area);else app.append(area);
+ const area=document.createElement('div');area.className='bonus-hat';
+ const choices=SpellmasterBonus.availableChoices(spellStorage,profile);
+ area.innerHTML=choices.length?'<h3>You earned a free explorer item!</h3><p>Try on a reward, choose its colour and wear it on your next adventure.</p><button>Choose my free item</button>':'<p>You have collected the whole wardrobe!</p>';
+ const button=area.querySelector('button');
+ if(button)button.onclick=()=>ExplorerShop.open(profile,spellStorage,()=>{
+  const claim=SpellmasterBonus.read(spellStorage,profile).rounds.find(row=>row.id===roundId);
+  if(claim?.avatarChoice==='claimed'){
+   const item=SpellmasterBonus.AVATAR_ITEMS.find(item=>item.id===claim.avatarItemId);
+   area.textContent=item.name+' is yours!';
+  }
+ },roundId);
+ app.querySelector('.actions').before(area);
 }
 function nextAfterBonus(){
- stop();const upcoming=adaptiveSelect();
+ window.SpellmasterReader?.stop();stop();const upcoming=adaptiveSelect();
  if(!upcoming){finish();return}
  stage='choice';
  app.innerHTML='<span class="eyebrow">YOUR CHOICE</span><h2>Keep exploring?</h2>'+
@@ -853,7 +852,7 @@ next=function(){
  voiceSet();
 };
 finish=function(){
- stop();stage='finished';
+ window.SpellmasterReader?.stop();stop();stage='finished';
  const ending=window.SpellmasterSessionClosing.message({attempts:runResults,history:adaptiveLoad(),today:adaptiveToday()});
  const remembered=runResults.filter(x=>x.initial).length;
  app.innerHTML='<span class="eyebrow">YOUR JOURNEY TODAY</span>'+
@@ -1071,7 +1070,7 @@ begin=async function(){
 };
 welcome=renderLanding;
 let previousPresentationStage=null;
-const playStages=new Set(['question','retry','review','short-review','success','bonus-intro','bonus-question','bonus-feedback','curriculum-loading','finished']);
+const playStages=new Set(['question','retry','review','short-review','success','bonus-intro','bonus-question','bonus-feedback','bonus-result','avatar-reward','curriculum-loading','finished']);
 const renderPresentation=()=>{
  const playing=playStages.has(stage);
  document.body.classList.toggle('lesson-active',playing);
