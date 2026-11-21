@@ -372,7 +372,7 @@ function success(improved){
  '<p class="small muted">Moving to your next challenge…</p>'+
  soundVoice()+'<div class="actions"><button class="alt" onclick="next()">Continue now</button>'+
  '<button class="alt" onclick="finish()">Finish for today</button></div>';
- voiceSet();successAudio();
+ voiceSet();if(results[idx]?.earnedCoins)requestAnimationFrame(()=>{if(stage==='success')window.SpellmasterCoinFlight?.(results[idx].earnedCoins)});successAudio();
 }
 async function successAudio(){
  stop();const t=ticket;
@@ -689,6 +689,7 @@ check=function(retry){
    const coins=1+Math.min(2,misses);
    wallet.coins+=coins;
    spellStorage.setItem(SpellmasterBonus.key(profile),JSON.stringify(wallet));
+   results[idx].earnedCoins=coins;
    results[idx].rewardText='+'+coins+(coins===1?' coin':' coins for sticking with this word')+' · Your balance: '+wallet.coins;
   }
  }
@@ -797,6 +798,7 @@ function finishBonusRound(){
  '<p>✦ '+outcome.bonusPoints+' bonus points</p>'+
  '<div class="actions"><button onclick="openExplorerShop()">Visit Explorer Shop</button><button class="alt" onclick="nextAfterBonus()">Continue adventure</button>'+
  '<button class="alt" onclick="finish()">Finish for today</button></div></section>';
+ if(reward&&!reward.alreadyAwarded&&outcome.coins)requestAnimationFrame(()=>{if(stage==='bonus-result')window.SpellmasterCoinFlight?.(outcome.coins)});
  const scene=app.querySelector('.reward-scene');
  if(ExplorerCreator.valid(reward?.explorerStyle))scene.append(ExplorerCreator.sprite(reward.explorerStyle,reward.equipped,reward.colours));
  else{const guide=new Image();guide.src='/assets/spellmaster/explorer-painted.webp';guide.alt='';scene.append(guide)}

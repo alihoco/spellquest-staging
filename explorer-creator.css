@@ -33,3 +33,18 @@
 
 #app .reward-scene{height:clamp(105px,17vh,162px);border-radius:14px;background:#263845 url('/assets/spellmaster/crystal-cavern.webp') center 64%/cover;display:flex;align-items:end;justify-content:center;margin-bottom:12px}
 .reward-scene>img{height:100%}
+body.lesson-active .sm-side{opacity:1}
+#sm-rewards,#sm-profile{border:3px double #caab74;border-radius:17px;background:#fff2d6;box-shadow:0 4px 0 #402a42,0 8px 22px #17122355}
+#sm-rewards summary,#sm-profile summary{color:#fff0d1;background:linear-gradient(115deg,#33263e,#513451);border:0}
+#sm-rewards summary{justify-content:start;gap:8px;padding:9px}
+#sm-rewards summary:after{margin-left:auto}
+#sm-rewards summary strong{display:block;color:#ffda78;font-size:1.15em}
+.purse-art{object-fit:contain;display:block;width:clamp(54px,5vw,84px);height:68px}
+.satchel-stats{display:grid;grid-template-columns:1fr 1fr;text-align:center;gap:5px;font-size:12px}.satchel-stats span+span{border-left:1px solid #d8bd93}.satchel-stats b{display:block;font-size:19px;color:#56314c}
+#sm-profile .sm-side-body{padding:0 9px 10px;text-align:center}
+.wardrobe-portrait{height:112px;margin:0 -9px 6px;padding:4px;background:linear-gradient(0deg,#27163745,transparent),url('/assets/spellmaster/library-cinematic.webp') center 63%/cover}
+.wardrobe-portrait img{height:100%;width:auto}
+#sm-open-shop{color:#fff3d5;background:#583b69}
+.pocket-deposit{display:inline-flex;vertical-align:middle;margin-left:6px}.pocket-deposit .purse-art{width:44px;height:44px}
+.flying-spell-coin{pointer-events:none;position:fixed;z-index:1000;display:grid;place-items:center;width:24px;height:24px;color:#885407;border:2px solid #a17523;border-radius:50%;font:900 16px/1 Georgia;background:radial-gradient(circle at 32% 24%,#fff3ae,#efb337 62%,#bc7817);box-shadow:inset 0 0 0 2px #ffdc76,0 2px 4px #55301055}
+.pocket-deposit-row{display:flex;align-items:center;justify-content:space-between;gap:8px}.pocket-deposit{flex:none}

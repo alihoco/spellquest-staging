@@ -14,8 +14,9 @@
  '<div class="sm-character-hint"><strong>✦ Better today than yesterday</strong><p>Look for the little steps forward. Your explorer will celebrate what you learn.</p></div>';
  const side=document.createElement('aside');side.className='sm-side';side.setAttribute('aria-label','Adventure and rewards');
  side.innerHTML='<details class="sm-side-box" id="sm-adventure"><summary>🗺️ Your Adventure</summary><div class="sm-side-body"><ul id="sm-journey-list"></ul><div class="sm-mini-meter"><span id="sm-journey-meter"></span></div><small id="sm-journey-caption">Your personal journey</small></div></details>'+
- '<details class="sm-side-box" id="sm-rewards"><summary>🏆 Your Rewards</summary><div class="sm-side-body"><div class="sm-reward-row"><span class="sm-reward-icon">🪙</span><div><div class="sm-count" id="sm-coin-count">0</div><small>Your Explorer Shop coins</small></div></div><div class="sm-reward-row"><span class="sm-reward-icon">✦</span><div><div class="sm-count" id="sm-point-count">0</div><small>Bonus points</small></div></div><div class="sm-reward-row"><span class="sm-reward-icon">✨</span><div><div class="sm-count" id="sm-item-count">0</div><small>Avatar items earned</small></div></div><small>Coins and cosmetics are separate from lasting spelling mastery.</small></div></details>'+
- '<details class="sm-side-box" id="sm-profile"><summary>🎒 Your Explorer</summary><div class="sm-side-body"><div class="sm-reward-row"><span class="sm-reward-icon">📖</span><div><strong id="sm-profile-name">Explorer</strong><small id="sm-profile-style">Your chosen style</small></div></div><small>Choose how the adventure looks from your local tester profile. Visit the Explorer Shop to change your outfit.</small></div></details>';
+ '<details class="sm-side-box satchel-card" id="sm-rewards"><summary><img class="purse-art" src="/assets/spellmaster/explorer-purse.webp" alt=""><span>Your Rewards<strong><span id="sm-coin-count">0</span> coins</strong></span></summary><div class="sm-side-body"><div class="satchel-stats"><span><b id="sm-point-count">0</b>Bonus points</span><span><b id="sm-item-count">0</b>Wardrobe items</span></div></div></details>'+
+ '<details class="sm-side-box wardrobe-card" id="sm-profile"><summary>Your Explorer</summary><div class="sm-side-body"><div class="wardrobe-portrait" aria-hidden="true"></div><strong id="sm-profile-name">Explorer</strong><button type="button" id="sm-open-shop">Visit Explorer Shop</button></div></details>';
+ side.querySelector('#sm-open-shop').onclick=()=>openExplorerShop();
  const defaultPortrait=character.querySelector('.sm-avatar-illustration');
  const portraitFrame=document.createElement('div');portraitFrame.className=defaultPortrait.className;
  defaultPortrait.replaceWith(portraitFrame);defaultPortrait.removeAttribute('class');portraitFrame.append(defaultPortrait);
@@ -49,6 +50,7 @@
   if(window.ExplorerCreator?.valid(v.bonus?.explorerStyle)){
    holder.replaceChildren(ExplorerCreator.sprite(v.bonus.explorerStyle,v.bonus.equipped,v.bonus.colours));
   }else holder.replaceChildren(defaultPortrait.cloneNode());
+  side.querySelector('.wardrobe-portrait').replaceChildren(holder.firstElementChild.cloneNode(true));
   nodeTrack.replaceChildren();list.replaceChildren();
   for(let i=firstVisible;i<=lastVisible;i++){
    const complete=v.active&&i<v.count;
@@ -76,7 +78,6 @@
   text('sm-point-count',String(v.bonus?.bonusPoints||0));
   text('sm-item-count',String(v.bonus?.inventory?.length||0));
   text('sm-profile-name',v.profile?.alias||'Your explorer');
-  text('sm-profile-style',v.profile?('Theme: '+(v.profile.theme==='auto'?'Age-adjusted':v.profile.theme)):'Local tester profile');
   const avatarTitle=character.querySelector('h3');
   if(avatarTitle)avatarTitle.textContent=v.profile?.alias?('Explorer '+v.profile.alias):'Meet your explorer';
   document.body.dataset.smStage=v.currentStage;
@@ -88,3 +89,37 @@
  window.addEventListener('resize',schedule,{passive:true});
  schedule();
 })();
+
+// The wallet is credited by the lesson. This effect only illustrates that deposit.
+window.SpellmasterCoinFlight=function(amount){
+ const receipt=document.querySelector('#app .reward-receipt');
+ if(!receipt||!amount)return;
+ let bag=document.querySelector('#sm-rewards .purse-art');
+ if(!bag)return;
+ const rect=bag.getBoundingClientRect();
+ let pocket=null;
+ if(!rect.width||rect.top<0||rect.bottom>innerHeight||rect.right>innerWidth){
+  pocket=document.createElement('span');pocket.className='pocket-deposit';
+  pocket.setAttribute('aria-hidden','true');
+  bag=bag.cloneNode();pocket.append(bag);
+  const row=document.createElement('div');row.className='pocket-deposit-row';
+  receipt.before(row);row.append(receipt,pocket);
+ }
+ if(matchMedia('(prefers-reduced-motion:reduce)').matches||document.body.dataset.theme==='focus'||!bag.animate)return;
+ const start=receipt.getBoundingClientRect(),end=bag.getBoundingClientRect();
+ const x=start.left+start.width*.45,y=start.top+start.height*.45;
+ const dx=end.left+end.width*.5-x,dy=end.top+end.height*.32-y;
+ const count=Math.min(5,amount);
+ for(let i=0;i<count;i++){
+  const coin=document.createElement('span');coin.className='flying-spell-coin';coin.textContent='✦';
+  coin.setAttribute('aria-hidden','true');coin.style.left=x+'px';coin.style.top=y+'px';document.body.append(coin);
+  const flight=coin.animate([
+   {transform:'translate(-50%,-50%) scale(.72)',opacity:0},
+   {offset:.15,transform:'translate('+dx*.09+'px,'+(dy*.09-22)+'px) rotate(-16deg)',opacity:1},
+   {offset:.55,transform:'translate('+dx*.5+'px,'+(dy*.5-42-i*3)+'px) rotate(22deg)',opacity:1},
+   {transform:'translate('+dx+'px,'+dy+'px) scale(.26)',opacity:0}
+  ],{duration:590,delay:i*55,easing:'ease-in-out',fill:'both'});
+  flight.onfinish=()=>{coin.remove();if(i===count-1&&bag.isConnected)bag.animate([{transform:'scale(1)'},{transform:'scale(1.09) rotate(3deg)'},{transform:'scale(1)'}],220)};
+  flight.oncancel=()=>coin.remove();
+ }
+};
