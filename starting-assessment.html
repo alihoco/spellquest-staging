@@ -35,8 +35,20 @@ document.addEventListener('DOMContentLoaded',()=>{
  const storage=window.SpellmasterAccount?.token()?sessionStorage:localStorage;
  if(storage.getItem('spellquest-audio-first')!=='off')hearAssessmentInstructions();
 });
+let assessmentAge=null;
+function readAssessmentAge(profile){
+ const birth=profile?.birthMonth||profile?.birth;
+ assessmentAge=birth?SpellmasterProfiles.ageInYears(birth):profile?.ageYears??null;
+}
+document.addEventListener('DOMContentLoaded',()=>{
+ const account=window.SpellmasterAccount;
+ if(!account?.token()){readAssessmentAge(SpellmasterProfiles.active(localStorage));return}
+ const id=account.selectedLearner(),cached=SpellmasterProfiles.active(sessionStorage);
+ if(cached?.id===id)readAssessmentAge(cached);
+ account.request('/me').then(me=>readAssessmentAge(me.learners?.find(p=>p.id===id))).catch(()=>{});
+});
 function present(){
- current=policy.planned(results);
+ current=policy.planned(results,10,assessmentAge);
  if(!current)return finish();
  $('audio-notice').textContent='';$('count').textContent='Word '+(at+1)+' of ten';
  $('bar').style.width=(at*10)+'%';$('answer').value='';
