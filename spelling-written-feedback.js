@@ -40,6 +40,7 @@ function lesson(word,attempt,visualGroups){
   if(x.kind==='different_letter')specific='The spelling uses the letter '+x.expected.toUpperCase()+' at position '+position+'. ';
   if(x.kind==='extra_letter')specific='There was an extra letter in your attempt. ';
  }
+ if(word==='different'&&!String(attempt).toLowerCase().includes('ff'))specific='Different has two F letters together. Look for that pair near the beginning. ';
  if(!specific)specific='A few letters need another look. ';
  const text=specific+'Look at the written groups. Then hide the word and try again.';
  const spoken=specific+'Look at how the word is written. When you are ready, hide it and try again.';

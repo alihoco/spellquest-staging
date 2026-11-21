@@ -65,7 +65,7 @@ async function readWord(firstPrompt=false){
  stopAudio();const id=turnId,word=current?.word;if(!word)return;
  $('audio-notice').textContent='Getting your word ready…';
  try{
-  const url=firstPrompt&&word==='said'?'/assets/audio/assessment-first-said.mp3?v=clear4':'https://spellquest-voice-staging.onrender.com/api/voice?accent=clear4&clip='+encodeURIComponent('catalogue-word-en-'+word+'-v1')+'&voice=marin';
+  const url=firstPrompt&&word==='said'?'/assets/audio/assessment-first-said.mp3?v=clear4':['water','different'].includes(word)?'/assets/audio/'+word+'-en-gb.mp3?v=clear4':'https://spellquest-voice-staging.onrender.com/api/voice?accent=clear4&clip='+encodeURIComponent('catalogue-word-en-'+word+'-v1')+'&voice=marin';
   const response=await fetch(url,{mode:'cors'});if(!response.ok)throw Error('Narrator unavailable');
   const blob=await response.blob();if(id!==turnId)return;
   currentAudioUrl=URL.createObjectURL(blob);

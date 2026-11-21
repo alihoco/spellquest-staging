@@ -225,9 +225,12 @@ let pace=spellStorage.getItem('spellquest-sound-pace')||'relaxed';
 let stage='welcome',idx=0,first=0,results=[],ticket=0,activePlayer=null,activePlaying=false,activeResolve=null;
 const cached=new Map();
 const makeUrl=clip=>{
+ if(clip==='catalogue-word-en-different-v1')return Promise.resolve('/assets/audio/different-en-gb.mp3?v=clear4');
+ if(clip==='catalogue-word-en-water-v1')return Promise.resolve('/assets/audio/water-en-gb.mp3?v=clear4');
+ if(clip==='catalogue-next-en-water-v1')return Promise.resolve('/assets/audio/next-water-en-gb.mp3?v=clear4');
  const key=voice+':'+clip;
  if(!cached.has(key)){
-  const prom=fetch(ENDPOINT+'?accent=clear4&clip='+encodeURIComponent(clip)+'&voice='+encodeURIComponent(voice))
+  const prom=fetch(ENDPOINT+'?accent=clear4&clip='+encodeURIComponent(clip)+'&voice='+encodeURIComponent(voice),{signal:AbortSignal.timeout(18000)})
    .then(r=>{if(!r.ok)throw new Error('Voice error '+r.status);return r.blob()})
    .then(blob=>URL.createObjectURL(blob))
    .catch(e=>{cached.delete(key);throw e});
@@ -268,7 +271,11 @@ async function speak(clip,t=ticket){
  try{
   const url=await makeUrl(clip);if(t!==ticket)return false;
   const player=new Audio(url);activePlayer=player;
-  const ended=new Promise(resolve=>{activeResolve=resolve;player.onended=()=>{activeResolve=null;resolve(true)};player.onerror=()=>{activeResolve=null;resolve(false)}});
+  const ended=new Promise(resolve=>{
+   const timer=setTimeout(()=>{player.pause();finishPlayback(false)},45000);
+   function finishPlayback(ok){clearTimeout(timer);player.onended=null;player.onerror=null;if(activeResolve===finishPlayback)activeResolve=null;resolve(ok)}
+   activeResolve=finishPlayback;player.onended=()=>finishPlayback(true);player.onerror=()=>finishPlayback(false);
+  });
   await player.play();activePlaying=true;
   const ok=await ended;activePlaying=false;
   if(t===ticket){activePlayer=null;setStatus(ok?'':'The voice stopped. Please replay this step.')}
@@ -513,7 +520,7 @@ function review(){
 }
 async function reviewAudio(){
  stop();stage='review';const t=ticket,w=WORDS[idx],host=$('review-content');if(!host)return;
- host.innerHTML='<div class="note"><strong>First, hear the complete word.</strong><p>You can say it aloud if you like.</p></div>';
+ host.innerHTML='<div class="note"><strong>'+w.word+'</strong><p>'+errorFeedbackForCurrent().text+'</p></div>';
  let ok=await speak(wordAudioClip(w),t);
  if(t!==ticket)return;
  if(!ok)setStatus('The word narration was unavailable. You can still review the correct spelling below and replay the lesson.');
